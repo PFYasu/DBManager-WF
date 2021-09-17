@@ -38,7 +38,7 @@ namespace DBManager.Views
 
             var dto = response.Payload as ConnectionNamesDto;
 
-            foreach(var name in dto.Names)
+            foreach (var name in dto.Names)
             {
                 connectionList.Items.Add(name);
             }
@@ -73,7 +73,15 @@ namespace DBManager.Views
                 return;
             }
 
-            LoadConnections();   
+            if (connectionsLayout.Controls.Count == 1
+                && connectionsLayout.Controls[0].Text == connectionName)
+            {
+                connectionsLayout.Controls[0].Dispose();
+                connectionsLayout.Controls.Clear();
+                statusStrip.Items["activeConnection"].Text = "";
+            }
+
+            LoadConnections();
         }
 
         private void setConnectionConfig_Click(object sender, System.EventArgs e)
@@ -87,12 +95,11 @@ namespace DBManager.Views
             {
                 removeConnection.Enabled = false;
                 setConnectionConfig.Enabled = false;
-                statusStrip.Items["activeConnection"].Text = "";
 
                 return;
             }
 
-            var connectionName = connectionList.Items[0].Text;
+            var connectionName = connectionList.SelectedItems[0].Text;
 
             removeConnection.Enabled = true;
             setConnectionConfig.Enabled = true;
@@ -105,12 +112,12 @@ namespace DBManager.Views
                 _messageHelper.ShowError($"Unable to remove {connectionName} connection", response);
                 return;
             }
-            
-            var payload = response.Payload as PresenterResponseDto; //need here to dispose elements from listview and clear it to avoid forms duplications.
+
+            var payload = response.Payload as PresenterResponseDto;
 
             Form form;
 
-            switch(payload.Type)
+            switch (payload.Type)
             {
                 case EngineType.MySql:
                     form = new MySqlView(payload.Presenter);
@@ -122,7 +129,14 @@ namespace DBManager.Views
 
             form.TopLevel = false;
             form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            form.Text = connectionName;
 
+            if(connectionsLayout.Controls.Count == 1)
+            {
+                connectionsLayout.Controls[0].Dispose();
+                connectionsLayout.Controls.Clear();
+
+            }
             connectionsLayout.Controls.Add(form);
 
             form.Show();

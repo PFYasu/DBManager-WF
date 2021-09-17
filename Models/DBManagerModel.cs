@@ -17,7 +17,7 @@ namespace DBManager.Models
             _connections = new List<Connection>();
         }
 
-        public static async Task<DBManagerModel> CreateInstance()
+        public static async Task<DBManagerModel> Initialize()
         {
             var instance = new DBManagerModel();
 

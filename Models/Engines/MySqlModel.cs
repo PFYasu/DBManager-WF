@@ -1,5 +1,5 @@
 ﻿using DBManager.Utils;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -42,7 +42,7 @@ namespace DBManager.Models.Engines
 
             var dataTable = new DataTable();
 
-            await dataAdapter.FillAsync(dataTable);
+            dataAdapter.Fill(dataTable);
 
             await connection.CloseAsync();
             return dataTable;
@@ -53,7 +53,7 @@ namespace DBManager.Models.Engines
             using var connection = new MySqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            connection.ChangeDatabase(databaseName);
+            await connection.ChangeDatabaseAsync(databaseName);
 
             await connection.CloseAsync();
         }

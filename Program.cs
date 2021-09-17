@@ -16,7 +16,7 @@ namespace DBManager
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var model = await DBManagerModel.CreateInstance();
+            var model = await DBManagerModel.Initialize();
             var presenter = new DBManagerPresenter(model);
             var view = new DBManagerView(presenter);
 

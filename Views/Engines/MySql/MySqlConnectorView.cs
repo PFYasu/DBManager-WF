@@ -3,7 +3,6 @@ using DBManager.Presenters;
 using DBManager.Utils;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DBManager.Views.Engines.MySql
@@ -24,31 +23,11 @@ namespace DBManager.Views.Engines.MySql
 
         private async void save_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(name.Text))
-                _messageHelper.ShowError("Name cannot be empty.");
-            else if (string.IsNullOrEmpty(serverUrl.Text))
-                _messageHelper.ShowError("Server URL cannot be empty.");
-            else if (string.IsNullOrEmpty(port.Value.ToString()))
-                _messageHelper.ShowError("Port cannot be empty.");
-            else if (string.IsNullOrEmpty(username.Text))
-                _messageHelper.ShowError("Username cannot be empty.");
-            else if (string.IsNullOrEmpty(password.Text))
-                _messageHelper.ShowError("Password cannot be empty.");
+            if (IsValidForm(out string error) == false)
+                _messageHelper.ShowError(error);
             else
             {
-                var parameters = new Dictionary<string, string>();
-
-                parameters["Server"] = serverUrl.Text;
-                parameters["Port"] = port.Value.ToString();
-                parameters["Uid"] = username.Text;
-                parameters["Pwd"] = password.Text;
-
-                var dto = new AddConnectionDto
-                {
-                    Type = EngineType.MySql,
-                    ConnectionParameters = parameters,
-                    Name = name.Text
-                };
+                var dto = PrepareDto();
 
                 var response = await _presenter.AddConnection(dto);
 
@@ -65,6 +44,45 @@ namespace DBManager.Views.Engines.MySql
         private void cancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private bool IsValidForm(out string error)
+        {
+            if (string.IsNullOrEmpty(name.Text))
+                error = "Name cannot be empty.";
+            else if (string.IsNullOrEmpty(serverUrl.Text))
+                error = "Server URL cannot be empty.";
+            else if (string.IsNullOrEmpty(port.Value.ToString()))
+                error = "Port cannot be empty.";
+            else if (string.IsNullOrEmpty(username.Text))
+                error = "Username cannot be empty.";
+            else if (string.IsNullOrEmpty(password.Text))
+                error = "Password cannot be empty.";
+            else
+            {
+                error = null;
+                return true;
+            }
+            return false;
+        }
+
+        private AddConnectionDto PrepareDto()
+        {
+            var parameters = new Dictionary<string, string>();
+
+            parameters["Server"] = serverUrl.Text;
+            parameters["Port"] = port.Value.ToString();
+            parameters["Uid"] = username.Text;
+            parameters["Pwd"] = password.Text;
+
+            var dto = new AddConnectionDto
+            {
+                Type = EngineType.MySql,
+                ConnectionParameters = parameters,
+                Name = name.Text
+            };
+
+            return dto;
         }
     }
 }
