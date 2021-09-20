@@ -17,6 +17,8 @@ namespace DBManager.Presenters.Engines
             _model = model;
         }
 
+        public override string ConnectionName => _model.Name;
+
         public override async Task<Response> GetDatabaseNames()
         {
             const string query = "SHOW DATABASES;";

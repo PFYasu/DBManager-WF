@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace DBManager.Views
+namespace DBManager.Views.Helpers
 {
     public class MessageHelper
     {

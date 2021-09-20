@@ -2,6 +2,8 @@
 using DBManager.Presenters;
 using DBManager.Utils;
 using DBManager.Views.Engines.MySql;
+using DBManager.Views.Helpers;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace DBManager.Views
@@ -22,28 +24,8 @@ namespace DBManager.Views
             addConnection.Enabled = true;
             removeConnection.Enabled = false;
             setConnectionConfig.Enabled = false;
-        }
 
-        private void LoadConnections()
-        {
-            var response = _presenter.GetConnectionNames();
-
-            if (response.Type == ResponseType.Error)
-            {
-                _messageHelper.ShowError("Unable to load connection list", response);
-                return;
-            }
-
-            connectionList.Items.Clear();
-
-            var dto = response.Payload as ConnectionNamesDto;
-
-            foreach (var name in dto.Names)
-            {
-                connectionList.Items.Add(name);
-            }
-
-            statusStrip.Items["numberOfConnections"].Text = $"Connections: {dto.Names.Count}";
+            connectionTree.ImageList = GetImageList();
         }
 
         private void addConnection_Click(object sender, System.EventArgs e)
@@ -56,10 +38,10 @@ namespace DBManager.Views
 
         private async void removeConnection_Click(object sender, System.EventArgs e)
         {
-            if (connectionList.SelectedItems.Count != 1)
+            if (connectionTree.SelectedNode == null)
                 return;
 
-            string connectionName = connectionList.SelectedItems[0].Text;
+            string connectionName = connectionTree.SelectedNode.Text;
             var status = _messageHelper.ShowQuestion($"Are you sure you want to delete the {connectionName} connection?");
 
             if (status == DialogResult.No)
@@ -89,27 +71,28 @@ namespace DBManager.Views
 
         }
 
-        private void connectionList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void connectionTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (connectionList.SelectedItems.Count != 1)
-            {
-                removeConnection.Enabled = false;
-                setConnectionConfig.Enabled = false;
+            var nodes = TreeNodeHelper.GetElements(e.Node);
 
+            var connection = nodes.Connection;
+            var database = nodes.Database;
+
+            if (connection == null)
                 return;
-            }
 
-            var connectionName = connectionList.SelectedItems[0].Text;
+            if (database != null)
+                return;
 
             removeConnection.Enabled = true;
             setConnectionConfig.Enabled = true;
-            statusStrip.Items["activeConnection"].Text = $"Active: {connectionName}";
+            statusStrip.Items["activeConnection"].Text = $"Active: {connection.Text}";
 
-            var response = _presenter.GetPresenter(connectionName);
+            var response = _presenter.GetPresenter(connection.Text);
 
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to remove {connectionName} connection", response);
+                _messageHelper.ShowError($"Unable to remove {connection.Text} connection", response);
                 return;
             }
 
@@ -120,7 +103,7 @@ namespace DBManager.Views
             switch (payload.Type)
             {
                 case EngineType.MySql:
-                    form = new MySqlView(payload.Presenter);
+                    form = new MySqlView(payload.Presenter, connectionTree);
                     break;
                 default:
                     _messageHelper.ShowError("Unable to create view - incorrect engine type");
@@ -129,9 +112,9 @@ namespace DBManager.Views
 
             form.TopLevel = false;
             form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            form.Text = connectionName;
+            form.Text = connection.Text;
 
-            if(connectionsLayout.Controls.Count == 1)
+            if (connectionsLayout.Controls.Count == 1)
             {
                 connectionsLayout.Controls[0].Dispose();
                 connectionsLayout.Controls.Clear();
@@ -140,6 +123,44 @@ namespace DBManager.Views
             connectionsLayout.Controls.Add(form);
 
             form.Show();
+        }
+
+        private void LoadConnections()
+        {
+            var response = _presenter.GetConnectionNames();
+
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError("Unable to load connection list", response);
+                return;
+            }
+
+            connectionTree.Nodes.Clear();
+
+            var dto = response.Payload as ConnectionNamesDto;
+
+            foreach (var name in dto.Names)
+            {
+                var node = connectionTree
+                    .Nodes.Add(name);
+
+                node.Name = name.ToString();
+                node.ImageIndex = 0;
+                node.SelectedImageIndex = 0;
+            }
+
+            statusStrip.Items["numberOfConnections"].Text = $"Connections: {dto.Names.Count}";
+        }
+
+        private ImageList GetImageList()
+        {
+            var imageList = new ImageList();
+
+            imageList.Images.Add(Image.FromFile($"{Constants.Paths.Resources}/connection.png"));
+            imageList.Images.Add(Image.FromFile($"{Constants.Paths.Resources}/database.png"));
+            imageList.Images.Add(Image.FromFile($"{Constants.Paths.Resources}/table.png"));
+
+            return imageList;
         }
     }
 }

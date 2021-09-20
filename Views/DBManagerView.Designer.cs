@@ -33,12 +33,12 @@ namespace DBManager.Views
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.numberOfConnections = new System.Windows.Forms.ToolStripStatusLabel();
             this.activeConnection = new System.Windows.Forms.ToolStripStatusLabel();
-            this.connectionList = new System.Windows.Forms.ListView();
             this.connectionServiceLayout = new System.Windows.Forms.TableLayoutPanel();
             this.setConnectionConfig = new System.Windows.Forms.Button();
             this.removeConnection = new System.Windows.Forms.Button();
             this.addConnection = new System.Windows.Forms.Button();
             this.connectionsLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.connectionTree = new System.Windows.Forms.TreeView();
             this.statusStrip.SuspendLayout();
             this.connectionServiceLayout.SuspendLayout();
             this.SuspendLayout();
@@ -65,20 +65,6 @@ namespace DBManager.Views
             this.activeConnection.Name = "activeConnection";
             this.activeConnection.Size = new System.Drawing.Size(46, 17);
             this.activeConnection.Text = "Active: ";
-            // 
-            // connectionList
-            // 
-            this.connectionList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.connectionList.HideSelection = false;
-            this.connectionList.Location = new System.Drawing.Point(12, 58);
-            this.connectionList.MultiSelect = false;
-            this.connectionList.Name = "connectionList";
-            this.connectionList.Size = new System.Drawing.Size(140, 367);
-            this.connectionList.TabIndex = 1;
-            this.connectionList.UseCompatibleStateImageBehavior = false;
-            this.connectionList.View = System.Windows.Forms.View.List;
-            this.connectionList.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.connectionList_ItemSelectionChanged);
             // 
             // connectionServiceLayout
             // 
@@ -151,14 +137,24 @@ namespace DBManager.Views
             this.connectionsLayout.Size = new System.Drawing.Size(513, 413);
             this.connectionsLayout.TabIndex = 3;
             // 
+            // connectionTree
+            // 
+            this.connectionTree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.connectionTree.Location = new System.Drawing.Point(12, 58);
+            this.connectionTree.Name = "connectionTree";
+            this.connectionTree.Size = new System.Drawing.Size(137, 367);
+            this.connectionTree.TabIndex = 4;
+            this.connectionTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.connectionTree_NodeMouseClick);
+            // 
             // DBManagerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 461);
+            this.Controls.Add(this.connectionTree);
             this.Controls.Add(this.connectionsLayout);
             this.Controls.Add(this.connectionServiceLayout);
-            this.Controls.Add(this.connectionList);
             this.Controls.Add(this.statusStrip);
             this.MinimumSize = new System.Drawing.Size(700, 500);
             this.Name = "DBManagerView";
@@ -174,7 +170,6 @@ namespace DBManager.Views
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ListView connectionList;
         private System.Windows.Forms.TableLayoutPanel connectionServiceLayout;
         private System.Windows.Forms.Button addConnection;
         private System.Windows.Forms.Button removeConnection;
@@ -182,5 +177,6 @@ namespace DBManager.Views
         private System.Windows.Forms.ToolStripStatusLabel numberOfConnections;
         private System.Windows.Forms.ToolStripStatusLabel activeConnection;
         private System.Windows.Forms.TableLayoutPanel connectionsLayout;
+        private System.Windows.Forms.TreeView connectionTree;
     }
 }

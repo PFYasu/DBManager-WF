@@ -1,5 +1,6 @@
 ﻿using DBManager.Presenters;
 using DBManager.Views.Engines.MySql;
+using DBManager.Views.Helpers;
 using System;
 using System.Windows.Forms;
 

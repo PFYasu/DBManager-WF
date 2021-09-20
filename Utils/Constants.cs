@@ -5,6 +5,7 @@
         public static class Paths
         {
             public const string ConnectionData = "../../../Data.txt";
+            public const string Resources = "../../../Resources";
         }
     }
 }
