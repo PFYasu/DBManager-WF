@@ -39,8 +39,13 @@ namespace DBManager.Views
             this.addConnection = new System.Windows.Forms.Button();
             this.connectionsLayout = new System.Windows.Forms.TableLayoutPanel();
             this.connectionTree = new System.Windows.Forms.TreeView();
+            this.connectionSplitContainer = new System.Windows.Forms.SplitContainer();
             this.statusStrip.SuspendLayout();
             this.connectionServiceLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.connectionSplitContainer)).BeginInit();
+            this.connectionSplitContainer.Panel1.SuspendLayout();
+            this.connectionSplitContainer.Panel2.SuspendLayout();
+            this.connectionSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -130,30 +135,53 @@ namespace DBManager.Views
             this.connectionsLayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.connectionsLayout.ColumnCount = 1;
             this.connectionsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.connectionsLayout.Location = new System.Drawing.Point(159, 12);
+            this.connectionsLayout.Location = new System.Drawing.Point(3, 3);
             this.connectionsLayout.Name = "connectionsLayout";
             this.connectionsLayout.RowCount = 1;
             this.connectionsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.connectionsLayout.Size = new System.Drawing.Size(513, 413);
+            this.connectionsLayout.Size = new System.Drawing.Size(467, 365);
             this.connectionsLayout.TabIndex = 3;
             // 
             // connectionTree
             // 
-            this.connectionTree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.connectionTree.Location = new System.Drawing.Point(12, 58);
+            this.connectionTree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.connectionTree.Location = new System.Drawing.Point(3, 3);
             this.connectionTree.Name = "connectionTree";
-            this.connectionTree.Size = new System.Drawing.Size(137, 367);
+            this.connectionTree.Size = new System.Drawing.Size(130, 365);
             this.connectionTree.TabIndex = 4;
             this.connectionTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.connectionTree_NodeMouseClick);
+            // 
+            // connectionSplitContainer
+            // 
+            this.connectionSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.connectionSplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.connectionSplitContainer.Cursor = System.Windows.Forms.Cursors.Default;
+            this.connectionSplitContainer.Location = new System.Drawing.Point(15, 61);
+            this.connectionSplitContainer.Name = "connectionSplitContainer";
+            // 
+            // connectionSplitContainer.Panel1
+            // 
+            this.connectionSplitContainer.Panel1.Controls.Add(this.connectionTree);
+            this.connectionSplitContainer.Panel1MinSize = 140;
+            // 
+            // connectionSplitContainer.Panel2
+            // 
+            this.connectionSplitContainer.Panel2.Controls.Add(this.connectionsLayout);
+            this.connectionSplitContainer.Size = new System.Drawing.Size(657, 375);
+            this.connectionSplitContainer.SplitterDistance = 140;
+            this.connectionSplitContainer.SplitterWidth = 10;
+            this.connectionSplitContainer.TabIndex = 5;
             // 
             // DBManagerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 461);
-            this.Controls.Add(this.connectionTree);
-            this.Controls.Add(this.connectionsLayout);
+            this.Controls.Add(this.connectionSplitContainer);
             this.Controls.Add(this.connectionServiceLayout);
             this.Controls.Add(this.statusStrip);
             this.MinimumSize = new System.Drawing.Size(700, 500);
@@ -162,6 +190,11 @@ namespace DBManager.Views
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.connectionServiceLayout.ResumeLayout(false);
+            this.connectionSplitContainer.Panel1.ResumeLayout(false);
+            this.connectionSplitContainer.Panel2.ResumeLayout(false);
+            this.connectionSplitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.connectionSplitContainer)).EndInit();
+            this.connectionSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,5 +211,6 @@ namespace DBManager.Views
         private System.Windows.Forms.ToolStripStatusLabel activeConnection;
         private System.Windows.Forms.TableLayoutPanel connectionsLayout;
         private System.Windows.Forms.TreeView connectionTree;
+        private System.Windows.Forms.SplitContainer connectionSplitContainer;
     }
 }
