@@ -52,7 +52,7 @@ namespace DBManager.Views
             this.cancel.Location = new System.Drawing.Point(12, 198);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(150, 23);
-            this.cancel.TabIndex = 1;
+            this.cancel.TabIndex = 2;
             this.cancel.Text = "Cancel";
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.Cancel_Click);
@@ -74,7 +74,7 @@ namespace DBManager.Views
             this.createPostgreSQL.Location = new System.Drawing.Point(168, 42);
             this.createPostgreSQL.Name = "createPostgreSQL";
             this.createPostgreSQL.Size = new System.Drawing.Size(150, 150);
-            this.createPostgreSQL.TabIndex = 3;
+            this.createPostgreSQL.TabIndex = 1;
             this.createPostgreSQL.UseVisualStyleBackColor = false;
             this.createPostgreSQL.Click += new System.EventHandler(this.createPostgreSQL_Click);
             // 

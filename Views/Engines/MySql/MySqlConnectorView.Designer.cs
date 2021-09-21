@@ -54,14 +54,14 @@ namespace DBManager.Views.Engines.MySql
             this.serverUrl.Location = new System.Drawing.Point(12, 120);
             this.serverUrl.Name = "serverUrl";
             this.serverUrl.Size = new System.Drawing.Size(190, 23);
-            this.serverUrl.TabIndex = 0;
+            this.serverUrl.TabIndex = 1;
             // 
             // username
             // 
             this.username.Location = new System.Drawing.Point(12, 176);
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(190, 23);
-            this.username.TabIndex = 1;
+            this.username.TabIndex = 4;
             // 
             // serverUrlLabel
             // 
@@ -96,14 +96,14 @@ namespace DBManager.Views.Engines.MySql
             this.password.Name = "password";
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(164, 23);
-            this.password.TabIndex = 6;
+            this.password.TabIndex = 5;
             // 
             // addConnection
             // 
             this.addConnection.Location = new System.Drawing.Point(73, 205);
             this.addConnection.Name = "addConnection";
             this.addConnection.Size = new System.Drawing.Size(299, 23);
-            this.addConnection.TabIndex = 8;
+            this.addConnection.TabIndex = 6;
             this.addConnection.Text = "Save";
             this.addConnection.UseVisualStyleBackColor = true;
             this.addConnection.Click += new System.EventHandler(this.save_Click);
@@ -113,7 +113,7 @@ namespace DBManager.Views.Engines.MySql
             this.cancel.Location = new System.Drawing.Point(12, 205);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(55, 23);
-            this.cancel.TabIndex = 9;
+            this.cancel.TabIndex = 7;
             this.cancel.Text = "Cancel";
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
@@ -140,7 +140,7 @@ namespace DBManager.Views.Engines.MySql
             this.name.Location = new System.Drawing.Point(12, 66);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(190, 23);
-            this.name.TabIndex = 11;
+            this.name.TabIndex = 0;
             // 
             // portLabel
             // 
@@ -181,7 +181,7 @@ namespace DBManager.Views.Engines.MySql
             0});
             this.port.Name = "port";
             this.port.Size = new System.Drawing.Size(57, 23);
-            this.port.TabIndex = 17;
+            this.port.TabIndex = 3;
             // 
             // MySqlConnectorView
             // 
