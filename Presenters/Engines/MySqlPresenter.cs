@@ -11,10 +11,12 @@ namespace DBManager.Presenters.Engines
     public class MySqlPresenter : EnginePresenterBase
     {
         private readonly IEngineModel _model;
+        private readonly DBManagerPresenterDatabaseOperationBase _dbManagerPresenter;
 
-        public MySqlPresenter(IEngineModel model)
+        public MySqlPresenter(IEngineModel model, DBManagerPresenterDatabaseOperationBase dbManagerPresenter)
         {
             _model = model;
+            _dbManagerPresenter = dbManagerPresenter;
         }
 
         public override string ConnectionName => _model.Name;

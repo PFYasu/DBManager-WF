@@ -94,7 +94,7 @@ namespace DBManager.Presenters
                 case EngineType.MySql:
                     type = connection.Type;
                     model = new MySqlModel(connection);
-                    presenter = new MySqlPresenter(model);
+                    presenter = new MySqlPresenter(model, this);
                     break;
                 default:
                     return Error("Unable to create presenter. Incorrect engine type.");
