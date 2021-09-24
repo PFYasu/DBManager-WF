@@ -1,6 +1,7 @@
 ﻿using DBManager.Dto;
 using DBManager.Dto.Engines;
 using DBManager.Models.Engines;
+using DBManager.Utils;
 using System;
 using System.Data;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace DBManager.Presenters.Engines
         }
 
         public override string ConnectionName => _model.Name;
+        public override EngineType EngineType => _model.Type;
 
         public override async Task<Response> GetDatabaseNames()
         {

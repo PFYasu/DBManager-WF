@@ -1,14 +1,17 @@
 ﻿using DBManager.Dto;
+using DBManager.Dto.Engines;
 using DBManager.Presenters;
+using DBManager.Presenters.Engines;
 using DBManager.Utils;
 using DBManager.Views.Engines.MySql;
 using DBManager.Views.Helpers;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DBManager.Views
 {
-    public partial class DBManagerView : Form, IDBManagerView
+    public partial class DBManagerView : Form
     {
         private readonly DBManagerPresenterBase _presenter;
         private readonly MessageHelper _messageHelper;
@@ -26,6 +29,7 @@ namespace DBManager.Views
             setConnectionConfig.Enabled = false;
 
             connectionTree.ImageList = GetImageList();
+            statusStrip.ImageList = GetImageList();
         }
 
         private void addConnection_Click(object sender, System.EventArgs e)
@@ -60,7 +64,7 @@ namespace DBManager.Views
             {
                 connectionsLayout.Controls[0].Dispose();
                 connectionsLayout.Controls.Clear();
-                statusStrip.Items["activeConnection"].Text = "";
+                statusStrip.Items["activeConnection"].Text = string.Empty;
             }
 
             LoadConnections();
@@ -71,54 +75,52 @@ namespace DBManager.Views
 
         }
 
-        private void connectionTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private async void connectionTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             var nodes = TreeNodeHelper.GetElements(e.Node);
 
-            var connection = nodes.Connection;
-            var database = nodes.Database;
-
-            if (connection == null)
+            if (nodes.Mode == TreeNodeMode.NotSupported)
                 return;
 
-            if (database != null)
-                return;
-
-            removeConnection.Enabled = true;
-            setConnectionConfig.Enabled = true;
-            statusStrip.Items["activeConnection"].Text = $"Active: {connection.Text}";
-
-            var response = _presenter.GetPresenter(connection.Text);
+            var response = _presenter.GetPresenter(nodes.Connection.Text);
 
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to remove {connection.Text} connection", response);
+                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection", response);
                 return;
             }
 
             var payload = response.Payload as PresenterResponseDto;
-
             Form form;
 
-            switch (payload.Type)
+            switch (nodes.Mode)
             {
-                case EngineType.MySql:
-                    form = new MySqlView(payload.Presenter, connectionTree);
+                case TreeNodeMode.ConnectionSelected:
+                    form = new MySqlConnectionView(payload.Presenter);
+                    await LoadDatabases(payload.Presenter);
+                    break;
+                case TreeNodeMode.DatabaseSelected:
+                    form = new MySqlDatabaseView(payload.Presenter);
+                    await LoadTables(payload.Presenter, nodes.Database.Text);
+                    break;
+                case TreeNodeMode.TableSelected:
+                    form = new MySqlTableView(payload.Presenter);
                     break;
                 default:
                     _messageHelper.ShowError("Unable to create view - incorrect engine type");
                     return;
             }
 
+            UpdateStatusStrip(nodes);
+
             form.TopLevel = false;
             form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            form.Text = connection.Text;
+            form.Text = nodes.Connection.Text;
 
             if (connectionsLayout.Controls.Count == 1)
             {
                 connectionsLayout.Controls[0].Dispose();
                 connectionsLayout.Controls.Clear();
-
             }
             connectionsLayout.Controls.Add(form);
 
@@ -150,6 +152,65 @@ namespace DBManager.Views
             }
 
             statusStrip.Items["numberOfConnections"].Text = $"Connections: {dto.Names.Count}";
+            statusStrip.Items["numberOfConnections"].ImageIndex = 0;
+        }
+
+        private async Task LoadDatabases(EnginePresenterBase presenter)
+        {
+            var response = await presenter.GetDatabaseNames();
+
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to get databases for {presenter.ConnectionName} connection", response);
+                return;
+            }
+
+            var payload = response.Payload as DatabaseNamesResponseDto;
+
+            connectionTree
+                .Nodes[presenter.ConnectionName]
+                .Nodes.Clear();
+
+            foreach (var name in payload.Names)
+            {
+                var node = connectionTree
+                    .Nodes[presenter.ConnectionName]
+                    .Nodes.Add(name);
+
+                node.Name = name.ToString();
+                node.ImageIndex = 1;
+                node.SelectedImageIndex = 1;
+            }
+        }
+
+        private async Task LoadTables(EnginePresenterBase presenter, string databaseName)
+        {
+            var response = await presenter.GetTableNames(databaseName);
+
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to get databases for {presenter.ConnectionName} connection", response);
+                return;
+            }
+
+            var payload = response.Payload as TableNamesResponseDto;
+
+            connectionTree
+                .Nodes[presenter.ConnectionName]
+                .Nodes[databaseName]
+                .Nodes.Clear();
+
+            foreach (var name in payload.Names)
+            {
+                var node = connectionTree
+                    .Nodes[presenter.ConnectionName]
+                    .Nodes[databaseName]
+                    .Nodes.Add(name);
+
+                node.Name = name.ToString();
+                node.ImageIndex = 2;
+                node.SelectedImageIndex = 2;
+            }
         }
 
         private ImageList GetImageList()
@@ -161,6 +222,36 @@ namespace DBManager.Views
             imageList.Images.Add(Image.FromFile($"{Constants.Paths.Resources}/table.png"));
 
             return imageList;
+        }
+
+        private void UpdateStatusStrip(TreeNodeElements nodes)
+        {
+            statusStrip.Items["activeConnection"].Text = string.Empty;
+            statusStrip.Items["activeDatabase"].Text = string.Empty;
+            statusStrip.Items["activeTable"].Text = string.Empty;
+
+            statusStrip.Items["activeConnection"].ImageIndex = -1;
+            statusStrip.Items["activeDatabase"].ImageIndex = -1;
+            statusStrip.Items["activeTable"].ImageIndex = -1;
+
+            if (nodes.Connection != null)
+            {
+                statusStrip.Items["activeConnection"].Text = $"Connection: {nodes.Connection.Text}";
+                statusStrip.Items["activeConnection"].ImageIndex = 0;
+            }
+
+            if (nodes.Database != null)
+            {
+                statusStrip.Items["activeDatabase"].Text = $"Database: {nodes.Database.Text}";
+                statusStrip.Items["activeDatabase"].ImageIndex = 1;
+            }
+
+
+            if (nodes.Table != null)
+            {
+                statusStrip.Items["activeTable"].Text = $"Table: {nodes.Table.Text}";
+                statusStrip.Items["activeTable"].ImageIndex = 2;
+            }
         }
     }
 }

@@ -33,6 +33,8 @@ namespace DBManager.Views
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.numberOfConnections = new System.Windows.Forms.ToolStripStatusLabel();
             this.activeConnection = new System.Windows.Forms.ToolStripStatusLabel();
+            this.activeDatabase = new System.Windows.Forms.ToolStripStatusLabel();
+            this.activeTable = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionServiceLayout = new System.Windows.Forms.TableLayoutPanel();
             this.setConnectionConfig = new System.Windows.Forms.Button();
             this.removeConnection = new System.Windows.Forms.Button();
@@ -52,7 +54,9 @@ namespace DBManager.Views
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.numberOfConnections,
-            this.activeConnection});
+            this.activeConnection,
+            this.activeDatabase,
+            this.activeTable});
             this.statusStrip.Location = new System.Drawing.Point(0, 439);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(684, 22);
@@ -62,14 +66,22 @@ namespace DBManager.Views
             // numberOfConnections
             // 
             this.numberOfConnections.Name = "numberOfConnections";
-            this.numberOfConnections.Size = new System.Drawing.Size(80, 17);
-            this.numberOfConnections.Text = "Connections: ";
+            this.numberOfConnections.Size = new System.Drawing.Size(0, 17);
             // 
             // activeConnection
             // 
             this.activeConnection.Name = "activeConnection";
-            this.activeConnection.Size = new System.Drawing.Size(46, 17);
-            this.activeConnection.Text = "Active: ";
+            this.activeConnection.Size = new System.Drawing.Size(0, 17);
+            // 
+            // activeDatabase
+            // 
+            this.activeDatabase.Name = "activeDatabase";
+            this.activeDatabase.Size = new System.Drawing.Size(0, 17);
+            // 
+            // activeTable
+            // 
+            this.activeTable.Name = "activeTable";
+            this.activeTable.Size = new System.Drawing.Size(0, 17);
             // 
             // connectionServiceLayout
             // 
@@ -139,7 +151,7 @@ namespace DBManager.Views
             this.connectionsLayout.Name = "connectionsLayout";
             this.connectionsLayout.RowCount = 1;
             this.connectionsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.connectionsLayout.Size = new System.Drawing.Size(467, 365);
+            this.connectionsLayout.Size = new System.Drawing.Size(485, 365);
             this.connectionsLayout.TabIndex = 3;
             // 
             // connectionTree
@@ -212,5 +224,7 @@ namespace DBManager.Views
         private System.Windows.Forms.TableLayoutPanel connectionsLayout;
         private System.Windows.Forms.TreeView connectionTree;
         private System.Windows.Forms.SplitContainer connectionSplitContainer;
+        private System.Windows.Forms.ToolStripStatusLabel activeDatabase;
+        private System.Windows.Forms.ToolStripStatusLabel activeTable;
     }
 }

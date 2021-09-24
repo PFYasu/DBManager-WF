@@ -12,10 +12,12 @@ namespace DBManager.Presenters
     public class DBManagerPresenter : DBManagerPresenterBase
     {
         private readonly IDBManagerModel _model;
+        private readonly Dictionary<string, EnginePresenterBase> _presenters;
 
         public DBManagerPresenter(IDBManagerModel model)
         {
             _model = model;
+            _presenters = new Dictionary<string, EnginePresenterBase>();
         }
 
         public override async Task<Response> AddConnection(AddConnectionDto dto)
@@ -62,6 +64,20 @@ namespace DBManager.Presenters
         {
             List<string> names;
 
+            PresenterResponseDto dto;
+            EnginePresenterBase presenter;
+
+            if (_presenters.TryGetValue(connectionName, out EnginePresenterBase presenterFromDictionary))
+            {
+                dto = new PresenterResponseDto
+                {
+                    Type = presenterFromDictionary.EngineType,
+                    Presenter = presenterFromDictionary
+                };
+
+                return Ok(dto);
+            }
+
             try
             {
                 names = _model.GetConnectionNames();
@@ -87,7 +103,6 @@ namespace DBManager.Presenters
 
             EngineType type;
             IEngineModel model;
-            EnginePresenterBase presenter;
 
             switch (connection.Type)
             {
@@ -100,11 +115,16 @@ namespace DBManager.Presenters
                     return Error("Unable to create presenter. Incorrect engine type.");
             }
 
-            var dto = new PresenterResponseDto
+            dto = new PresenterResponseDto
             {
                 Type = type,
                 Presenter = presenter
             };
+
+            if (_presenters.TryAdd(connectionName, presenter) == false)
+            {
+                return Error($"Connection {connectionName} already exists in dictionary.");
+            }
 
             return Ok(dto);
         }
@@ -134,6 +154,8 @@ namespace DBManager.Presenters
             {
                 return Error(exception.Message);
             }
+
+            _presenters.Remove(connectionName);
 
             return Ok();
         }
