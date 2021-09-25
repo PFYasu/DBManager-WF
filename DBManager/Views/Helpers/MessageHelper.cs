@@ -17,9 +17,9 @@ namespace DBManager.Views.Helpers
             var errorMessage = $"{comment}\n{message}";
 
             MessageBox.Show(
-                errorMessage, 
-                _viewName, 
-                MessageBoxButtons.OK, 
+                errorMessage,
+                _viewName,
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }
 

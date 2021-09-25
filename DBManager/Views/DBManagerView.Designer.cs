@@ -65,21 +65,25 @@ namespace DBManager.Views
             // 
             // numberOfConnections
             // 
+            this.numberOfConnections.ForeColor = System.Drawing.Color.White;
             this.numberOfConnections.Name = "numberOfConnections";
             this.numberOfConnections.Size = new System.Drawing.Size(0, 17);
             // 
             // activeConnection
             // 
+            this.activeConnection.ForeColor = System.Drawing.Color.White;
             this.activeConnection.Name = "activeConnection";
             this.activeConnection.Size = new System.Drawing.Size(0, 17);
             // 
             // activeDatabase
             // 
+            this.activeDatabase.ForeColor = System.Drawing.Color.White;
             this.activeDatabase.Name = "activeDatabase";
             this.activeDatabase.Size = new System.Drawing.Size(0, 17);
             // 
             // activeTable
             // 
+            this.activeTable.ForeColor = System.Drawing.Color.White;
             this.activeTable.Name = "activeTable";
             this.activeTable.Size = new System.Drawing.Size(0, 17);
             // 
@@ -101,7 +105,7 @@ namespace DBManager.Views
             // 
             // setConnectionConfig
             // 
-            this.setConnectionConfig.BackColor = System.Drawing.Color.White;
+            this.setConnectionConfig.BackColor = System.Drawing.Color.Gray;
             this.setConnectionConfig.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("setConnectionConfig.BackgroundImage")));
             this.setConnectionConfig.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.setConnectionConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -114,7 +118,7 @@ namespace DBManager.Views
             // 
             // removeConnection
             // 
-            this.removeConnection.BackColor = System.Drawing.Color.White;
+            this.removeConnection.BackColor = System.Drawing.Color.Gray;
             this.removeConnection.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("removeConnection.BackgroundImage")));
             this.removeConnection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.removeConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -127,7 +131,7 @@ namespace DBManager.Views
             // 
             // addConnection
             // 
-            this.addConnection.BackColor = System.Drawing.Color.White;
+            this.addConnection.BackColor = System.Drawing.Color.Gray;
             this.addConnection.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("addConnection.BackgroundImage")));
             this.addConnection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.addConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -147,6 +151,7 @@ namespace DBManager.Views
             this.connectionsLayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.connectionsLayout.ColumnCount = 1;
             this.connectionsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.connectionsLayout.ForeColor = System.Drawing.Color.White;
             this.connectionsLayout.Location = new System.Drawing.Point(3, 3);
             this.connectionsLayout.Name = "connectionsLayout";
             this.connectionsLayout.RowCount = 1;
@@ -159,6 +164,10 @@ namespace DBManager.Views
             this.connectionTree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.connectionTree.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.connectionTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.connectionTree.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.connectionTree.ForeColor = System.Drawing.Color.White;
             this.connectionTree.Location = new System.Drawing.Point(3, 3);
             this.connectionTree.Name = "connectionTree";
             this.connectionTree.Size = new System.Drawing.Size(130, 365);
@@ -192,6 +201,7 @@ namespace DBManager.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(684, 461);
             this.Controls.Add(this.connectionSplitContainer);
             this.Controls.Add(this.connectionServiceLayout);

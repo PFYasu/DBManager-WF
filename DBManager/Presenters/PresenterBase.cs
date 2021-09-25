@@ -1,7 +1,4 @@
-﻿using DBManager.Dto;
-using DBManager.Utils;
-
-namespace DBManager.Presenters
+﻿namespace DBManager.Presenters
 {
     public abstract class PresenterBase
     {

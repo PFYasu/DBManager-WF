@@ -31,7 +31,6 @@ namespace DBManager.Views.Engines.MySql
                 var dto = PrepareDto();
 
                 var response = await _presenter.AddConnection(dto);
-
                 if (response.Type == ResponseType.Error)
                 {
                     _messageHelper.ShowError("Unable to add new connection.", response.Payload);

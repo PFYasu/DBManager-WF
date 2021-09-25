@@ -1,6 +1,4 @@
-﻿using DBManager.Utils;
-
-namespace DBManager.Presenters
+﻿namespace DBManager.Presenters
 {
     public class Response
     {

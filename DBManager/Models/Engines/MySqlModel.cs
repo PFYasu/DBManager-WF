@@ -36,7 +36,7 @@ namespace DBManager.Models.Engines
         {
             using var connection = new MySqlConnection(_connectionString);
             await connection.OpenAsync();
-
+            await connection.ChangeDatabaseAsync("information_schema");
             using var command = new MySqlCommand(query, connection);
             using var dataAdapter = new MySqlDataAdapter(command);
 
