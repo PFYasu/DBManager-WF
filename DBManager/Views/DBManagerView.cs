@@ -30,6 +30,7 @@ namespace DBManager.Views
 
             connectionTree.ImageList = GetImageList();
             statusStrip.ImageList = GetImageList();
+            statusStrip.BackColor = Color.FromArgb(64, 64, 64);
         }
 
         private void addConnection_Click(object sender, System.EventArgs e)
@@ -52,7 +53,6 @@ namespace DBManager.Views
                 return;
 
             var response = await _presenter.RemoveConnection(connectionName);
-
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to remove {connectionName} connection", response);
@@ -83,7 +83,6 @@ namespace DBManager.Views
                 return;
 
             var response = _presenter.GetPresenter(nodes.Connection.Text);
-
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection", response);
@@ -100,11 +99,11 @@ namespace DBManager.Views
                     await LoadDatabases(payload.Presenter);
                     break;
                 case TreeNodeMode.DatabaseSelected:
-                    form = new MySqlDatabaseView(payload.Presenter);
+                    form = new MySqlDatabaseView(payload.Presenter, nodes.Database.Text);
                     await LoadTables(payload.Presenter, nodes.Database.Text);
                     break;
                 case TreeNodeMode.TableSelected:
-                    form = new MySqlTableView(payload.Presenter);
+                    form = new MySqlTableView(payload.Presenter, nodes.Database.Text, nodes.Table.Text);
                     break;
                 default:
                     _messageHelper.ShowError("Unable to create view - incorrect engine type");
@@ -130,7 +129,6 @@ namespace DBManager.Views
         private void LoadConnections()
         {
             var response = _presenter.GetConnectionNames();
-
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to load connection list", response);
@@ -158,7 +156,6 @@ namespace DBManager.Views
         private async Task LoadDatabases(EnginePresenterBase presenter)
         {
             var response = await presenter.GetDatabaseNames();
-
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to get databases for {presenter.ConnectionName} connection", response);
@@ -186,7 +183,6 @@ namespace DBManager.Views
         private async Task LoadTables(EnginePresenterBase presenter, string databaseName)
         {
             var response = await presenter.GetTableNames(databaseName);
-
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to get databases for {presenter.ConnectionName} connection", response);
