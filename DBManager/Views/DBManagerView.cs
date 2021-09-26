@@ -30,7 +30,6 @@ namespace DBManager.Views
 
             connectionTree.ImageList = GetImageList();
             statusStrip.ImageList = GetImageList();
-            statusStrip.BackColor = Color.FromArgb(64, 64, 64);
         }
 
         private void addConnection_Click(object sender, System.EventArgs e)
