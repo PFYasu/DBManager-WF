@@ -29,8 +29,6 @@ namespace DBManager.Views.Engines.MySql
 
         public async Task Test()
         {
-            tableParametersLayout.SuspendLayout();
-
             var response = await _presenter.GetTableDetails(_databaseName, _tableName);
             if (response.Type == ResponseType.Error)
             {
@@ -40,28 +38,27 @@ namespace DBManager.Views.Engines.MySql
             
             var payload = response.Payload as TableDetailsResponseDto;
 
-            tableParametersLayout.RowCount += payload.ColumnsStructure.Count;
+            structure_tableParametersDataGridView.Rows.Clear();
 
             for (int i = 0; i < payload.ColumnsStructure.Count; i++)
             {
-                tableParametersLayout.Controls.Add(GetLabel((i + 1).ToString()), 0, i + 1); //Name = $"Name|{payload.TablesDetails[i].Name}", 
-                tableParametersLayout.Controls.Add(GetLabel(payload.ColumnsStructure[i].Name), 1, i + 1);
-                tableParametersLayout.Controls.Add(GetLabel(payload.ColumnsStructure[i].Type), 2, i + 1);
-                tableParametersLayout.Controls.Add(GetLabel(payload.ColumnsStructure[i].ComparingSubtitlesMethod), 3, i + 1);
+                structure_tableParametersDataGridView.Rows.Insert(
+                    i,
+                    i,
+                    payload.ColumnsStructure[i].Name,
+                    payload.ColumnsStructure[i].Type,
+                    payload.ColumnsStructure[i].ComparingSubtitlesMethod);
             }
 
             tableDataGridView.DataSource = payload.Table;
 
             browse_rowsCountLabel.Text = $"Elements: {payload.RowsCount}";
-            tableStructure_recordsCountLabel.Text = $"Elements: {payload.ColumnsCount}";
 
             statistics_createdAtLabel.Text = $"Created at: {payload.CreatedAt}";
             statistics_lastUpdateLabel.Text = $"Last update: {payload.LastUpdate}";
             statistics_sizeLabel.Text = $"Size (KB): {payload.Size}";
             statistics_columnsCountLabel.Text = $"Columns: {payload.ColumnsCount}";
-            statistics_recordsCountLabel.Text = $"Records: {payload.RowsCount}";
-
-            tableParametersLayout.ResumeLayout();
+            statistics_rowsCountLabel.Text = $"Records: {payload.RowsCount}";
         }
 
         public Label GetLabel(string text)
@@ -71,7 +68,7 @@ namespace DBManager.Views.Engines.MySql
                 Text = text,
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
                 TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.White
+                ForeColor = Color.Black
             };
         }
     }
