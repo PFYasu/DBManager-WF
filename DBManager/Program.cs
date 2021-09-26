@@ -1,4 +1,4 @@
-using DBManager.Models;
+﻿using DBManager.Models;
 using DBManager.Presenters;
 using DBManager.Views;
 using System;
@@ -12,7 +12,6 @@ namespace DBManager
         [STAThread]
         static async Task Main()
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

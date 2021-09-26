@@ -55,7 +55,17 @@ namespace DBManager.Models
         {
             _connections.Add(connection);
 
-            await File.WriteAllTextAsync(Constants.Paths.ConnectionData, JsonConvert.SerializeObject(_connections));
+            using (var fileStream = new FileStream(Constants.Paths.ConnectionData, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+            {
+                var streamReader = new StreamReader(fileStream);
+                using (var streamWriter = new StreamWriter(fileStream))
+                {
+                    var serializedList = JsonConvert.SerializeObject(_connections);
+
+                    fileStream.SetLength(0);
+                    await streamWriter.WriteAsync(serializedList);
+                }
+            }
         }
 
         public Connection GetConnection(string connectionName)
@@ -72,7 +82,17 @@ namespace DBManager.Models
             if (result != 1)
                 throw new InvalidOperationException("Removed more than one connection.");
 
-            await File.WriteAllTextAsync(Constants.Paths.ConnectionData, JsonConvert.SerializeObject(_connections));
+            using (var fileStream = new FileStream(Constants.Paths.ConnectionData, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+            {
+                var streamReader = new StreamReader(fileStream);
+                using (var streamWriter = new StreamWriter(fileStream))
+                {
+                    var serializedList = JsonConvert.SerializeObject(_connections);
+
+                    fileStream.SetLength(0);
+                    await streamWriter.WriteAsync(serializedList);
+                }
+            }
         }
     }
 }

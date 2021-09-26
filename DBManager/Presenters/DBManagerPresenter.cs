@@ -121,10 +121,10 @@ namespace DBManager.Presenters
                 Presenter = presenter
             };
 
-            if (_presenters.TryAdd(connectionName, presenter) == false)
-            {
+            if (_presenters.ContainsKey(connectionName) == true)
                 return Error($"Connection {connectionName} already exists in dictionary.");
-            }
+            else
+                _presenters.Add(connectionName, presenter);
 
             return Ok(dto);
         }
