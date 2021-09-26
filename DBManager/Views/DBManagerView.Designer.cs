@@ -57,9 +57,10 @@ namespace DBManager.Views
             this.activeConnection,
             this.activeDatabase,
             this.activeTable});
-            this.statusStrip.Location = new System.Drawing.Point(0, 439);
+            this.statusStrip.Location = new System.Drawing.Point(0, 378);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(684, 22);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
+            this.statusStrip.Size = new System.Drawing.Size(586, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -96,11 +97,11 @@ namespace DBManager.Views
             this.connectionServiceLayout.Controls.Add(this.setConnectionConfig, 0, 0);
             this.connectionServiceLayout.Controls.Add(this.removeConnection, 0, 0);
             this.connectionServiceLayout.Controls.Add(this.addConnection, 0, 0);
-            this.connectionServiceLayout.Location = new System.Drawing.Point(12, 12);
+            this.connectionServiceLayout.Location = new System.Drawing.Point(10, 10);
             this.connectionServiceLayout.Name = "connectionServiceLayout";
             this.connectionServiceLayout.RowCount = 1;
             this.connectionServiceLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.connectionServiceLayout.Size = new System.Drawing.Size(140, 42);
+            this.connectionServiceLayout.Size = new System.Drawing.Size(120, 36);
             this.connectionServiceLayout.TabIndex = 2;
             // 
             // setConnectionConfig
@@ -109,9 +110,9 @@ namespace DBManager.Views
             this.setConnectionConfig.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("setConnectionConfig.BackgroundImage")));
             this.setConnectionConfig.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.setConnectionConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.setConnectionConfig.Location = new System.Drawing.Point(95, 3);
+            this.setConnectionConfig.Location = new System.Drawing.Point(83, 3);
             this.setConnectionConfig.Name = "setConnectionConfig";
-            this.setConnectionConfig.Size = new System.Drawing.Size(42, 36);
+            this.setConnectionConfig.Size = new System.Drawing.Size(34, 30);
             this.setConnectionConfig.TabIndex = 2;
             this.setConnectionConfig.UseVisualStyleBackColor = false;
             this.setConnectionConfig.Click += new System.EventHandler(this.setConnectionConfig_Click);
@@ -122,9 +123,9 @@ namespace DBManager.Views
             this.removeConnection.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("removeConnection.BackgroundImage")));
             this.removeConnection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.removeConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.removeConnection.Location = new System.Drawing.Point(49, 3);
+            this.removeConnection.Location = new System.Drawing.Point(43, 3);
             this.removeConnection.Name = "removeConnection";
-            this.removeConnection.Size = new System.Drawing.Size(40, 36);
+            this.removeConnection.Size = new System.Drawing.Size(34, 30);
             this.removeConnection.TabIndex = 1;
             this.removeConnection.UseVisualStyleBackColor = false;
             this.removeConnection.Click += new System.EventHandler(this.removeConnection_Click);
@@ -137,7 +138,7 @@ namespace DBManager.Views
             this.addConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addConnection.Location = new System.Drawing.Point(3, 3);
             this.addConnection.Name = "addConnection";
-            this.addConnection.Size = new System.Drawing.Size(40, 36);
+            this.addConnection.Size = new System.Drawing.Size(34, 30);
             this.addConnection.TabIndex = 0;
             this.addConnection.UseVisualStyleBackColor = false;
             this.addConnection.Click += new System.EventHandler(this.addConnection_Click);
@@ -156,7 +157,7 @@ namespace DBManager.Views
             this.connectionsLayout.Name = "connectionsLayout";
             this.connectionsLayout.RowCount = 1;
             this.connectionsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.connectionsLayout.Size = new System.Drawing.Size(485, 365);
+            this.connectionsLayout.Size = new System.Drawing.Size(390, 315);
             this.connectionsLayout.TabIndex = 3;
             // 
             // connectionTree
@@ -166,11 +167,11 @@ namespace DBManager.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this.connectionTree.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.connectionTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.connectionTree.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.connectionTree.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.connectionTree.ForeColor = System.Drawing.Color.White;
             this.connectionTree.Location = new System.Drawing.Point(3, 3);
             this.connectionTree.Name = "connectionTree";
-            this.connectionTree.Size = new System.Drawing.Size(130, 365);
+            this.connectionTree.Size = new System.Drawing.Size(130, 315);
             this.connectionTree.TabIndex = 4;
             this.connectionTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.connectionTree_NodeMouseClick);
             // 
@@ -181,7 +182,7 @@ namespace DBManager.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this.connectionSplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.connectionSplitContainer.Cursor = System.Windows.Forms.Cursors.Default;
-            this.connectionSplitContainer.Location = new System.Drawing.Point(15, 61);
+            this.connectionSplitContainer.Location = new System.Drawing.Point(13, 53);
             this.connectionSplitContainer.Name = "connectionSplitContainer";
             // 
             // connectionSplitContainer.Panel1
@@ -192,21 +193,21 @@ namespace DBManager.Views
             // connectionSplitContainer.Panel2
             // 
             this.connectionSplitContainer.Panel2.Controls.Add(this.connectionsLayout);
-            this.connectionSplitContainer.Size = new System.Drawing.Size(657, 375);
+            this.connectionSplitContainer.Size = new System.Drawing.Size(563, 325);
             this.connectionSplitContainer.SplitterDistance = 140;
-            this.connectionSplitContainer.SplitterWidth = 10;
+            this.connectionSplitContainer.SplitterWidth = 9;
             this.connectionSplitContainer.TabIndex = 5;
             // 
             // DBManagerView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(684, 461);
+            this.ClientSize = new System.Drawing.Size(586, 400);
             this.Controls.Add(this.connectionSplitContainer);
             this.Controls.Add(this.connectionServiceLayout);
             this.Controls.Add(this.statusStrip);
-            this.MinimumSize = new System.Drawing.Size(700, 500);
+            this.MinimumSize = new System.Drawing.Size(602, 439);
             this.Name = "DBManagerView";
             this.Text = "DBManager";
             this.statusStrip.ResumeLayout(false);
