@@ -9,7 +9,8 @@ namespace DBManager.Models.Engines
         string Name { get; }
         EngineType Type { get; }
         Task<DataTable> ExecuteQuery(string query);
+        Task<DataTable> ExecuteQuery(string query, string databaseName);
         Task<int> ExecuteNonQuery(string query);
-        Task ChangeDatabase(string databaseName);
+        Task<int> ExecuteNonQuery(string query, string databaseName);
     }
 }
