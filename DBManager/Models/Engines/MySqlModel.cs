@@ -20,32 +20,52 @@ namespace DBManager.Models.Engines
         public string Name { get; }
         public EngineType Type { get; }
 
+        public async Task<DataTable> ExecuteQuery(string query)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var dataTable = StartExecuteQuery(connection, query);
+
+            await connection.CloseAsync();
+            return dataTable;
+        }
+
+        public async Task<DataTable> ExecuteQuery(string query, string databaseName)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            await connection.ChangeDatabaseAsync(databaseName);
+
+            var dataTable = StartExecuteQuery(connection, query);
+
+            await connection.CloseAsync();
+            return dataTable;
+        }
+
         public async Task<int> ExecuteNonQuery(string query)
         {
             using var connection = new MySqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            var command = new MySqlCommand(query, connection);
-            var affected = command.ExecuteNonQuery();
+            var affected = await StartExecuteNonQuery(connection, query);
 
             await connection.CloseAsync();
             return affected;
         }
 
-        public async Task<DataTable> ExecuteQuery(string query)
+        public async Task<int> ExecuteNonQuery(string query, string databaseName)
         {
             using var connection = new MySqlConnection(_connectionString);
             await connection.OpenAsync();
-            await connection.ChangeDatabaseAsync("information_schema");
-            using var command = new MySqlCommand(query, connection);
-            using var dataAdapter = new MySqlDataAdapter(command);
 
-            var dataTable = new DataTable();
+            await connection.ChangeDatabaseAsync(databaseName);
 
-            dataAdapter.Fill(dataTable);
+            var affected = await StartExecuteNonQuery(connection, query);
 
             await connection.CloseAsync();
-            return dataTable;
+            return affected;
         }
 
         public async Task ChangeDatabase(string databaseName)
@@ -53,9 +73,27 @@ namespace DBManager.Models.Engines
             using var connection = new MySqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            await connection.ChangeDatabaseAsync(databaseName);
-
             await connection.CloseAsync();
+        }
+
+        private DataTable StartExecuteQuery(MySqlConnection connection, string query)
+        {
+            using var command = new MySqlCommand(query, connection);
+            using var dataAdapter = new MySqlDataAdapter(command);
+
+            var dataTable = new DataTable();
+
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+        private async Task<int> StartExecuteNonQuery(MySqlConnection connection, string query)
+        {
+            var command = new MySqlCommand(query, connection);
+            var affected = await command.ExecuteNonQueryAsync();
+
+            return affected;
         }
     }
 }

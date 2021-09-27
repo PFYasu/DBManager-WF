@@ -49,14 +49,13 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetTable(string databaseName, string tableName)
         {
-            string query = $"SELECT * FROM {databaseName}.{tableName};";
+            string query = $"SELECT * FROM {tableName};";
 
             DataTable result;
 
             try
             {
-                await _model.ChangeDatabase(databaseName);
-                result = await _model.ExecuteQuery(query);
+                result = await _model.ExecuteQuery(query, databaseName);
             }
             catch (Exception exception)
             {
@@ -70,14 +69,13 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetTableNames(string databaseName)
         {
-            string query = $"SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = '{databaseName}';";
+            string query = $"SELECT TABLE_NAME FROM TABLES WHERE TABLE_SCHEMA = '{databaseName}';";
 
             DataTable result;
 
             try
             {
-                await _model.ChangeDatabase(databaseName);
-                result = await _model.ExecuteQuery(query);
+                result = await _model.ExecuteQuery(query, "information_schema");
             }
             catch (Exception exception)
             {
@@ -99,8 +97,7 @@ namespace DBManager.Presenters.Engines
 
             try
             {
-                await _model.ChangeDatabase(databaseName);
-                result = await _model.ExecuteQuery(query);
+                result = await _model.ExecuteQuery(query, databaseName);
             }
             catch (Exception exception)
             {
@@ -133,8 +130,8 @@ namespace DBManager.Presenters.Engines
 
             try
             {
-                tableQueryResult = await _model.ExecuteQuery(tableQuery);
-                columnsQueryResult = await _model.ExecuteQuery(columnsQuery);
+                tableQueryResult = await _model.ExecuteQuery(tableQuery, "information_schema");
+                columnsQueryResult = await _model.ExecuteQuery(columnsQuery, "information_schema");
             }
             catch (Exception exception)
             {
