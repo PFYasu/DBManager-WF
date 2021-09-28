@@ -12,9 +12,9 @@ namespace DBManager.Presenters.Engines
     public class MySqlPresenter : EnginePresenterBase
     {
         private readonly IEngineModel _model;
-        private readonly DBManagerPresenterDatabaseOperationBase _dbManagerPresenter;
+        private readonly DBManagerPresenterBase _dbManagerPresenter;
 
-        public MySqlPresenter(IEngineModel model, DBManagerPresenterDatabaseOperationBase dbManagerPresenter)
+        public MySqlPresenter(IEngineModel model, DBManagerPresenterBase dbManagerPresenter)
         {
             _model = model;
             _dbManagerPresenter = dbManagerPresenter;

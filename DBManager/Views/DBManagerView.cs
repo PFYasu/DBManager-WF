@@ -45,7 +45,12 @@ namespace DBManager.Views
             if (connectionTree.SelectedNode == null)
                 return;
 
-            string connectionName = connectionTree.SelectedNode.Text;
+            var nodes = TreeNodeHelper.GetElements(connectionTree.SelectedNode);
+
+            if (nodes.Mode == TreeNodeMode.NotSupported)
+                return;
+
+            string connectionName = nodes.Connection.Text;
             var status = _messageHelper.ShowQuestion($"Are you sure you want to delete the {connectionName} connection?");
 
             if (status == DialogResult.No)
@@ -79,7 +84,10 @@ namespace DBManager.Views
             var nodes = TreeNodeHelper.GetElements(e.Node);
 
             if (nodes.Mode == TreeNodeMode.NotSupported)
+            {
+                removeConnection.Enabled = false;
                 return;
+            }
 
             var response = _presenter.GetPresenter(nodes.Connection.Text);
             if (response.Type == ResponseType.Error)
@@ -108,6 +116,8 @@ namespace DBManager.Views
                     _messageHelper.ShowError("Unable to create view - incorrect engine type");
                     return;
             }
+
+            removeConnection.Enabled = true;
 
             UpdateStatusStrip(nodes);
 
