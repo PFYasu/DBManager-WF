@@ -97,6 +97,7 @@
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\EngineType.cs" />
     <Compile Include="Utils\ModelExtensions.cs" />
+    <Compile Include="Utils\QueryHelper.cs" />
     <Compile Include="Views\ConnectorSelectorView.cs">
       <SubType>Form</SubType>
     </Compile>

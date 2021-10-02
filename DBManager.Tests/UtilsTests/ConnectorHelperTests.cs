@@ -17,14 +17,22 @@ namespace DBManager.Tests.UtilsTests
                 { "Password", "pwd123" }
             };
 
-            var results = ConnectorHelper.Combine(parameters);
+            var result = Act(parameters);
 
-            Assert.NotNull(results);
-            Assert.NotEmpty(results);
-            Assert.Contains("Url=localhost;", results);
-            Assert.Contains("Port=3306;", results);
-            Assert.Contains("Uid=user;", results);
-            Assert.Contains("Password=pwd123;", results);
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Contains("Url=localhost;", result);
+            Assert.Contains("Port=3306;", result);
+            Assert.Contains("Uid=user;", result);
+            Assert.Contains("Password=pwd123;", result);
+        }
+
+        
+        public string Act(Dictionary<string, string> parameters)
+        {
+            var result = ConnectorHelper.Combine(parameters);
+
+            return result;
         }
     }
 }
