@@ -7,11 +7,11 @@ namespace DBManager.Dto.Engines
     public class TableDetailsResponseDto
     {
         public DataTable Table { get; set; }
-        public int RowsCount { get; set; }
-        public int ColumnsCount { get; set; }
+        public int? RowsCount { get; set; }
+        public int? ColumnsCount { get; set; }
         public List<ColumnsStructure> ColumnsStructure { get; set; }
-        public decimal Size { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public decimal? Size { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public DateTime? LastUpdate { get; set; }
 
         public TableDetailsResponseDto()

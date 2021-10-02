@@ -327,6 +327,7 @@ namespace DBManager.Views.Engines.MySql
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MySqlTableView";
             this.Text = "MySqlTableView";
+            this.Load += new System.EventHandler(this.MySqlTableView_Load);
             this.tableView.ResumeLayout(false);
             this.browse.ResumeLayout(false);
             this.browse.PerformLayout();
