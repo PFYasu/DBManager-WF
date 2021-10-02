@@ -69,7 +69,11 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetTableNames(string databaseName)
         {
-            string query = $"SELECT TABLE_NAME FROM TABLES WHERE TABLE_SCHEMA = '{databaseName}';";
+            string query = 
+                $"SELECT " +
+                    $"TABLE_NAME " +
+                $"FROM TABLES " +
+                $"WHERE TABLE_SCHEMA = '{databaseName}';";
 
             DataTable result;
 
@@ -111,7 +115,12 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetTableDetails(string databaseName, string tableName)
         {
-            string tableQuery = $"SELECT TABLE_NAME, CREATE_TIME, UPDATE_TIME, ROUND(SUM(data_length + index_length) / 1024, 1) AS 'SIZE' " +
+            string tableQuery = 
+                $"SELECT " +
+                    $"TABLE_NAME, " +
+                    $"CREATE_TIME, " +
+                    $"UPDATE_TIME, " +
+                    $"ROUND(SUM(data_length + index_length) / 1024, 1) AS 'SIZE' " +
                 $"FROM TABLES " +
                 $"WHERE TABLE_SCHEMA = '{databaseName}' AND TABLE_NAME = '{tableName}';";
 
@@ -126,7 +135,7 @@ namespace DBManager.Presenters.Engines
 
             tableQueryResponse = await GetTable(databaseName, tableName);
             if (tableQueryResponse.Type == ResponseType.Error)
-                return Error(tableQueryResponse.Payload as string);
+                return Error(tableQueryResponse.Payload);
 
             try
             {
@@ -142,17 +151,17 @@ namespace DBManager.Presenters.Engines
 
             var rowsCount = tableQueryPayload.Table.Rows.Count;
             var columnsCount = columnsQueryResult.Rows.Count;
-            var createdAt = tableQueryResult.Rows[0].Field<DateTime>("CREATE_TIME");
-            var lastUpdate = tableQueryResult.Rows[0].Field<DateTime?>("UPDATE_TIME");
-            var size = tableQueryResult.Rows[0].Field<decimal>("SIZE");
+            var createdAt = tableQueryResult.Rows[0].TryConvertTo<DateTime>("CREATE_TIME");
+            var lastUpdate = tableQueryResult.Rows[0].TryConvertTo<DateTime?>("UPDATE_TIME");
+            var size = tableQueryResult.Rows[0].TryConvertTo<decimal>("SIZE");
 
             var columnsStructure = new List<ColumnsStructure>();
 
             foreach (DataRow row in columnsQueryResult.Rows)
             {
-                var name = row.Field<string>("COLUMN_NAME");
-                var type = row.Field<string>("DATA_TYPE");
-                var comparingSubtitlesMethod = row.Field<string>("COLLATION_NAME");
+                var name = row.TryConvertTo<string>("COLUMN_NAME");
+                var type = row.TryConvertTo<string>("DATA_TYPE");
+                var comparingSubtitlesMethod = row.TryConvertTo<string>("COLLATION_NAME");
 
                 var columnStructure = new ColumnsStructure
                 {
@@ -173,6 +182,61 @@ namespace DBManager.Presenters.Engines
                 Size = size,
                 CreatedAt = createdAt,
                 LastUpdate = lastUpdate
+            };
+
+            return Ok(dto);
+        }
+
+        public override async Task<Response> GetDatabaseDetails(string databaseName)
+        {
+            string query = 
+                $"SELECT " +
+                    $"TABLE_NAME, " +
+                    $"TABLE_TYPE, " +
+                    $"ROUND(SUM(DATA_LENGTH + INDEX_LENGTH) / 1024, 1) AS 'SIZE', " +
+                    $"TABLE_ROWS, " +
+                    $"TABLE_COLLATION " +
+                $"FROM TABLES " +
+                $"WHERE TABLE_SCHEMA = '{databaseName}' " +
+                $"GROUP BY TABLE_NAME;";
+
+            DataTable result;
+
+            try
+            {
+                result = await _model.ExecuteQuery(query, "information_schema");
+            }
+            catch (Exception exception)
+            {
+                return Error(exception.Message);
+            }
+
+            var tablesStructure = new List<TablesStructure>();
+
+            foreach (DataRow row in result.Rows)
+            {
+                var name = row.TryConvertTo<string>("TABLE_NAME");
+                var type = row.TryConvertTo<string>("TABLE_TYPE");
+                var records = row.TryConvertTo<UInt64?>("TABLE_ROWS");
+                var size = row.TryConvertTo<decimal?>("SIZE");
+                var comparingSubtitlesMethod = row.TryConvertTo<string>("TABLE_COLLATION");
+
+                var columnStructure = new TablesStructure
+                {
+                    Name = name,
+                    Type = type,
+                    Records = records,
+                    Size = size,
+                    ComparingSubtitlesMethod = comparingSubtitlesMethod
+                };
+
+                tablesStructure.Add(columnStructure);
+            }
+
+            var dto = new DatabaseDetailsResponseDto
+            {
+                TablesCount = tablesStructure.Count,
+                TablesStructure = tablesStructure
             };
 
             return Ok(dto);

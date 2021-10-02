@@ -23,11 +23,9 @@ namespace DBManager.Views.Engines.MySql
             _messageHelper = new MessageHelper("DBManager - table view");
 
             InitializeComponent();
-
-            Test();
         }
 
-        public async Task Test()
+        public async Task InitializeView()
         {
             var response = await _presenter.GetTableDetails(_databaseName, _tableName);
             if (response.Type == ResponseType.Error)
@@ -59,6 +57,11 @@ namespace DBManager.Views.Engines.MySql
             statistics_sizeLabel.Text = $"Size (KB): {payload.Size}";
             statistics_columnsCountLabel.Text = $"Columns: {payload.ColumnsCount}";
             statistics_rowsCountLabel.Text = $"Records: {payload.RowsCount}";
+        }
+
+        private async void MySqlTableView_Load(object sender, System.EventArgs e)
+        {
+            await InitializeView();
         }
 
         public Label GetLabel(string text)
