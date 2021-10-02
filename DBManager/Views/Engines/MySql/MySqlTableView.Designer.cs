@@ -35,6 +35,7 @@ namespace DBManager.Views.Engines.MySql
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableView = new System.Windows.Forms.TabControl();
             this.browse = new System.Windows.Forms.TabPage();
             this.tableDataGridView = new System.Windows.Forms.DataGridView();
@@ -90,29 +91,36 @@ namespace DBManager.Views.Engines.MySql
             // 
             this.tableDataGridView.AllowUserToAddRows = false;
             this.tableDataGridView.AllowUserToDeleteRows = false;
+            this.tableDataGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.tableDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.tableDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.tableDataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.tableDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.tableDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.tableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.tableDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.tableDataGridView.EnableHeadersVisualStyles = false;
+            this.tableDataGridView.GridColor = System.Drawing.Color.Silver;
             this.tableDataGridView.Location = new System.Drawing.Point(0, 33);
             this.tableDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.tableDataGridView.Name = "tableDataGridView";
@@ -127,6 +135,7 @@ namespace DBManager.Views.Engines.MySql
             this.tableDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.tableDataGridView.RowHeadersVisible = false;
             this.tableDataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.tableDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tableDataGridView.Size = new System.Drawing.Size(678, 335);
             this.tableDataGridView.TabIndex = 6;
             // 
@@ -177,7 +186,6 @@ namespace DBManager.Views.Engines.MySql
             // 
             this.structure_tableParametersDataGridView.AllowUserToAddRows = false;
             this.structure_tableParametersDataGridView.AllowUserToDeleteRows = false;
-            this.structure_tableParametersDataGridView.AllowUserToResizeColumns = false;
             this.structure_tableParametersDataGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
             this.structure_tableParametersDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
@@ -186,11 +194,14 @@ namespace DBManager.Views.Engines.MySql
             | System.Windows.Forms.AnchorStyles.Right)));
             this.structure_tableParametersDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.structure_tableParametersDataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.structure_tableParametersDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.structure_tableParametersDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.structure_tableParametersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
@@ -200,12 +211,23 @@ namespace DBManager.Views.Engines.MySql
             this.structure_Name,
             this.structure_Type,
             this.structure_comparingSubtitlesMethod});
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.structure_tableParametersDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
+            this.structure_tableParametersDataGridView.EnableHeadersVisualStyles = false;
+            this.structure_tableParametersDataGridView.GridColor = System.Drawing.Color.Silver;
             this.structure_tableParametersDataGridView.Location = new System.Drawing.Point(0, 137);
             this.structure_tableParametersDataGridView.Name = "structure_tableParametersDataGridView";
             this.structure_tableParametersDataGridView.ReadOnly = true;
             this.structure_tableParametersDataGridView.RowHeadersVisible = false;
             this.structure_tableParametersDataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-            this.structure_tableParametersDataGridView.Size = new System.Drawing.Size(682, 231);
+            this.structure_tableParametersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.structure_tableParametersDataGridView.Size = new System.Drawing.Size(678, 231);
             this.structure_tableParametersDataGridView.TabIndex = 16;
             // 
             // structure_columnNumber

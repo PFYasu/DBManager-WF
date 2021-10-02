@@ -166,7 +166,7 @@ namespace DBManager.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this.connectionTree.BackColor = System.Drawing.Color.White;
             this.connectionTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.connectionTree.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.connectionTree.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.connectionTree.ForeColor = System.Drawing.Color.Black;
             this.connectionTree.Indent = 8;
             this.connectionTree.Location = new System.Drawing.Point(3, 3);

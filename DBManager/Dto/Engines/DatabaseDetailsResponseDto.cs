@@ -6,15 +6,15 @@ namespace DBManager.Dto.Engines
     public class DatabaseDetailsResponseDto
     {
         public int TablesCount { get; set; }
-        public List<TablesStructure> TablesStructure { get; set; }
+        public List<TableStructure> TablesStructure { get; set; }
 
         public DatabaseDetailsResponseDto()
         {
-            TablesStructure = new List<TablesStructure>();
+            TablesStructure = new List<TableStructure>();
         }
     }
 
-    public class TablesStructure
+    public class TableStructure
     {
         public string Name { get; set; }
         public string Type { get; set; }

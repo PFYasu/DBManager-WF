@@ -36,15 +36,13 @@ namespace DBManager.Presenters
             if (names.Contains(dto.Name))
                 return Error($"Connection with {dto.Name} already exists");
 
-            var parameters = dto.ConnectionParameters;
-
-            string connectionString = ConnectorHelper.Combine(parameters);
+            var connectionParameters = dto.ConnectionParameters;
 
             var connection = new Connection
             {
                 Name = dto.Name,
                 Type = dto.Type,
-                ConnectionString = connectionString
+                ConnectionParameters = connectionParameters
             };
 
             try
