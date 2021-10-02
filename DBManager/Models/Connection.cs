@@ -1,4 +1,5 @@
 ﻿using DBManager.Utils;
+using System.Collections.Generic;
 
 namespace DBManager.Models
 {
@@ -6,6 +7,11 @@ namespace DBManager.Models
     {
         public string Name { get; set; }
         public EngineType Type { get; set; }
-        public string ConnectionString { get; set; }
+        public Dictionary<string, string> ConnectionParameters { get; set; }
+
+        public Connection()
+        {
+            ConnectionParameters = new Dictionary<string, string>();
+        }
     }
 }

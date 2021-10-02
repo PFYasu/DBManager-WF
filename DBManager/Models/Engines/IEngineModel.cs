@@ -1,4 +1,5 @@
 ﻿using DBManager.Utils;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace DBManager.Models.Engines
     {
         string Name { get; }
         EngineType Type { get; }
+        Dictionary<string, string> ConnectionParameters { get; }
         Task<DataTable> ExecuteQuery(string query);
         Task<DataTable> ExecuteQuery(string query, string databaseName);
         Task<int> ExecuteNonQuery(string query);

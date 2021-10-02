@@ -22,7 +22,7 @@ namespace DBManager.Views.Engines.MySql
             InitializeComponent();
         }
 
-        private async void MySqlDatabaseView_Shown(object sender, System.EventArgs e)
+        private async void MySqlDatabaseView_Load(object sender, System.EventArgs e)
         {
             await InitializeView();
         }

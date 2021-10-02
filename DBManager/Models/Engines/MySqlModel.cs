@@ -1,5 +1,6 @@
 ﻿using DBManager.Utils;
 using MySqlConnector;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -11,14 +12,17 @@ namespace DBManager.Models.Engines
 
         public MySqlModel(Connection connection)
         {
-            _connectionString = connection.ConnectionString;
+            var connectionParameters = connection.ConnectionParameters;
+            _connectionString = ConnectorHelper.Combine(connectionParameters);
 
             Name = connection.Name;
             Type = connection.Type;
+            ConnectionParameters = connectionParameters;
         }
 
         public string Name { get; }
         public EngineType Type { get; }
+        public Dictionary<string, string> ConnectionParameters { get; }
 
         public async Task<DataTable> ExecuteQuery(string query)
         {

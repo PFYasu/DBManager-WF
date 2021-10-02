@@ -149,13 +149,14 @@ namespace DBManager.Presenters.Engines
 
             var tableQueryPayload = tableQueryResponse.Payload as TableResponseDto;
 
+            var table = tableQueryPayload.Table;
             var rowsCount = tableQueryPayload.Table.Rows.Count;
             var columnsCount = columnsQueryResult.Rows.Count;
             var createdAt = tableQueryResult.Rows[0].TryConvertTo<DateTime>("CREATE_TIME");
             var lastUpdate = tableQueryResult.Rows[0].TryConvertTo<DateTime?>("UPDATE_TIME");
             var size = tableQueryResult.Rows[0].TryConvertTo<decimal>("SIZE");
 
-            var columnsStructure = new List<ColumnsStructure>();
+            var columnsStructure = new List<ColumnStructure>();
 
             foreach (DataRow row in columnsQueryResult.Rows)
             {
@@ -163,7 +164,7 @@ namespace DBManager.Presenters.Engines
                 var type = row.TryConvertTo<string>("DATA_TYPE");
                 var comparingSubtitlesMethod = row.TryConvertTo<string>("COLLATION_NAME");
 
-                var columnStructure = new ColumnsStructure
+                var columnStructure = new ColumnStructure
                 {
                     Name = name,
                     Type = type,
@@ -175,7 +176,7 @@ namespace DBManager.Presenters.Engines
 
             var dto = new TableDetailsResponseDto
             {
-                Table = tableQueryPayload.Table,
+                Table = table,
                 RowsCount = rowsCount,
                 ColumnsCount = columnsCount,
                 ColumnsStructure = columnsStructure,
@@ -211,7 +212,7 @@ namespace DBManager.Presenters.Engines
                 return Error(exception.Message);
             }
 
-            var tablesStructure = new List<TablesStructure>();
+            var tablesStructure = new List<TableStructure>();
 
             foreach (DataRow row in result.Rows)
             {
@@ -221,7 +222,7 @@ namespace DBManager.Presenters.Engines
                 var size = row.TryConvertTo<decimal?>("SIZE");
                 var comparingSubtitlesMethod = row.TryConvertTo<string>("TABLE_COLLATION");
 
-                var columnStructure = new TablesStructure
+                var columnStructure = new TableStructure
                 {
                     Name = name,
                     Type = type,
@@ -237,6 +238,56 @@ namespace DBManager.Presenters.Engines
             {
                 TablesCount = tablesStructure.Count,
                 TablesStructure = tablesStructure
+            };
+
+            return Ok(dto);
+        }
+
+        public override async Task<Response> GetConnectionDetails()
+        {
+            string query = "SHOW DATABASES;";
+
+            DataTable result;
+
+            try
+            {
+                result = await _model.ExecuteQuery(query);
+            }
+            catch (Exception exception)
+            {
+                return Error(exception.Message);
+            }
+
+            var name = _model.Name;
+            var type = _model.Type;
+
+            var connectionParameters = _model.ConnectionParameters;
+            var uid = connectionParameters["Uid"];
+            var server = connectionParameters["Server"];
+            var port = int.Parse(connectionParameters["Port"]);
+
+            var databasesCount = result.Rows.Count;
+
+            var databasesStructure = new List<DatabaseStructure>();
+
+            foreach (DataRow row in result.Rows)
+            {
+                var databaseName = row.TryConvertTo<string>("Database");
+
+                var databaseStructure = new DatabaseStructure { Name = databaseName };
+
+                databasesStructure.Add(databaseStructure);
+            }
+
+            var dto = new ConnectionDetailsResponseDto()
+            {
+                Name = name,
+                Type = type,
+                Uid = uid,
+                Server = server,
+                Port = port,
+                DatabasesCount = databasesCount,
+                DatabasesStructure = databasesStructure
             };
 
             return Ok(dto);
