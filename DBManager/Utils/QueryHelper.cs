@@ -21,10 +21,4 @@ namespace DBManager.Utils
             return QueryType.NonQuery;
         }
     }
-
-    public enum QueryType
-    {
-        Query,
-        NonQuery
-    }
 }

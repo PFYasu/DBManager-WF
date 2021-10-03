@@ -5,6 +5,7 @@ using DBManager.Presenters.Engines;
 using DBManager.Utils;
 using DBManager.Views.Engines.MySql;
 using DBManager.Views.Helpers;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -32,7 +33,7 @@ namespace DBManager.Views
             statusStrip.ImageList = GetImageList();
         }
 
-        private void addConnection_Click(object sender, System.EventArgs e)
+        private void addConnection_Click(object sender, EventArgs e)
         {
             using var form = new ConnectorSelectorView(_presenter);
             form.ShowDialog();
@@ -40,7 +41,7 @@ namespace DBManager.Views
             LoadConnections();
         }
 
-        private async void removeConnection_Click(object sender, System.EventArgs e)
+        private async void removeConnection_Click(object sender, EventArgs e)
         {
             if (connectionTree.SelectedNode == null)
                 return;
@@ -74,7 +75,7 @@ namespace DBManager.Views
             LoadConnections();
         }
 
-        private void setConnectionConfig_Click(object sender, System.EventArgs e)
+        private void setConnectionConfig_Click(object sender, EventArgs e)
         {
 
         }

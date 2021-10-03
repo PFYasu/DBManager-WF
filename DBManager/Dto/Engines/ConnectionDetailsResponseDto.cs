@@ -1,6 +1,5 @@
 ﻿using DBManager.Utils;
 using System.Collections.Generic;
-using System.Data;
 
 namespace DBManager.Dto.Engines
 {

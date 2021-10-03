@@ -17,9 +17,9 @@ namespace DBManager.Tests.UtilsTests
 
             Assert.Equal(QueryType.Query, result);
         }
-        
+
         [Theory]
-        [InlineData("UPDATE employees SET salary = 3000 WHERE salary < 2500;")]       
+        [InlineData("UPDATE employees SET salary = 3000 WHERE salary < 2500;")]
         [InlineData("UPDATE employees SET selection = 2 WHERE selection = 1;")]
         [InlineData("Update selectTable set fromColumn = 'test' WHERE fromColumn = 'otherTest';")]
         public void ForNonQuery_WithUpdateStatement_ReturnsNonQueryType(string query)
@@ -48,7 +48,7 @@ namespace DBManager.Tests.UtilsTests
 
             Assert.Equal(QueryType.NonQuery, result);
         }
-        
+
 
         public QueryType Act(string query)
         {
