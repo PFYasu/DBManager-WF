@@ -2,6 +2,7 @@
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Views.Helpers;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,9 +23,22 @@ namespace DBManager.Views.Engines.MySql
             InitializeComponent();
         }
 
-        private async void MySqlDatabaseView_Load(object sender, System.EventArgs e)
+        private async void MySqlDatabaseView_Load(object sender, EventArgs e)
         {
             await InitializeView();
+        }
+
+        private void query_Enter(object sender, EventArgs e)
+        {
+            if (query.Controls.Count != 0)
+                return;
+
+            var queryView = new QueryView(_presenter, _databaseName)
+            {
+                Dock = DockStyle.Fill
+            };
+
+            query.Controls.Add(queryView);
         }
 
         public async Task InitializeView()
@@ -53,6 +67,7 @@ namespace DBManager.Views.Engines.MySql
             }
 
             structure_tablesCountLabel.Text = $"Tables: {payload.TablesCount}";
+            structure_databaseNameLabel.Text = $"Name: {_databaseName}";
         }
     }
 }

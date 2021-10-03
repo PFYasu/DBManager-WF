@@ -27,7 +27,7 @@ namespace DBManager.Tests.UtilsTests
             Assert.Contains("Password=pwd123;", result);
         }
 
-        
+
         public string Act(Dictionary<string, string> parameters)
         {
             var result = ConnectorHelper.Combine(parameters);

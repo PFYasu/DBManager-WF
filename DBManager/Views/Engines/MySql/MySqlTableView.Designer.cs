@@ -54,6 +54,8 @@ namespace DBManager.Views.Engines.MySql
             this.statistics_sizeLabel = new System.Windows.Forms.Label();
             this.statistics_statisticsLabel = new System.Windows.Forms.Label();
             this.tableStructure_tableStructureLabel = new System.Windows.Forms.Label();
+            this.browse_tableNameLabel = new System.Windows.Forms.Label();
+            this.statistics_tableNameLabel = new System.Windows.Forms.Label();
             this.tableView.SuspendLayout();
             this.browse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableDataGridView)).BeginInit();
@@ -77,6 +79,7 @@ namespace DBManager.Views.Engines.MySql
             // browse
             // 
             this.browse.BackColor = System.Drawing.Color.White;
+            this.browse.Controls.Add(this.browse_tableNameLabel);
             this.browse.Controls.Add(this.tableDataGridView);
             this.browse.Controls.Add(this.browse_rowsCountLabel);
             this.browse.Controls.Add(this.browse_browseLabel);
@@ -166,6 +169,7 @@ namespace DBManager.Views.Engines.MySql
             // structure
             // 
             this.structure.BackColor = System.Drawing.Color.White;
+            this.structure.Controls.Add(this.statistics_tableNameLabel);
             this.structure.Controls.Add(this.structure_tableParametersDataGridView);
             this.structure.Controls.Add(this.statistics_columnsCountLabel);
             this.structure.Controls.Add(this.statistics_rowsCountLabel);
@@ -338,6 +342,30 @@ namespace DBManager.Views.Engines.MySql
             this.tableStructure_tableStructureLabel.TabIndex = 2;
             this.tableStructure_tableStructureLabel.Text = "Table structure";
             // 
+            // browse_tableNameLabel
+            // 
+            this.browse_tableNameLabel.AutoSize = true;
+            this.browse_tableNameLabel.BackColor = System.Drawing.Color.White;
+            this.browse_tableNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.browse_tableNameLabel.ForeColor = System.Drawing.Color.Black;
+            this.browse_tableNameLabel.Location = new System.Drawing.Point(248, 9);
+            this.browse_tableNameLabel.Name = "browse_tableNameLabel";
+            this.browse_tableNameLabel.Size = new System.Drawing.Size(64, 21);
+            this.browse_tableNameLabel.TabIndex = 21;
+            this.browse_tableNameLabel.Text = "Name: ";
+            // 
+            // statistics_tableNameLabel
+            // 
+            this.statistics_tableNameLabel.AutoSize = true;
+            this.statistics_tableNameLabel.BackColor = System.Drawing.Color.White;
+            this.statistics_tableNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.statistics_tableNameLabel.ForeColor = System.Drawing.Color.Black;
+            this.statistics_tableNameLabel.Location = new System.Drawing.Point(113, 10);
+            this.statistics_tableNameLabel.Name = "statistics_tableNameLabel";
+            this.statistics_tableNameLabel.Size = new System.Drawing.Size(64, 21);
+            this.statistics_tableNameLabel.TabIndex = 21;
+            this.statistics_tableNameLabel.Text = "Name: ";
+            // 
             // MySqlTableView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -380,5 +408,7 @@ namespace DBManager.Views.Engines.MySql
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_comparingSubtitlesMethod;
+        private System.Windows.Forms.Label browse_tableNameLabel;
+        private System.Windows.Forms.Label statistics_tableNameLabel;
     }
 }

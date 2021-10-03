@@ -69,7 +69,7 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetTableNames(string databaseName)
         {
-            string query = 
+            string query =
                 $"SELECT " +
                     $"TABLE_NAME " +
                 $"FROM TABLES " +
@@ -97,25 +97,44 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> SendQuery(string databaseName, string query)
         {
-            DataTable result;
+            var queryType = QueryHelper.GetQueryType(query);
+
+            var result = new DataTable();
 
             try
             {
-                result = await _model.ExecuteQuery(query, databaseName);
+                switch (queryType)
+                {
+                    case QueryType.Query:
+                        var executeQueryResult = await _model.ExecuteQuery(query, databaseName);
+                        result = executeQueryResult;
+                        break;
+                    case QueryType.NonQuery:
+                        var executeNonQueryResult = await _model.ExecuteNonQuery(query, databaseName);
+                        result.Columns.Add("AFFECTED ROWS");
+                        result.Rows.Add(executeNonQueryResult);
+                        break;
+                    default:
+                        return Error("Invalid query type.");
+                }
             }
             catch (Exception exception)
             {
                 return Error(exception.Message);
             }
 
-            var dto = new ExecuteQueryResponseDto { DataTable = result };
+            var dto = new QueryResponseDto
+            {
+                Type = queryType,
+                Table = result
+            };
 
             return Ok(dto);
         }
 
         public override async Task<Response> GetTableDetails(string databaseName, string tableName)
         {
-            string tableQuery = 
+            string tableQuery =
                 $"SELECT " +
                     $"TABLE_NAME, " +
                     $"CREATE_TIME, " +
@@ -190,7 +209,7 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetDatabaseDetails(string databaseName)
         {
-            string query = 
+            string query =
                 $"SELECT " +
                     $"TABLE_NAME, " +
                     $"TABLE_TYPE, " +

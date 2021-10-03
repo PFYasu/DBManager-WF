@@ -43,6 +43,8 @@ namespace DBManager.Views.Engines.MySql
             this.structure = new System.Windows.Forms.TabPage();
             this.structure_tablesCountLabel = new System.Windows.Forms.Label();
             this.databaseView = new System.Windows.Forms.TabControl();
+            this.query = new System.Windows.Forms.TabPage();
+            this.structure_databaseNameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.structure_databaseParametersDataGridView)).BeginInit();
             this.structure.SuspendLayout();
             this.databaseView.SuspendLayout();
@@ -149,6 +151,7 @@ namespace DBManager.Views.Engines.MySql
             // structure
             // 
             this.structure.BackColor = System.Drawing.Color.White;
+            this.structure.Controls.Add(this.structure_databaseNameLabel);
             this.structure.Controls.Add(this.structure_tablesCountLabel);
             this.structure.Controls.Add(this.structure_databaseParametersDataGridView);
             this.structure.Controls.Add(this.databaseStructure_databaseStructureLabel);
@@ -175,6 +178,7 @@ namespace DBManager.Views.Engines.MySql
             // databaseView
             // 
             this.databaseView.Controls.Add(this.structure);
+            this.databaseView.Controls.Add(this.query);
             this.databaseView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.databaseView.Location = new System.Drawing.Point(0, 0);
             this.databaseView.Margin = new System.Windows.Forms.Padding(0);
@@ -183,6 +187,28 @@ namespace DBManager.Views.Engines.MySql
             this.databaseView.SelectedIndex = 0;
             this.databaseView.Size = new System.Drawing.Size(699, 390);
             this.databaseView.TabIndex = 4;
+            // 
+            // query
+            // 
+            this.query.Location = new System.Drawing.Point(4, 22);
+            this.query.Name = "query";
+            this.query.Size = new System.Drawing.Size(691, 364);
+            this.query.TabIndex = 2;
+            this.query.Text = "Query";
+            this.query.UseVisualStyleBackColor = true;
+            this.query.Enter += new System.EventHandler(this.query_Enter);
+            // 
+            // structure_databaseNameLabel
+            // 
+            this.structure_databaseNameLabel.AutoSize = true;
+            this.structure_databaseNameLabel.BackColor = System.Drawing.Color.White;
+            this.structure_databaseNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.structure_databaseNameLabel.ForeColor = System.Drawing.Color.Black;
+            this.structure_databaseNameLabel.Location = new System.Drawing.Point(294, 10);
+            this.structure_databaseNameLabel.Name = "structure_databaseNameLabel";
+            this.structure_databaseNameLabel.Size = new System.Drawing.Size(64, 21);
+            this.structure_databaseNameLabel.TabIndex = 21;
+            this.structure_databaseNameLabel.Text = "Name: ";
             // 
             // MySqlDatabaseView
             // 
@@ -215,5 +241,7 @@ namespace DBManager.Views.Engines.MySql
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_Records;
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_size;
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_comparingSubtitlesMethod;
+        private System.Windows.Forms.TabPage query;
+        private System.Windows.Forms.Label structure_databaseNameLabel;
     }
 }

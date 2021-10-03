@@ -2,6 +2,7 @@
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Views.Helpers;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,7 +21,7 @@ namespace DBManager.Views.Engines.MySql
             InitializeComponent();
         }
 
-        private async void MySqlConnectionView_Load(object sender, System.EventArgs e)
+        private async void MySqlConnectionView_Load(object sender, EventArgs e)
         {
             await InitializeView();
         }

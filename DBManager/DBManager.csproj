@@ -48,6 +48,7 @@
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -75,7 +76,7 @@
     <Compile Include="Dto\Engines\ConnectionDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseNamesResponseDto.cs" />
-    <Compile Include="Dto\Engines\ExecuteQueryResponseDto.cs" />
+    <Compile Include="Dto\Engines\QueryResponseDto.cs" />
     <Compile Include="Dto\Engines\TableDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\TableNamesResponseDto.cs" />
     <Compile Include="Dto\Engines\TableResponseDto.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Utils\EngineType.cs" />
     <Compile Include="Utils\ModelExtensions.cs" />
     <Compile Include="Utils\QueryHelper.cs" />
+    <Compile Include="Utils\QueryType.cs" />
     <Compile Include="Views\ConnectorSelectorView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +136,12 @@
     <Compile Include="Views\Engines\MySql\MySqlTableView.designer.cs">
       <DependentUpon>MySqlTableView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Engines\QueryView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Engines\QueryView.Designer.cs">
+      <DependentUpon>QueryView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Helpers\MessageHelper.cs" />
     <Compile Include="Views\Helpers\TreeNodeHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -162,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Engines\MySql\MySqlTableView.resx">
       <DependentUpon>MySqlTableView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Engines\QueryView.resx">
+      <DependentUpon>QueryView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -2,6 +2,7 @@
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Views.Helpers;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -51,7 +52,9 @@ namespace DBManager.Views.Engines.MySql
             tableDataGridView.DataSource = payload.Table;
 
             browse_rowsCountLabel.Text = $"Elements: {payload.RowsCount}";
+            browse_tableNameLabel.Text = $"Name: {_tableName}";
 
+            statistics_tableNameLabel.Text = $"Name: {_tableName}";
             statistics_createdAtLabel.Text = $"Created at: {payload.CreatedAt}";
             statistics_lastUpdateLabel.Text = $"Last update: {payload.LastUpdate}";
             statistics_sizeLabel.Text = $"Size (KB): {payload.Size}";
@@ -59,7 +62,7 @@ namespace DBManager.Views.Engines.MySql
             statistics_rowsCountLabel.Text = $"Records: {payload.RowsCount}";
         }
 
-        private async void MySqlTableView_Load(object sender, System.EventArgs e)
+        private async void MySqlTableView_Load(object sender, EventArgs e)
         {
             await InitializeView();
         }
