@@ -1,7 +1,7 @@
 ﻿
-namespace DBManager.Views.Engines.MySql
+namespace DBManager.Views.Engines
 {
-    partial class MySqlDatabaseView
+    partial class DatabaseView
     {
         /// <summary>
         /// Required designer variable.
@@ -42,12 +42,12 @@ namespace DBManager.Views.Engines.MySql
             this.structure_comparingSubtitlesMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.structure = new System.Windows.Forms.TabPage();
             this.structure_tablesCountLabel = new System.Windows.Forms.Label();
-            this.databaseView = new System.Windows.Forms.TabControl();
+            this.databaseView_tabControl = new System.Windows.Forms.TabControl();
             this.query = new System.Windows.Forms.TabPage();
             this.structure_databaseNameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.structure_databaseParametersDataGridView)).BeginInit();
             this.structure.SuspendLayout();
-            this.databaseView.SuspendLayout();
+            this.databaseView_tabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // databaseStructure_databaseStructureLabel
@@ -177,16 +177,16 @@ namespace DBManager.Views.Engines.MySql
             // 
             // databaseView
             // 
-            this.databaseView.Controls.Add(this.structure);
-            this.databaseView.Controls.Add(this.query);
-            this.databaseView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.databaseView.Location = new System.Drawing.Point(0, 0);
-            this.databaseView.Margin = new System.Windows.Forms.Padding(0);
-            this.databaseView.Name = "databaseView";
-            this.databaseView.Padding = new System.Drawing.Point(10, 3);
-            this.databaseView.SelectedIndex = 0;
-            this.databaseView.Size = new System.Drawing.Size(699, 390);
-            this.databaseView.TabIndex = 4;
+            this.databaseView_tabControl.Controls.Add(this.structure);
+            this.databaseView_tabControl.Controls.Add(this.query);
+            this.databaseView_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.databaseView_tabControl.Location = new System.Drawing.Point(0, 0);
+            this.databaseView_tabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.databaseView_tabControl.Name = "databaseView";
+            this.databaseView_tabControl.Padding = new System.Drawing.Point(10, 3);
+            this.databaseView_tabControl.SelectedIndex = 0;
+            this.databaseView_tabControl.Size = new System.Drawing.Size(699, 390);
+            this.databaseView_tabControl.TabIndex = 4;
             // 
             // query
             // 
@@ -216,7 +216,7 @@ namespace DBManager.Views.Engines.MySql
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(699, 390);
-            this.Controls.Add(this.databaseView);
+            this.Controls.Add(this.databaseView_tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MySqlDatabaseView";
             this.Text = "MySqlDatabaseView";
@@ -224,7 +224,7 @@ namespace DBManager.Views.Engines.MySql
             ((System.ComponentModel.ISupportInitialize)(this.structure_databaseParametersDataGridView)).EndInit();
             this.structure.ResumeLayout(false);
             this.structure.PerformLayout();
-            this.databaseView.ResumeLayout(false);
+            this.databaseView_tabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -233,7 +233,7 @@ namespace DBManager.Views.Engines.MySql
         private System.Windows.Forms.Label databaseStructure_databaseStructureLabel;
         private System.Windows.Forms.DataGridView structure_databaseParametersDataGridView;
         private System.Windows.Forms.TabPage structure;
-        private System.Windows.Forms.TabControl databaseView;
+        private System.Windows.Forms.TabControl databaseView_tabControl;
         private System.Windows.Forms.Label structure_tablesCountLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_columnNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_Name;

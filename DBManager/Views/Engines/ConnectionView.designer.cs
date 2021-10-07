@@ -1,7 +1,7 @@
 ﻿
-namespace DBManager.Views.Engines.MySql
+namespace DBManager.Views.Engines
 {
-    partial class MySqlConnectionView
+    partial class ConnectionView
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace DBManager.Views.Engines.MySql
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.connectionView = new System.Windows.Forms.TabControl();
+            this.connectionView_tabControl = new System.Windows.Forms.TabControl();
             this.structure = new System.Windows.Forms.TabPage();
             this.informations_portLabel = new System.Windows.Forms.Label();
             this.informations_serverLabel = new System.Windows.Forms.Label();
@@ -45,22 +45,22 @@ namespace DBManager.Views.Engines.MySql
             this.structure_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.informations_connectionNameLabel = new System.Windows.Forms.Label();
             this.informations_typeLabel = new System.Windows.Forms.Label();
-            this.connectionView.SuspendLayout();
+            this.connectionView_tabControl.SuspendLayout();
             this.structure.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.structure_connectionParametersDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // connectionView
             // 
-            this.connectionView.Controls.Add(this.structure);
-            this.connectionView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.connectionView.Location = new System.Drawing.Point(0, 0);
-            this.connectionView.Margin = new System.Windows.Forms.Padding(0);
-            this.connectionView.Name = "connectionView";
-            this.connectionView.Padding = new System.Drawing.Point(10, 3);
-            this.connectionView.SelectedIndex = 0;
-            this.connectionView.Size = new System.Drawing.Size(686, 390);
-            this.connectionView.TabIndex = 5;
+            this.connectionView_tabControl.Controls.Add(this.structure);
+            this.connectionView_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.connectionView_tabControl.Location = new System.Drawing.Point(0, 0);
+            this.connectionView_tabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.connectionView_tabControl.Name = "connectionView";
+            this.connectionView_tabControl.Padding = new System.Drawing.Point(10, 3);
+            this.connectionView_tabControl.SelectedIndex = 0;
+            this.connectionView_tabControl.Size = new System.Drawing.Size(686, 390);
+            this.connectionView_tabControl.TabIndex = 5;
             // 
             // structure
             // 
@@ -242,12 +242,12 @@ namespace DBManager.Views.Engines.MySql
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(686, 390);
-            this.Controls.Add(this.connectionView);
+            this.Controls.Add(this.connectionView_tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MySqlConnectionView";
             this.Text = "MySqlConnectionView";
             this.Load += new System.EventHandler(this.MySqlConnectionView_Load);
-            this.connectionView.ResumeLayout(false);
+            this.connectionView_tabControl.ResumeLayout(false);
             this.structure.ResumeLayout(false);
             this.structure.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.structure_connectionParametersDataGridView)).EndInit();
@@ -257,7 +257,7 @@ namespace DBManager.Views.Engines.MySql
 
         #endregion
 
-        private System.Windows.Forms.TabControl connectionView;
+        private System.Windows.Forms.TabControl connectionView_tabControl;
         private System.Windows.Forms.TabPage structure;
         private System.Windows.Forms.Label structure_databasesCountLabel;
         private System.Windows.Forms.DataGridView structure_connectionParametersDataGridView;

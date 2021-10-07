@@ -6,15 +6,15 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DBManager.Views.Engines.MySql
+namespace DBManager.Views.Engines
 {
-    public partial class MySqlDatabaseView : Form
+    public partial class DatabaseView : Form
     {
         private readonly EnginePresenterBase _presenter;
         private readonly string _databaseName;
         private readonly MessageHelper _messageHelper;
 
-        public MySqlDatabaseView(EnginePresenterBase presenter, string databaseName)
+        public DatabaseView(EnginePresenterBase presenter, string databaseName)
         {
             _presenter = presenter;
             _databaseName = databaseName;

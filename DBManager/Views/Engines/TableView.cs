@@ -7,16 +7,16 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DBManager.Views.Engines.MySql
+namespace DBManager.Views.Engines
 {
-    public partial class MySqlTableView : Form
+    public partial class TableView : Form
     {
         private readonly EnginePresenterBase _presenter;
         private readonly string _databaseName;
         private readonly string _tableName;
         private readonly MessageHelper _messageHelper;
 
-        public MySqlTableView(EnginePresenterBase presenter, string databaseName, string tableName)
+        public TableView(EnginePresenterBase presenter, string databaseName, string tableName)
         {
             _presenter = presenter;
             _databaseName = databaseName;

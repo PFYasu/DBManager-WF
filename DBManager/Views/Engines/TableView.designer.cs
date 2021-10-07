@@ -1,7 +1,7 @@
 ﻿
-namespace DBManager.Views.Engines.MySql
+namespace DBManager.Views.Engines
 {
-    partial class MySqlTableView
+    partial class TableView
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,7 @@ namespace DBManager.Views.Engines.MySql
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.tableView = new System.Windows.Forms.TabControl();
+            this.tableView_tabControl = new System.Windows.Forms.TabControl();
             this.browse = new System.Windows.Forms.TabPage();
             this.tableDataGridView = new System.Windows.Forms.DataGridView();
             this.browse_rowsCountLabel = new System.Windows.Forms.Label();
@@ -56,7 +56,7 @@ namespace DBManager.Views.Engines.MySql
             this.tableStructure_tableStructureLabel = new System.Windows.Forms.Label();
             this.browse_tableNameLabel = new System.Windows.Forms.Label();
             this.statistics_tableNameLabel = new System.Windows.Forms.Label();
-            this.tableView.SuspendLayout();
+            this.tableView_tabControl.SuspendLayout();
             this.browse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableDataGridView)).BeginInit();
             this.structure.SuspendLayout();
@@ -65,16 +65,16 @@ namespace DBManager.Views.Engines.MySql
             // 
             // tableView
             // 
-            this.tableView.Controls.Add(this.browse);
-            this.tableView.Controls.Add(this.structure);
-            this.tableView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableView.Location = new System.Drawing.Point(0, 0);
-            this.tableView.Margin = new System.Windows.Forms.Padding(0);
-            this.tableView.Name = "tableView";
-            this.tableView.Padding = new System.Drawing.Point(10, 3);
-            this.tableView.SelectedIndex = 0;
-            this.tableView.Size = new System.Drawing.Size(686, 390);
-            this.tableView.TabIndex = 3;
+            this.tableView_tabControl.Controls.Add(this.browse);
+            this.tableView_tabControl.Controls.Add(this.structure);
+            this.tableView_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableView_tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tableView_tabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.tableView_tabControl.Name = "tableView";
+            this.tableView_tabControl.Padding = new System.Drawing.Point(10, 3);
+            this.tableView_tabControl.SelectedIndex = 0;
+            this.tableView_tabControl.Size = new System.Drawing.Size(686, 390);
+            this.tableView_tabControl.TabIndex = 3;
             // 
             // browse
             // 
@@ -373,12 +373,12 @@ namespace DBManager.Views.Engines.MySql
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(686, 390);
-            this.Controls.Add(this.tableView);
+            this.Controls.Add(this.tableView_tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MySqlTableView";
             this.Text = "MySqlTableView";
             this.Load += new System.EventHandler(this.MySqlTableView_Load);
-            this.tableView.ResumeLayout(false);
+            this.tableView_tabControl.ResumeLayout(false);
             this.browse.ResumeLayout(false);
             this.browse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableDataGridView)).EndInit();
@@ -390,7 +390,7 @@ namespace DBManager.Views.Engines.MySql
         }
 
         #endregion
-        private System.Windows.Forms.TabControl tableView;
+        private System.Windows.Forms.TabControl tableView_tabControl;
         private System.Windows.Forms.TabPage browse;
         private System.Windows.Forms.TabPage structure;
         private System.Windows.Forms.Label tableStructure_tableStructureLabel;

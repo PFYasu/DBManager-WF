@@ -6,14 +6,14 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DBManager.Views.Engines.MySql
+namespace DBManager.Views.Engines
 {
-    public partial class MySqlConnectionView : Form
+    public partial class ConnectionView : Form
     {
         private readonly EnginePresenterBase _presenter;
         private readonly MessageHelper _messageHelper;
 
-        public MySqlConnectionView(EnginePresenterBase presenter)
+        public ConnectionView(EnginePresenterBase presenter)
         {
             _presenter = presenter;
             _messageHelper = new MessageHelper("DBManager - connection view");
