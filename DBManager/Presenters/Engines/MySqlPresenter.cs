@@ -47,26 +47,6 @@ namespace DBManager.Presenters.Engines
             return Ok(dto);
         }
 
-        public override async Task<Response> GetTable(string databaseName, string tableName)
-        {
-            string query = $"SELECT * FROM {tableName};";
-
-            DataTable result;
-
-            try
-            {
-                result = await _model.ExecuteQuery(query, databaseName);
-            }
-            catch (Exception exception)
-            {
-                return Error(exception.Message);
-            }
-
-            var dto = new TableResponseDto { Table = result };
-
-            return Ok(dto);
-        }
-
         public override async Task<Response> GetTableNames(string databaseName)
         {
             string query =
@@ -86,11 +66,12 @@ namespace DBManager.Presenters.Engines
                 return Error(exception.Message);
             }
 
-            var dto = new TableNamesResponseDto();
-            dto.Names = result
+            var names = result
                 .AsEnumerable()
                 .Select(x => x.Field<string>("table_name"))
                 .ToList();
+
+            var dto = new TableNamesResponseDto { Names = names };
 
             return Ok(dto);
         }
@@ -143,7 +124,6 @@ namespace DBManager.Presenters.Engines
                 $"FROM TABLES " +
                 $"WHERE TABLE_SCHEMA = '{databaseName}' AND TABLE_NAME = '{tableName}';";
 
-            Response tableQueryResponse;
             DataTable tableQueryResult;
 
             string columnsQuery = $"SELECT COLUMN_NAME, DATA_TYPE, COLLATION_NAME " +
@@ -152,24 +132,24 @@ namespace DBManager.Presenters.Engines
 
             DataTable columnsQueryResult;
 
-            tableQueryResponse = await GetTable(databaseName, tableName);
-            if (tableQueryResponse.Type == ResponseType.Error)
-                return Error(tableQueryResponse.Payload);
+            string fullTableQuery = $"SELECT * FROM {tableName}";
+
+            DataTable fullTableResult;
 
             try
             {
                 tableQueryResult = await _model.ExecuteQuery(tableQuery, "information_schema");
                 columnsQueryResult = await _model.ExecuteQuery(columnsQuery, "information_schema");
+                fullTableResult = await _model.ExecuteQuery(fullTableQuery, databaseName);
             }
             catch (Exception exception)
             {
                 return Error(exception.Message);
             }
 
-            var tableQueryPayload = tableQueryResponse.Payload as TableResponseDto;
+            var table = fullTableResult;
+            var rowsCount = fullTableResult.Rows.Count;
 
-            var table = tableQueryPayload.Table;
-            var rowsCount = tableQueryPayload.Table.Rows.Count;
             var columnsCount = columnsQueryResult.Rows.Count;
             var createdAt = tableQueryResult.Rows[0].TryConvertTo<DateTime>("CREATE_TIME");
             var lastUpdate = tableQueryResult.Rows[0].TryConvertTo<DateTime?>("UPDATE_TIME");
