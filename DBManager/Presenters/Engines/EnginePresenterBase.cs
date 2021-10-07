@@ -13,6 +13,7 @@ namespace DBManager.Presenters.Engines
         public abstract Task<Response> SendQuery(string databaseName, string query);
         public abstract Task<Response> GetTableDetails(string databaseName, string tableName);
         public abstract Task<Response> GetDatabaseDetails(string databaseName);
+        public abstract Task<Response> GetDatabaseTableColumns(string databaseName);
         public abstract Task<Response> GetConnectionDetails();
     }
 }

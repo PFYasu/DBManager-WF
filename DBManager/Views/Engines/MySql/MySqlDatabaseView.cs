@@ -28,15 +28,28 @@ namespace DBManager.Views.Engines.MySql
             await InitializeView();
         }
 
-        private void query_Enter(object sender, EventArgs e)
+        private async void query_Enter(object sender, EventArgs e)
         {
             if (query.Controls.Count != 0)
                 return;
 
-            var queryView = new QueryView(_presenter, _databaseName)
+            var response = await _presenter.GetDatabaseTableColumns(_databaseName);
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError("Unable to get database tables columns.", response.Payload);
+                return;
+            }
+
+            var payload = response.Payload as DatabaseTableColumnsResponseDto;
+
+            var databaseTableColumns = payload.DatabaseTableColumns;
+
+            var queryView = new QueryView(_presenter, _databaseName, databaseTableColumns)
             {
                 Dock = DockStyle.Fill
             };
+
+            queryView.InitializeView();
 
             query.Controls.Add(queryView);
         }

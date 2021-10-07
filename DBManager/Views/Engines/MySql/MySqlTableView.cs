@@ -34,7 +34,7 @@ namespace DBManager.Views.Engines.MySql
                 _messageHelper.ShowError("Unable to get table details.", response.Payload);
                 return;
             }
-            
+
             var payload = response.Payload as TableDetailsResponseDto;
 
             structure_tableParametersDataGridView.Rows.Clear();
