@@ -3,7 +3,7 @@ using DBManager.Dto.Engines;
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Utils;
-using DBManager.Views.Engines.MySql;
+using DBManager.Views.Engines;
 using DBManager.Views.Helpers;
 using System;
 using System.Drawing;
@@ -103,15 +103,15 @@ namespace DBManager.Views
             switch (nodes.Mode)
             {
                 case TreeNodeMode.ConnectionSelected:
-                    form = new MySqlConnectionView(payload.Presenter);
+                    form = new ConnectionView(payload.Presenter);
                     await LoadDatabases(payload.Presenter);
                     break;
                 case TreeNodeMode.DatabaseSelected:
-                    form = new MySqlDatabaseView(payload.Presenter, nodes.Database.Text);
+                    form = new DatabaseView(payload.Presenter, nodes.Database.Text);
                     await LoadTables(payload.Presenter, nodes.Database.Text);
                     break;
                 case TreeNodeMode.TableSelected:
-                    form = new MySqlTableView(payload.Presenter, nodes.Database.Text, nodes.Table.Text);
+                    form = new TableView(payload.Presenter, nodes.Database.Text, nodes.Table.Text);
                     break;
                 default:
                     _messageHelper.ShowError("Unable to create view - incorrect engine type");

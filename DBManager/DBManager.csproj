@@ -113,11 +113,11 @@
     <Compile Include="Views\DBManagerView.designer.cs">
       <DependentUpon>DBManagerView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Engines\MySql\MySqlConnectionView.cs">
+    <Compile Include="Views\Engines\ConnectionView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Engines\MySql\MySqlConnectionView.designer.cs">
-      <DependentUpon>MySqlConnectionView.cs</DependentUpon>
+    <Compile Include="Views\Engines\ConnectionView.designer.cs">
+      <DependentUpon>ConnectionView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Engines\MySql\MySqlConnectorView.cs">
       <SubType>Form</SubType>
@@ -125,17 +125,17 @@
     <Compile Include="Views\Engines\MySql\MySqlConnectorView.Designer.cs">
       <DependentUpon>MySqlConnectorView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Engines\MySql\MySqlDatabaseView.cs">
+    <Compile Include="Views\Engines\DatabaseView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Engines\MySql\MySqlDatabaseView.designer.cs">
-      <DependentUpon>MySqlDatabaseView.cs</DependentUpon>
+    <Compile Include="Views\Engines\DatabaseView.designer.cs">
+      <DependentUpon>DatabaseView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Engines\MySql\MySqlTableView.cs">
+    <Compile Include="Views\Engines\TableView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Engines\MySql\MySqlTableView.designer.cs">
-      <DependentUpon>MySqlTableView.cs</DependentUpon>
+    <Compile Include="Views\Engines\TableView.designer.cs">
+      <DependentUpon>TableView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Engines\QueryView.cs">
       <SubType>UserControl</SubType>
@@ -160,17 +160,17 @@
     <EmbeddedResource Include="Views\DBManagerView.resx">
       <DependentUpon>DBManagerView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Engines\MySql\MySqlConnectionView.resx">
-      <DependentUpon>MySqlConnectionView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Engines\ConnectionView.resx">
+      <DependentUpon>ConnectionView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Engines\MySql\MySqlConnectorView.resx">
       <DependentUpon>MySqlConnectorView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Engines\MySql\MySqlDatabaseView.resx">
-      <DependentUpon>MySqlDatabaseView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Engines\DatabaseView.resx">
+      <DependentUpon>DatabaseView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Engines\MySql\MySqlTableView.resx">
-      <DependentUpon>MySqlTableView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Engines\TableView.resx">
+      <DependentUpon>TableView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Engines\QueryView.resx">
       <DependentUpon>QueryView.cs</DependentUpon>
