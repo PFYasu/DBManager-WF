@@ -97,7 +97,7 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> SendQuery(string databaseName, string query)
         {
-            var queryType = QueryHelper.GetQueryType(query);
+            var queryType = QueryHelper.QueryTypeResolver.GetQueryType(query);
 
             var result = new DataTable();
 
@@ -257,6 +257,47 @@ namespace DBManager.Presenters.Engines
             {
                 TablesCount = tablesStructure.Count,
                 TablesStructure = tablesStructure
+            };
+
+            return Ok(dto);
+        }
+
+        public override async Task<Response> GetDatabaseTableColumns(string databaseName)
+        {
+            string query =
+                $"SELECT " +
+                    $"TABLE_NAME, " +
+                    $"COLUMN_NAME " +
+                $"FROM COLUMNS " +
+                $"WHERE TABLE_SCHEMA = '{databaseName}';";
+
+            DataTable result;
+
+            try
+            {
+                result = await _model.ExecuteQuery(query, "information_schema");
+            }
+            catch (Exception exception)
+            {
+                return Error(exception.Message);
+            }
+
+            var databaseTableColumns = new Dictionary<string, List<string>>();
+
+            foreach (DataRow row in result.Rows)
+            {
+                var tableName = row.TryConvertTo<string>("TABLE_NAME");
+                var columnName = row.TryConvertTo<string>("COLUMN_NAME");
+
+                if (databaseTableColumns.ContainsKey(tableName) == false)
+                    databaseTableColumns.Add(tableName, new List<string>());
+
+                databaseTableColumns[tableName].Add(columnName);
+            }
+
+            var dto = new DatabaseTableColumnsResponseDto
+            {
+                DatabaseTableColumns = databaseTableColumns
             };
 
             return Ok(dto);

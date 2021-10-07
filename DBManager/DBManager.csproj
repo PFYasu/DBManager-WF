@@ -76,6 +76,7 @@
     <Compile Include="Dto\Engines\ConnectionDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseNamesResponseDto.cs" />
+    <Compile Include="Dto\Engines\DatabaseTableColumnsResponseDto.cs" />
     <Compile Include="Dto\Engines\QueryResponseDto.cs" />
     <Compile Include="Dto\Engines\TableDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\TableNamesResponseDto.cs" />
