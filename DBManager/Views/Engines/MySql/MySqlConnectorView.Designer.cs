@@ -51,58 +51,58 @@ namespace DBManager.Views.Engines.MySql
             // 
             // serverUrl
             // 
-            this.serverUrl.Location = new System.Drawing.Point(12, 120);
+            this.serverUrl.Location = new System.Drawing.Point(10, 104);
             this.serverUrl.Name = "serverUrl";
-            this.serverUrl.Size = new System.Drawing.Size(190, 23);
+            this.serverUrl.Size = new System.Drawing.Size(163, 20);
             this.serverUrl.TabIndex = 1;
             // 
             // username
             // 
-            this.username.Location = new System.Drawing.Point(12, 176);
+            this.username.Location = new System.Drawing.Point(10, 153);
             this.username.Name = "username";
-            this.username.Size = new System.Drawing.Size(190, 23);
+            this.username.Size = new System.Drawing.Size(163, 20);
             this.username.TabIndex = 4;
             // 
             // serverUrlLabel
             // 
             this.serverUrlLabel.AutoSize = true;
-            this.serverUrlLabel.Location = new System.Drawing.Point(12, 102);
+            this.serverUrlLabel.Location = new System.Drawing.Point(10, 88);
             this.serverUrlLabel.Name = "serverUrlLabel";
-            this.serverUrlLabel.Size = new System.Drawing.Size(63, 15);
+            this.serverUrlLabel.Size = new System.Drawing.Size(63, 13);
             this.serverUrlLabel.TabIndex = 4;
             this.serverUrlLabel.Text = "Server URL";
             // 
             // usernameLabel
             // 
             this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Location = new System.Drawing.Point(12, 158);
+            this.usernameLabel.Location = new System.Drawing.Point(10, 137);
             this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Size = new System.Drawing.Size(60, 15);
+            this.usernameLabel.Size = new System.Drawing.Size(55, 13);
             this.usernameLabel.TabIndex = 5;
             this.usernameLabel.Text = "Username";
             // 
             // passwordLabel
             // 
             this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(214, 158);
+            this.passwordLabel.Location = new System.Drawing.Point(183, 137);
             this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(57, 15);
+            this.passwordLabel.Size = new System.Drawing.Size(53, 13);
             this.passwordLabel.TabIndex = 7;
             this.passwordLabel.Text = "Password";
             // 
             // password
             // 
-            this.password.Location = new System.Drawing.Point(208, 176);
+            this.password.Location = new System.Drawing.Point(178, 153);
             this.password.Name = "password";
             this.password.PasswordChar = '*';
-            this.password.Size = new System.Drawing.Size(164, 23);
+            this.password.Size = new System.Drawing.Size(141, 20);
             this.password.TabIndex = 5;
             // 
             // addConnection
             // 
-            this.addConnection.Location = new System.Drawing.Point(73, 205);
+            this.addConnection.Location = new System.Drawing.Point(63, 178);
             this.addConnection.Name = "addConnection";
-            this.addConnection.Size = new System.Drawing.Size(299, 23);
+            this.addConnection.Size = new System.Drawing.Size(256, 20);
             this.addConnection.TabIndex = 6;
             this.addConnection.Text = "Save";
             this.addConnection.UseVisualStyleBackColor = true;
@@ -110,9 +110,9 @@ namespace DBManager.Views.Engines.MySql
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(12, 205);
+            this.cancel.Location = new System.Drawing.Point(10, 178);
             this.cancel.Name = "cancel";
-            this.cancel.Size = new System.Drawing.Size(55, 23);
+            this.cancel.Size = new System.Drawing.Size(47, 20);
             this.cancel.TabIndex = 7;
             this.cancel.Text = "Cancel";
             this.cancel.UseVisualStyleBackColor = true;
@@ -121,73 +121,73 @@ namespace DBManager.Views.Engines.MySql
             // validationError
             // 
             this.validationError.AutoSize = true;
-            this.validationError.Location = new System.Drawing.Point(9, 231);
+            this.validationError.Location = new System.Drawing.Point(8, 200);
             this.validationError.Name = "validationError";
-            this.validationError.Size = new System.Drawing.Size(0, 15);
+            this.validationError.Size = new System.Drawing.Size(0, 13);
             this.validationError.TabIndex = 10;
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(12, 48);
+            this.nameLabel.Location = new System.Drawing.Point(10, 42);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(39, 15);
+            this.nameLabel.Size = new System.Drawing.Size(35, 13);
             this.nameLabel.TabIndex = 12;
             this.nameLabel.Text = "Name";
             // 
             // name
             // 
-            this.name.Location = new System.Drawing.Point(12, 66);
+            this.name.Location = new System.Drawing.Point(10, 57);
             this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(190, 23);
+            this.name.Size = new System.Drawing.Size(163, 20);
             this.name.TabIndex = 0;
             // 
             // portLabel
             // 
             this.portLabel.AutoSize = true;
-            this.portLabel.Location = new System.Drawing.Point(208, 102);
+            this.portLabel.Location = new System.Drawing.Point(178, 88);
             this.portLabel.Name = "portLabel";
-            this.portLabel.Size = new System.Drawing.Size(29, 15);
+            this.portLabel.Size = new System.Drawing.Size(26, 13);
             this.portLabel.TabIndex = 14;
             this.portLabel.Text = "Port";
             // 
             // setConnectorParametersLabel
             // 
             this.setConnectorParametersLabel.AutoSize = true;
-            this.setConnectorParametersLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.setConnectorParametersLabel.Location = new System.Drawing.Point(4, 9);
+            this.setConnectorParametersLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F);
+            this.setConnectorParametersLabel.Location = new System.Drawing.Point(3, 8);
             this.setConnectorParametersLabel.Name = "setConnectorParametersLabel";
-            this.setConnectorParametersLabel.Size = new System.Drawing.Size(261, 30);
+            this.setConnectorParametersLabel.Size = new System.Drawing.Size(229, 30);
             this.setConnectorParametersLabel.TabIndex = 15;
-            this.setConnectorParametersLabel.Text = "Set connection parameters";
+            this.setConnectorParametersLabel.Text = "Connection parameters";
             // 
             // connectionLogo
             // 
             this.connectionLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("connectionLogo.BackgroundImage")));
             this.connectionLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.connectionLogo.Location = new System.Drawing.Point(275, 12);
+            this.connectionLogo.Location = new System.Drawing.Point(236, 10);
             this.connectionLogo.Name = "connectionLogo";
-            this.connectionLogo.Size = new System.Drawing.Size(100, 100);
+            this.connectionLogo.Size = new System.Drawing.Size(86, 87);
             this.connectionLogo.TabIndex = 16;
             this.connectionLogo.TabStop = false;
             // 
             // port
             // 
-            this.port.Location = new System.Drawing.Point(208, 120);
+            this.port.Location = new System.Drawing.Point(178, 104);
             this.port.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
             this.port.Name = "port";
-            this.port.Size = new System.Drawing.Size(57, 23);
+            this.port.Size = new System.Drawing.Size(49, 20);
             this.port.TabIndex = 3;
             // 
             // MySqlConnectorView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 237);
+            this.ClientSize = new System.Drawing.Size(329, 205);
             this.Controls.Add(this.port);
             this.Controls.Add(this.connectionLogo);
             this.Controls.Add(this.setConnectorParametersLabel);
