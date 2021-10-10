@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace DBManager.Tests.UtilsTests.QueryHelperTests
+namespace DBManager.Tests.UtilsTests
 {
     public class HardcodedQueryTests
     {

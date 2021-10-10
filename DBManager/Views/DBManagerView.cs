@@ -195,7 +195,7 @@ namespace DBManager.Views
             var response = await presenter.GetTableNames(databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get databases for {presenter.ConnectionName} connection", response);
+                _messageHelper.ShowError($"Unable to get tables for {presenter.ConnectionName} connection", response);
                 return;
             }
 

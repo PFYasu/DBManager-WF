@@ -138,6 +138,8 @@ namespace DBManager.Views.Engines
 
             query_databaseNameLabel.Text = $"Name: {_databaseName}";
 
+            structure_tablesView.Items.Clear();
+
             foreach (var table in _databaseTableColumns.Keys)
             {
                 structure_tablesView.Items.Add(table);

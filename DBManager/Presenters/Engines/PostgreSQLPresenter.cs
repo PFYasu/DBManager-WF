@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace DBManager.Presenters.Engines
 {
-    public class MySqlPresenter : EnginePresenterBase
+    public class PostgreSQLPresenter : EnginePresenterBase
     {
         private readonly IEngineModel _model;
         private readonly DBManagerPresenterBase _dbManagerPresenter;
 
-        public MySqlPresenter(IEngineModel model, DBManagerPresenterBase dbManagerPresenter)
+        public PostgreSQLPresenter(IEngineModel model, DBManagerPresenterBase dbManagerPresenter)
         {
             _model = model;
             _dbManagerPresenter = dbManagerPresenter;
@@ -25,7 +25,7 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetDatabaseNames()
         {
-            const string query = "SHOW DATABASES;";
+            const string query = "SELECT datname FROM pg_database WHERE datistemplate = false;";
             DataTable result;
 
             try
@@ -40,7 +40,7 @@ namespace DBManager.Presenters.Engines
             var dto = new DatabaseNamesResponseDto();
             dto.Names = result
                 .AsEnumerable()
-                .Select(x => x.TryConvertTo<string>("Database"))
+                .Select(x => x.Field<string>("datname"))
                 .ToList();
 
             return Ok(dto);
@@ -48,16 +48,17 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetTableNames(string databaseName)
         {
-            var query =
+            string query =
                 $"SELECT " +
-                    $"TABLE_NAME " +
-                $"FROM TABLES " +
-                $"WHERE TABLE_SCHEMA = '{databaseName}';";
+                    $"table_name " +
+                $"FROM information_schema.tables " +
+                $"WHERE table_schema = 'public' " +
+                $"ORDER BY table_name;";
             DataTable result;
 
             try
             {
-                result = await _model.ExecuteQuery(query, "information_schema");
+                result = await _model.ExecuteQuery(query, databaseName);
             }
             catch (Exception exception)
             {
@@ -66,7 +67,7 @@ namespace DBManager.Presenters.Engines
 
             var names = result
                 .AsEnumerable()
-                .Select(x => x.Field<string>("table_name"))
+                .Select(x => x.TryConvertTo<string>("table_name"))
                 .ToList();
 
             var dto = new TableNamesResponseDto { Names = names };
@@ -112,50 +113,46 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetTableDetails(string databaseName, string tableName)
         {
-            var tableQuery =
-                $"SELECT " +
-                    $"TABLE_NAME, " +
-                    $"CREATE_TIME, " +
-                    $"UPDATE_TIME, " +
-                    $"ROUND(SUM(data_length + index_length) / 1024, 1) AS 'SIZE' " +
-                $"FROM TABLES " +
-                $"WHERE TABLE_SCHEMA = '{databaseName}' AND TABLE_NAME = '{tableName}';";
-            DataTable tableQueryResult;
-
-            var columnsQuery = $"SELECT COLUMN_NAME, DATA_TYPE, COLLATION_NAME " +
-                $"FROM COLUMNS " +
-                $"WHERE TABLE_NAME = '{tableName}' AND TABLE_SCHEMA = '{databaseName}';";
-            DataTable columnsQueryResult;
+            var tableSizeQuery = $"SELECT pg_total_relation_size('{tableName}') AS SIZE;";
+            DataTable tableSizeQueryResult;
 
             var fullTableQuery = $"SELECT * FROM {tableName}";
-            DataTable fullTableResult;
+            DataTable fullTableQueryResult;
+
+            var columnsQuery =
+                $"SELECT " +
+                    $"column_name, " +
+                    $"data_type, " +
+                    $"collation_name " +
+                $"FROM information_schema.columns " +
+                $"WHERE table_name = '{tableName}' AND table_catalog = '{databaseName}';";
+            DataTable columnsQueryResult;
 
             try
             {
-                tableQueryResult = await _model.ExecuteQuery(tableQuery, "information_schema");
-                columnsQueryResult = await _model.ExecuteQuery(columnsQuery, "information_schema");
-                fullTableResult = await _model.ExecuteQuery(fullTableQuery, databaseName);
+                tableSizeQueryResult = await _model.ExecuteQuery(tableSizeQuery, databaseName);
+                fullTableQueryResult = await _model.ExecuteQuery(fullTableQuery, databaseName);
+                columnsQueryResult = await _model.ExecuteQuery(columnsQuery, databaseName);
             }
             catch (Exception exception)
             {
                 return Error(exception.Message);
             }
 
-            var table = fullTableResult;
-            var rowsCount = fullTableResult.Rows.Count;
+            var table = fullTableQueryResult;
+            var rowsCount = fullTableQueryResult.Rows.Count;
 
             var columnsCount = columnsQueryResult.Rows.Count;
-            var createdAt = tableQueryResult.Rows[0].TryConvertTo<DateTime>("CREATE_TIME");
-            var lastUpdate = tableQueryResult.Rows[0].TryConvertTo<DateTime?>("UPDATE_TIME");
-            var size = tableQueryResult.Rows[0].TryConvertTo<decimal>("SIZE");
+            var sizeInt64Format = tableSizeQueryResult.Rows[0].TryConvertTo<Int64>("SIZE");
+            var size = (decimal)(sizeInt64Format * 0.001);
 
             var columnsStructure = new List<ColumnStructure>();
 
             foreach (DataRow row in columnsQueryResult.Rows)
             {
-                var name = row.TryConvertTo<string>("COLUMN_NAME");
-                var type = row.TryConvertTo<string>("DATA_TYPE");
-                var comparingSubtitlesMethod = row.TryConvertTo<string>("COLLATION_NAME");
+                var name = row.TryConvertTo<string>("column_name");
+                var type = row.TryConvertTo<string>("data_type");
+                var comparingSubtitlesMethod = row.TryConvertTo<string>("collation_name");
 
                 var columnStructure = new ColumnStructure
                 {
@@ -174,8 +171,8 @@ namespace DBManager.Presenters.Engines
                 ColumnsCount = columnsCount,
                 ColumnsStructure = columnsStructure,
                 Size = size,
-                CreatedAt = createdAt,
-                LastUpdate = lastUpdate
+                CreatedAt = null,
+                LastUpdate = null
             };
 
             return Ok(dto);
@@ -183,36 +180,54 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetDatabaseDetails(string databaseName)
         {
-            var query =
+            var tableQuery =
                 $"SELECT " +
-                    $"TABLE_NAME, " +
-                    $"TABLE_TYPE, " +
-                    $"ROUND(SUM(DATA_LENGTH + INDEX_LENGTH) / 1024, 1) AS 'SIZE', " +
-                    $"TABLE_ROWS, " +
-                    $"TABLE_COLLATION " +
-                $"FROM TABLES " +
-                $"WHERE TABLE_SCHEMA = '{databaseName}' " +
-                $"GROUP BY TABLE_NAME;";
-            DataTable result;
+                    $"table_name, " +
+                    $"table_type, " +
+                    $"pg_total_relation_size(\'\"\'||table_schema||\'\".\"\'||table_name||\'\"\') AS SIZE " +
+                $"FROM information_schema.tables " +
+                $"WHERE table_catalog = '{databaseName}' AND table_schema = 'public';";
+            DataTable tableQueryResult;
+
+            var tableSizeQuery =
+                $"SELECT " +
+                    $"relname as name, " +
+                    $"n_live_tup as rows " +
+                $"FROM pg_stat_user_tables";
+            DataTable tableSizeQueryResult;
 
             try
             {
-                result = await _model.ExecuteQuery(query, "information_schema");
+                tableQueryResult = await _model.ExecuteQuery(tableQuery, databaseName);
+                tableSizeQueryResult = await _model.ExecuteQuery(tableSizeQuery, databaseName);
             }
             catch (Exception exception)
             {
                 return Error(exception.Message);
             }
 
+            var tablesAndRowsCount = new Dictionary<string, ulong>();
+
+            foreach (DataRow row in tableSizeQueryResult.Rows)
+            {
+                var name = row.TryConvertTo<string>("name");
+
+                var rowsInt64 = row.TryConvertTo<Int64>("rows");
+                var rows = (ulong)rowsInt64;
+
+                tablesAndRowsCount.Add(name, rows);
+            }
+
             var tablesStructure = new List<TableStructure>();
 
-            foreach (DataRow row in result.Rows)
+            foreach (DataRow row in tableQueryResult.Rows)
             {
-                var name = row.TryConvertTo<string>("TABLE_NAME");
-                var type = row.TryConvertTo<string>("TABLE_TYPE");
-                var records = row.TryConvertTo<UInt64?>("TABLE_ROWS");
-                var size = row.TryConvertTo<decimal?>("SIZE");
-                var comparingSubtitlesMethod = row.TryConvertTo<string>("TABLE_COLLATION");
+                var name = row.TryConvertTo<string>("table_name");
+                var type = row.TryConvertTo<string>("table_type");
+                var records = tablesAndRowsCount[name];
+
+                var sizeInt64Format = row.TryConvertTo<Int64>("SIZE");
+                var size = (decimal)(sizeInt64Format * 0.001);
 
                 var columnStructure = new TableStructure
                 {
@@ -220,7 +235,7 @@ namespace DBManager.Presenters.Engines
                     Type = type,
                     Records = records,
                     Size = size,
-                    ComparingSubtitlesMethod = comparingSubtitlesMethod
+                    ComparingSubtitlesMethod = null
                 };
 
                 tablesStructure.Add(columnStructure);
@@ -239,17 +254,17 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetDatabaseTableColumns(string databaseName)
         {
-            var query =
+            string query =
                 $"SELECT " +
-                    $"TABLE_NAME, " +
-                    $"COLUMN_NAME " +
-                $"FROM COLUMNS " +
-                $"WHERE TABLE_SCHEMA = '{databaseName}';";
+                    $"table_name, " +
+                    $"column_name " +
+                $"FROM information_schema.columns " +
+                $"WHERE table_catalog = '{databaseName}' AND table_schema = 'public';";
             DataTable result;
 
             try
             {
-                result = await _model.ExecuteQuery(query, "information_schema");
+                result = await _model.ExecuteQuery(query, databaseName);
             }
             catch (Exception exception)
             {
@@ -260,8 +275,8 @@ namespace DBManager.Presenters.Engines
 
             foreach (DataRow row in result.Rows)
             {
-                var tableName = row.TryConvertTo<string>("TABLE_NAME");
-                var columnName = row.TryConvertTo<string>("COLUMN_NAME");
+                var tableName = row.TryConvertTo<string>("table_name");
+                var columnName = row.TryConvertTo<string>("column_name");
 
                 if (databaseTableColumns.ContainsKey(tableName) == false)
                     databaseTableColumns.Add(tableName, new List<string>());
@@ -279,7 +294,7 @@ namespace DBManager.Presenters.Engines
 
         public override async Task<Response> GetConnectionDetails()
         {
-            var query = "SHOW DATABASES;";
+            string query = "SELECT datname FROM pg_database WHERE datistemplate = false;";
             DataTable result;
 
             try
@@ -305,7 +320,7 @@ namespace DBManager.Presenters.Engines
 
             foreach (DataRow row in result.Rows)
             {
-                var databaseName = row.TryConvertTo<string>("Database");
+                var databaseName = row.TryConvertTo<string>("datname");
 
                 var databaseStructure = new DatabaseStructure { Name = databaseName };
 
