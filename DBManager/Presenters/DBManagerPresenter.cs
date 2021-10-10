@@ -20,7 +20,7 @@ namespace DBManager.Presenters
             _presenters = new Dictionary<string, EnginePresenterBase>();
         }
 
-        public override async Task<Response> AddConnection(ConnectionDto dto)
+        public override async Task<Response> AddConnection(AddConnectionDto dto)
         {
             if (ConnectionExists(dto.Name))
                 return Error($"Connection with {dto.Name} already exists");
@@ -101,7 +101,7 @@ namespace DBManager.Presenters
                 Presenter = presenter
             };
 
-            if (_presenters.ContainsKey(connectionName) == true)
+            if (_presenters.ContainsKey(connectionName))
                 return Error($"Connection {connectionName} already exists in dictionary.");
             else
                 _presenters.Add(connectionName, presenter);
@@ -125,6 +125,40 @@ namespace DBManager.Presenters
             }
 
             _presenters.Remove(connectionName);
+
+            return Ok();
+        }
+
+        public override async Task<Response> UpdateConnection(UpdateConnectionDto dto)
+        {
+            if (ConnectionExists(dto.OldName) == false)
+                return Error($"{dto.OldName} connection does not exist");
+
+            if (dto.OldName != dto.Name
+                && ConnectionExists(dto.Name))
+                return Error($"Unable to change {dto.OldName} connection - {dto.Name} connection already exists");
+
+            var connectionParameters = dto.ConnectionParameters;
+
+            var connection = new Connection
+            {
+                Name = dto.Name,
+                Type = dto.Type,
+                ConnectionParameters = connectionParameters
+            };
+
+            try
+            {
+                await _model.RemoveConnection(dto.OldName);
+                await _model.AddConnection(connection);
+                await _model.LoadConnections();
+            }
+            catch (Exception exception)
+            {
+                return Error(exception.Message);
+            }
+
+            _presenters.Remove(dto.OldName);
 
             return Ok();
         }
@@ -167,7 +201,7 @@ namespace DBManager.Presenters
             var connectionParameters = connection.ConnectionParameters;
             var name = connection.Name;
 
-            var dto = new ConnectionDto
+            var dto = new AddConnectionDto
             {
                 Type = type,
                 ConnectionParameters = connectionParameters,
