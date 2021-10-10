@@ -157,9 +157,9 @@ namespace DBManager.Views.Engines.PostgreSQL
             this.setConnectorParametersLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F);
             this.setConnectorParametersLabel.Location = new System.Drawing.Point(3, 8);
             this.setConnectorParametersLabel.Name = "setConnectorParametersLabel";
-            this.setConnectorParametersLabel.Size = new System.Drawing.Size(261, 30);
+            this.setConnectorParametersLabel.Size = new System.Drawing.Size(229, 30);
             this.setConnectorParametersLabel.TabIndex = 15;
-            this.setConnectorParametersLabel.Text = "Set connection parameters";
+            this.setConnectorParametersLabel.Text = "Connection parameters";
             // 
             // connectionLogo
             // 
@@ -183,7 +183,7 @@ namespace DBManager.Views.Engines.PostgreSQL
             this.port.Size = new System.Drawing.Size(49, 20);
             this.port.TabIndex = 3;
             // 
-            // MySqlConnectorView
+            // PostgreSQLConnectorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -204,8 +204,8 @@ namespace DBManager.Views.Engines.PostgreSQL
             this.Controls.Add(this.username);
             this.Controls.Add(this.serverUrl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "MySqlConnectorView";
-            this.Text = "DBManager - MySQL connector configuration";
+            this.Name = "PostgreSQLConnectorView";
+            this.Text = "DBManager - PostgreSQL connector configuration";
             ((System.ComponentModel.ISupportInitialize)(this.connectionLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.port)).EndInit();
             this.ResumeLayout(false);

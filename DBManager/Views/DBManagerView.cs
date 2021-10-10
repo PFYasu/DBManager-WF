@@ -4,6 +4,8 @@ using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Utils;
 using DBManager.Views.Engines;
+using DBManager.Views.Engines.MySql;
+using DBManager.Views.Engines.PostgreSQL;
 using DBManager.Views.Helpers;
 using System;
 using System.Drawing;
@@ -16,13 +18,11 @@ namespace DBManager.Views
     {
         private readonly DBManagerPresenterBase _presenter;
         private readonly MessageHelper _messageHelper;
-        private bool _treeViewActionIsActive;
 
         public DBManagerView(DBManagerPresenterBase presenter)
         {
             _presenter = presenter;
             _messageHelper = new MessageHelper("DbManager");
-            _treeViewActionIsActive = false;
 
             InitializeComponent();
             LoadConnections();
@@ -79,7 +79,44 @@ namespace DBManager.Views
 
         private void setConnectionConfig_Click(object sender, EventArgs e)
         {
+            if (connectionTree.SelectedNode == null)
+                return;
 
+            var nodes = TreeNodeHelper.GetElements(connectionTree.SelectedNode);
+
+            if (nodes.Mode == TreeNodeMode.NotSupported)
+                return;
+
+            string connectionName = nodes.Connection.Text;
+
+            var response = _presenter.GetPresenter(connectionName);
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection", response);
+                return;
+            }
+
+            var payload = response.Payload as PresenterResponseDto;
+
+            Form form;
+
+            switch (payload.Type)
+            {
+                case EngineType.MySql:
+                    form = new MySqlConnectorView(_presenter, connectionName);
+                    break;
+                case EngineType.PostgreSQL:
+                    form = new PostgreSQLConnectorView(_presenter, connectionName);
+                    break;
+                default:
+                    _messageHelper.ShowError("Unable to create connector update view - incorrect engine type");
+                    return;
+            }
+
+            var result = form.ShowDialog();
+
+            if (result == DialogResult.OK)
+                DialogResult = DialogResult.OK;
         }
 
         private async void connectionTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -89,6 +126,7 @@ namespace DBManager.Views
             if (nodes.Mode == TreeNodeMode.NotSupported)
             {
                 removeConnection.Enabled = false;
+                setConnectionConfig.Enabled = false;
                 return;
             }
 
@@ -135,6 +173,7 @@ namespace DBManager.Views
             }
 
             removeConnection.Enabled = true;
+            setConnectionConfig.Enabled = true;
 
             UpdateStatusStrip(nodes);
 

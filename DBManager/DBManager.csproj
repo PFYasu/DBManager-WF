@@ -89,7 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dto\AddConnectionDto.cs" />
+    <Compile Include="Dto\ConnectionDto.cs" />
     <Compile Include="Dto\ConnectionNamesDto.cs" />
     <Compile Include="Dto\Engines\ConnectionDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseDetailsResponseDto.cs" />
@@ -169,6 +169,7 @@
     <Compile Include="Views\Engines\QueryView.Designer.cs">
       <DependentUpon>QueryView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Helpers\ConnectorMode.cs" />
     <Compile Include="Views\Helpers\MessageHelper.cs" />
     <Compile Include="Views\Helpers\TreeNodeHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

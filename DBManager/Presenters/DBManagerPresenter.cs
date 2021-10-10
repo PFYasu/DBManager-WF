@@ -20,20 +20,9 @@ namespace DBManager.Presenters
             _presenters = new Dictionary<string, EnginePresenterBase>();
         }
 
-        public override async Task<Response> AddConnection(AddConnectionDto dto)
+        public override async Task<Response> AddConnection(ConnectionDto dto)
         {
-            List<string> names;
-
-            try
-            {
-                names = _model.GetConnectionNames();
-            }
-            catch (Exception exception)
-            {
-                return Error(exception.Message);
-            }
-
-            if (names.Contains(dto.Name))
+            if (ConnectionExists(dto.Name))
                 return Error($"Connection with {dto.Name} already exists");
 
             var connectionParameters = dto.ConnectionParameters;
@@ -60,8 +49,6 @@ namespace DBManager.Presenters
 
         public override Response GetPresenter(string connectionName)
         {
-            List<string> names;
-
             PresenterResponseDto dto;
             EnginePresenterBase presenter;
 
@@ -76,17 +63,8 @@ namespace DBManager.Presenters
                 return Ok(dto);
             }
 
-            try
-            {
-                names = _model.GetConnectionNames();
-            }
-            catch (Exception exception)
-            {
-                return Error(exception.Message);
-            }
-
-            if (names.Contains(connectionName) == false)
-                return Error($"Connection with {connectionName} does not exist.");
+            if (ConnectionExists(connectionName) == false)
+                return Error($"Connection with {connectionName} does not exist");
 
             Connection connection;
 
@@ -133,19 +111,8 @@ namespace DBManager.Presenters
 
         public override async Task<Response> RemoveConnection(string connectionName)
         {
-            List<string> names;
-
-            try
-            {
-                names = _model.GetConnectionNames();
-            }
-            catch (Exception exception)
-            {
-                return Error(exception.Message);
-            }
-
-            if (names.Contains(connectionName) == false)
-                return Error($"Connection with {connectionName} does not exist.");
+            if (ConnectionExists(connectionName) == false)
+                return Error($"Connection with {connectionName} does not exist");
 
             try
             {
@@ -178,6 +145,52 @@ namespace DBManager.Presenters
             var dto = new ConnectionNamesDto { Names = names };
 
             return Ok(dto);
+        }
+
+        public override Response GetConnectionSettings(string connectionName)
+        {
+            if (ConnectionExists(connectionName) == false)
+                return Error($"Connection with {connectionName} does not exist");
+
+            Connection connection;
+
+            try
+            {
+                connection = _model.GetConnection(connectionName);
+            }
+            catch (Exception exception)
+            {
+                return Error(exception.Message);
+            }
+
+            var type = connection.Type;
+            var connectionParameters = connection.ConnectionParameters;
+            var name = connection.Name;
+
+            var dto = new ConnectionDto
+            {
+                Type = type,
+                ConnectionParameters = connectionParameters,
+                Name = name
+            };
+
+            return Ok(dto);
+        }
+
+        private bool ConnectionExists(string connectionName)
+        {
+            List<string> names;
+
+            try
+            {
+                names = _model.GetConnectionNames();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return names.Contains(connectionName);
         }
     }
 }

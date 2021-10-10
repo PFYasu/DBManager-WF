@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace DBManager.Dto
 {
-    public class AddConnectionDto
+    public class ConnectionDto
     {
         public EngineType Type { get; set; }
         public Dictionary<string, string> ConnectionParameters { get; set; }
         public string Name { get; set; }
 
-        public AddConnectionDto()
+        public ConnectionDto()
         {
             ConnectionParameters = new Dictionary<string, string>();
         }
