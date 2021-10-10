@@ -171,6 +171,7 @@ namespace DBManager.Views
             this.connectionTree.Indent = 8;
             this.connectionTree.Location = new System.Drawing.Point(3, 3);
             this.connectionTree.Name = "connectionTree";
+            this.connectionTree.ShowPlusMinus = false;
             this.connectionTree.Size = new System.Drawing.Size(130, 315);
             this.connectionTree.TabIndex = 4;
             this.connectionTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.connectionTree_NodeMouseClick);
