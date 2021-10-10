@@ -89,7 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dto\ConnectionDto.cs" />
+    <Compile Include="Dto\AddConnectionDto.cs" />
     <Compile Include="Dto\ConnectionNamesDto.cs" />
     <Compile Include="Dto\Engines\ConnectionDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseDetailsResponseDto.cs" />
@@ -100,6 +100,7 @@
     <Compile Include="Dto\Engines\TableNamesResponseDto.cs" />
     <Compile Include="Dto\Engines\TableResponseDto.cs" />
     <Compile Include="Dto\PresenterResponseDto.cs" />
+    <Compile Include="Dto\UpdateConnectionDto.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\DBManagerModel.cs" />
     <Compile Include="Models\Engines\IEngineModel.cs" />
@@ -225,7 +226,6 @@
     <Content Include="Resources\connection.png" />
     <Content Include="Resources\ConnectionsStart.png" />
     <Content Include="Resources\database.png" />
-    <Content Include="Resources\MongoDB_logo.png" />
     <Content Include="Resources\MySQL_logo.png" />
     <Content Include="Resources\PostgreSQL_logo.png" />
     <Content Include="Resources\Remove.png" />

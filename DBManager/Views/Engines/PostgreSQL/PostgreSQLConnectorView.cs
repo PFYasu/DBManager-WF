@@ -11,8 +11,9 @@ namespace DBManager.Views.Engines.PostgreSQL
     public partial class PostgreSQLConnectorView : Form
     {
         private readonly DBManagerPresenterBase _presenter;
-        private readonly MessageHelper _messageHelper;
         private readonly ConnectorMode _connectorMode;
+        private readonly MessageHelper _messageHelper;
+        private readonly string _connectionName;
 
         public PostgreSQLConnectorView(DBManagerPresenterBase presenter)
         {
@@ -29,6 +30,7 @@ namespace DBManager.Views.Engines.PostgreSQL
             _presenter = presenter;
             _connectorMode = ConnectorMode.UpdateConnection;
             _messageHelper = new MessageHelper("DBManager - PostgreSQL update connector");
+            _connectionName = connectionName;
 
             InitializeComponent();
             FillForm(connectionName);
@@ -39,30 +41,50 @@ namespace DBManager.Views.Engines.PostgreSQL
         private async void save_Click(object sender, EventArgs e)
         {
             if (IsValidForm(out string error) == false)
-                _messageHelper.ShowError(error);
-            else
             {
-                var dto = PrepareDto();
-
-                if (_connectorMode == ConnectorMode.UpdateConnection)
-                {
-                    var removeConnectonResponse = await _presenter.RemoveConnection(dto.Name);
-                    if (removeConnectonResponse.Type == ResponseType.Error)
-                    {
-                        _messageHelper.ShowError("Unable to remove connection.", removeConnectonResponse.Payload);
-                        return;
-                    }
-                }
-
-                var response = await _presenter.AddConnection(dto);
-                if (response.Type == ResponseType.Error)
-                {
-                    _messageHelper.ShowError("Unable to add new connection.", response.Payload);
-                    return;
-                }
-
-                DialogResult = DialogResult.OK;
+                _messageHelper.ShowError(error);
+                return;
             }
+
+            var connectionParameters = PrepareConnectionParameters();
+            var type = EngineType.PostgreSQL;
+            var connectionName = name.Text;
+
+            Response response;
+
+            switch (_connectorMode)
+            {
+                case ConnectorMode.NewConnection:
+                    var addConnectionDto = new AddConnectionDto
+                    {
+                        Type = type,
+                        ConnectionParameters = connectionParameters,
+                        Name = connectionName
+                    };
+                    response = await _presenter.AddConnection(addConnectionDto);
+                    break;
+                case ConnectorMode.UpdateConnection:
+                    var updateConnectionDto = new UpdateConnectionDto
+                    {
+                        Type = type,
+                        ConnectionParameters = connectionParameters,
+                        Name = connectionName,
+                        OldName = _connectionName
+                    };
+                    response = await _presenter.UpdateConnection(updateConnectionDto);
+                    break;
+                default:
+                    _messageHelper.ShowError("Unable to perform connector action - incorrect connector mode");
+                    return;
+            }
+
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to perform connector action for {connectionName} connection.", response.Payload);
+                return;
+            }
+
+            DialogResult = DialogResult.OK;
         }
 
         private void cancel_Click(object sender, EventArgs e)
@@ -79,7 +101,7 @@ namespace DBManager.Views.Engines.PostgreSQL
                 return;
             }
 
-            var payload = response.Payload as ConnectionDto;
+            var payload = response.Payload as AddConnectionDto;
 
             try
             {
@@ -115,7 +137,7 @@ namespace DBManager.Views.Engines.PostgreSQL
             return false;
         }
 
-        private ConnectionDto PrepareDto()
+        private Dictionary<string, string> PrepareConnectionParameters()
         {
             var parameters = new Dictionary<string, string>();
 
@@ -124,14 +146,7 @@ namespace DBManager.Views.Engines.PostgreSQL
             parameters["Uid"] = username.Text;
             parameters["Pwd"] = password.Text;
 
-            var dto = new ConnectionDto
-            {
-                Type = EngineType.PostgreSQL,
-                ConnectionParameters = parameters,
-                Name = name.Text
-            };
-
-            return dto;
+            return parameters;
         }
     }
 }

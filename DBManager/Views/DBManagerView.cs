@@ -116,7 +116,7 @@ namespace DBManager.Views
             var result = form.ShowDialog();
 
             if (result == DialogResult.OK)
-                DialogResult = DialogResult.OK;
+                LoadConnections();
         }
 
         private async void connectionTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -306,7 +306,6 @@ namespace DBManager.Views
                 statusStrip.Items["activeDatabase"].Text = $"Database: {nodes.Database.Text}";
                 statusStrip.Items["activeDatabase"].ImageIndex = 1;
             }
-
 
             if (nodes.Table != null)
             {
