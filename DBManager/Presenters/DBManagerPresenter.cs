@@ -99,19 +99,23 @@ namespace DBManager.Presenters
                 return Error(exception.Message);
             }
 
-            EngineType type;
             IEngineModel model;
 
             switch (connection.Type)
             {
                 case EngineType.MySql:
-                    type = connection.Type;
                     model = new MySqlModel(connection);
                     presenter = new MySqlPresenter(model, this);
+                    break;
+                case EngineType.PostgreSQL:
+                    model = new PostgreSQLModel(connection);
+                    presenter = new PostgreSQLPresenter(model, this);
                     break;
                 default:
                     return Error("Unable to create presenter. Incorrect engine type.");
             }
+
+            var type = connection.Type;
 
             dto = new PresenterResponseDto
             {

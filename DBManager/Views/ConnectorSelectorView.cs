@@ -1,5 +1,6 @@
 ﻿using DBManager.Presenters;
 using DBManager.Views.Engines.MySql;
+using DBManager.Views.Engines.PostgreSQL;
 using DBManager.Views.Helpers;
 using System;
 using System.Windows.Forms;
@@ -36,7 +37,12 @@ namespace DBManager.Views
 
         private void createPostgreSQL_Click(object sender, EventArgs e)
         {
-            //TODO: Deploy a link to PostrgreSQL Connector View
+            using var form = new PostgreSQLConnectorView(_presenter);
+
+            var result = form.ShowDialog();
+
+            if (result == DialogResult.OK)
+                DialogResult = DialogResult.OK;
         }
     }
 }

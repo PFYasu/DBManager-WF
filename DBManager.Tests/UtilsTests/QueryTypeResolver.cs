@@ -1,7 +1,7 @@
 ﻿using DBManager.Utils;
 using Xunit;
 
-namespace DBManager.Tests.UtilsTests.QueryHelperTests
+namespace DBManager.Tests.UtilsTests
 {
     public class QueryTypeResolver
     {

@@ -11,15 +11,6 @@
             };
         }
 
-        protected Response Error(object payload)
-        {
-            return new Response
-            {
-                Type = ResponseType.Error,
-                Payload = payload as string
-            };
-        }
-
         protected Response Ok()
         {
             return new Response

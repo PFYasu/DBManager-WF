@@ -1,16 +1,16 @@
 ﻿using DBManager.Utils;
-using MySqlConnector;
+using Npgsql;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
 namespace DBManager.Models.Engines
 {
-    public class MySqlModel : IEngineModel
+    public class PostgreSQLModel : IEngineModel
     {
         private readonly string _connectionString;
 
-        public MySqlModel(Connection connection)
+        public PostgreSQLModel(Connection connection)
         {
             var connectionParameters = connection.ConnectionParameters;
             _connectionString = ConnectorHelper.Combine(connectionParameters);
@@ -26,7 +26,7 @@ namespace DBManager.Models.Engines
 
         public async Task<DataTable> ExecuteQuery(string query)
         {
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
 
             var dataTable = StartExecuteQuery(connection, query);
@@ -37,10 +37,10 @@ namespace DBManager.Models.Engines
 
         public async Task<DataTable> ExecuteQuery(string query, string databaseName)
         {
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            await connection.ChangeDatabaseAsync(databaseName);
+            connection.ChangeDatabase(databaseName);
 
             var dataTable = StartExecuteQuery(connection, query);
 
@@ -50,7 +50,7 @@ namespace DBManager.Models.Engines
 
         public async Task<int> ExecuteNonQuery(string query)
         {
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
 
             var affected = await StartExecuteNonQuery(connection, query);
@@ -61,10 +61,10 @@ namespace DBManager.Models.Engines
 
         public async Task<int> ExecuteNonQuery(string query, string databaseName)
         {
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            await connection.ChangeDatabaseAsync(databaseName);
+            connection.ChangeDatabase(databaseName);
 
             var affected = await StartExecuteNonQuery(connection, query);
 
@@ -72,10 +72,10 @@ namespace DBManager.Models.Engines
             return affected;
         }
 
-        private DataTable StartExecuteQuery(MySqlConnection connection, string query)
+        private DataTable StartExecuteQuery(NpgsqlConnection connection, string query)
         {
-            using var command = new MySqlCommand(query, connection);
-            using var dataAdapter = new MySqlDataAdapter(command);
+            using var command = new NpgsqlCommand(query, connection);
+            using var dataAdapter = new NpgsqlDataAdapter(command);
 
             var dataTable = new DataTable();
 
@@ -84,9 +84,9 @@ namespace DBManager.Models.Engines
             return dataTable;
         }
 
-        private async Task<int> StartExecuteNonQuery(MySqlConnection connection, string query)
+        private async Task<int> StartExecuteNonQuery(NpgsqlConnection connection, string query)
         {
-            var command = new MySqlCommand(query, connection);
+            var command = new NpgsqlCommand(query, connection);
             var affected = await command.ExecuteNonQueryAsync();
 
             return affected;
