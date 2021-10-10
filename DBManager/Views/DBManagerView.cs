@@ -16,11 +16,13 @@ namespace DBManager.Views
     {
         private readonly DBManagerPresenterBase _presenter;
         private readonly MessageHelper _messageHelper;
+        private bool _treeViewActionIsActive;
 
         public DBManagerView(DBManagerPresenterBase presenter)
         {
             _presenter = presenter;
             _messageHelper = new MessageHelper("DbManager");
+            _treeViewActionIsActive = false;
 
             InitializeComponent();
             LoadConnections();
@@ -103,12 +105,26 @@ namespace DBManager.Views
             switch (nodes.Mode)
             {
                 case TreeNodeMode.ConnectionSelected:
+                    if (nodes.Connection.IsExpanded)
+                    {
+                        nodes.Connection.Collapse();
+                        return;
+                    }
+
                     form = new ConnectionView(payload.Presenter);
                     await LoadDatabases(payload.Presenter);
+                    nodes.Connection.Expand();
                     break;
                 case TreeNodeMode.DatabaseSelected:
+                    if (nodes.Database.IsExpanded)
+                    {
+                        nodes.Database.Collapse();
+                        return;
+                    }
+
                     form = new DatabaseView(payload.Presenter, nodes.Database.Text);
                     await LoadTables(payload.Presenter, nodes.Database.Text);
+                    nodes.Database.Expand();
                     break;
                 case TreeNodeMode.TableSelected:
                     form = new TableView(payload.Presenter, nodes.Database.Text, nodes.Table.Text);
