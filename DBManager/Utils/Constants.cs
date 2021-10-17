@@ -7,5 +7,10 @@
             public const string ConnectionData = "../../Data.txt";
             public const string Resources = "../../Resources";
         }
+
+        public static class QueryTracker
+        {
+            public const int RefreshTimePeriod = 60000;
+        }
     }
 }

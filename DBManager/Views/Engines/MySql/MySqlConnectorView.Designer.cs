@@ -100,9 +100,9 @@ namespace DBManager.Views.Engines.MySql
             // 
             // addConnection
             // 
-            this.addConnection.Location = new System.Drawing.Point(63, 178);
+            this.addConnection.Location = new System.Drawing.Point(76, 178);
             this.addConnection.Name = "addConnection";
-            this.addConnection.Size = new System.Drawing.Size(256, 20);
+            this.addConnection.Size = new System.Drawing.Size(243, 20);
             this.addConnection.TabIndex = 6;
             this.addConnection.Text = "Save";
             this.addConnection.UseVisualStyleBackColor = true;
@@ -112,7 +112,7 @@ namespace DBManager.Views.Engines.MySql
             // 
             this.cancel.Location = new System.Drawing.Point(10, 178);
             this.cancel.Name = "cancel";
-            this.cancel.Size = new System.Drawing.Size(47, 20);
+            this.cancel.Size = new System.Drawing.Size(60, 20);
             this.cancel.TabIndex = 7;
             this.cancel.Text = "Cancel";
             this.cancel.UseVisualStyleBackColor = true;

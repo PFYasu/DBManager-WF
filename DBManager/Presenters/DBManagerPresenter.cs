@@ -23,7 +23,7 @@ namespace DBManager.Presenters
         public override async Task<Response> AddConnection(AddConnectionDto dto)
         {
             if (ConnectionExists(dto.Name))
-                return Error($"Connection with {dto.Name} already exists");
+                return Error($"Connection with {dto.Name} name already exists");
 
             var connectionParameters = dto.ConnectionParameters;
 
@@ -64,7 +64,7 @@ namespace DBManager.Presenters
             }
 
             if (ConnectionExists(connectionName) == false)
-                return Error($"Connection with {connectionName} does not exist");
+                return Error($"Connection with {connectionName} name does not exist");
 
             Connection connection;
 
@@ -112,7 +112,7 @@ namespace DBManager.Presenters
         public override async Task<Response> RemoveConnection(string connectionName)
         {
             if (ConnectionExists(connectionName) == false)
-                return Error($"Connection with {connectionName} does not exist");
+                return Error($"Connection with {connectionName} name does not exist");
 
             try
             {
