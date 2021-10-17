@@ -29,34 +29,34 @@ namespace DBManager.Views.Engines
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.connectionView_tabControl = new System.Windows.Forms.TabControl();
             this.structure = new System.Windows.Forms.TabPage();
+            this.informations_typeLabel = new System.Windows.Forms.Label();
+            this.informations_connectionNameLabel = new System.Windows.Forms.Label();
             this.informations_portLabel = new System.Windows.Forms.Label();
             this.informations_serverLabel = new System.Windows.Forms.Label();
             this.informations_loggedAsLabel = new System.Windows.Forms.Label();
             this.informations_informationsLabel = new System.Windows.Forms.Label();
             this.structure_databasesCountLabel = new System.Windows.Forms.Label();
             this.structure_connectionParametersDataGridView = new System.Windows.Forms.DataGridView();
-            this.connectionStructure_connectionStructureLabel = new System.Windows.Forms.Label();
             this.structure_columnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.structure_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.informations_connectionNameLabel = new System.Windows.Forms.Label();
-            this.informations_typeLabel = new System.Windows.Forms.Label();
+            this.connectionStructure_connectionStructureLabel = new System.Windows.Forms.Label();
             this.connectionView_tabControl.SuspendLayout();
             this.structure.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.structure_connectionParametersDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // connectionView
+            // connectionView_tabControl
             // 
             this.connectionView_tabControl.Controls.Add(this.structure);
             this.connectionView_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.connectionView_tabControl.Location = new System.Drawing.Point(0, 0);
             this.connectionView_tabControl.Margin = new System.Windows.Forms.Padding(0);
-            this.connectionView_tabControl.Name = "connectionView";
+            this.connectionView_tabControl.Name = "connectionView_tabControl";
             this.connectionView_tabControl.Padding = new System.Drawing.Point(10, 3);
             this.connectionView_tabControl.SelectedIndex = 0;
             this.connectionView_tabControl.Size = new System.Drawing.Size(686, 390);
@@ -81,6 +81,30 @@ namespace DBManager.Views.Engines
             this.structure.Size = new System.Drawing.Size(678, 364);
             this.structure.TabIndex = 1;
             this.structure.Text = "Structure";
+            // 
+            // informations_typeLabel
+            // 
+            this.informations_typeLabel.AutoSize = true;
+            this.informations_typeLabel.BackColor = System.Drawing.Color.White;
+            this.informations_typeLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.informations_typeLabel.ForeColor = System.Drawing.Color.Black;
+            this.informations_typeLabel.Location = new System.Drawing.Point(8, 53);
+            this.informations_typeLabel.Name = "informations_typeLabel";
+            this.informations_typeLabel.Size = new System.Drawing.Size(43, 20);
+            this.informations_typeLabel.TabIndex = 23;
+            this.informations_typeLabel.Text = "Type:";
+            // 
+            // informations_connectionNameLabel
+            // 
+            this.informations_connectionNameLabel.AutoSize = true;
+            this.informations_connectionNameLabel.BackColor = System.Drawing.Color.White;
+            this.informations_connectionNameLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.informations_connectionNameLabel.ForeColor = System.Drawing.Color.Black;
+            this.informations_connectionNameLabel.Location = new System.Drawing.Point(8, 33);
+            this.informations_connectionNameLabel.Name = "informations_connectionNameLabel";
+            this.informations_connectionNameLabel.Size = new System.Drawing.Size(56, 20);
+            this.informations_connectionNameLabel.TabIndex = 22;
+            this.informations_connectionNameLabel.Text = "Name: ";
             // 
             // informations_portLabel
             // 
@@ -147,8 +171,8 @@ namespace DBManager.Views.Engines
             this.structure_connectionParametersDataGridView.AllowUserToAddRows = false;
             this.structure_connectionParametersDataGridView.AllowUserToDeleteRows = false;
             this.structure_connectionParametersDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            this.structure_connectionParametersDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            this.structure_connectionParametersDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.structure_connectionParametersDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -156,27 +180,27 @@ namespace DBManager.Views.Engines
             this.structure_connectionParametersDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.structure_connectionParametersDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.structure_connectionParametersDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.structure_connectionParametersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.structure_connectionParametersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.structure_connectionParametersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.structure_connectionParametersDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.structure_columnNumber,
             this.structure_Name});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.structure_connectionParametersDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.structure_connectionParametersDataGridView.DefaultCellStyle = dataGridViewCellStyle6;
             this.structure_connectionParametersDataGridView.EnableHeadersVisualStyles = false;
             this.structure_connectionParametersDataGridView.GridColor = System.Drawing.Color.Silver;
             this.structure_connectionParametersDataGridView.Location = new System.Drawing.Point(0, 127);
@@ -187,18 +211,6 @@ namespace DBManager.Views.Engines
             this.structure_connectionParametersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.structure_connectionParametersDataGridView.Size = new System.Drawing.Size(678, 241);
             this.structure_connectionParametersDataGridView.TabIndex = 16;
-            // 
-            // connectionStructure_connectionStructureLabel
-            // 
-            this.connectionStructure_connectionStructureLabel.AutoSize = true;
-            this.connectionStructure_connectionStructureLabel.BackColor = System.Drawing.Color.White;
-            this.connectionStructure_connectionStructureLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
-            this.connectionStructure_connectionStructureLabel.ForeColor = System.Drawing.Color.Black;
-            this.connectionStructure_connectionStructureLabel.Location = new System.Drawing.Point(3, 94);
-            this.connectionStructure_connectionStructureLabel.Name = "connectionStructure_connectionStructureLabel";
-            this.connectionStructure_connectionStructureLabel.Size = new System.Drawing.Size(220, 30);
-            this.connectionStructure_connectionStructureLabel.TabIndex = 2;
-            this.connectionStructure_connectionStructureLabel.Text = "Connection structure";
             // 
             // structure_columnNumber
             // 
@@ -212,31 +224,19 @@ namespace DBManager.Views.Engines
             this.structure_Name.Name = "structure_Name";
             this.structure_Name.ReadOnly = true;
             // 
-            // informations_connectionNameLabel
+            // connectionStructure_connectionStructureLabel
             // 
-            this.informations_connectionNameLabel.AutoSize = true;
-            this.informations_connectionNameLabel.BackColor = System.Drawing.Color.White;
-            this.informations_connectionNameLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F);
-            this.informations_connectionNameLabel.ForeColor = System.Drawing.Color.Black;
-            this.informations_connectionNameLabel.Location = new System.Drawing.Point(8, 33);
-            this.informations_connectionNameLabel.Name = "informations_connectionNameLabel";
-            this.informations_connectionNameLabel.Size = new System.Drawing.Size(56, 20);
-            this.informations_connectionNameLabel.TabIndex = 22;
-            this.informations_connectionNameLabel.Text = "Name: ";
+            this.connectionStructure_connectionStructureLabel.AutoSize = true;
+            this.connectionStructure_connectionStructureLabel.BackColor = System.Drawing.Color.White;
+            this.connectionStructure_connectionStructureLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.connectionStructure_connectionStructureLabel.ForeColor = System.Drawing.Color.Black;
+            this.connectionStructure_connectionStructureLabel.Location = new System.Drawing.Point(3, 94);
+            this.connectionStructure_connectionStructureLabel.Name = "connectionStructure_connectionStructureLabel";
+            this.connectionStructure_connectionStructureLabel.Size = new System.Drawing.Size(220, 30);
+            this.connectionStructure_connectionStructureLabel.TabIndex = 2;
+            this.connectionStructure_connectionStructureLabel.Text = "Connection structure";
             // 
-            // informations_typeLabel
-            // 
-            this.informations_typeLabel.AutoSize = true;
-            this.informations_typeLabel.BackColor = System.Drawing.Color.White;
-            this.informations_typeLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F);
-            this.informations_typeLabel.ForeColor = System.Drawing.Color.Black;
-            this.informations_typeLabel.Location = new System.Drawing.Point(8, 53);
-            this.informations_typeLabel.Name = "informations_typeLabel";
-            this.informations_typeLabel.Size = new System.Drawing.Size(43, 20);
-            this.informations_typeLabel.TabIndex = 23;
-            this.informations_typeLabel.Text = "Type:";
-            // 
-            // MySqlConnectionView
+            // ConnectionView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -244,7 +244,7 @@ namespace DBManager.Views.Engines
             this.ClientSize = new System.Drawing.Size(686, 390);
             this.Controls.Add(this.connectionView_tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "MySqlConnectionView";
+            this.Name = "ConnectionView";
             this.Text = "MySqlConnectionView";
             this.Load += new System.EventHandler(this.MySqlConnectionView_Load);
             this.connectionView_tabControl.ResumeLayout(false);

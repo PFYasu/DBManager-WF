@@ -54,6 +54,21 @@ namespace DBManager.Views.Engines
             query.Controls.Add(queryView);
         }
 
+        private void databaseView_tabControl_Enter(object sender, EventArgs e)
+        {
+            if (query.Controls.Count != 0)
+                return;
+
+            var trackedQueriesView = new TrackedQueriesView(_presenter, _databaseName)
+            {
+                Dock = DockStyle.Fill
+            };
+
+            trackedQueriesView.InitializeView();
+
+            trackedQueries.Controls.Add(trackedQueriesView);
+        }
+
         public async Task InitializeView()
         {
             var response = await _presenter.GetDatabaseDetails(_databaseName);

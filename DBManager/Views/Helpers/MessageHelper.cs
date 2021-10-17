@@ -40,5 +40,14 @@ namespace DBManager.Views.Helpers
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
         }
+
+        public void ShowInformation(string comment)
+        {
+            MessageBox.Show(
+                comment,
+                _viewName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
     }
 }

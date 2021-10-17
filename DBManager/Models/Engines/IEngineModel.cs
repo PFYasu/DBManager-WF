@@ -10,6 +10,7 @@ namespace DBManager.Models.Engines
         string Name { get; }
         EngineType Type { get; }
         Dictionary<string, string> ConnectionParameters { get; }
+        IQueryTracker QueryTracker { get; }
         Task<DataTable> ExecuteQuery(string query);
         Task<DataTable> ExecuteQuery(string query, string databaseName);
         Task<int> ExecuteNonQuery(string query);

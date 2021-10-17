@@ -18,7 +18,8 @@ namespace DBManager.Views.Engines
         private readonly Dictionary<string, List<string>> _databaseTableColumns;
         private readonly MessageHelper _messageHelper;
 
-        public QueryView(EnginePresenterBase presenter,
+        public QueryView(
+            EnginePresenterBase presenter,
             string databaseName,
             Dictionary<string, List<string>> databaseTableColumns)
         {
@@ -28,7 +29,6 @@ namespace DBManager.Views.Engines
             _messageHelper = new MessageHelper("DBManager - database query view");
 
             InitializeComponent();
-            InitializeView();
         }
 
         private void query_selectButton_Click(object sender, EventArgs e)

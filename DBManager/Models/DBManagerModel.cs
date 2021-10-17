@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DBManager.Models
 {
-    public class DBManagerModel : IDBManagerModel
+    public class DBManagerModel : IDBManagerModel, IAsyncDisposable
     {
         private readonly List<Connection> _connections;
 
@@ -55,17 +55,7 @@ namespace DBManager.Models
         {
             _connections.Add(connection);
 
-            using (var fileStream = new FileStream(Constants.Paths.ConnectionData, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
-            {
-                var streamReader = new StreamReader(fileStream);
-                using (var streamWriter = new StreamWriter(fileStream))
-                {
-                    var serializedList = JsonConvert.SerializeObject(_connections);
-
-                    fileStream.SetLength(0);
-                    await streamWriter.WriteAsync(serializedList);
-                }
-            }
+            await SaveConnectionListToFile();
         }
 
         public Connection GetConnection(string connectionName)
@@ -82,6 +72,11 @@ namespace DBManager.Models
             if (result != 1)
                 throw new InvalidOperationException("Removed more than one connection.");
 
+            await SaveConnectionListToFile();
+        }
+
+        private async Task SaveConnectionListToFile()
+        {
             using (var fileStream = new FileStream(Constants.Paths.ConnectionData, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
             {
                 var streamReader = new StreamReader(fileStream);
@@ -93,6 +88,11 @@ namespace DBManager.Models
                     await streamWriter.WriteAsync(serializedList);
                 }
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await SaveConnectionListToFile();
         }
     }
 }

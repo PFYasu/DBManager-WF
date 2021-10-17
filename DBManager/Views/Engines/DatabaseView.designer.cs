@@ -41,10 +41,11 @@ namespace DBManager.Views.Engines
             this.structure_size = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.structure_comparingSubtitlesMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.structure = new System.Windows.Forms.TabPage();
+            this.structure_databaseNameLabel = new System.Windows.Forms.Label();
             this.structure_tablesCountLabel = new System.Windows.Forms.Label();
             this.databaseView_tabControl = new System.Windows.Forms.TabControl();
             this.query = new System.Windows.Forms.TabPage();
-            this.structure_databaseNameLabel = new System.Windows.Forms.Label();
+            this.trackedQueries = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.structure_databaseParametersDataGridView)).BeginInit();
             this.structure.SuspendLayout();
             this.databaseView_tabControl.SuspendLayout();
@@ -163,41 +164,6 @@ namespace DBManager.Views.Engines
             this.structure.TabIndex = 1;
             this.structure.Text = "Structure";
             // 
-            // structure_tablesCountLabel
-            // 
-            this.structure_tablesCountLabel.AutoSize = true;
-            this.structure_tablesCountLabel.BackColor = System.Drawing.Color.White;
-            this.structure_tablesCountLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.structure_tablesCountLabel.ForeColor = System.Drawing.Color.Black;
-            this.structure_tablesCountLabel.Location = new System.Drawing.Point(205, 10);
-            this.structure_tablesCountLabel.Name = "structure_tablesCountLabel";
-            this.structure_tablesCountLabel.Size = new System.Drawing.Size(66, 21);
-            this.structure_tablesCountLabel.TabIndex = 17;
-            this.structure_tablesCountLabel.Text = "Tables: ";
-            // 
-            // databaseView
-            // 
-            this.databaseView_tabControl.Controls.Add(this.structure);
-            this.databaseView_tabControl.Controls.Add(this.query);
-            this.databaseView_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.databaseView_tabControl.Location = new System.Drawing.Point(0, 0);
-            this.databaseView_tabControl.Margin = new System.Windows.Forms.Padding(0);
-            this.databaseView_tabControl.Name = "databaseView";
-            this.databaseView_tabControl.Padding = new System.Drawing.Point(10, 3);
-            this.databaseView_tabControl.SelectedIndex = 0;
-            this.databaseView_tabControl.Size = new System.Drawing.Size(699, 390);
-            this.databaseView_tabControl.TabIndex = 4;
-            // 
-            // query
-            // 
-            this.query.Location = new System.Drawing.Point(4, 22);
-            this.query.Name = "query";
-            this.query.Size = new System.Drawing.Size(691, 364);
-            this.query.TabIndex = 2;
-            this.query.Text = "Query";
-            this.query.UseVisualStyleBackColor = true;
-            this.query.Enter += new System.EventHandler(this.query_Enter);
-            // 
             // structure_databaseNameLabel
             // 
             this.structure_databaseNameLabel.AutoSize = true;
@@ -210,7 +176,54 @@ namespace DBManager.Views.Engines
             this.structure_databaseNameLabel.TabIndex = 21;
             this.structure_databaseNameLabel.Text = "Name: ";
             // 
-            // MySqlDatabaseView
+            // structure_tablesCountLabel
+            // 
+            this.structure_tablesCountLabel.AutoSize = true;
+            this.structure_tablesCountLabel.BackColor = System.Drawing.Color.White;
+            this.structure_tablesCountLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.structure_tablesCountLabel.ForeColor = System.Drawing.Color.Black;
+            this.structure_tablesCountLabel.Location = new System.Drawing.Point(205, 10);
+            this.structure_tablesCountLabel.Name = "structure_tablesCountLabel";
+            this.structure_tablesCountLabel.Size = new System.Drawing.Size(66, 21);
+            this.structure_tablesCountLabel.TabIndex = 17;
+            this.structure_tablesCountLabel.Text = "Tables: ";
+            // 
+            // databaseView_tabControl
+            // 
+            this.databaseView_tabControl.Controls.Add(this.structure);
+            this.databaseView_tabControl.Controls.Add(this.query);
+            this.databaseView_tabControl.Controls.Add(this.trackedQueries);
+            this.databaseView_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.databaseView_tabControl.Location = new System.Drawing.Point(0, 0);
+            this.databaseView_tabControl.Margin = new System.Windows.Forms.Padding(0);
+            this.databaseView_tabControl.Name = "databaseView_tabControl";
+            this.databaseView_tabControl.Padding = new System.Drawing.Point(10, 3);
+            this.databaseView_tabControl.SelectedIndex = 0;
+            this.databaseView_tabControl.Size = new System.Drawing.Size(699, 390);
+            this.databaseView_tabControl.TabIndex = 4;
+            this.databaseView_tabControl.Enter += new System.EventHandler(this.databaseView_tabControl_Enter);
+            // 
+            // query
+            // 
+            this.query.Location = new System.Drawing.Point(4, 22);
+            this.query.Name = "query";
+            this.query.Size = new System.Drawing.Size(691, 364);
+            this.query.TabIndex = 2;
+            this.query.Text = "Query";
+            this.query.UseVisualStyleBackColor = true;
+            this.query.Enter += new System.EventHandler(this.query_Enter);
+            // 
+            // trackedQueries
+            // 
+            this.trackedQueries.Location = new System.Drawing.Point(4, 22);
+            this.trackedQueries.Name = "trackedQueries";
+            this.trackedQueries.Padding = new System.Windows.Forms.Padding(3);
+            this.trackedQueries.Size = new System.Drawing.Size(691, 364);
+            this.trackedQueries.TabIndex = 3;
+            this.trackedQueries.Text = "Tracked Queries";
+            this.trackedQueries.UseVisualStyleBackColor = true;
+            // 
+            // DatabaseView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -218,7 +231,7 @@ namespace DBManager.Views.Engines
             this.ClientSize = new System.Drawing.Size(699, 390);
             this.Controls.Add(this.databaseView_tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "MySqlDatabaseView";
+            this.Name = "DatabaseView";
             this.Text = "MySqlDatabaseView";
             this.Load += new System.EventHandler(this.MySqlDatabaseView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.structure_databaseParametersDataGridView)).EndInit();
@@ -243,5 +256,6 @@ namespace DBManager.Views.Engines
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_comparingSubtitlesMethod;
         private System.Windows.Forms.TabPage query;
         private System.Windows.Forms.Label structure_databaseNameLabel;
+        private System.Windows.Forms.TabPage trackedQueries;
     }
 }
