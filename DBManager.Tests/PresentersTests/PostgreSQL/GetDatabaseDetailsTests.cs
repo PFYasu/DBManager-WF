@@ -5,29 +5,30 @@ using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Tests.Helpers;
 using DBManager.Utils;
-using MySqlConnector;
+using Npgsql;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.MySql
+namespace DBManager.Tests.PresentersTests.PostgreSQL
 {
     public class GetDatabaseDetailsTests
     {
-        private readonly MySqlPresenter _presenter;
+        private readonly PostgreSQLPresenter _presenter;
 
         public GetDatabaseDetailsTests()
         {
             var connection = new Connection
             {
-                Name = "dbmanager_mysql_test",
-                Type = EngineType.MySql,
-                ConnectionParameters = ConnectionParameters.MySql.ConnectionParameters,
+                Name = "dbmanager_postgresql_test",
+                Type = EngineType.PostgreSQL,
+                ConnectionParameters = ConnectionParameters.PostgreSQL.ConnectionParameters,
                 TrackedQueries = new List<TrackedQuery>()
             };
 
-            var model = new MySqlModel(connection);
-            _presenter = new MySqlPresenter(model, null);
+            var model = new PostgreSQLModel(connection);
+            _presenter = new PostgreSQLPresenter(model, null);
         }
 
         [Fact]
@@ -37,30 +38,32 @@ namespace DBManager.Tests.PresentersTests.MySql
 
             const string tableName = "employees";
 
-            var connection = new MySqlConnection(ConnectionParameters.MySql.ConnectionString);
+            var connection = new NpgsqlConnection(ConnectionParameters.PostgreSQL.ConnectionString);
 
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
+            await PostgreSQLHelper.RemoveDatabase(connection, databaseName);
 
             using (var command = connection.CreateCommand())
             {
                 await connection.OpenAsync();
 
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{databaseName}`;";
+                command.CommandText = $"CREATE DATABASE {databaseName};";
                 await command.ExecuteNonQueryAsync();
 
                 await connection.ChangeDatabaseAsync(databaseName);
 
                 command.CommandText =
-                    $"CREATE TABLE IF NOT EXISTS `{tableName}` (" +
+                    $"CREATE TABLE {tableName} (" +
                         $"id INT," +
                         $"name VARCHAR(20));";
                 await command.ExecuteNonQueryAsync();
 
-                command.CommandText = $"INSERT INTO `{tableName}` VALUES (1, 'test');";
+                command.CommandText = $"INSERT INTO {tableName} VALUES (1, 'test');";
                 await command.ExecuteNonQueryAsync();
 
                 await connection.CloseAsync();
             }
+
+            WaitForApplyChangesToDatabase();
 
 
             var result = await Act(databaseName);
@@ -78,7 +81,13 @@ namespace DBManager.Tests.PresentersTests.MySql
             Assert.Equal(tableName, tableStructure.Name);
             Assert.Equal((ulong)1, tableStructure.Records);
 
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
+            await PostgreSQLHelper.RemoveDatabase(connection, databaseName);
+        }
+
+
+        private void WaitForApplyChangesToDatabase(uint time = 500)
+        {
+            Thread.Sleep(500);
         }
 
 
