@@ -5,29 +5,29 @@ using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Tests.Helpers;
 using DBManager.Utils;
-using MySqlConnector;
+using Npgsql;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.MySql
+namespace DBManager.Tests.PresentersTests.PostgreSQL
 {
     public class GetDatabaseNamesTests
     {
-        private readonly MySqlPresenter _presenter;
+        private readonly PostgreSQLPresenter _presenter;
 
         public GetDatabaseNamesTests()
         {
             var connection = new Connection
             {
-                Name = "dbmanager_mysql_test",
-                Type = EngineType.MySql,
-                ConnectionParameters = ConnectionParameters.MySql.ConnectionParameters,
+                Name = "dbmanager_postgresql_test",
+                Type = EngineType.PostgreSQL,
+                ConnectionParameters = ConnectionParameters.PostgreSQL.ConnectionParameters,
                 TrackedQueries = new List<TrackedQuery>()
             };
 
-            var model = new MySqlModel(connection);
-            _presenter = new MySqlPresenter(model, null);
+            var model = new PostgreSQLModel(connection);
+            _presenter = new PostgreSQLPresenter(model, null);
         }
 
         [Fact]
@@ -36,19 +36,25 @@ namespace DBManager.Tests.PresentersTests.MySql
             var firstDatabaseName = NamesGenerator.Generate();
             var secondDatabaseName = NamesGenerator.Generate();
 
-            var connection = new MySqlConnection(ConnectionParameters.MySql.ConnectionString);
+            var databasesToDelete = new List<string>
+            {
+                firstDatabaseName,
+                secondDatabaseName
+            };
 
-            await MySQLHelper.RemoveDatabase(connection, firstDatabaseName);
-            await MySQLHelper.RemoveDatabase(connection, secondDatabaseName);
+            var connection = new NpgsqlConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+
+            await PostgreSQLHelper.RemoveDatabase(connection, firstDatabaseName);
+            await PostgreSQLHelper.RemoveDatabase(connection, secondDatabaseName);
 
             using (var command = connection.CreateCommand())
             {
                 await connection.OpenAsync();
 
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{firstDatabaseName}`;";
+                command.CommandText = $"CREATE DATABASE {firstDatabaseName};";
                 await command.ExecuteNonQueryAsync();
 
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{secondDatabaseName}`;";
+                command.CommandText = $"CREATE DATABASE {secondDatabaseName};";
                 await command.ExecuteNonQueryAsync();
 
                 await connection.CloseAsync();
@@ -65,8 +71,8 @@ namespace DBManager.Tests.PresentersTests.MySql
             Assert.Contains(firstDatabaseName, payload.Names);
             Assert.Contains(secondDatabaseName, payload.Names);
 
-            await MySQLHelper.RemoveDatabase(connection, firstDatabaseName);
-            await MySQLHelper.RemoveDatabase(connection, secondDatabaseName);
+            await PostgreSQLHelper.RemoveDatabase(connection, firstDatabaseName);
+            await PostgreSQLHelper.RemoveDatabase(connection, secondDatabaseName);
         }
 
 
