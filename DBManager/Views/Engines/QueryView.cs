@@ -100,6 +100,14 @@ namespace DBManager.Views.Engines
             query_queryTypeLabel.Text = $"Type: {payload.Type}";
         }
 
+        private void query_addTrackedQueryButton_Click(object sender, EventArgs e)
+        {
+            var query = query_queryInput.Text;
+
+            using var form = new NewTrackedQueryView(_presenter, _databaseName, query);
+            form.ShowDialog();
+        }
+
         private void structure_tablesView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (structure_tablesView.SelectedItems.Count == 0)

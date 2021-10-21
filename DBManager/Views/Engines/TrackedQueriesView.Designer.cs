@@ -39,7 +39,6 @@ namespace DBManager.Views.Engines
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.trackedQueriesContainer = new System.Windows.Forms.SplitContainer();
             this.trackedQueries_removeButton = new System.Windows.Forms.Button();
-            this.trackedQueries_addButton = new System.Windows.Forms.Button();
             this.trackedQueries_refreshButton = new System.Windows.Forms.Button();
             this.trackedQueries_queryPreview = new System.Windows.Forms.RichTextBox();
             this.trackedQueries_timePeriodLabel = new System.Windows.Forms.Label();
@@ -72,7 +71,6 @@ namespace DBManager.Views.Engines
             // trackedQueriesContainer.Panel1
             // 
             this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_removeButton);
-            this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_addButton);
             this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_refreshButton);
             this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_queryPreview);
             this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_timePeriodLabel);
@@ -89,24 +87,13 @@ namespace DBManager.Views.Engines
             // trackedQueries_removeButton
             // 
             this.trackedQueries_removeButton.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_removeButton.Location = new System.Drawing.Point(168, 108);
+            this.trackedQueries_removeButton.Location = new System.Drawing.Point(87, 108);
             this.trackedQueries_removeButton.Name = "trackedQueries_removeButton";
             this.trackedQueries_removeButton.Size = new System.Drawing.Size(75, 23);
             this.trackedQueries_removeButton.TabIndex = 17;
             this.trackedQueries_removeButton.Text = "Remove";
             this.trackedQueries_removeButton.UseVisualStyleBackColor = true;
             this.trackedQueries_removeButton.Click += new System.EventHandler(this.trackedQueries_removeButton_Click);
-            // 
-            // trackedQueries_addButton
-            // 
-            this.trackedQueries_addButton.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_addButton.Location = new System.Drawing.Point(87, 108);
-            this.trackedQueries_addButton.Name = "trackedQueries_addButton";
-            this.trackedQueries_addButton.Size = new System.Drawing.Size(75, 23);
-            this.trackedQueries_addButton.TabIndex = 16;
-            this.trackedQueries_addButton.Text = "Add";
-            this.trackedQueries_addButton.UseVisualStyleBackColor = true;
-            this.trackedQueries_addButton.Click += new System.EventHandler(this.trackedQueries_addButton_Click);
             // 
             // trackedQueries_refreshButton
             // 
@@ -309,7 +296,7 @@ namespace DBManager.Views.Engines
             this.trackedQueries_previousQuery.RowHeadersVisible = false;
             this.trackedQueries_previousQuery.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.trackedQueries_previousQuery.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.trackedQueries_previousQuery.Size = new System.Drawing.Size(606, 117);
+            this.trackedQueries_previousQuery.Size = new System.Drawing.Size(606, 112);
             this.trackedQueries_previousQuery.TabIndex = 11;
             // 
             // TrackedQueriesView
@@ -349,7 +336,6 @@ namespace DBManager.Views.Engines
         private System.Windows.Forms.Label trackedQueries_timePeriodLabel;
         private System.Windows.Forms.RichTextBox trackedQueries_queryPreview;
         private System.Windows.Forms.Button trackedQueries_removeButton;
-        private System.Windows.Forms.Button trackedQueries_addButton;
         private System.Windows.Forms.Button trackedQueries_refreshButton;
     }
 }
