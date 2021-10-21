@@ -34,7 +34,10 @@ namespace DBManager.Views.Engines
         private void query_selectButton_Click(object sender, EventArgs e)
         {
             if (structure_tablesView.SelectedItems.Count == 0)
+            {
+                _messageHelper.ShowInformation("Please select table from list above");
                 return;
+            }
 
             var tableName = structure_tablesView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
@@ -47,7 +50,10 @@ namespace DBManager.Views.Engines
         private void query_insertButton_Click(object sender, EventArgs e)
         {
             if (structure_tablesView.SelectedItems.Count == 0)
+            {
+                _messageHelper.ShowInformation("Please select table from list above");
                 return;
+            }
 
             var tableName = structure_tablesView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
@@ -60,7 +66,10 @@ namespace DBManager.Views.Engines
         private void query_deleteButton_Click(object sender, EventArgs e)
         {
             if (structure_tablesView.SelectedItems.Count == 0)
+            {
+                _messageHelper.ShowInformation("Please select table from list above");
                 return;
+            }
 
             var tableName = structure_tablesView.SelectedItems[0].Text;
 
@@ -72,7 +81,10 @@ namespace DBManager.Views.Engines
         private void query_updateButton_Click(object sender, EventArgs e)
         {
             if (structure_tablesView.SelectedItems.Count == 0)
+            {
+                _messageHelper.ShowInformation("Please select table from list above");
                 return;
+            }
 
             var tableName = structure_tablesView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
@@ -85,6 +97,12 @@ namespace DBManager.Views.Engines
         private async void query_sendQueryButton_Click(object sender, EventArgs e)
         {
             var query = query_queryInput.Text;
+
+            if (string.IsNullOrEmpty(query))
+            {
+                _messageHelper.ShowInformation("Please insert a SQL statement above");
+                return;
+            }
 
             var response = await _presenter.SendQuery(_databaseName, query);
             if (response.Type == ResponseType.Error)
@@ -104,8 +122,18 @@ namespace DBManager.Views.Engines
         {
             var query = query_queryInput.Text;
 
+            if (string.IsNullOrEmpty(query))
+            {
+                _messageHelper.ShowInformation("Please insert a SQL statement above");
+                return;
+            }
+
             using var form = new NewTrackedQueryView(_presenter, _databaseName, query);
-            form.ShowDialog();
+
+            var result = form.ShowDialog();
+
+            if (result == DialogResult.OK)
+                _messageHelper.ShowInformation("Tracked query was added successfully.");
         }
 
         private void structure_tablesView_SelectedIndexChanged(object sender, EventArgs e)

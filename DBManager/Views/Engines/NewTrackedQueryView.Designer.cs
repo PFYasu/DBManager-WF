@@ -125,6 +125,11 @@ namespace DBManager.Views.Engines
             this.timePeriod.Name = "timePeriod";
             this.timePeriod.Size = new System.Drawing.Size(115, 20);
             this.timePeriod.TabIndex = 3;
+            this.timePeriod.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // query
             // 
