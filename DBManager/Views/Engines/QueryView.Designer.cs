@@ -41,7 +41,9 @@ namespace DBManager.Views.Engines
             this.structure_columnsView = new System.Windows.Forms.ListView();
             this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.queryContainer = new System.Windows.Forms.SplitContainer();
+            this.queryAction_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.query_sendQueryButton = new System.Windows.Forms.Button();
+            this.query_addTrackedQueryButton = new System.Windows.Forms.Button();
             this.query_queryInsertLabel = new System.Windows.Forms.Label();
             this.crud_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.query_updateButton = new System.Windows.Forms.Button();
@@ -55,8 +57,6 @@ namespace DBManager.Views.Engines
             this.query_queryLabel = new System.Windows.Forms.Label();
             this.query_databaseLabel = new System.Windows.Forms.Label();
             this.query_databaseNameLabel = new System.Windows.Forms.Label();
-            this.query_addTrackedQueryButton = new System.Windows.Forms.Button();
-            this.queryAction_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.structureView)).BeginInit();
             this.structureView.Panel1.SuspendLayout();
             this.structureView.Panel2.SuspendLayout();
@@ -69,9 +69,9 @@ namespace DBManager.Views.Engines
             this.queryContainer.Panel1.SuspendLayout();
             this.queryContainer.Panel2.SuspendLayout();
             this.queryContainer.SuspendLayout();
+            this.queryAction_tableLayoutPanel.SuspendLayout();
             this.crud_tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.query_DataGridView)).BeginInit();
-            this.queryAction_tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // structureView
@@ -165,7 +165,7 @@ namespace DBManager.Views.Engines
             this.structure_columnsView.Margin = new System.Windows.Forms.Padding(0);
             this.structure_columnsView.MultiSelect = false;
             this.structure_columnsView.Name = "structure_columnsView";
-            this.structure_columnsView.Size = new System.Drawing.Size(599, 119);
+            this.structure_columnsView.Size = new System.Drawing.Size(606, 119);
             this.structure_columnsView.TabIndex = 2;
             this.structure_columnsView.UseCompatibleStateImageBehavior = false;
             this.structure_columnsView.View = System.Windows.Forms.View.Details;
@@ -201,6 +201,22 @@ namespace DBManager.Views.Engines
             this.queryContainer.SplitterWidth = 9;
             this.queryContainer.TabIndex = 0;
             // 
+            // queryAction_tableLayoutPanel
+            // 
+            this.queryAction_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.queryAction_tableLayoutPanel.ColumnCount = 2;
+            this.queryAction_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.queryAction_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.queryAction_tableLayoutPanel.Controls.Add(this.query_sendQueryButton, 0, 0);
+            this.queryAction_tableLayoutPanel.Controls.Add(this.query_addTrackedQueryButton, 1, 0);
+            this.queryAction_tableLayoutPanel.Location = new System.Drawing.Point(3, 147);
+            this.queryAction_tableLayoutPanel.Name = "queryAction_tableLayoutPanel";
+            this.queryAction_tableLayoutPanel.RowCount = 1;
+            this.queryAction_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.queryAction_tableLayoutPanel.Size = new System.Drawing.Size(320, 34);
+            this.queryAction_tableLayoutPanel.TabIndex = 15;
+            // 
             // query_sendQueryButton
             // 
             this.query_sendQueryButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -213,6 +229,19 @@ namespace DBManager.Views.Engines
             this.query_sendQueryButton.Text = "Send Query";
             this.query_sendQueryButton.UseVisualStyleBackColor = true;
             this.query_sendQueryButton.Click += new System.EventHandler(this.query_sendQueryButton_Click);
+            // 
+            // query_addTrackedQueryButton
+            // 
+            this.query_addTrackedQueryButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.query_addTrackedQueryButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.query_addTrackedQueryButton.ForeColor = System.Drawing.Color.Black;
+            this.query_addTrackedQueryButton.Location = new System.Drawing.Point(195, 3);
+            this.query_addTrackedQueryButton.Name = "query_addTrackedQueryButton";
+            this.query_addTrackedQueryButton.Size = new System.Drawing.Size(122, 28);
+            this.query_addTrackedQueryButton.TabIndex = 16;
+            this.query_addTrackedQueryButton.Text = "Add Tracked Query";
+            this.query_addTrackedQueryButton.UseVisualStyleBackColor = true;
+            this.query_addTrackedQueryButton.Click += new System.EventHandler(this.query_addTrackedQueryButton_Click);
             // 
             // query_queryInsertLabel
             // 
@@ -243,7 +272,7 @@ namespace DBManager.Views.Engines
             this.crud_tableLayoutPanel.Name = "crud_tableLayoutPanel";
             this.crud_tableLayoutPanel.RowCount = 1;
             this.crud_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.crud_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.crud_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.crud_tableLayoutPanel.Size = new System.Drawing.Size(319, 28);
             this.crud_tableLayoutPanel.TabIndex = 14;
             // 
@@ -383,7 +412,7 @@ namespace DBManager.Views.Engines
             this.query_DataGridView.RowHeadersVisible = false;
             this.query_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.query_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.query_DataGridView.Size = new System.Drawing.Size(580, 153);
+            this.query_DataGridView.Size = new System.Drawing.Size(587, 153);
             this.query_DataGridView.TabIndex = 10;
             // 
             // query_queryLabel
@@ -422,35 +451,6 @@ namespace DBManager.Views.Engines
             this.query_databaseNameLabel.TabIndex = 20;
             this.query_databaseNameLabel.Text = "Name: ";
             // 
-            // query_addTrackedQueryButton
-            // 
-            this.query_addTrackedQueryButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.query_addTrackedQueryButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.query_addTrackedQueryButton.ForeColor = System.Drawing.Color.Black;
-            this.query_addTrackedQueryButton.Location = new System.Drawing.Point(195, 3);
-            this.query_addTrackedQueryButton.Name = "query_addTrackedQueryButton";
-            this.query_addTrackedQueryButton.Size = new System.Drawing.Size(122, 28);
-            this.query_addTrackedQueryButton.TabIndex = 16;
-            this.query_addTrackedQueryButton.Text = "Add Tracked Query";
-            this.query_addTrackedQueryButton.UseVisualStyleBackColor = true;
-            this.query_addTrackedQueryButton.Click += new System.EventHandler(this.query_addTrackedQueryButton_Click);
-            // 
-            // queryAction_tableLayoutPanel
-            // 
-            this.queryAction_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.queryAction_tableLayoutPanel.ColumnCount = 2;
-            this.queryAction_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.queryAction_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.queryAction_tableLayoutPanel.Controls.Add(this.query_sendQueryButton, 0, 0);
-            this.queryAction_tableLayoutPanel.Controls.Add(this.query_addTrackedQueryButton, 1, 0);
-            this.queryAction_tableLayoutPanel.Location = new System.Drawing.Point(3, 147);
-            this.queryAction_tableLayoutPanel.Name = "queryAction_tableLayoutPanel";
-            this.queryAction_tableLayoutPanel.RowCount = 1;
-            this.queryAction_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.queryAction_tableLayoutPanel.Size = new System.Drawing.Size(320, 34);
-            this.queryAction_tableLayoutPanel.TabIndex = 15;
-            // 
             // QueryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -476,9 +476,9 @@ namespace DBManager.Views.Engines
             this.queryContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.queryContainer)).EndInit();
             this.queryContainer.ResumeLayout(false);
+            this.queryAction_tableLayoutPanel.ResumeLayout(false);
             this.crud_tableLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.query_DataGridView)).EndInit();
-            this.queryAction_tableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
