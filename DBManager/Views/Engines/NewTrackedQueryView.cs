@@ -14,13 +14,16 @@ namespace DBManager.Views.Engines
         private readonly MessageHelper _messageHelper;
         private readonly string _databaseName;
 
-        public NewTrackedQueryView(EnginePresenterBase presenter, string databaseName)
+        public NewTrackedQueryView(EnginePresenterBase presenter, string databaseName, string queryPreview = null)
         {
             _presenter = presenter;
             _databaseName = databaseName;
             _messageHelper = new MessageHelper("DBManager - Tracked query configuration");
 
             InitializeComponent();
+
+            if (queryPreview != null)
+                query.Text = queryPreview;
         }
 
         private void save_Click(object sender, EventArgs e)

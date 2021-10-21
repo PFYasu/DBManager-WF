@@ -30,9 +30,6 @@ namespace DBManager.Views.Engines
 
         private async void query_Enter(object sender, EventArgs e)
         {
-            if (query.Controls.Count != 0)
-                return;
-
             var response = await _presenter.GetDatabaseTableColumns(_databaseName);
             if (response.Type == ResponseType.Error)
             {
@@ -51,20 +48,21 @@ namespace DBManager.Views.Engines
 
             queryView.InitializeView();
 
+            query.Controls.Clear();
+
             query.Controls.Add(queryView);
         }
 
-        private void databaseView_tabControl_Enter(object sender, EventArgs e)
+        private void trackedQueries_Enter(object sender, EventArgs e)
         {
-            if (query.Controls.Count != 0)
-                return;
-
             var trackedQueriesView = new TrackedQueriesView(_presenter, _databaseName)
             {
                 Dock = DockStyle.Fill
             };
 
             trackedQueriesView.InitializeView();
+
+            trackedQueries.Controls.Clear();
 
             trackedQueries.Controls.Add(trackedQueriesView);
         }

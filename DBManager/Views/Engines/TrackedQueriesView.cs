@@ -37,13 +37,6 @@ namespace DBManager.Views.Engines
             FillTrackedQueryDetails();
         }
 
-        private void trackedQueries_addButton_Click(object sender, EventArgs e)
-        {
-            using var form = new NewTrackedQueryView(_presenter, _databaseName);
-            form.ShowDialog();
-            GetTrackedQueriesList();
-        }
-
         private void trackedQueries_removeButton_Click(object sender, EventArgs e)
         {
             var selectedItem = trackedQueries_trackedQueriesList.SelectedItems[0].Text;
@@ -127,8 +120,9 @@ namespace DBManager.Views.Engines
             trackedQueries_removeButton.Enabled = false;
             trackedQueries_refreshButton.Enabled = false;
 
-            trackedQueries_actualQueryInfoLabel.Text = "Select query from list below";
-            trackedQueries_timePeriodLabel.Text = "";
+            trackedQueries_actualQueryInfoLabel.Text = "";
+            trackedQueries_previousQueryInfoLabel.Text = "";
+            trackedQueries_timePeriodLabel.Text = "Select query from list below";
             trackedQueries_queryPreview.Text = "";
 
             trackedQueries_previousQuery.DataSource = null;
