@@ -32,72 +32,90 @@ namespace DBManager.Views.Engines
             InitializeComponent();
         }
 
-        private void query_selectButton_Click(object sender, EventArgs e)
+        public void InitializeView()
         {
-            if (structure_tablesView.SelectedItems.Count == 0)
+            DatabaseStructure_ListView.Columns[0].Width = -2;
+            TableStructure_ListView.Columns[0].Width = -2;
+
+            CopyData_Button.Visible = false;
+            QueryType_Label.Visible = false;
+
+            Name_Label.Text = $"Name: {_databaseName}";
+
+            DatabaseStructure_ListView.Items.Clear();
+
+            foreach (var table in _databaseTableColumns.Keys)
+            {
+                DatabaseStructure_ListView.Items.Add(table);
+            }
+        }
+
+        private void Select_Button_Click(object sender, EventArgs e)
+        {
+            if (DatabaseStructure_ListView.SelectedItems.Count == 0)
             {
                 _messageHelper.ShowInformation("Please select table from list above");
                 return;
             }
 
-            var tableName = structure_tablesView.SelectedItems[0].Text;
+            var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
 
             var query = QueryHelper.HardcodedQuery.Select(tableName, columns);
 
-            query_queryInput.Text = query;
+            Query_RichTextBox.Text = query;
         }
 
-        private void query_insertButton_Click(object sender, EventArgs e)
+        private void Insert_Button_Click(object sender, EventArgs e)
         {
-            if (structure_tablesView.SelectedItems.Count == 0)
+            if (DatabaseStructure_ListView.SelectedItems.Count == 0)
             {
                 _messageHelper.ShowInformation("Please select table from list above");
                 return;
             }
 
-            var tableName = structure_tablesView.SelectedItems[0].Text;
+            var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
 
             var query = QueryHelper.HardcodedQuery.InsertInto(tableName, columns);
 
-            query_queryInput.Text = query;
+            Query_RichTextBox.Text = query;
         }
 
-        private void query_deleteButton_Click(object sender, EventArgs e)
+        private void Delete_Button_Click(object sender, EventArgs e)
         {
-            if (structure_tablesView.SelectedItems.Count == 0)
+            if (DatabaseStructure_ListView.SelectedItems.Count == 0)
             {
                 _messageHelper.ShowInformation("Please select table from list above");
                 return;
             }
 
-            var tableName = structure_tablesView.SelectedItems[0].Text;
+            var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
 
             var query = QueryHelper.HardcodedQuery.Delete(tableName);
 
-            query_queryInput.Text = query;
+            Query_RichTextBox.Text = query;
         }
 
-        private void query_updateButton_Click(object sender, EventArgs e)
+        private void Update_Button_Click(object sender, EventArgs e)
         {
-            if (structure_tablesView.SelectedItems.Count == 0)
+            if (DatabaseStructure_ListView.SelectedItems.Count == 0)
             {
                 _messageHelper.ShowInformation("Please select table from list above");
                 return;
             }
 
-            var tableName = structure_tablesView.SelectedItems[0].Text;
+            var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
 
             var query = QueryHelper.HardcodedQuery.Update(tableName, columns);
 
-            query_queryInput.Text = query;
+            Query_RichTextBox.Text = query;
         }
 
-        private async void query_sendQueryButton_Click(object sender, EventArgs e)
+        private async void SendQuery_Button_Click(object sender, EventArgs e)
         {
-            var query = query_queryInput.Text;
+            var query = Query_RichTextBox.Text;
 
             if (string.IsNullOrEmpty(query))
             {
@@ -114,17 +132,17 @@ namespace DBManager.Views.Engines
 
             var payload = response.Payload as QueryResponseDto;
 
-            query_DataGridView.DataSource = payload.Table;
+            QueryResult_DataGridView.DataSource = payload.Table;
 
-            query_queryTypeLabel.Visible = true;
-            query_queryTypeLabel.Text = $"Type: {payload.Type}";
+            QueryType_Label.Visible = true;
+            QueryType_Label.Text = $"Type: {payload.Type}";
 
-            query_copyDataButton.Visible = payload.Type == QueryType.Query;
+            CopyData_Button.Visible = payload.Type == QueryType.Query;
         }
 
-        private void query_addTrackedQueryButton_Click(object sender, EventArgs e)
+        private void AddTrackedQuery_Button_Click(object sender, EventArgs e)
         {
-            var query = query_queryInput.Text;
+            var query = Query_RichTextBox.Text;
 
             if (string.IsNullOrEmpty(query))
             {
@@ -140,61 +158,43 @@ namespace DBManager.Views.Engines
                 _messageHelper.ShowInformation("Tracked query was added successfully.");
         }
 
-        private void query_copyDataButton_Click(object sender, EventArgs e)
+        private void CopyData_Button_Click(object sender, EventArgs e)
         {
-            var dataToTransfer = query_DataGridView.DataSource as DataTable;
+            var dataToTransfer = QueryResult_DataGridView.DataSource as DataTable;
 
             using var form = new DataTransferView(_presenter, dataToTransfer);
             form.ShowDialog();
         }
 
-        private void structure_tablesView_SelectedIndexChanged(object sender, EventArgs e)
+        private void DatabaseStructure_ListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (structure_tablesView.SelectedItems.Count == 0)
+            if (DatabaseStructure_ListView.SelectedItems.Count == 0)
                 return;
 
-            var selectedItem = structure_tablesView.SelectedItems[0].Text;
+            var selectedItem = DatabaseStructure_ListView.SelectedItems[0].Text;
 
-            structure_tableNameLabel.Text = selectedItem;
+            SelectedDatabase_Label.Text = selectedItem;
 
-            structure_columnsView.Items.Clear();
+            TableStructure_ListView.Items.Clear();
             foreach (var columnName in _databaseTableColumns[selectedItem])
             {
-                structure_columnsView.Items.Add(columnName);
+                TableStructure_ListView.Items.Add(columnName);
             }
         }
 
-        private void structure_columnsView_SelectedIndexChanged(object sender, EventArgs e)
+        private void TableStructure_ListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (structure_columnsView.SelectedItems.Count == 0)
+            if (TableStructure_ListView.SelectedItems.Count == 0)
                 return;
 
-            var selectedItem = structure_columnsView.SelectedItems[0].Text;
+            var selectedItem = TableStructure_ListView.SelectedItems[0].Text;
 
-            query_queryInput.Text += selectedItem;
+            Query_RichTextBox.Text += selectedItem;
         }
 
-        private void structure_tableNameLabel_Click(object sender, EventArgs e)
+        private void SelectedDatabase_Label_Click(object sender, EventArgs e)
         {
-            query_queryInput.Text += structure_tableNameLabel.Text;
-        }
-
-        public void InitializeView()
-        {
-            structure_tablesView.Columns[0].Width = -2;
-            structure_columnsView.Columns[0].Width = -2;
-
-            query_copyDataButton.Visible = false;
-            query_queryTypeLabel.Visible = false;
-
-            query_databaseNameLabel.Text = $"Name: {_databaseName}";
-
-            structure_tablesView.Items.Clear();
-
-            foreach (var table in _databaseTableColumns.Keys)
-            {
-                structure_tablesView.Items.Add(table);
-            }
+            Query_RichTextBox.Text += SelectedDatabase_Label.Text;
         }
     }
 }

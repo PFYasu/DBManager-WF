@@ -26,19 +26,19 @@ namespace DBManager.Views.Engines
             LoadConnections();
 
             var imageList = ConnectionImageListHelper.GetImageList();
-            connectionTreeView.InitializeView(imageList);
+            ConnectionTree_ConnectionTreeView.InitializeView(imageList);
 
-            tryCopyData_button.Enabled = false;
+            TryCopyData_Button.Enabled = false;
 
-            connectionTreeView.OnSelectedNodeChanged += ConnectionTreeView_OnSelectedNodeChanged;
+            ConnectionTree_ConnectionTreeView.OnSelectedNodeChanged += ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged;
         }
 
-        private async void ConnectionTreeView_OnSelectedNodeChanged(object sender, TreeNodeElements e)
+        private async void ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged(object sender, TreeNodeElements e)
         {
             if (e.Mode == TreeNodeMode.NotSupported)
                 return;
 
-            tryCopyData_button.Enabled = false;
+            TryCopyData_Button.Enabled = false;
 
             switch (e.Mode)
             {
@@ -63,14 +63,14 @@ namespace DBManager.Views.Engines
                     e.Database.Expand();
                     break;
                 case TreeNodeMode.TableSelected:
-                    tryCopyData_button.Enabled = true;
+                    TryCopyData_Button.Enabled = true;
                     break;
             }
         }
 
-        private async void tryCopyData_button_Click(object sender, EventArgs e)
+        private async void TryCopyData_Button_Click(object sender, EventArgs e)
         {
-            var nodes = connectionTreeView.LastSelectedNode;
+            var nodes = ConnectionTree_ConnectionTreeView.LastSelectedNode;
 
             var response = await _presenter.DataTransferDriver.SendData(
                 _dataToTransfer,
@@ -97,7 +97,7 @@ namespace DBManager.Views.Engines
 
             var dto = response.Payload as ConnectionNamesDto;
 
-            connectionTreeView.LoadConnections(dto.Names);
+            ConnectionTree_ConnectionTreeView.LoadConnections(dto.Names);
         }
 
         private async Task LoadDatabases(string connectionName)
@@ -111,7 +111,7 @@ namespace DBManager.Views.Engines
 
             var payload = response.Payload as DatabaseNamesResponseDto;
 
-            connectionTreeView.LoadDatabases(connectionName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadDatabases(connectionName, payload.Names);
         }
 
         private async Task LoadTables(string connectionName, string databaseName)
@@ -125,7 +125,7 @@ namespace DBManager.Views.Engines
 
             var payload = response.Payload as TableNamesResponseDto;
 
-            connectionTreeView.LoadTables(connectionName, databaseName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadTables(connectionName, databaseName, payload.Names);
         }
     }
 }

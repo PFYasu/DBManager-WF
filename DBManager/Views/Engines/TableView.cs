@@ -3,7 +3,6 @@ using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Views.Helpers;
 using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -37,11 +36,11 @@ namespace DBManager.Views.Engines
 
             var payload = response.Payload as TableDetailsResponseDto;
 
-            structure_tableParametersDataGridView.Rows.Clear();
+            Structure_Structure_DataGridView.Rows.Clear();
 
             for (int i = 0; i < payload.ColumnsStructure.Count; i++)
             {
-                structure_tableParametersDataGridView.Rows.Insert(
+                Structure_Structure_DataGridView.Rows.Insert(
                     i,
                     i,
                     payload.ColumnsStructure[i].Name,
@@ -49,33 +48,22 @@ namespace DBManager.Views.Engines
                     payload.ColumnsStructure[i].ComparingSubtitlesMethod);
             }
 
-            tableDataGridView.DataSource = payload.Table;
+            Structure_Browse_DataGridView.DataSource = payload.Table;
 
-            browse_rowsCountLabel.Text = $"Elements: {payload.RowsCount}";
-            browse_tableNameLabel.Text = $"Name: {_tableName}";
+            Elements_Browse_Label.Text = $"Elements: {payload.RowsCount}";
+            Name_Browse_Label.Text = $"Name: {_tableName}";
 
-            statistics_tableNameLabel.Text = $"Name: {_tableName}";
-            statistics_createdAtLabel.Text = $"Created at: {payload.CreatedAt}";
-            statistics_lastUpdateLabel.Text = $"Last update: {payload.LastUpdate}";
-            statistics_sizeLabel.Text = $"Size (KB): {payload.Size}";
-            statistics_columnsCountLabel.Text = $"Columns: {payload.ColumnsCount}";
-            statistics_rowsCountLabel.Text = $"Records: {payload.RowsCount}";
+            Name_Structure_Label.Text = $"Name: {_tableName}";
+            CreatedAt_Structure_Label.Text = $"Created at: {payload.CreatedAt}";
+            LastUpdate_Structure_Label.Text = $"Last update: {payload.LastUpdate}";
+            Size_Structure_Label.Text = $"Size (KB): {payload.Size}";
+            Columns_Structure_Label.Text = $"Columns: {payload.ColumnsCount}";
+            Records_Structure_Label.Text = $"Records: {payload.RowsCount}";
         }
 
         private async void MySqlTableView_Load(object sender, EventArgs e)
         {
             await InitializeView();
-        }
-
-        public Label GetLabel(string text)
-        {
-            return new Label
-            {
-                Text = text,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
-                TextAlign = ContentAlignment.MiddleCenter,
-                ForeColor = Color.Black
-            };
         }
     }
 }

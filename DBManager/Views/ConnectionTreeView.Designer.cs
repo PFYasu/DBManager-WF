@@ -29,29 +29,29 @@ namespace DBManager.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.connectionTree = new System.Windows.Forms.TreeView();
+            this.ConnectionTree_TreeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
-            // connectionTree
+            // ConnectionTree_TreeView
             // 
-            this.connectionTree.BackColor = System.Drawing.Color.White;
-            this.connectionTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.connectionTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.connectionTree.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.connectionTree.ForeColor = System.Drawing.Color.Black;
-            this.connectionTree.Indent = 8;
-            this.connectionTree.Location = new System.Drawing.Point(0, 0);
-            this.connectionTree.Name = "connectionTree";
-            this.connectionTree.ShowPlusMinus = false;
-            this.connectionTree.Size = new System.Drawing.Size(150, 150);
-            this.connectionTree.TabIndex = 5;
-            this.connectionTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.connectionTree_NodeMouseClick);
+            this.ConnectionTree_TreeView.BackColor = System.Drawing.Color.White;
+            this.ConnectionTree_TreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ConnectionTree_TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ConnectionTree_TreeView.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ConnectionTree_TreeView.ForeColor = System.Drawing.Color.Black;
+            this.ConnectionTree_TreeView.Indent = 8;
+            this.ConnectionTree_TreeView.Location = new System.Drawing.Point(0, 0);
+            this.ConnectionTree_TreeView.Name = "ConnectionTree_TreeView";
+            this.ConnectionTree_TreeView.ShowPlusMinus = false;
+            this.ConnectionTree_TreeView.Size = new System.Drawing.Size(150, 150);
+            this.ConnectionTree_TreeView.TabIndex = 5;
+            this.ConnectionTree_TreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ConnectionTree_TreeView_NodeMouseClick);
             // 
             // ConnectionTreeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.connectionTree);
+            this.Controls.Add(this.ConnectionTree_TreeView);
             this.Name = "ConnectionTreeView";
             this.ResumeLayout(false);
 
@@ -59,6 +59,6 @@ namespace DBManager.Views
 
         #endregion
 
-        private System.Windows.Forms.TreeView connectionTree;
+        private System.Windows.Forms.TreeView ConnectionTree_TreeView;
     }
 }

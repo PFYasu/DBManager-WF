@@ -23,12 +23,41 @@ namespace DBManager.Views.Engines
             InitializeComponent();
         }
 
+        public async Task InitializeView()
+        {
+            var response = await _presenter.GetDatabaseDetails(_databaseName);
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError("Unable to get database details.", response.Payload);
+                return;
+            }
+
+            var payload = response.Payload as DatabaseDetailsResponseDto;
+
+            Structure_Structure_DataGridView.Rows.Clear();
+
+            for (int i = 0; i < payload.TablesStructure.Count; i++)
+            {
+                Structure_Structure_DataGridView.Rows.Insert(
+                    i,
+                    i,
+                    payload.TablesStructure[i].Name,
+                    payload.TablesStructure[i].Type,
+                    payload.TablesStructure[i].Records,
+                    payload.TablesStructure[i].Size,
+                    payload.TablesStructure[i].ComparingSubtitlesMethod);
+            }
+
+            Tables_Structure_Label.Text = $"Tables: {payload.TablesCount}";
+            Name_Structure_Label.Text = $"Name: {_databaseName}";
+        }
+
         private async void MySqlDatabaseView_Load(object sender, EventArgs e)
         {
             await InitializeView();
         }
 
-        private async void query_Enter(object sender, EventArgs e)
+        private async void Query_Enter(object sender, EventArgs e)
         {
             var response = await _presenter.GetDatabaseTableColumns(_databaseName);
             if (response.Type == ResponseType.Error)
@@ -48,12 +77,12 @@ namespace DBManager.Views.Engines
 
             queryView.InitializeView();
 
-            query.Controls.Clear();
+            Query.Controls.Clear();
 
-            query.Controls.Add(queryView);
+            Query.Controls.Add(queryView);
         }
 
-        private void trackedQueries_Enter(object sender, EventArgs e)
+        private void TrackedQueries_Enter(object sender, EventArgs e)
         {
             var trackedQueriesView = new TrackedQueriesView(_presenter, _databaseName)
             {
@@ -62,38 +91,9 @@ namespace DBManager.Views.Engines
 
             trackedQueriesView.InitializeView();
 
-            trackedQueries.Controls.Clear();
+            TrackedQueries.Controls.Clear();
 
-            trackedQueries.Controls.Add(trackedQueriesView);
-        }
-
-        public async Task InitializeView()
-        {
-            var response = await _presenter.GetDatabaseDetails(_databaseName);
-            if (response.Type == ResponseType.Error)
-            {
-                _messageHelper.ShowError("Unable to get database details.", response.Payload);
-                return;
-            }
-
-            var payload = response.Payload as DatabaseDetailsResponseDto;
-
-            structure_databaseParametersDataGridView.Rows.Clear();
-
-            for (int i = 0; i < payload.TablesStructure.Count; i++)
-            {
-                structure_databaseParametersDataGridView.Rows.Insert(
-                    i,
-                    i,
-                    payload.TablesStructure[i].Name,
-                    payload.TablesStructure[i].Type,
-                    payload.TablesStructure[i].Records,
-                    payload.TablesStructure[i].Size,
-                    payload.TablesStructure[i].ComparingSubtitlesMethod);
-            }
-
-            structure_tablesCountLabel.Text = $"Tables: {payload.TablesCount}";
-            structure_databaseNameLabel.Text = $"Name: {_databaseName}";
+            TrackedQueries.Controls.Add(trackedQueriesView);
         }
     }
 }

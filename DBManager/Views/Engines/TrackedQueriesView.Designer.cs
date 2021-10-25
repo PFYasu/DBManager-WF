@@ -29,26 +29,26 @@ namespace DBManager.Views.Engines
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.trackedQueriesContainer = new System.Windows.Forms.SplitContainer();
-            this.trackedQueries_removeButton = new System.Windows.Forms.Button();
-            this.trackedQueries_refreshButton = new System.Windows.Forms.Button();
-            this.trackedQueries_queryPreview = new System.Windows.Forms.RichTextBox();
+            this.Remove_Button = new System.Windows.Forms.Button();
+            this.Refresh_Button = new System.Windows.Forms.Button();
+            this.TrackedQuery_RichTextBox = new System.Windows.Forms.RichTextBox();
             this.trackedQueries_timePeriodLabel = new System.Windows.Forms.Label();
-            this.trackedQueries_trackedQueriesList = new System.Windows.Forms.ListView();
+            this.TrackedQueries_ListView = new System.Windows.Forms.ListView();
             this.trackedQueryNames = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.trackedQueriesResultsContainer = new System.Windows.Forms.SplitContainer();
-            this.trackedQueries_actualQueryInfoLabel = new System.Windows.Forms.Label();
-            this.trackedQueries_actualQuery = new System.Windows.Forms.DataGridView();
-            this.trackedQueries_previousQueryInfoLabel = new System.Windows.Forms.Label();
-            this.trackedQueries_previousQuery = new System.Windows.Forms.DataGridView();
+            this.ActualQuery_Label = new System.Windows.Forms.Label();
+            this.ActualQuery_DataGridView = new System.Windows.Forms.DataGridView();
+            this.PreviousQuery_Label = new System.Windows.Forms.Label();
+            this.PreviousQuery_DataGridView = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.trackedQueriesContainer)).BeginInit();
             this.trackedQueriesContainer.Panel1.SuspendLayout();
             this.trackedQueriesContainer.Panel2.SuspendLayout();
@@ -57,8 +57,8 @@ namespace DBManager.Views.Engines
             this.trackedQueriesResultsContainer.Panel1.SuspendLayout();
             this.trackedQueriesResultsContainer.Panel2.SuspendLayout();
             this.trackedQueriesResultsContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackedQueries_actualQuery)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackedQueries_previousQuery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActualQuery_DataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviousQuery_DataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // trackedQueriesContainer
@@ -70,11 +70,11 @@ namespace DBManager.Views.Engines
             // 
             // trackedQueriesContainer.Panel1
             // 
-            this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_removeButton);
-            this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_refreshButton);
-            this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_queryPreview);
+            this.trackedQueriesContainer.Panel1.Controls.Add(this.Remove_Button);
+            this.trackedQueriesContainer.Panel1.Controls.Add(this.Refresh_Button);
+            this.trackedQueriesContainer.Panel1.Controls.Add(this.TrackedQuery_RichTextBox);
             this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_timePeriodLabel);
-            this.trackedQueriesContainer.Panel1.Controls.Add(this.trackedQueries_trackedQueriesList);
+            this.trackedQueriesContainer.Panel1.Controls.Add(this.TrackedQueries_ListView);
             // 
             // trackedQueriesContainer.Panel2
             // 
@@ -84,38 +84,38 @@ namespace DBManager.Views.Engines
             this.trackedQueriesContainer.SplitterWidth = 9;
             this.trackedQueriesContainer.TabIndex = 1;
             // 
-            // trackedQueries_removeButton
+            // Remove_Button
             // 
-            this.trackedQueries_removeButton.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_removeButton.Location = new System.Drawing.Point(87, 108);
-            this.trackedQueries_removeButton.Name = "trackedQueries_removeButton";
-            this.trackedQueries_removeButton.Size = new System.Drawing.Size(75, 23);
-            this.trackedQueries_removeButton.TabIndex = 17;
-            this.trackedQueries_removeButton.Text = "Remove";
-            this.trackedQueries_removeButton.UseVisualStyleBackColor = true;
-            this.trackedQueries_removeButton.Click += new System.EventHandler(this.trackedQueries_removeButton_Click);
+            this.Remove_Button.ForeColor = System.Drawing.Color.Black;
+            this.Remove_Button.Location = new System.Drawing.Point(87, 108);
+            this.Remove_Button.Name = "Remove_Button";
+            this.Remove_Button.Size = new System.Drawing.Size(75, 23);
+            this.Remove_Button.TabIndex = 17;
+            this.Remove_Button.Text = "Remove";
+            this.Remove_Button.UseVisualStyleBackColor = true;
+            this.Remove_Button.Click += new System.EventHandler(this.Remove_Button_Click);
             // 
-            // trackedQueries_refreshButton
+            // Refresh_Button
             // 
-            this.trackedQueries_refreshButton.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_refreshButton.Location = new System.Drawing.Point(6, 108);
-            this.trackedQueries_refreshButton.Name = "trackedQueries_refreshButton";
-            this.trackedQueries_refreshButton.Size = new System.Drawing.Size(75, 23);
-            this.trackedQueries_refreshButton.TabIndex = 15;
-            this.trackedQueries_refreshButton.Text = "Refresh";
-            this.trackedQueries_refreshButton.UseVisualStyleBackColor = true;
-            this.trackedQueries_refreshButton.Click += new System.EventHandler(this.trackedQueries_refreshButton_Click);
+            this.Refresh_Button.ForeColor = System.Drawing.Color.Black;
+            this.Refresh_Button.Location = new System.Drawing.Point(6, 108);
+            this.Refresh_Button.Name = "Refresh_Button";
+            this.Refresh_Button.Size = new System.Drawing.Size(75, 23);
+            this.Refresh_Button.TabIndex = 15;
+            this.Refresh_Button.Text = "Refresh";
+            this.Refresh_Button.UseVisualStyleBackColor = true;
+            this.Refresh_Button.Click += new System.EventHandler(this.Refresh_Button_Click);
             // 
-            // trackedQueries_queryPreview
+            // TrackedQuery_RichTextBox
             // 
-            this.trackedQueries_queryPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TrackedQuery_RichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackedQueries_queryPreview.Location = new System.Drawing.Point(6, 21);
-            this.trackedQueries_queryPreview.Name = "trackedQueries_queryPreview";
-            this.trackedQueries_queryPreview.ReadOnly = true;
-            this.trackedQueries_queryPreview.Size = new System.Drawing.Size(297, 81);
-            this.trackedQueries_queryPreview.TabIndex = 14;
-            this.trackedQueries_queryPreview.Text = "";
+            this.TrackedQuery_RichTextBox.Location = new System.Drawing.Point(6, 21);
+            this.TrackedQuery_RichTextBox.Name = "TrackedQuery_RichTextBox";
+            this.TrackedQuery_RichTextBox.ReadOnly = true;
+            this.TrackedQuery_RichTextBox.Size = new System.Drawing.Size(297, 81);
+            this.TrackedQuery_RichTextBox.TabIndex = 14;
+            this.TrackedQuery_RichTextBox.Text = "";
             // 
             // trackedQueries_timePeriodLabel
             // 
@@ -127,24 +127,24 @@ namespace DBManager.Views.Engines
             this.trackedQueries_timePeriodLabel.Size = new System.Drawing.Size(0, 17);
             this.trackedQueries_timePeriodLabel.TabIndex = 13;
             // 
-            // trackedQueries_trackedQueriesList
+            // TrackedQueries_ListView
             // 
-            this.trackedQueries_trackedQueriesList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.TrackedQueries_ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackedQueries_trackedQueriesList.BackColor = System.Drawing.Color.White;
-            this.trackedQueries_trackedQueriesList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.TrackedQueries_ListView.BackColor = System.Drawing.Color.White;
+            this.TrackedQueries_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.trackedQueryNames});
-            this.trackedQueries_trackedQueriesList.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.trackedQueries_trackedQueriesList.HideSelection = false;
-            this.trackedQueries_trackedQueriesList.Location = new System.Drawing.Point(0, 137);
-            this.trackedQueries_trackedQueriesList.MultiSelect = false;
-            this.trackedQueries_trackedQueriesList.Name = "trackedQueries_trackedQueriesList";
-            this.trackedQueries_trackedQueriesList.Size = new System.Drawing.Size(306, 230);
-            this.trackedQueries_trackedQueriesList.TabIndex = 1;
-            this.trackedQueries_trackedQueriesList.UseCompatibleStateImageBehavior = false;
-            this.trackedQueries_trackedQueriesList.View = System.Windows.Forms.View.Details;
-            this.trackedQueries_trackedQueriesList.SelectedIndexChanged += new System.EventHandler(this.trackedQueries_trackedQueriesList_SelectedIndexChanged);
+            this.TrackedQueries_ListView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TrackedQueries_ListView.HideSelection = false;
+            this.TrackedQueries_ListView.Location = new System.Drawing.Point(0, 137);
+            this.TrackedQueries_ListView.MultiSelect = false;
+            this.TrackedQueries_ListView.Name = "TrackedQueries_ListView";
+            this.TrackedQueries_ListView.Size = new System.Drawing.Size(306, 230);
+            this.TrackedQueries_ListView.TabIndex = 1;
+            this.TrackedQueries_ListView.UseCompatibleStateImageBehavior = false;
+            this.TrackedQueries_ListView.View = System.Windows.Forms.View.Details;
+            this.TrackedQueries_ListView.SelectedIndexChanged += new System.EventHandler(this.TrackedQueries_ListView_SelectedIndexChanged);
             // 
             // trackedQueryNames
             // 
@@ -161,143 +161,143 @@ namespace DBManager.Views.Engines
             // 
             // trackedQueriesResultsContainer.Panel1
             // 
-            this.trackedQueriesResultsContainer.Panel1.Controls.Add(this.trackedQueries_actualQueryInfoLabel);
-            this.trackedQueriesResultsContainer.Panel1.Controls.Add(this.trackedQueries_actualQuery);
+            this.trackedQueriesResultsContainer.Panel1.Controls.Add(this.ActualQuery_Label);
+            this.trackedQueriesResultsContainer.Panel1.Controls.Add(this.ActualQuery_DataGridView);
             // 
             // trackedQueriesResultsContainer.Panel2
             // 
-            this.trackedQueriesResultsContainer.Panel2.Controls.Add(this.trackedQueries_previousQueryInfoLabel);
-            this.trackedQueriesResultsContainer.Panel2.Controls.Add(this.trackedQueries_previousQuery);
+            this.trackedQueriesResultsContainer.Panel2.Controls.Add(this.PreviousQuery_Label);
+            this.trackedQueriesResultsContainer.Panel2.Controls.Add(this.PreviousQuery_DataGridView);
             this.trackedQueriesResultsContainer.Size = new System.Drawing.Size(610, 371);
             this.trackedQueriesResultsContainer.SplitterDistance = 203;
             this.trackedQueriesResultsContainer.SplitterWidth = 9;
             this.trackedQueriesResultsContainer.TabIndex = 1;
             // 
-            // trackedQueries_actualQueryInfoLabel
+            // ActualQuery_Label
             // 
-            this.trackedQueries_actualQueryInfoLabel.AutoSize = true;
-            this.trackedQueries_actualQueryInfoLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.trackedQueries_actualQueryInfoLabel.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_actualQueryInfoLabel.Location = new System.Drawing.Point(1, 0);
-            this.trackedQueries_actualQueryInfoLabel.Name = "trackedQueries_actualQueryInfoLabel";
-            this.trackedQueries_actualQueryInfoLabel.Size = new System.Drawing.Size(85, 17);
-            this.trackedQueries_actualQueryInfoLabel.TabIndex = 12;
-            this.trackedQueries_actualQueryInfoLabel.Text = "ActualQuery";
+            this.ActualQuery_Label.AutoSize = true;
+            this.ActualQuery_Label.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ActualQuery_Label.ForeColor = System.Drawing.Color.Black;
+            this.ActualQuery_Label.Location = new System.Drawing.Point(1, 0);
+            this.ActualQuery_Label.Name = "ActualQuery_Label";
+            this.ActualQuery_Label.Size = new System.Drawing.Size(85, 17);
+            this.ActualQuery_Label.TabIndex = 12;
+            this.ActualQuery_Label.Text = "ActualQuery";
             // 
-            // trackedQueries_actualQuery
+            // ActualQuery_DataGridView
             // 
-            this.trackedQueries_actualQuery.AllowUserToAddRows = false;
-            this.trackedQueries_actualQuery.AllowUserToDeleteRows = false;
-            this.trackedQueries_actualQuery.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.trackedQueries_actualQuery.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.trackedQueries_actualQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ActualQuery_DataGridView.AllowUserToAddRows = false;
+            this.ActualQuery_DataGridView.AllowUserToDeleteRows = false;
+            this.ActualQuery_DataGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ActualQuery_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+            this.ActualQuery_DataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackedQueries_actualQuery.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.trackedQueries_actualQuery.BackgroundColor = System.Drawing.Color.White;
-            this.trackedQueries_actualQuery.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.trackedQueries_actualQuery.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.trackedQueries_actualQuery.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.trackedQueries_actualQuery.DefaultCellStyle = dataGridViewCellStyle3;
-            this.trackedQueries_actualQuery.EnableHeadersVisualStyles = false;
-            this.trackedQueries_actualQuery.GridColor = System.Drawing.Color.Silver;
-            this.trackedQueries_actualQuery.Location = new System.Drawing.Point(0, 17);
-            this.trackedQueries_actualQuery.Margin = new System.Windows.Forms.Padding(0);
-            this.trackedQueries_actualQuery.Name = "trackedQueries_actualQuery";
-            this.trackedQueries_actualQuery.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.trackedQueries_actualQuery.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.trackedQueries_actualQuery.RowHeadersVisible = false;
-            this.trackedQueries_actualQuery.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_actualQuery.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.trackedQueries_actualQuery.Size = new System.Drawing.Size(606, 182);
-            this.trackedQueries_actualQuery.TabIndex = 11;
+            this.ActualQuery_DataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.ActualQuery_DataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.ActualQuery_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle18.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ActualQuery_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            this.ActualQuery_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ActualQuery_DataGridView.DefaultCellStyle = dataGridViewCellStyle19;
+            this.ActualQuery_DataGridView.EnableHeadersVisualStyles = false;
+            this.ActualQuery_DataGridView.GridColor = System.Drawing.Color.Silver;
+            this.ActualQuery_DataGridView.Location = new System.Drawing.Point(0, 17);
+            this.ActualQuery_DataGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.ActualQuery_DataGridView.Name = "ActualQuery_DataGridView";
+            this.ActualQuery_DataGridView.ReadOnly = true;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ActualQuery_DataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            this.ActualQuery_DataGridView.RowHeadersVisible = false;
+            this.ActualQuery_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.ActualQuery_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.ActualQuery_DataGridView.Size = new System.Drawing.Size(606, 182);
+            this.ActualQuery_DataGridView.TabIndex = 11;
             // 
-            // trackedQueries_previousQueryInfoLabel
+            // PreviousQuery_Label
             // 
-            this.trackedQueries_previousQueryInfoLabel.AutoSize = true;
-            this.trackedQueries_previousQueryInfoLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.trackedQueries_previousQueryInfoLabel.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_previousQueryInfoLabel.Location = new System.Drawing.Point(1, 0);
-            this.trackedQueries_previousQueryInfoLabel.Name = "trackedQueries_previousQueryInfoLabel";
-            this.trackedQueries_previousQueryInfoLabel.Size = new System.Drawing.Size(103, 17);
-            this.trackedQueries_previousQueryInfoLabel.TabIndex = 13;
-            this.trackedQueries_previousQueryInfoLabel.Text = "Previous Query";
+            this.PreviousQuery_Label.AutoSize = true;
+            this.PreviousQuery_Label.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.PreviousQuery_Label.ForeColor = System.Drawing.Color.Black;
+            this.PreviousQuery_Label.Location = new System.Drawing.Point(1, 0);
+            this.PreviousQuery_Label.Name = "PreviousQuery_Label";
+            this.PreviousQuery_Label.Size = new System.Drawing.Size(103, 17);
+            this.PreviousQuery_Label.TabIndex = 13;
+            this.PreviousQuery_Label.Text = "Previous Query";
             // 
-            // trackedQueries_previousQuery
+            // PreviousQuery_DataGridView
             // 
-            this.trackedQueries_previousQuery.AllowUserToAddRows = false;
-            this.trackedQueries_previousQuery.AllowUserToDeleteRows = false;
-            this.trackedQueries_previousQuery.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.trackedQueries_previousQuery.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.trackedQueries_previousQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.PreviousQuery_DataGridView.AllowUserToAddRows = false;
+            this.PreviousQuery_DataGridView.AllowUserToDeleteRows = false;
+            this.PreviousQuery_DataGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PreviousQuery_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+            this.PreviousQuery_DataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackedQueries_previousQuery.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.trackedQueries_previousQuery.BackgroundColor = System.Drawing.Color.White;
-            this.trackedQueries_previousQuery.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.trackedQueries_previousQuery.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.trackedQueries_previousQuery.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.trackedQueries_previousQuery.DefaultCellStyle = dataGridViewCellStyle7;
-            this.trackedQueries_previousQuery.EnableHeadersVisualStyles = false;
-            this.trackedQueries_previousQuery.GridColor = System.Drawing.Color.Silver;
-            this.trackedQueries_previousQuery.Location = new System.Drawing.Point(0, 18);
-            this.trackedQueries_previousQuery.Margin = new System.Windows.Forms.Padding(0);
-            this.trackedQueries_previousQuery.Name = "trackedQueries_previousQuery";
-            this.trackedQueries_previousQuery.ReadOnly = true;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.trackedQueries_previousQuery.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.trackedQueries_previousQuery.RowHeadersVisible = false;
-            this.trackedQueries_previousQuery.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-            this.trackedQueries_previousQuery.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.trackedQueries_previousQuery.Size = new System.Drawing.Size(606, 112);
-            this.trackedQueries_previousQuery.TabIndex = 11;
+            this.PreviousQuery_DataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.PreviousQuery_DataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.PreviousQuery_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle22.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle22.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PreviousQuery_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            this.PreviousQuery_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.PreviousQuery_DataGridView.DefaultCellStyle = dataGridViewCellStyle23;
+            this.PreviousQuery_DataGridView.EnableHeadersVisualStyles = false;
+            this.PreviousQuery_DataGridView.GridColor = System.Drawing.Color.Silver;
+            this.PreviousQuery_DataGridView.Location = new System.Drawing.Point(0, 18);
+            this.PreviousQuery_DataGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.PreviousQuery_DataGridView.Name = "PreviousQuery_DataGridView";
+            this.PreviousQuery_DataGridView.ReadOnly = true;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.PreviousQuery_DataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            this.PreviousQuery_DataGridView.RowHeadersVisible = false;
+            this.PreviousQuery_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.PreviousQuery_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.PreviousQuery_DataGridView.Size = new System.Drawing.Size(606, 132);
+            this.PreviousQuery_DataGridView.TabIndex = 11;
             // 
             // TrackedQueriesView
             // 
@@ -317,8 +317,8 @@ namespace DBManager.Views.Engines
             this.trackedQueriesResultsContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackedQueriesResultsContainer)).EndInit();
             this.trackedQueriesResultsContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackedQueries_actualQuery)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackedQueries_previousQuery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActualQuery_DataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviousQuery_DataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -326,16 +326,16 @@ namespace DBManager.Views.Engines
         #endregion
 
         private System.Windows.Forms.SplitContainer trackedQueriesContainer;
-        private System.Windows.Forms.ListView trackedQueries_trackedQueriesList;
+        private System.Windows.Forms.ListView TrackedQueries_ListView;
         private System.Windows.Forms.ColumnHeader trackedQueryNames;
         private System.Windows.Forms.SplitContainer trackedQueriesResultsContainer;
-        private System.Windows.Forms.DataGridView trackedQueries_actualQuery;
-        private System.Windows.Forms.DataGridView trackedQueries_previousQuery;
-        private System.Windows.Forms.Label trackedQueries_actualQueryInfoLabel;
-        private System.Windows.Forms.Label trackedQueries_previousQueryInfoLabel;
+        private System.Windows.Forms.DataGridView ActualQuery_DataGridView;
+        private System.Windows.Forms.DataGridView PreviousQuery_DataGridView;
+        private System.Windows.Forms.Label ActualQuery_Label;
+        private System.Windows.Forms.Label PreviousQuery_Label;
         private System.Windows.Forms.Label trackedQueries_timePeriodLabel;
-        private System.Windows.Forms.RichTextBox trackedQueries_queryPreview;
-        private System.Windows.Forms.Button trackedQueries_removeButton;
-        private System.Windows.Forms.Button trackedQueries_refreshButton;
+        private System.Windows.Forms.RichTextBox TrackedQuery_RichTextBox;
+        private System.Windows.Forms.Button Remove_Button;
+        private System.Windows.Forms.Button Refresh_Button;
     }
 }

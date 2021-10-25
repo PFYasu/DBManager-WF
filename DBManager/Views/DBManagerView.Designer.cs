@@ -30,39 +30,39 @@ namespace DBManager.Views
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DBManagerView));
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.Status_StatusStrip = new System.Windows.Forms.StatusStrip();
             this.numberOfConnections = new System.Windows.Forms.ToolStripStatusLabel();
             this.activeConnection = new System.Windows.Forms.ToolStripStatusLabel();
             this.activeDatabase = new System.Windows.Forms.ToolStripStatusLabel();
             this.activeTable = new System.Windows.Forms.ToolStripStatusLabel();
-            this.connectionServiceLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.setConnectionConfig = new System.Windows.Forms.Button();
-            this.removeConnection = new System.Windows.Forms.Button();
-            this.addConnection = new System.Windows.Forms.Button();
-            this.connectionsLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.connectionSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.connectionTreeView = new DBManager.Views.ConnectionTreeView();
-            this.statusStrip.SuspendLayout();
-            this.connectionServiceLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionSplitContainer)).BeginInit();
-            this.connectionSplitContainer.Panel1.SuspendLayout();
-            this.connectionSplitContainer.Panel2.SuspendLayout();
-            this.connectionSplitContainer.SuspendLayout();
+            this.ConnectionAction_TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.UpdateConnection_Button = new System.Windows.Forms.Button();
+            this.RemoveConnection_Button = new System.Windows.Forms.Button();
+            this.AddConnection_Button = new System.Windows.Forms.Button();
+            this.ConnectionManager_TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.Connection_SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.ConnectionTree_ConnectionTreeView = new DBManager.Views.ConnectionTreeView();
+            this.Status_StatusStrip.SuspendLayout();
+            this.ConnectionAction_TableLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Connection_SplitContainer)).BeginInit();
+            this.Connection_SplitContainer.Panel1.SuspendLayout();
+            this.Connection_SplitContainer.Panel2.SuspendLayout();
+            this.Connection_SplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // statusStrip
+            // Status_StatusStrip
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Status_StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.numberOfConnections,
             this.activeConnection,
             this.activeDatabase,
             this.activeTable});
-            this.statusStrip.Location = new System.Drawing.Point(0, 378);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
-            this.statusStrip.Size = new System.Drawing.Size(586, 22);
-            this.statusStrip.TabIndex = 0;
-            this.statusStrip.Text = "statusStrip1";
+            this.Status_StatusStrip.Location = new System.Drawing.Point(0, 378);
+            this.Status_StatusStrip.Name = "Status_StatusStrip";
+            this.Status_StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
+            this.Status_StatusStrip.Size = new System.Drawing.Size(586, 22);
+            this.Status_StatusStrip.TabIndex = 0;
+            this.Status_StatusStrip.Text = "statusStrip1";
             // 
             // numberOfConnections
             // 
@@ -88,107 +88,107 @@ namespace DBManager.Views
             this.activeTable.Name = "activeTable";
             this.activeTable.Size = new System.Drawing.Size(0, 17);
             // 
-            // connectionServiceLayout
+            // ConnectionAction_TableLayoutPanel
             // 
-            this.connectionServiceLayout.ColumnCount = 3;
-            this.connectionServiceLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.connectionServiceLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.connectionServiceLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.connectionServiceLayout.Controls.Add(this.setConnectionConfig, 0, 0);
-            this.connectionServiceLayout.Controls.Add(this.removeConnection, 0, 0);
-            this.connectionServiceLayout.Controls.Add(this.addConnection, 0, 0);
-            this.connectionServiceLayout.Location = new System.Drawing.Point(10, 10);
-            this.connectionServiceLayout.Name = "connectionServiceLayout";
-            this.connectionServiceLayout.RowCount = 1;
-            this.connectionServiceLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.connectionServiceLayout.Size = new System.Drawing.Size(120, 36);
-            this.connectionServiceLayout.TabIndex = 2;
+            this.ConnectionAction_TableLayoutPanel.ColumnCount = 3;
+            this.ConnectionAction_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ConnectionAction_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ConnectionAction_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.ConnectionAction_TableLayoutPanel.Controls.Add(this.UpdateConnection_Button, 0, 0);
+            this.ConnectionAction_TableLayoutPanel.Controls.Add(this.RemoveConnection_Button, 0, 0);
+            this.ConnectionAction_TableLayoutPanel.Controls.Add(this.AddConnection_Button, 0, 0);
+            this.ConnectionAction_TableLayoutPanel.Location = new System.Drawing.Point(10, 10);
+            this.ConnectionAction_TableLayoutPanel.Name = "ConnectionAction_TableLayoutPanel";
+            this.ConnectionAction_TableLayoutPanel.RowCount = 1;
+            this.ConnectionAction_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ConnectionAction_TableLayoutPanel.Size = new System.Drawing.Size(120, 36);
+            this.ConnectionAction_TableLayoutPanel.TabIndex = 2;
             // 
-            // setConnectionConfig
+            // UpdateConnection_Button
             // 
-            this.setConnectionConfig.BackColor = System.Drawing.Color.White;
-            this.setConnectionConfig.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("setConnectionConfig.BackgroundImage")));
-            this.setConnectionConfig.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.setConnectionConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.setConnectionConfig.Location = new System.Drawing.Point(83, 3);
-            this.setConnectionConfig.Name = "setConnectionConfig";
-            this.setConnectionConfig.Size = new System.Drawing.Size(34, 30);
-            this.setConnectionConfig.TabIndex = 2;
-            this.setConnectionConfig.UseVisualStyleBackColor = false;
-            this.setConnectionConfig.Click += new System.EventHandler(this.setConnectionConfig_Click);
+            this.UpdateConnection_Button.BackColor = System.Drawing.Color.White;
+            this.UpdateConnection_Button.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("UpdateConnection_Button.BackgroundImage")));
+            this.UpdateConnection_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.UpdateConnection_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateConnection_Button.Location = new System.Drawing.Point(83, 3);
+            this.UpdateConnection_Button.Name = "UpdateConnection_Button";
+            this.UpdateConnection_Button.Size = new System.Drawing.Size(34, 30);
+            this.UpdateConnection_Button.TabIndex = 2;
+            this.UpdateConnection_Button.UseVisualStyleBackColor = false;
+            this.UpdateConnection_Button.Click += new System.EventHandler(this.UpdateConnection_Button_Click);
             // 
-            // removeConnection
+            // RemoveConnection_Button
             // 
-            this.removeConnection.BackColor = System.Drawing.Color.White;
-            this.removeConnection.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("removeConnection.BackgroundImage")));
-            this.removeConnection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.removeConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.removeConnection.Location = new System.Drawing.Point(43, 3);
-            this.removeConnection.Name = "removeConnection";
-            this.removeConnection.Size = new System.Drawing.Size(34, 30);
-            this.removeConnection.TabIndex = 1;
-            this.removeConnection.UseVisualStyleBackColor = false;
-            this.removeConnection.Click += new System.EventHandler(this.removeConnection_Click);
+            this.RemoveConnection_Button.BackColor = System.Drawing.Color.White;
+            this.RemoveConnection_Button.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("RemoveConnection_Button.BackgroundImage")));
+            this.RemoveConnection_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.RemoveConnection_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RemoveConnection_Button.Location = new System.Drawing.Point(43, 3);
+            this.RemoveConnection_Button.Name = "RemoveConnection_Button";
+            this.RemoveConnection_Button.Size = new System.Drawing.Size(34, 30);
+            this.RemoveConnection_Button.TabIndex = 1;
+            this.RemoveConnection_Button.UseVisualStyleBackColor = false;
+            this.RemoveConnection_Button.Click += new System.EventHandler(this.RemoveConnection_Button_Click);
             // 
-            // addConnection
+            // AddConnection_Button
             // 
-            this.addConnection.BackColor = System.Drawing.Color.White;
-            this.addConnection.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("addConnection.BackgroundImage")));
-            this.addConnection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.addConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addConnection.Location = new System.Drawing.Point(3, 3);
-            this.addConnection.Name = "addConnection";
-            this.addConnection.Size = new System.Drawing.Size(34, 30);
-            this.addConnection.TabIndex = 0;
-            this.addConnection.UseVisualStyleBackColor = false;
-            this.addConnection.Click += new System.EventHandler(this.addConnection_Click);
+            this.AddConnection_Button.BackColor = System.Drawing.Color.White;
+            this.AddConnection_Button.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AddConnection_Button.BackgroundImage")));
+            this.AddConnection_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.AddConnection_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AddConnection_Button.Location = new System.Drawing.Point(3, 3);
+            this.AddConnection_Button.Name = "AddConnection_Button";
+            this.AddConnection_Button.Size = new System.Drawing.Size(34, 30);
+            this.AddConnection_Button.TabIndex = 0;
+            this.AddConnection_Button.UseVisualStyleBackColor = false;
+            this.AddConnection_Button.Click += new System.EventHandler(this.AddConnection_Button_Click);
             // 
-            // connectionsLayout
+            // ConnectionManager_TableLayoutPanel
             // 
-            this.connectionsLayout.AutoSize = true;
-            this.connectionsLayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.connectionsLayout.ColumnCount = 1;
-            this.connectionsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.connectionsLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.connectionsLayout.ForeColor = System.Drawing.Color.White;
-            this.connectionsLayout.Location = new System.Drawing.Point(0, 0);
-            this.connectionsLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.connectionsLayout.Name = "connectionsLayout";
-            this.connectionsLayout.RowCount = 1;
-            this.connectionsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.connectionsLayout.Size = new System.Drawing.Size(410, 321);
-            this.connectionsLayout.TabIndex = 3;
+            this.ConnectionManager_TableLayoutPanel.AutoSize = true;
+            this.ConnectionManager_TableLayoutPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ConnectionManager_TableLayoutPanel.ColumnCount = 1;
+            this.ConnectionManager_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ConnectionManager_TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ConnectionManager_TableLayoutPanel.ForeColor = System.Drawing.Color.White;
+            this.ConnectionManager_TableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.ConnectionManager_TableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ConnectionManager_TableLayoutPanel.Name = "ConnectionManager_TableLayoutPanel";
+            this.ConnectionManager_TableLayoutPanel.RowCount = 1;
+            this.ConnectionManager_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.ConnectionManager_TableLayoutPanel.Size = new System.Drawing.Size(410, 321);
+            this.ConnectionManager_TableLayoutPanel.TabIndex = 3;
             // 
-            // connectionSplitContainer
+            // Connection_SplitContainer
             // 
-            this.connectionSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Connection_SplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.connectionSplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.connectionSplitContainer.Cursor = System.Windows.Forms.Cursors.Default;
-            this.connectionSplitContainer.Location = new System.Drawing.Point(13, 53);
-            this.connectionSplitContainer.Name = "connectionSplitContainer";
+            this.Connection_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Connection_SplitContainer.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Connection_SplitContainer.Location = new System.Drawing.Point(13, 53);
+            this.Connection_SplitContainer.Name = "Connection_SplitContainer";
             // 
-            // connectionSplitContainer.Panel1
+            // Connection_SplitContainer.Panel1
             // 
-            this.connectionSplitContainer.Panel1.Controls.Add(this.connectionTreeView);
-            this.connectionSplitContainer.Panel1MinSize = 140;
+            this.Connection_SplitContainer.Panel1.Controls.Add(this.ConnectionTree_ConnectionTreeView);
+            this.Connection_SplitContainer.Panel1MinSize = 140;
             // 
-            // connectionSplitContainer.Panel2
+            // Connection_SplitContainer.Panel2
             // 
-            this.connectionSplitContainer.Panel2.Controls.Add(this.connectionsLayout);
-            this.connectionSplitContainer.Size = new System.Drawing.Size(563, 325);
-            this.connectionSplitContainer.SplitterDistance = 140;
-            this.connectionSplitContainer.SplitterWidth = 9;
-            this.connectionSplitContainer.TabIndex = 5;
+            this.Connection_SplitContainer.Panel2.Controls.Add(this.ConnectionManager_TableLayoutPanel);
+            this.Connection_SplitContainer.Size = new System.Drawing.Size(563, 325);
+            this.Connection_SplitContainer.SplitterDistance = 140;
+            this.Connection_SplitContainer.SplitterWidth = 9;
+            this.Connection_SplitContainer.TabIndex = 5;
             // 
-            // connectionTreeView
+            // ConnectionTree_ConnectionTreeView
             // 
-            this.connectionTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.connectionTreeView.Location = new System.Drawing.Point(0, 0);
-            this.connectionTreeView.Name = "connectionTreeView";
-            this.connectionTreeView.Size = new System.Drawing.Size(136, 321);
-            this.connectionTreeView.TabIndex = 0;
+            this.ConnectionTree_ConnectionTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ConnectionTree_ConnectionTreeView.Location = new System.Drawing.Point(0, 0);
+            this.ConnectionTree_ConnectionTreeView.Name = "ConnectionTree_ConnectionTreeView";
+            this.ConnectionTree_ConnectionTreeView.Size = new System.Drawing.Size(136, 321);
+            this.ConnectionTree_ConnectionTreeView.TabIndex = 0;
             // 
             // DBManagerView
             // 
@@ -196,20 +196,20 @@ namespace DBManager.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(586, 400);
-            this.Controls.Add(this.connectionSplitContainer);
-            this.Controls.Add(this.connectionServiceLayout);
-            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.Connection_SplitContainer);
+            this.Controls.Add(this.ConnectionAction_TableLayoutPanel);
+            this.Controls.Add(this.Status_StatusStrip);
             this.MinimumSize = new System.Drawing.Size(602, 439);
             this.Name = "DBManagerView";
             this.Text = "DBManager";
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
-            this.connectionServiceLayout.ResumeLayout(false);
-            this.connectionSplitContainer.Panel1.ResumeLayout(false);
-            this.connectionSplitContainer.Panel2.ResumeLayout(false);
-            this.connectionSplitContainer.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionSplitContainer)).EndInit();
-            this.connectionSplitContainer.ResumeLayout(false);
+            this.Status_StatusStrip.ResumeLayout(false);
+            this.Status_StatusStrip.PerformLayout();
+            this.ConnectionAction_TableLayoutPanel.ResumeLayout(false);
+            this.Connection_SplitContainer.Panel1.ResumeLayout(false);
+            this.Connection_SplitContainer.Panel2.ResumeLayout(false);
+            this.Connection_SplitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Connection_SplitContainer)).EndInit();
+            this.Connection_SplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,17 +217,17 @@ namespace DBManager.Views
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.TableLayoutPanel connectionServiceLayout;
-        private System.Windows.Forms.Button addConnection;
-        private System.Windows.Forms.Button removeConnection;
-        private System.Windows.Forms.Button setConnectionConfig;
+        private System.Windows.Forms.StatusStrip Status_StatusStrip;
+        private System.Windows.Forms.TableLayoutPanel ConnectionAction_TableLayoutPanel;
+        private System.Windows.Forms.Button AddConnection_Button;
+        private System.Windows.Forms.Button RemoveConnection_Button;
+        private System.Windows.Forms.Button UpdateConnection_Button;
         private System.Windows.Forms.ToolStripStatusLabel numberOfConnections;
         private System.Windows.Forms.ToolStripStatusLabel activeConnection;
-        private System.Windows.Forms.TableLayoutPanel connectionsLayout;
-        private System.Windows.Forms.SplitContainer connectionSplitContainer;
+        private System.Windows.Forms.TableLayoutPanel ConnectionManager_TableLayoutPanel;
+        private System.Windows.Forms.SplitContainer Connection_SplitContainer;
         private System.Windows.Forms.ToolStripStatusLabel activeDatabase;
         private System.Windows.Forms.ToolStripStatusLabel activeTable;
-        private ConnectionTreeView connectionTreeView;
+        private ConnectionTreeView ConnectionTree_ConnectionTreeView;
     }
 }

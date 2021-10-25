@@ -25,7 +25,7 @@ namespace DBManager.Views
             Close();
         }
 
-        private void createMySql_Click(object sender, EventArgs e)
+        private void MySql_Button_Click(object sender, EventArgs e)
         {
             using var form = new MySqlConnectorView(_presenter);
 
@@ -35,7 +35,7 @@ namespace DBManager.Views
                 DialogResult = DialogResult.OK;
         }
 
-        private void createPostgreSQL_Click(object sender, EventArgs e)
+        private void PostgreSQL_Button_Click(object sender, EventArgs e)
         {
             using var form = new PostgreSQLConnectorView(_presenter);
 

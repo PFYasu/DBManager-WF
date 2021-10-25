@@ -29,394 +29,405 @@ namespace DBManager.Views.Engines
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.structureView = new System.Windows.Forms.SplitContainer();
-            this.structureContainer = new System.Windows.Forms.SplitContainer();
-            this.structure_tablesView = new System.Windows.Forms.ListView();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.StructureView = new System.Windows.Forms.SplitContainer();
+            this.Structure_SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.DatabaseStructure_ListView = new System.Windows.Forms.ListView();
             this.tableNames = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.structure_tableNameLabel = new System.Windows.Forms.Label();
-            this.structure_columnsView = new System.Windows.Forms.ListView();
+            this.SelectedDatabase_Label = new System.Windows.Forms.Label();
+            this.TableStructure_ListView = new System.Windows.Forms.ListView();
             this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.queryContainer = new System.Windows.Forms.SplitContainer();
-            this.queryAction_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.query_sendQueryButton = new System.Windows.Forms.Button();
-            this.query_addTrackedQueryButton = new System.Windows.Forms.Button();
-            this.query_queryInsertLabel = new System.Windows.Forms.Label();
-            this.crud_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.query_updateButton = new System.Windows.Forms.Button();
-            this.query_selectButton = new System.Windows.Forms.Button();
-            this.query_insertButton = new System.Windows.Forms.Button();
-            this.query_deleteButton = new System.Windows.Forms.Button();
-            this.query_queryInput = new System.Windows.Forms.RichTextBox();
-            this.query_queryTypeLabel = new System.Windows.Forms.Label();
-            this.query_queryResultsLabel = new System.Windows.Forms.Label();
-            this.query_DataGridView = new System.Windows.Forms.DataGridView();
+            this.QueryContainer_SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.QueryAction_TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SendQuery_Button = new System.Windows.Forms.Button();
+            this.AddTrackedQuery_Button = new System.Windows.Forms.Button();
+            this.Query_Label = new System.Windows.Forms.Label();
+            this.Crud_TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.Update_Button = new System.Windows.Forms.Button();
+            this.Select_Button = new System.Windows.Forms.Button();
+            this.Insert_Button = new System.Windows.Forms.Button();
+            this.Delete_Button = new System.Windows.Forms.Button();
+            this.Query_RichTextBox = new System.Windows.Forms.RichTextBox();
+            this.CopyData_Button = new System.Windows.Forms.Button();
+            this.QueryType_Label = new System.Windows.Forms.Label();
+            this.QueryResult_Label = new System.Windows.Forms.Label();
+            this.QueryResult_DataGridView = new System.Windows.Forms.DataGridView();
             this.query_queryLabel = new System.Windows.Forms.Label();
-            this.query_databaseLabel = new System.Windows.Forms.Label();
-            this.query_databaseNameLabel = new System.Windows.Forms.Label();
-            this.query_copyDataButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.structureView)).BeginInit();
-            this.structureView.Panel1.SuspendLayout();
-            this.structureView.Panel2.SuspendLayout();
-            this.structureView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.structureContainer)).BeginInit();
-            this.structureContainer.Panel1.SuspendLayout();
-            this.structureContainer.Panel2.SuspendLayout();
-            this.structureContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.queryContainer)).BeginInit();
-            this.queryContainer.Panel1.SuspendLayout();
-            this.queryContainer.Panel2.SuspendLayout();
-            this.queryContainer.SuspendLayout();
-            this.queryAction_tableLayoutPanel.SuspendLayout();
-            this.crud_tableLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.query_DataGridView)).BeginInit();
+            this.Database_Label = new System.Windows.Forms.Label();
+            this.Name_Label = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.StructureView)).BeginInit();
+            this.StructureView.Panel1.SuspendLayout();
+            this.StructureView.Panel2.SuspendLayout();
+            this.StructureView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Structure_SplitContainer)).BeginInit();
+            this.Structure_SplitContainer.Panel1.SuspendLayout();
+            this.Structure_SplitContainer.Panel2.SuspendLayout();
+            this.Structure_SplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QueryContainer_SplitContainer)).BeginInit();
+            this.QueryContainer_SplitContainer.Panel1.SuspendLayout();
+            this.QueryContainer_SplitContainer.Panel2.SuspendLayout();
+            this.QueryContainer_SplitContainer.SuspendLayout();
+            this.QueryAction_TableLayoutPanel.SuspendLayout();
+            this.Crud_TableLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QueryResult_DataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // structureView
+            // StructureView
             // 
-            this.structureView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.StructureView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.structureView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.structureView.Location = new System.Drawing.Point(0, 34);
-            this.structureView.Name = "structureView";
-            this.structureView.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.StructureView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.StructureView.Location = new System.Drawing.Point(0, 34);
+            this.StructureView.Name = "StructureView";
+            this.StructureView.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // structureView.Panel1
+            // StructureView.Panel1
             // 
-            this.structureView.Panel1.AutoScroll = true;
-            this.structureView.Panel1.Controls.Add(this.structureContainer);
-            this.structureView.Panel1.ForeColor = System.Drawing.Color.White;
+            this.StructureView.Panel1.AutoScroll = true;
+            this.StructureView.Panel1.Controls.Add(this.Structure_SplitContainer);
+            this.StructureView.Panel1.ForeColor = System.Drawing.Color.White;
             // 
-            // structureView.Panel2
+            // StructureView.Panel2
             // 
-            this.structureView.Panel2.Controls.Add(this.queryContainer);
-            this.structureView.Size = new System.Drawing.Size(929, 337);
-            this.structureView.SplitterDistance = 140;
-            this.structureView.SplitterWidth = 9;
-            this.structureView.TabIndex = 0;
+            this.StructureView.Panel2.Controls.Add(this.QueryContainer_SplitContainer);
+            this.StructureView.Size = new System.Drawing.Size(929, 337);
+            this.StructureView.SplitterDistance = 140;
+            this.StructureView.SplitterWidth = 9;
+            this.StructureView.TabIndex = 0;
             // 
-            // structureContainer
+            // Structure_SplitContainer
             // 
-            this.structureContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.structureContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.structureContainer.Location = new System.Drawing.Point(0, 0);
-            this.structureContainer.Name = "structureContainer";
+            this.Structure_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Structure_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Structure_SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.Structure_SplitContainer.Name = "Structure_SplitContainer";
             // 
-            // structureContainer.Panel1
+            // Structure_SplitContainer.Panel1
             // 
-            this.structureContainer.Panel1.Controls.Add(this.structure_tablesView);
+            this.Structure_SplitContainer.Panel1.Controls.Add(this.DatabaseStructure_ListView);
             // 
-            // structureContainer.Panel2
+            // Structure_SplitContainer.Panel2
             // 
-            this.structureContainer.Panel2.Controls.Add(this.structure_tableNameLabel);
-            this.structureContainer.Panel2.Controls.Add(this.structure_columnsView);
-            this.structureContainer.Size = new System.Drawing.Size(929, 140);
-            this.structureContainer.SplitterDistance = 310;
-            this.structureContainer.SplitterWidth = 9;
-            this.structureContainer.TabIndex = 0;
+            this.Structure_SplitContainer.Panel2.Controls.Add(this.SelectedDatabase_Label);
+            this.Structure_SplitContainer.Panel2.Controls.Add(this.TableStructure_ListView);
+            this.Structure_SplitContainer.Size = new System.Drawing.Size(929, 140);
+            this.Structure_SplitContainer.SplitterDistance = 310;
+            this.Structure_SplitContainer.SplitterWidth = 9;
+            this.Structure_SplitContainer.TabIndex = 0;
             // 
-            // structure_tablesView
+            // DatabaseStructure_ListView
             // 
-            this.structure_tablesView.BackColor = System.Drawing.Color.White;
-            this.structure_tablesView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.DatabaseStructure_ListView.BackColor = System.Drawing.Color.White;
+            this.DatabaseStructure_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.tableNames});
-            this.structure_tablesView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.structure_tablesView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.structure_tablesView.HideSelection = false;
-            this.structure_tablesView.Location = new System.Drawing.Point(0, 0);
-            this.structure_tablesView.MultiSelect = false;
-            this.structure_tablesView.Name = "structure_tablesView";
-            this.structure_tablesView.Size = new System.Drawing.Size(306, 136);
-            this.structure_tablesView.TabIndex = 1;
-            this.structure_tablesView.UseCompatibleStateImageBehavior = false;
-            this.structure_tablesView.View = System.Windows.Forms.View.Details;
-            this.structure_tablesView.SelectedIndexChanged += new System.EventHandler(this.structure_tablesView_SelectedIndexChanged);
+            this.DatabaseStructure_ListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DatabaseStructure_ListView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.DatabaseStructure_ListView.HideSelection = false;
+            this.DatabaseStructure_ListView.Location = new System.Drawing.Point(0, 0);
+            this.DatabaseStructure_ListView.MultiSelect = false;
+            this.DatabaseStructure_ListView.Name = "DatabaseStructure_ListView";
+            this.DatabaseStructure_ListView.Size = new System.Drawing.Size(306, 136);
+            this.DatabaseStructure_ListView.TabIndex = 1;
+            this.DatabaseStructure_ListView.UseCompatibleStateImageBehavior = false;
+            this.DatabaseStructure_ListView.View = System.Windows.Forms.View.Details;
+            this.DatabaseStructure_ListView.SelectedIndexChanged += new System.EventHandler(this.DatabaseStructure_ListView_SelectedIndexChanged);
             // 
             // tableNames
             // 
             this.tableNames.Text = "Table";
             // 
-            // structure_tableNameLabel
+            // SelectedDatabase_Label
             // 
-            this.structure_tableNameLabel.AutoSize = true;
-            this.structure_tableNameLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.structure_tableNameLabel.ForeColor = System.Drawing.Color.Black;
-            this.structure_tableNameLabel.Location = new System.Drawing.Point(3, 0);
-            this.structure_tableNameLabel.Name = "structure_tableNameLabel";
-            this.structure_tableNameLabel.Size = new System.Drawing.Size(65, 17);
-            this.structure_tableNameLabel.TabIndex = 3;
-            this.structure_tableNameLabel.Text = "Database";
-            this.structure_tableNameLabel.Click += new System.EventHandler(this.structure_tableNameLabel_Click);
+            this.SelectedDatabase_Label.AutoSize = true;
+            this.SelectedDatabase_Label.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.SelectedDatabase_Label.ForeColor = System.Drawing.Color.Black;
+            this.SelectedDatabase_Label.Location = new System.Drawing.Point(3, 0);
+            this.SelectedDatabase_Label.Name = "SelectedDatabase_Label";
+            this.SelectedDatabase_Label.Size = new System.Drawing.Size(73, 17);
+            this.SelectedDatabase_Label.TabIndex = 3;
+            this.SelectedDatabase_Label.Text = "Database: ";
+            this.SelectedDatabase_Label.Click += new System.EventHandler(this.SelectedDatabase_Label_Click);
             // 
-            // structure_columnsView
+            // TableStructure_ListView
             // 
-            this.structure_columnsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.TableStructure_ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.structure_columnsView.BackColor = System.Drawing.Color.White;
-            this.structure_columnsView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.TableStructure_ListView.BackColor = System.Drawing.Color.White;
+            this.TableStructure_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader});
-            this.structure_columnsView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.structure_columnsView.HideSelection = false;
-            this.structure_columnsView.Location = new System.Drawing.Point(0, 17);
-            this.structure_columnsView.Margin = new System.Windows.Forms.Padding(0);
-            this.structure_columnsView.MultiSelect = false;
-            this.structure_columnsView.Name = "structure_columnsView";
-            this.structure_columnsView.Size = new System.Drawing.Size(601, 119);
-            this.structure_columnsView.TabIndex = 2;
-            this.structure_columnsView.UseCompatibleStateImageBehavior = false;
-            this.structure_columnsView.View = System.Windows.Forms.View.Details;
-            this.structure_columnsView.SelectedIndexChanged += new System.EventHandler(this.structure_columnsView_SelectedIndexChanged);
+            this.TableStructure_ListView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TableStructure_ListView.HideSelection = false;
+            this.TableStructure_ListView.Location = new System.Drawing.Point(0, 17);
+            this.TableStructure_ListView.Margin = new System.Windows.Forms.Padding(0);
+            this.TableStructure_ListView.MultiSelect = false;
+            this.TableStructure_ListView.Name = "TableStructure_ListView";
+            this.TableStructure_ListView.Size = new System.Drawing.Size(606, 119);
+            this.TableStructure_ListView.TabIndex = 2;
+            this.TableStructure_ListView.UseCompatibleStateImageBehavior = false;
+            this.TableStructure_ListView.View = System.Windows.Forms.View.Details;
+            this.TableStructure_ListView.SelectedIndexChanged += new System.EventHandler(this.TableStructure_ListView_SelectedIndexChanged);
             // 
             // columnHeader
             // 
             this.columnHeader.Text = "Column";
             // 
-            // queryContainer
+            // QueryContainer_SplitContainer
             // 
-            this.queryContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.queryContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.queryContainer.Location = new System.Drawing.Point(0, 0);
-            this.queryContainer.Name = "queryContainer";
+            this.QueryContainer_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.QueryContainer_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.QueryContainer_SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.QueryContainer_SplitContainer.Name = "QueryContainer_SplitContainer";
             // 
-            // queryContainer.Panel1
+            // QueryContainer_SplitContainer.Panel1
             // 
-            this.queryContainer.Panel1.Controls.Add(this.queryAction_tableLayoutPanel);
-            this.queryContainer.Panel1.Controls.Add(this.query_queryInsertLabel);
-            this.queryContainer.Panel1.Controls.Add(this.crud_tableLayoutPanel);
-            this.queryContainer.Panel1.Controls.Add(this.query_queryInput);
-            this.queryContainer.Panel1MinSize = 100;
+            this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.QueryAction_TableLayoutPanel);
+            this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.Query_Label);
+            this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.Crud_TableLayoutPanel);
+            this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.Query_RichTextBox);
+            this.QueryContainer_SplitContainer.Panel1MinSize = 100;
             // 
-            // queryContainer.Panel2
+            // QueryContainer_SplitContainer.Panel2
             // 
-            this.queryContainer.Panel2.Controls.Add(this.query_copyDataButton);
-            this.queryContainer.Panel2.Controls.Add(this.query_queryTypeLabel);
-            this.queryContainer.Panel2.Controls.Add(this.query_queryResultsLabel);
-            this.queryContainer.Panel2.Controls.Add(this.query_DataGridView);
-            this.queryContainer.Panel2.Controls.Add(this.query_queryLabel);
-            this.queryContainer.Size = new System.Drawing.Size(929, 188);
-            this.queryContainer.SplitterDistance = 329;
-            this.queryContainer.SplitterWidth = 9;
-            this.queryContainer.TabIndex = 0;
+            this.QueryContainer_SplitContainer.Panel2.Controls.Add(this.CopyData_Button);
+            this.QueryContainer_SplitContainer.Panel2.Controls.Add(this.QueryType_Label);
+            this.QueryContainer_SplitContainer.Panel2.Controls.Add(this.QueryResult_Label);
+            this.QueryContainer_SplitContainer.Panel2.Controls.Add(this.QueryResult_DataGridView);
+            this.QueryContainer_SplitContainer.Panel2.Controls.Add(this.query_queryLabel);
+            this.QueryContainer_SplitContainer.Size = new System.Drawing.Size(929, 188);
+            this.QueryContainer_SplitContainer.SplitterDistance = 329;
+            this.QueryContainer_SplitContainer.SplitterWidth = 9;
+            this.QueryContainer_SplitContainer.TabIndex = 0;
             // 
-            // queryAction_tableLayoutPanel
+            // QueryAction_TableLayoutPanel
             // 
-            this.queryAction_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.QueryAction_TableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.queryAction_tableLayoutPanel.ColumnCount = 2;
-            this.queryAction_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.queryAction_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.queryAction_tableLayoutPanel.Controls.Add(this.query_sendQueryButton, 0, 0);
-            this.queryAction_tableLayoutPanel.Controls.Add(this.query_addTrackedQueryButton, 1, 0);
-            this.queryAction_tableLayoutPanel.Location = new System.Drawing.Point(3, 147);
-            this.queryAction_tableLayoutPanel.Name = "queryAction_tableLayoutPanel";
-            this.queryAction_tableLayoutPanel.RowCount = 1;
-            this.queryAction_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.queryAction_tableLayoutPanel.Size = new System.Drawing.Size(320, 34);
-            this.queryAction_tableLayoutPanel.TabIndex = 15;
+            this.QueryAction_TableLayoutPanel.ColumnCount = 2;
+            this.QueryAction_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.QueryAction_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.QueryAction_TableLayoutPanel.Controls.Add(this.SendQuery_Button, 0, 0);
+            this.QueryAction_TableLayoutPanel.Controls.Add(this.AddTrackedQuery_Button, 1, 0);
+            this.QueryAction_TableLayoutPanel.Location = new System.Drawing.Point(3, 147);
+            this.QueryAction_TableLayoutPanel.Name = "QueryAction_TableLayoutPanel";
+            this.QueryAction_TableLayoutPanel.RowCount = 1;
+            this.QueryAction_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.QueryAction_TableLayoutPanel.Size = new System.Drawing.Size(320, 34);
+            this.QueryAction_TableLayoutPanel.TabIndex = 15;
             // 
-            // query_sendQueryButton
+            // SendQuery_Button
             // 
-            this.query_sendQueryButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.query_sendQueryButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.query_sendQueryButton.ForeColor = System.Drawing.Color.Black;
-            this.query_sendQueryButton.Location = new System.Drawing.Point(3, 3);
-            this.query_sendQueryButton.Name = "query_sendQueryButton";
-            this.query_sendQueryButton.Size = new System.Drawing.Size(186, 28);
-            this.query_sendQueryButton.TabIndex = 15;
-            this.query_sendQueryButton.Text = "Send Query";
-            this.query_sendQueryButton.UseVisualStyleBackColor = true;
-            this.query_sendQueryButton.Click += new System.EventHandler(this.query_sendQueryButton_Click);
+            this.SendQuery_Button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SendQuery_Button.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.SendQuery_Button.ForeColor = System.Drawing.Color.Black;
+            this.SendQuery_Button.Location = new System.Drawing.Point(3, 3);
+            this.SendQuery_Button.Name = "SendQuery_Button";
+            this.SendQuery_Button.Size = new System.Drawing.Size(186, 28);
+            this.SendQuery_Button.TabIndex = 15;
+            this.SendQuery_Button.Text = "Send Query";
+            this.SendQuery_Button.UseVisualStyleBackColor = true;
+            this.SendQuery_Button.Click += new System.EventHandler(this.SendQuery_Button_Click);
             // 
-            // query_addTrackedQueryButton
+            // AddTrackedQuery_Button
             // 
-            this.query_addTrackedQueryButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.query_addTrackedQueryButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.query_addTrackedQueryButton.ForeColor = System.Drawing.Color.Black;
-            this.query_addTrackedQueryButton.Location = new System.Drawing.Point(195, 3);
-            this.query_addTrackedQueryButton.Name = "query_addTrackedQueryButton";
-            this.query_addTrackedQueryButton.Size = new System.Drawing.Size(122, 28);
-            this.query_addTrackedQueryButton.TabIndex = 16;
-            this.query_addTrackedQueryButton.Text = "Add Tracked Query";
-            this.query_addTrackedQueryButton.UseVisualStyleBackColor = true;
-            this.query_addTrackedQueryButton.Click += new System.EventHandler(this.query_addTrackedQueryButton_Click);
+            this.AddTrackedQuery_Button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AddTrackedQuery_Button.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.AddTrackedQuery_Button.ForeColor = System.Drawing.Color.Black;
+            this.AddTrackedQuery_Button.Location = new System.Drawing.Point(195, 3);
+            this.AddTrackedQuery_Button.Name = "AddTrackedQuery_Button";
+            this.AddTrackedQuery_Button.Size = new System.Drawing.Size(122, 28);
+            this.AddTrackedQuery_Button.TabIndex = 16;
+            this.AddTrackedQuery_Button.Text = "Add Tracked Query";
+            this.AddTrackedQuery_Button.UseVisualStyleBackColor = true;
+            this.AddTrackedQuery_Button.Click += new System.EventHandler(this.AddTrackedQuery_Button_Click);
             // 
-            // query_queryInsertLabel
+            // Query_Label
             // 
-            this.query_queryInsertLabel.AutoSize = true;
-            this.query_queryInsertLabel.BackColor = System.Drawing.Color.White;
-            this.query_queryInsertLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
-            this.query_queryInsertLabel.ForeColor = System.Drawing.Color.Black;
-            this.query_queryInsertLabel.Location = new System.Drawing.Point(3, 1);
-            this.query_queryInsertLabel.Name = "query_queryInsertLabel";
-            this.query_queryInsertLabel.Size = new System.Drawing.Size(73, 30);
-            this.query_queryInsertLabel.TabIndex = 12;
-            this.query_queryInsertLabel.Text = "Query";
+            this.Query_Label.AutoSize = true;
+            this.Query_Label.BackColor = System.Drawing.Color.White;
+            this.Query_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.Query_Label.ForeColor = System.Drawing.Color.Black;
+            this.Query_Label.Location = new System.Drawing.Point(3, 1);
+            this.Query_Label.Name = "Query_Label";
+            this.Query_Label.Size = new System.Drawing.Size(73, 30);
+            this.Query_Label.TabIndex = 12;
+            this.Query_Label.Text = "Query";
             // 
-            // crud_tableLayoutPanel
+            // Crud_TableLayoutPanel
             // 
-            this.crud_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.Crud_TableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.crud_tableLayoutPanel.ColumnCount = 4;
-            this.crud_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.crud_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.crud_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.crud_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.crud_tableLayoutPanel.Controls.Add(this.query_updateButton, 3, 0);
-            this.crud_tableLayoutPanel.Controls.Add(this.query_selectButton, 0, 0);
-            this.crud_tableLayoutPanel.Controls.Add(this.query_insertButton, 1, 0);
-            this.crud_tableLayoutPanel.Controls.Add(this.query_deleteButton, 2, 0);
-            this.crud_tableLayoutPanel.Location = new System.Drawing.Point(3, 113);
-            this.crud_tableLayoutPanel.Name = "crud_tableLayoutPanel";
-            this.crud_tableLayoutPanel.RowCount = 1;
-            this.crud_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.crud_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.crud_tableLayoutPanel.Size = new System.Drawing.Size(319, 28);
-            this.crud_tableLayoutPanel.TabIndex = 14;
+            this.Crud_TableLayoutPanel.ColumnCount = 4;
+            this.Crud_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.Crud_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.Crud_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.Crud_TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.Crud_TableLayoutPanel.Controls.Add(this.Update_Button, 3, 0);
+            this.Crud_TableLayoutPanel.Controls.Add(this.Select_Button, 0, 0);
+            this.Crud_TableLayoutPanel.Controls.Add(this.Insert_Button, 1, 0);
+            this.Crud_TableLayoutPanel.Controls.Add(this.Delete_Button, 2, 0);
+            this.Crud_TableLayoutPanel.Location = new System.Drawing.Point(3, 113);
+            this.Crud_TableLayoutPanel.Name = "Crud_TableLayoutPanel";
+            this.Crud_TableLayoutPanel.RowCount = 1;
+            this.Crud_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.Crud_TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.Crud_TableLayoutPanel.Size = new System.Drawing.Size(319, 28);
+            this.Crud_TableLayoutPanel.TabIndex = 14;
             // 
-            // query_updateButton
+            // Update_Button
             // 
-            this.query_updateButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.query_updateButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.query_updateButton.ForeColor = System.Drawing.Color.Black;
-            this.query_updateButton.Location = new System.Drawing.Point(240, 3);
-            this.query_updateButton.Name = "query_updateButton";
-            this.query_updateButton.Size = new System.Drawing.Size(76, 22);
-            this.query_updateButton.TabIndex = 16;
-            this.query_updateButton.Text = "UPDATE";
-            this.query_updateButton.UseVisualStyleBackColor = true;
-            this.query_updateButton.Click += new System.EventHandler(this.query_updateButton_Click);
+            this.Update_Button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Update_Button.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.Update_Button.ForeColor = System.Drawing.Color.Black;
+            this.Update_Button.Location = new System.Drawing.Point(240, 3);
+            this.Update_Button.Name = "Update_Button";
+            this.Update_Button.Size = new System.Drawing.Size(76, 22);
+            this.Update_Button.TabIndex = 16;
+            this.Update_Button.Text = "UPDATE";
+            this.Update_Button.UseVisualStyleBackColor = true;
+            this.Update_Button.Click += new System.EventHandler(this.Update_Button_Click);
             // 
-            // query_selectButton
+            // Select_Button
             // 
-            this.query_selectButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.query_selectButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.query_selectButton.ForeColor = System.Drawing.Color.Black;
-            this.query_selectButton.Location = new System.Drawing.Point(3, 3);
-            this.query_selectButton.Name = "query_selectButton";
-            this.query_selectButton.Size = new System.Drawing.Size(73, 22);
-            this.query_selectButton.TabIndex = 13;
-            this.query_selectButton.Text = "SELECT";
-            this.query_selectButton.UseVisualStyleBackColor = true;
-            this.query_selectButton.Click += new System.EventHandler(this.query_selectButton_Click);
+            this.Select_Button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Select_Button.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Select_Button.ForeColor = System.Drawing.Color.Black;
+            this.Select_Button.Location = new System.Drawing.Point(3, 3);
+            this.Select_Button.Name = "Select_Button";
+            this.Select_Button.Size = new System.Drawing.Size(73, 22);
+            this.Select_Button.TabIndex = 13;
+            this.Select_Button.Text = "SELECT";
+            this.Select_Button.UseVisualStyleBackColor = true;
+            this.Select_Button.Click += new System.EventHandler(this.Select_Button_Click);
             // 
-            // query_insertButton
+            // Insert_Button
             // 
-            this.query_insertButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.query_insertButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.query_insertButton.ForeColor = System.Drawing.Color.Black;
-            this.query_insertButton.Location = new System.Drawing.Point(82, 3);
-            this.query_insertButton.Name = "query_insertButton";
-            this.query_insertButton.Size = new System.Drawing.Size(73, 22);
-            this.query_insertButton.TabIndex = 14;
-            this.query_insertButton.Text = "INSERT";
-            this.query_insertButton.UseVisualStyleBackColor = true;
-            this.query_insertButton.Click += new System.EventHandler(this.query_insertButton_Click);
+            this.Insert_Button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Insert_Button.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Insert_Button.ForeColor = System.Drawing.Color.Black;
+            this.Insert_Button.Location = new System.Drawing.Point(82, 3);
+            this.Insert_Button.Name = "Insert_Button";
+            this.Insert_Button.Size = new System.Drawing.Size(73, 22);
+            this.Insert_Button.TabIndex = 14;
+            this.Insert_Button.Text = "INSERT";
+            this.Insert_Button.UseVisualStyleBackColor = true;
+            this.Insert_Button.Click += new System.EventHandler(this.Insert_Button_Click);
             // 
-            // query_deleteButton
+            // Delete_Button
             // 
-            this.query_deleteButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.query_deleteButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.query_deleteButton.ForeColor = System.Drawing.Color.Black;
-            this.query_deleteButton.Location = new System.Drawing.Point(161, 3);
-            this.query_deleteButton.Name = "query_deleteButton";
-            this.query_deleteButton.Size = new System.Drawing.Size(73, 22);
-            this.query_deleteButton.TabIndex = 15;
-            this.query_deleteButton.Text = "DELETE";
-            this.query_deleteButton.UseVisualStyleBackColor = true;
-            this.query_deleteButton.Click += new System.EventHandler(this.query_deleteButton_Click);
+            this.Delete_Button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Delete_Button.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.Delete_Button.ForeColor = System.Drawing.Color.Black;
+            this.Delete_Button.Location = new System.Drawing.Point(161, 3);
+            this.Delete_Button.Name = "Delete_Button";
+            this.Delete_Button.Size = new System.Drawing.Size(73, 22);
+            this.Delete_Button.TabIndex = 15;
+            this.Delete_Button.Text = "DELETE";
+            this.Delete_Button.UseVisualStyleBackColor = true;
+            this.Delete_Button.Click += new System.EventHandler(this.Delete_Button_Click);
             // 
-            // query_queryInput
+            // Query_RichTextBox
             // 
-            this.query_queryInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Query_RichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.query_queryInput.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.query_queryInput.Location = new System.Drawing.Point(1, 31);
-            this.query_queryInput.Name = "query_queryInput";
-            this.query_queryInput.Size = new System.Drawing.Size(322, 76);
-            this.query_queryInput.TabIndex = 13;
-            this.query_queryInput.Text = "";
+            this.Query_RichTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Query_RichTextBox.Location = new System.Drawing.Point(1, 31);
+            this.Query_RichTextBox.Name = "Query_RichTextBox";
+            this.Query_RichTextBox.Size = new System.Drawing.Size(322, 76);
+            this.Query_RichTextBox.TabIndex = 13;
+            this.Query_RichTextBox.Text = "";
             // 
-            // query_queryTypeLabel
+            // CopyData_Button
             // 
-            this.query_queryTypeLabel.AutoSize = true;
-            this.query_queryTypeLabel.BackColor = System.Drawing.Color.White;
-            this.query_queryTypeLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.query_queryTypeLabel.ForeColor = System.Drawing.Color.Black;
-            this.query_queryTypeLabel.Location = new System.Drawing.Point(143, 7);
-            this.query_queryTypeLabel.Name = "query_queryTypeLabel";
-            this.query_queryTypeLabel.Size = new System.Drawing.Size(54, 21);
-            this.query_queryTypeLabel.TabIndex = 18;
-            this.query_queryTypeLabel.Text = "Type: ";
+            this.CopyData_Button.ForeColor = System.Drawing.Color.Black;
+            this.CopyData_Button.Location = new System.Drawing.Point(252, 5);
+            this.CopyData_Button.Name = "CopyData_Button";
+            this.CopyData_Button.Size = new System.Drawing.Size(127, 23);
+            this.CopyData_Button.TabIndex = 19;
+            this.CopyData_Button.Text = "Copy data";
+            this.CopyData_Button.UseVisualStyleBackColor = true;
+            this.CopyData_Button.Click += new System.EventHandler(this.CopyData_Button_Click);
             // 
-            // query_queryResultsLabel
+            // QueryType_Label
             // 
-            this.query_queryResultsLabel.AutoSize = true;
-            this.query_queryResultsLabel.BackColor = System.Drawing.Color.White;
-            this.query_queryResultsLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
-            this.query_queryResultsLabel.ForeColor = System.Drawing.Color.Black;
-            this.query_queryResultsLabel.Location = new System.Drawing.Point(3, 1);
-            this.query_queryResultsLabel.Name = "query_queryResultsLabel";
-            this.query_queryResultsLabel.Size = new System.Drawing.Size(143, 30);
-            this.query_queryResultsLabel.TabIndex = 11;
-            this.query_queryResultsLabel.Text = "Query results";
+            this.QueryType_Label.AutoSize = true;
+            this.QueryType_Label.BackColor = System.Drawing.Color.White;
+            this.QueryType_Label.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.QueryType_Label.ForeColor = System.Drawing.Color.Black;
+            this.QueryType_Label.Location = new System.Drawing.Point(143, 7);
+            this.QueryType_Label.Name = "QueryType_Label";
+            this.QueryType_Label.Size = new System.Drawing.Size(54, 21);
+            this.QueryType_Label.TabIndex = 18;
+            this.QueryType_Label.Text = "Type: ";
             // 
-            // query_DataGridView
+            // QueryResult_Label
             // 
-            this.query_DataGridView.AllowUserToAddRows = false;
-            this.query_DataGridView.AllowUserToDeleteRows = false;
-            this.query_DataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.query_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
-            this.query_DataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.QueryResult_Label.AutoSize = true;
+            this.QueryResult_Label.BackColor = System.Drawing.Color.White;
+            this.QueryResult_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.QueryResult_Label.ForeColor = System.Drawing.Color.Black;
+            this.QueryResult_Label.Location = new System.Drawing.Point(3, 1);
+            this.QueryResult_Label.Name = "QueryResult_Label";
+            this.QueryResult_Label.Size = new System.Drawing.Size(143, 30);
+            this.QueryResult_Label.TabIndex = 11;
+            this.QueryResult_Label.Text = "Query results";
+            // 
+            // QueryResult_DataGridView
+            // 
+            this.QueryResult_DataGridView.AllowUserToAddRows = false;
+            this.QueryResult_DataGridView.AllowUserToDeleteRows = false;
+            this.QueryResult_DataGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.QueryResult_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.QueryResult_DataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.query_DataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.query_DataGridView.BackgroundColor = System.Drawing.Color.White;
-            this.query_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle18.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.query_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
-            this.query_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.query_DataGridView.DefaultCellStyle = dataGridViewCellStyle19;
-            this.query_DataGridView.EnableHeadersVisualStyles = false;
-            this.query_DataGridView.GridColor = System.Drawing.Color.Silver;
-            this.query_DataGridView.Location = new System.Drawing.Point(0, 31);
-            this.query_DataGridView.Margin = new System.Windows.Forms.Padding(0);
-            this.query_DataGridView.Name = "query_DataGridView";
-            this.query_DataGridView.ReadOnly = true;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.query_DataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
-            this.query_DataGridView.RowHeadersVisible = false;
-            this.query_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-            this.query_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.query_DataGridView.Size = new System.Drawing.Size(582, 153);
-            this.query_DataGridView.TabIndex = 10;
+            this.QueryResult_DataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.QueryResult_DataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.QueryResult_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QueryResult_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.QueryResult_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.QueryResult_DataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.QueryResult_DataGridView.EnableHeadersVisualStyles = false;
+            this.QueryResult_DataGridView.GridColor = System.Drawing.Color.Silver;
+            this.QueryResult_DataGridView.Location = new System.Drawing.Point(0, 31);
+            this.QueryResult_DataGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.QueryResult_DataGridView.Name = "QueryResult_DataGridView";
+            this.QueryResult_DataGridView.ReadOnly = true;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QueryResult_DataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.QueryResult_DataGridView.RowHeadersVisible = false;
+            this.QueryResult_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.QueryResult_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.QueryResult_DataGridView.Size = new System.Drawing.Size(587, 153);
+            this.QueryResult_DataGridView.TabIndex = 10;
             // 
             // query_queryLabel
             // 
@@ -430,69 +441,58 @@ namespace DBManager.Views.Engines
             this.query_queryLabel.TabIndex = 9;
             this.query_queryLabel.Text = "Query results: ";
             // 
-            // query_databaseLabel
+            // Database_Label
             // 
-            this.query_databaseLabel.AutoSize = true;
-            this.query_databaseLabel.BackColor = System.Drawing.Color.White;
-            this.query_databaseLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
-            this.query_databaseLabel.ForeColor = System.Drawing.Color.Black;
-            this.query_databaseLabel.Location = new System.Drawing.Point(3, 1);
-            this.query_databaseLabel.Name = "query_databaseLabel";
-            this.query_databaseLabel.Size = new System.Drawing.Size(102, 30);
-            this.query_databaseLabel.TabIndex = 19;
-            this.query_databaseLabel.Text = "Database";
+            this.Database_Label.AutoSize = true;
+            this.Database_Label.BackColor = System.Drawing.Color.White;
+            this.Database_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.Database_Label.ForeColor = System.Drawing.Color.Black;
+            this.Database_Label.Location = new System.Drawing.Point(3, 1);
+            this.Database_Label.Name = "Database_Label";
+            this.Database_Label.Size = new System.Drawing.Size(102, 30);
+            this.Database_Label.TabIndex = 19;
+            this.Database_Label.Text = "Database";
             // 
-            // query_databaseNameLabel
+            // Name_Label
             // 
-            this.query_databaseNameLabel.AutoSize = true;
-            this.query_databaseNameLabel.BackColor = System.Drawing.Color.White;
-            this.query_databaseNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.query_databaseNameLabel.ForeColor = System.Drawing.Color.Black;
-            this.query_databaseNameLabel.Location = new System.Drawing.Point(113, 8);
-            this.query_databaseNameLabel.Name = "query_databaseNameLabel";
-            this.query_databaseNameLabel.Size = new System.Drawing.Size(64, 21);
-            this.query_databaseNameLabel.TabIndex = 20;
-            this.query_databaseNameLabel.Text = "Name: ";
-            // 
-            // query_copyDataButton
-            // 
-            this.query_copyDataButton.ForeColor = System.Drawing.Color.Black;
-            this.query_copyDataButton.Location = new System.Drawing.Point(252, 5);
-            this.query_copyDataButton.Name = "query_copyDataButton";
-            this.query_copyDataButton.Size = new System.Drawing.Size(127, 23);
-            this.query_copyDataButton.TabIndex = 19;
-            this.query_copyDataButton.Text = "Copy data";
-            this.query_copyDataButton.UseVisualStyleBackColor = true;
-            this.query_copyDataButton.Click += new System.EventHandler(this.query_copyDataButton_Click);
+            this.Name_Label.AutoSize = true;
+            this.Name_Label.BackColor = System.Drawing.Color.White;
+            this.Name_Label.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.Name_Label.ForeColor = System.Drawing.Color.Black;
+            this.Name_Label.Location = new System.Drawing.Point(113, 8);
+            this.Name_Label.Name = "Name_Label";
+            this.Name_Label.Size = new System.Drawing.Size(64, 21);
+            this.Name_Label.TabIndex = 20;
+            this.Name_Label.Text = "Name: ";
             // 
             // QueryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.query_databaseNameLabel);
-            this.Controls.Add(this.query_databaseLabel);
-            this.Controls.Add(this.structureView);
+            this.Controls.Add(this.Name_Label);
+            this.Controls.Add(this.Database_Label);
+            this.Controls.Add(this.StructureView);
             this.Name = "QueryView";
             this.Size = new System.Drawing.Size(929, 371);
-            this.structureView.Panel1.ResumeLayout(false);
-            this.structureView.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.structureView)).EndInit();
-            this.structureView.ResumeLayout(false);
-            this.structureContainer.Panel1.ResumeLayout(false);
-            this.structureContainer.Panel2.ResumeLayout(false);
-            this.structureContainer.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.structureContainer)).EndInit();
-            this.structureContainer.ResumeLayout(false);
-            this.queryContainer.Panel1.ResumeLayout(false);
-            this.queryContainer.Panel1.PerformLayout();
-            this.queryContainer.Panel2.ResumeLayout(false);
-            this.queryContainer.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.queryContainer)).EndInit();
-            this.queryContainer.ResumeLayout(false);
-            this.queryAction_tableLayoutPanel.ResumeLayout(false);
-            this.crud_tableLayoutPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.query_DataGridView)).EndInit();
+            this.StructureView.Panel1.ResumeLayout(false);
+            this.StructureView.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.StructureView)).EndInit();
+            this.StructureView.ResumeLayout(false);
+            this.Structure_SplitContainer.Panel1.ResumeLayout(false);
+            this.Structure_SplitContainer.Panel2.ResumeLayout(false);
+            this.Structure_SplitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Structure_SplitContainer)).EndInit();
+            this.Structure_SplitContainer.ResumeLayout(false);
+            this.QueryContainer_SplitContainer.Panel1.ResumeLayout(false);
+            this.QueryContainer_SplitContainer.Panel1.PerformLayout();
+            this.QueryContainer_SplitContainer.Panel2.ResumeLayout(false);
+            this.QueryContainer_SplitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QueryContainer_SplitContainer)).EndInit();
+            this.QueryContainer_SplitContainer.ResumeLayout(false);
+            this.QueryAction_TableLayoutPanel.ResumeLayout(false);
+            this.Crud_TableLayoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.QueryResult_DataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -500,30 +500,30 @@ namespace DBManager.Views.Engines
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer structureView;
-        private System.Windows.Forms.SplitContainer queryContainer;
-        private System.Windows.Forms.DataGridView query_DataGridView;
+        private System.Windows.Forms.SplitContainer StructureView;
+        private System.Windows.Forms.SplitContainer QueryContainer_SplitContainer;
+        private System.Windows.Forms.DataGridView QueryResult_DataGridView;
         private System.Windows.Forms.Label query_queryLabel;
-        private System.Windows.Forms.Label query_queryResultsLabel;
-        private System.Windows.Forms.RichTextBox query_queryInput;
-        private System.Windows.Forms.TableLayoutPanel crud_tableLayoutPanel;
-        private System.Windows.Forms.Button query_updateButton;
-        private System.Windows.Forms.Button query_selectButton;
-        private System.Windows.Forms.Button query_insertButton;
-        private System.Windows.Forms.Button query_deleteButton;
-        private System.Windows.Forms.Label query_queryInsertLabel;
-        private System.Windows.Forms.Button query_sendQueryButton;
-        private System.Windows.Forms.Label query_queryTypeLabel;
-        private System.Windows.Forms.Label query_databaseLabel;
-        private System.Windows.Forms.Label query_databaseNameLabel;
-        private System.Windows.Forms.SplitContainer structureContainer;
-        private System.Windows.Forms.ListView structure_tablesView;
+        private System.Windows.Forms.Label QueryResult_Label;
+        private System.Windows.Forms.RichTextBox Query_RichTextBox;
+        private System.Windows.Forms.TableLayoutPanel Crud_TableLayoutPanel;
+        private System.Windows.Forms.Button Update_Button;
+        private System.Windows.Forms.Button Select_Button;
+        private System.Windows.Forms.Button Insert_Button;
+        private System.Windows.Forms.Button Delete_Button;
+        private System.Windows.Forms.Label Query_Label;
+        private System.Windows.Forms.Button SendQuery_Button;
+        private System.Windows.Forms.Label QueryType_Label;
+        private System.Windows.Forms.Label Database_Label;
+        private System.Windows.Forms.Label Name_Label;
+        private System.Windows.Forms.SplitContainer Structure_SplitContainer;
+        private System.Windows.Forms.ListView DatabaseStructure_ListView;
         private System.Windows.Forms.ColumnHeader tableNames;
-        private System.Windows.Forms.ListView structure_columnsView;
+        private System.Windows.Forms.ListView TableStructure_ListView;
         private System.Windows.Forms.ColumnHeader columnHeader;
-        private System.Windows.Forms.Label structure_tableNameLabel;
-        private System.Windows.Forms.Button query_addTrackedQueryButton;
-        private System.Windows.Forms.TableLayoutPanel queryAction_tableLayoutPanel;
-        private System.Windows.Forms.Button query_copyDataButton;
+        private System.Windows.Forms.Label SelectedDatabase_Label;
+        private System.Windows.Forms.Button AddTrackedQuery_Button;
+        private System.Windows.Forms.TableLayoutPanel QueryAction_TableLayoutPanel;
+        private System.Windows.Forms.Button CopyData_Button;
     }
 }
