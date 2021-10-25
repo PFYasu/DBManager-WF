@@ -20,11 +20,13 @@ namespace DBManager.Presenters.Engines
             _dbManagerPresenter = dbManagerPresenter;
 
             QueryTrackerDriver = new QueryTrackerDriver(_model);
+            DataTransferDriver = new DataTransferDriver(_dbManagerPresenter);
         }
 
         public override string ConnectionName => _model.Name;
         public override EngineType EngineType => _model.Type;
         public override QueryTrackerDriverBase QueryTrackerDriver { get; }
+        public override DataTransferDriverBase DataTransferDriver { get; }
 
         public override async Task<Response> GetDatabaseNames()
         {
