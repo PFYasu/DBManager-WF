@@ -23,10 +23,10 @@ namespace DBManager.Views.Engines
             InitializeComponent();
 
             if (queryPreview != null)
-                query.Text = queryPreview;
+                Query_RichTextBox.Text = queryPreview;
         }
 
-        private void save_Click(object sender, EventArgs e)
+        private void Save_Button_Click(object sender, EventArgs e)
         {
             if (IsValidForm(out string error) == false)
             {
@@ -46,22 +46,22 @@ namespace DBManager.Views.Engines
             DialogResult = DialogResult.OK;
         }
 
-        private void cancel_Click(object sender, EventArgs e)
+        private void Cancel_Button_Click(object sender, EventArgs e)
         {
             Close();
         }
 
         private bool IsValidForm(out string error)
         {
-            if (string.IsNullOrEmpty(name.Text))
+            if (string.IsNullOrEmpty(Name_TextBox.Text))
                 error = "Name cannot be empty.";
-            else if (string.IsNullOrEmpty(query.Text))
+            else if (string.IsNullOrEmpty(Query_RichTextBox.Text))
                 error = "Query cannot be empty.";
-            else if (string.IsNullOrEmpty(timePeriod.Value.ToString()))
+            else if (string.IsNullOrEmpty(TimePeriod_NumericUpDown.Value.ToString()))
                 error = "Time period cannot be empty.";
-            else if (timePeriod.Value <= 0)
+            else if (TimePeriod_NumericUpDown.Value <= 0)
                 error = "Time period must have a positive value";
-            else if (QueryHelper.QueryTypeResolver.GetQueryType(query.Text) == QueryType.NonQuery)
+            else if (QueryHelper.QueryTypeResolver.GetQueryType(Query_RichTextBox.Text) == QueryType.NonQuery)
                 error = "Query cannot be non query type.";
             else
             {
@@ -75,10 +75,10 @@ namespace DBManager.Views.Engines
         {
             var dto = new NewTrackedQueryDto
             {
-                Name = name.Text,
+                Name = Name_TextBox.Text,
                 DatabaseName = _databaseName,
-                Query = query.Text,
-                TimePeriod = (uint)timePeriod.Value
+                Query = Query_RichTextBox.Text,
+                TimePeriod = (uint)TimePeriod_NumericUpDown.Value
             };
 
             return dto;

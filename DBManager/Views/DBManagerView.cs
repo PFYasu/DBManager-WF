@@ -26,23 +26,23 @@ namespace DBManager.Views
             InitializeComponent();
             LoadConnections();
 
-            addConnection.Enabled = true;
-            removeConnection.Enabled = false;
-            setConnectionConfig.Enabled = false;
+            AddConnection_Button.Enabled = true;
+            RemoveConnection_Button.Enabled = false;
+            UpdateConnection_Button.Enabled = false;
 
             var imageList = ConnectionImageListHelper.GetImageList();
-            statusStrip.ImageList = imageList;
-            connectionTreeView.InitializeView(imageList);
+            Status_StatusStrip.ImageList = imageList;
+            ConnectionTree_ConnectionTreeView.InitializeView(imageList);
 
-            connectionTreeView.OnSelectedNodeChanged += ConnectionTreeView_OnSelectedNodeChanged;
+            ConnectionTree_ConnectionTreeView.OnSelectedNodeChanged += ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged;
         }
 
-        private async void ConnectionTreeView_OnSelectedNodeChanged(object sender, TreeNodeElements e)
+        private async void ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged(object sender, TreeNodeElements e)
         {
             if (e.Mode == TreeNodeMode.NotSupported)
             {
-                removeConnection.Enabled = false;
-                setConnectionConfig.Enabled = false;
+                RemoveConnection_Button.Enabled = false;
+                UpdateConnection_Button.Enabled = false;
                 return;
             }
 
@@ -88,8 +88,8 @@ namespace DBManager.Views
                     return;
             }
 
-            removeConnection.Enabled = true;
-            setConnectionConfig.Enabled = true;
+            RemoveConnection_Button.Enabled = true;
+            UpdateConnection_Button.Enabled = true;
 
             UpdateStatusStrip(e);
 
@@ -97,17 +97,17 @@ namespace DBManager.Views
             form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             form.Text = e.Connection.Text;
 
-            if (connectionsLayout.Controls.Count == 1)
+            if (ConnectionManager_TableLayoutPanel.Controls.Count == 1)
             {
-                connectionsLayout.Controls[0].Dispose();
-                connectionsLayout.Controls.Clear();
+                ConnectionManager_TableLayoutPanel.Controls[0].Dispose();
+                ConnectionManager_TableLayoutPanel.Controls.Clear();
             }
-            connectionsLayout.Controls.Add(form);
+            ConnectionManager_TableLayoutPanel.Controls.Add(form);
 
             form.Show();
         }
 
-        private void addConnection_Click(object sender, EventArgs e)
+        private void AddConnection_Button_Click(object sender, EventArgs e)
         {
             using var form = new ConnectorSelectorView(_presenter);
             form.ShowDialog();
@@ -115,9 +115,9 @@ namespace DBManager.Views
             LoadConnections();
         }
 
-        private async void removeConnection_Click(object sender, EventArgs e)
+        private async void RemoveConnection_Button_Click(object sender, EventArgs e)
         {
-            var nodes = connectionTreeView.LastSelectedNode;
+            var nodes = ConnectionTree_ConnectionTreeView.LastSelectedNode;
 
             if (nodes == null)
                 return;
@@ -138,20 +138,20 @@ namespace DBManager.Views
                 return;
             }
 
-            if (connectionsLayout.Controls.Count == 1
-                && connectionsLayout.Controls[0].Text == connectionName)
+            if (ConnectionManager_TableLayoutPanel.Controls.Count == 1
+                && ConnectionManager_TableLayoutPanel.Controls[0].Text == connectionName)
             {
-                connectionsLayout.Controls[0].Dispose();
-                connectionsLayout.Controls.Clear();
-                statusStrip.Items["activeConnection"].Text = string.Empty;
+                ConnectionManager_TableLayoutPanel.Controls[0].Dispose();
+                ConnectionManager_TableLayoutPanel.Controls.Clear();
+                Status_StatusStrip.Items["activeConnection"].Text = string.Empty;
             }
 
             LoadConnections();
         }
 
-        private void setConnectionConfig_Click(object sender, EventArgs e)
+        private void UpdateConnection_Button_Click(object sender, EventArgs e)
         {
-            var nodes = connectionTreeView.LastSelectedNode;
+            var nodes = ConnectionTree_ConnectionTreeView.LastSelectedNode;
 
             if (nodes == null)
                 return;
@@ -202,10 +202,10 @@ namespace DBManager.Views
 
             var dto = response.Payload as ConnectionNamesDto;
 
-            connectionTreeView.LoadConnections(dto.Names);
+            ConnectionTree_ConnectionTreeView.LoadConnections(dto.Names);
 
-            statusStrip.Items["numberOfConnections"].Text = $"Connections: {dto.Names.Count}";
-            statusStrip.Items["numberOfConnections"].ImageIndex = 0;
+            Status_StatusStrip.Items["numberOfConnections"].Text = $"Connections: {dto.Names.Count}";
+            Status_StatusStrip.Items["numberOfConnections"].ImageIndex = 0;
         }
 
         private async Task LoadDatabases(EnginePresenterBase presenter)
@@ -219,7 +219,7 @@ namespace DBManager.Views
 
             var payload = response.Payload as DatabaseNamesResponseDto;
 
-            connectionTreeView.LoadDatabases(presenter.ConnectionName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadDatabases(presenter.ConnectionName, payload.Names);
         }
 
         private async Task LoadTables(EnginePresenterBase presenter, string databaseName)
@@ -233,35 +233,35 @@ namespace DBManager.Views
 
             var payload = response.Payload as TableNamesResponseDto;
 
-            connectionTreeView.LoadTables(presenter.ConnectionName, databaseName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadTables(presenter.ConnectionName, databaseName, payload.Names);
         }
 
         private void UpdateStatusStrip(TreeNodeElements nodes)
         {
-            statusStrip.Items["activeConnection"].Text = string.Empty;
-            statusStrip.Items["activeDatabase"].Text = string.Empty;
-            statusStrip.Items["activeTable"].Text = string.Empty;
+            Status_StatusStrip.Items["activeConnection"].Text = string.Empty;
+            Status_StatusStrip.Items["activeDatabase"].Text = string.Empty;
+            Status_StatusStrip.Items["activeTable"].Text = string.Empty;
 
-            statusStrip.Items["activeConnection"].ImageIndex = -1;
-            statusStrip.Items["activeDatabase"].ImageIndex = -1;
-            statusStrip.Items["activeTable"].ImageIndex = -1;
+            Status_StatusStrip.Items["activeConnection"].ImageIndex = -1;
+            Status_StatusStrip.Items["activeDatabase"].ImageIndex = -1;
+            Status_StatusStrip.Items["activeTable"].ImageIndex = -1;
 
             if (nodes.Connection != null)
             {
-                statusStrip.Items["activeConnection"].Text = $"Connection: {nodes.Connection.Text}";
-                statusStrip.Items["activeConnection"].ImageIndex = 0;
+                Status_StatusStrip.Items["activeConnection"].Text = $"Connection: {nodes.Connection.Text}";
+                Status_StatusStrip.Items["activeConnection"].ImageIndex = 0;
             }
 
             if (nodes.Database != null)
             {
-                statusStrip.Items["activeDatabase"].Text = $"Database: {nodes.Database.Text}";
-                statusStrip.Items["activeDatabase"].ImageIndex = 1;
+                Status_StatusStrip.Items["activeDatabase"].Text = $"Database: {nodes.Database.Text}";
+                Status_StatusStrip.Items["activeDatabase"].ImageIndex = 1;
             }
 
             if (nodes.Table != null)
             {
-                statusStrip.Items["activeTable"].Text = $"Table: {nodes.Table.Text}";
-                statusStrip.Items["activeTable"].ImageIndex = 2;
+                Status_StatusStrip.Items["activeTable"].Text = $"Table: {nodes.Table.Text}";
+                Status_StatusStrip.Items["activeTable"].ImageIndex = 2;
             }
         }
     }

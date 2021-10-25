@@ -14,26 +14,26 @@ namespace DBManager.Views
             InitializeComponent();
         }
 
+        public void InitializeView(ImageList imageList)
+        {
+            ConnectionTree_TreeView.ImageList = imageList;
+        }
+
         public event EventHandler<TreeNodeElements> OnSelectedNodeChanged;
         public TreeNodeElements LastSelectedNode { get; private set; }
 
-        private void connectionTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void ConnectionTree_TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             LastSelectedNode = TreeNodeHelper.GetElements(e.Node);
 
             OnSelectedNodeChanged?.Invoke(this, LastSelectedNode);
         }
 
-        public void InitializeView(ImageList imageList)
-        {
-            connectionTree.ImageList = imageList;
-        }
-
         public void LoadConnections(List<string> connectionNames)
         {
             foreach (var name in connectionNames)
             {
-                var node = connectionTree
+                var node = ConnectionTree_TreeView
                     .Nodes.Add(name);
 
                 node.Name = name.ToString();
@@ -44,13 +44,13 @@ namespace DBManager.Views
 
         public void LoadDatabases(string connectionName, List<string> databaseNames)
         {
-            connectionTree
+            ConnectionTree_TreeView
                 .Nodes[connectionName]
                 .Nodes.Clear();
 
             foreach (var name in databaseNames)
             {
-                var node = connectionTree
+                var node = ConnectionTree_TreeView
                     .Nodes[connectionName]
                     .Nodes.Add(name);
 
@@ -62,14 +62,14 @@ namespace DBManager.Views
 
         public void LoadTables(string connectionName, string databaseName, List<string> tableNames)
         {
-            connectionTree
+            ConnectionTree_TreeView
                 .Nodes[connectionName]
                 .Nodes[databaseName]
                 .Nodes.Clear();
 
             foreach (var name in tableNames)
             {
-                var node = connectionTree
+                var node = ConnectionTree_TreeView
                     .Nodes[connectionName]
                     .Nodes[databaseName]
                     .Nodes.Add(name);

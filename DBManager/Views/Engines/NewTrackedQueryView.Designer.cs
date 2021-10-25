@@ -29,47 +29,47 @@ namespace DBManager.Views.Engines
         /// </summary>
         private void InitializeComponent()
         {
-            this.queryLabel = new System.Windows.Forms.Label();
-            this.addConnection = new System.Windows.Forms.Button();
-            this.cancel = new System.Windows.Forms.Button();
+            this.Query_Label = new System.Windows.Forms.Label();
+            this.Save_Button = new System.Windows.Forms.Button();
+            this.Cancel_Button = new System.Windows.Forms.Button();
             this.validationError = new System.Windows.Forms.Label();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.name = new System.Windows.Forms.TextBox();
-            this.timePeriodLabel = new System.Windows.Forms.Label();
-            this.setTrackedQueryParametersLabel = new System.Windows.Forms.Label();
-            this.timePeriod = new System.Windows.Forms.NumericUpDown();
-            this.query = new System.Windows.Forms.RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.timePeriod)).BeginInit();
+            this.Name_Label = new System.Windows.Forms.Label();
+            this.Name_TextBox = new System.Windows.Forms.TextBox();
+            this.TimePeriod_Label = new System.Windows.Forms.Label();
+            this.TrackedQueryParameters_Label = new System.Windows.Forms.Label();
+            this.TimePeriod_NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.Query_RichTextBox = new System.Windows.Forms.RichTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.TimePeriod_NumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // queryLabel
+            // Query_Label
             // 
-            this.queryLabel.AutoSize = true;
-            this.queryLabel.Location = new System.Drawing.Point(10, 81);
-            this.queryLabel.Name = "queryLabel";
-            this.queryLabel.Size = new System.Drawing.Size(35, 13);
-            this.queryLabel.TabIndex = 5;
-            this.queryLabel.Text = "Query";
+            this.Query_Label.AutoSize = true;
+            this.Query_Label.Location = new System.Drawing.Point(10, 81);
+            this.Query_Label.Name = "Query_Label";
+            this.Query_Label.Size = new System.Drawing.Size(35, 13);
+            this.Query_Label.TabIndex = 5;
+            this.Query_Label.Text = "Query";
             // 
-            // addConnection
+            // Save_Button
             // 
-            this.addConnection.Location = new System.Drawing.Point(75, 178);
-            this.addConnection.Name = "addConnection";
-            this.addConnection.Size = new System.Drawing.Size(244, 20);
-            this.addConnection.TabIndex = 6;
-            this.addConnection.Text = "Save";
-            this.addConnection.UseVisualStyleBackColor = true;
-            this.addConnection.Click += new System.EventHandler(this.save_Click);
+            this.Save_Button.Location = new System.Drawing.Point(75, 178);
+            this.Save_Button.Name = "Save_Button";
+            this.Save_Button.Size = new System.Drawing.Size(244, 20);
+            this.Save_Button.TabIndex = 6;
+            this.Save_Button.Text = "Save";
+            this.Save_Button.UseVisualStyleBackColor = true;
+            this.Save_Button.Click += new System.EventHandler(this.Save_Button_Click);
             // 
-            // cancel
+            // Cancel_Button
             // 
-            this.cancel.Location = new System.Drawing.Point(10, 178);
-            this.cancel.Name = "cancel";
-            this.cancel.Size = new System.Drawing.Size(59, 20);
-            this.cancel.TabIndex = 7;
-            this.cancel.Text = "Cancel";
-            this.cancel.UseVisualStyleBackColor = true;
-            this.cancel.Click += new System.EventHandler(this.cancel_Click);
+            this.Cancel_Button.Location = new System.Drawing.Point(10, 178);
+            this.Cancel_Button.Name = "Cancel_Button";
+            this.Cancel_Button.Size = new System.Drawing.Size(59, 20);
+            this.Cancel_Button.TabIndex = 7;
+            this.Cancel_Button.Text = "Cancel";
+            this.Cancel_Button.UseVisualStyleBackColor = true;
+            this.Cancel_Button.Click += new System.EventHandler(this.Cancel_Button_Click);
             // 
             // validationError
             // 
@@ -79,100 +79,100 @@ namespace DBManager.Views.Engines
             this.validationError.Size = new System.Drawing.Size(0, 13);
             this.validationError.TabIndex = 10;
             // 
-            // nameLabel
+            // Name_Label
             // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(10, 42);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(35, 13);
-            this.nameLabel.TabIndex = 12;
-            this.nameLabel.Text = "Name";
+            this.Name_Label.AutoSize = true;
+            this.Name_Label.Location = new System.Drawing.Point(10, 42);
+            this.Name_Label.Name = "Name_Label";
+            this.Name_Label.Size = new System.Drawing.Size(35, 13);
+            this.Name_Label.TabIndex = 12;
+            this.Name_Label.Text = "Name";
             // 
-            // name
+            // Name_TextBox
             // 
-            this.name.Location = new System.Drawing.Point(10, 57);
-            this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(188, 20);
-            this.name.TabIndex = 0;
+            this.Name_TextBox.Location = new System.Drawing.Point(10, 57);
+            this.Name_TextBox.Name = "Name_TextBox";
+            this.Name_TextBox.Size = new System.Drawing.Size(188, 20);
+            this.Name_TextBox.TabIndex = 0;
             // 
-            // timePeriodLabel
+            // TimePeriod_Label
             // 
-            this.timePeriodLabel.AutoSize = true;
-            this.timePeriodLabel.Location = new System.Drawing.Point(201, 41);
-            this.timePeriodLabel.Name = "timePeriodLabel";
-            this.timePeriodLabel.Size = new System.Drawing.Size(118, 13);
-            this.timePeriodLabel.TabIndex = 14;
-            this.timePeriodLabel.Text = "Time period (in minutes)";
+            this.TimePeriod_Label.AutoSize = true;
+            this.TimePeriod_Label.Location = new System.Drawing.Point(201, 41);
+            this.TimePeriod_Label.Name = "TimePeriod_Label";
+            this.TimePeriod_Label.Size = new System.Drawing.Size(118, 13);
+            this.TimePeriod_Label.TabIndex = 14;
+            this.TimePeriod_Label.Text = "Time period (in minutes)";
             // 
-            // setTrackedQueryParametersLabel
+            // TrackedQueryParameters_Label
             // 
-            this.setTrackedQueryParametersLabel.AutoSize = true;
-            this.setTrackedQueryParametersLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F);
-            this.setTrackedQueryParametersLabel.Location = new System.Drawing.Point(3, 8);
-            this.setTrackedQueryParametersLabel.Name = "setTrackedQueryParametersLabel";
-            this.setTrackedQueryParametersLabel.Size = new System.Drawing.Size(251, 30);
-            this.setTrackedQueryParametersLabel.TabIndex = 15;
-            this.setTrackedQueryParametersLabel.Text = "Tracked query parameters";
+            this.TrackedQueryParameters_Label.AutoSize = true;
+            this.TrackedQueryParameters_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F);
+            this.TrackedQueryParameters_Label.Location = new System.Drawing.Point(3, 8);
+            this.TrackedQueryParameters_Label.Name = "TrackedQueryParameters_Label";
+            this.TrackedQueryParameters_Label.Size = new System.Drawing.Size(251, 30);
+            this.TrackedQueryParameters_Label.TabIndex = 15;
+            this.TrackedQueryParameters_Label.Text = "Tracked query parameters";
             // 
-            // timePeriod
+            // TimePeriod_NumericUpDown
             // 
-            this.timePeriod.Location = new System.Drawing.Point(204, 57);
-            this.timePeriod.Maximum = new decimal(new int[] {
+            this.TimePeriod_NumericUpDown.Location = new System.Drawing.Point(204, 57);
+            this.TimePeriod_NumericUpDown.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
-            this.timePeriod.Name = "timePeriod";
-            this.timePeriod.Size = new System.Drawing.Size(115, 20);
-            this.timePeriod.TabIndex = 3;
-            this.timePeriod.Value = new decimal(new int[] {
+            this.TimePeriod_NumericUpDown.Name = "TimePeriod_NumericUpDown";
+            this.TimePeriod_NumericUpDown.Size = new System.Drawing.Size(115, 20);
+            this.TimePeriod_NumericUpDown.TabIndex = 3;
+            this.TimePeriod_NumericUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
-            // query
+            // Query_RichTextBox
             // 
-            this.query.Location = new System.Drawing.Point(10, 97);
-            this.query.Name = "query";
-            this.query.Size = new System.Drawing.Size(309, 75);
-            this.query.TabIndex = 16;
-            this.query.Text = "";
+            this.Query_RichTextBox.Location = new System.Drawing.Point(10, 97);
+            this.Query_RichTextBox.Name = "Query_RichTextBox";
+            this.Query_RichTextBox.Size = new System.Drawing.Size(309, 75);
+            this.Query_RichTextBox.TabIndex = 16;
+            this.Query_RichTextBox.Text = "";
             // 
             // NewTrackedQueryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(329, 205);
-            this.Controls.Add(this.query);
-            this.Controls.Add(this.timePeriod);
-            this.Controls.Add(this.setTrackedQueryParametersLabel);
-            this.Controls.Add(this.timePeriodLabel);
-            this.Controls.Add(this.nameLabel);
-            this.Controls.Add(this.name);
+            this.Controls.Add(this.Query_RichTextBox);
+            this.Controls.Add(this.TimePeriod_NumericUpDown);
+            this.Controls.Add(this.TrackedQueryParameters_Label);
+            this.Controls.Add(this.TimePeriod_Label);
+            this.Controls.Add(this.Name_Label);
+            this.Controls.Add(this.Name_TextBox);
             this.Controls.Add(this.validationError);
-            this.Controls.Add(this.cancel);
-            this.Controls.Add(this.addConnection);
-            this.Controls.Add(this.queryLabel);
+            this.Controls.Add(this.Cancel_Button);
+            this.Controls.Add(this.Save_Button);
+            this.Controls.Add(this.Query_Label);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "NewTrackedQueryView";
             this.Text = "DBManager - New tracked query configuration";
-            ((System.ComponentModel.ISupportInitialize)(this.timePeriod)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimePeriod_NumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label queryLabel;
-        private System.Windows.Forms.Button addConnection;
-        private System.Windows.Forms.Button cancel;
+        private System.Windows.Forms.Label Query_Label;
+        private System.Windows.Forms.Button Save_Button;
+        private System.Windows.Forms.Button Cancel_Button;
         private System.Windows.Forms.Label validationError;
-        private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.TextBox name;
-        private System.Windows.Forms.Label timePeriodLabel;
-        private System.Windows.Forms.Label setTrackedQueryParametersLabel;
-        private System.Windows.Forms.NumericUpDown timePeriod;
-        private System.Windows.Forms.RichTextBox query;
+        private System.Windows.Forms.Label Name_Label;
+        private System.Windows.Forms.TextBox Name_TextBox;
+        private System.Windows.Forms.Label TimePeriod_Label;
+        private System.Windows.Forms.Label TrackedQueryParameters_Label;
+        private System.Windows.Forms.NumericUpDown TimePeriod_NumericUpDown;
+        private System.Windows.Forms.RichTextBox Query_RichTextBox;
     }
 }

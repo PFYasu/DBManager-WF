@@ -27,19 +27,23 @@ namespace DBManager.Views.Engines
             InitializeComponent();
         }
 
-        private void trackedQueries_trackedQueriesList_SelectedIndexChanged(object sender, EventArgs e)
+        public void InitializeView()
+        {
+            TrackedQueries_ListView.Columns[0].Width = -2;
+            TrackedQueries_ListView.Columns[0].Width = -2;
+
+            DisableActionButtons();
+            GetTrackedQueriesList();
+        }
+
+        private void Refresh_Button_Click(object sender, EventArgs e)
         {
             FillTrackedQueryDetails();
         }
 
-        private void trackedQueries_refreshButton_Click(object sender, EventArgs e)
+        private void Remove_Button_Click(object sender, EventArgs e)
         {
-            FillTrackedQueryDetails();
-        }
-
-        private void trackedQueries_removeButton_Click(object sender, EventArgs e)
-        {
-            var selectedItem = trackedQueries_trackedQueriesList.SelectedItems[0].Text;
+            var selectedItem = TrackedQueries_ListView.SelectedItems[0].Text;
 
             var response = _presenter.QueryTrackerDriver.RemoveTrackedQuery(selectedItem, _databaseName);
             if (response.Type == ResponseType.Error)
@@ -52,9 +56,14 @@ namespace DBManager.Views.Engines
             _messageHelper.ShowInformation("Tracked query successfully removed.");
         }
 
+        private void TrackedQueries_ListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillTrackedQueryDetails();
+        }
+
         private void FillTrackedQueryDetails()
         {
-            if (trackedQueries_trackedQueriesList.SelectedItems.Count == 0)
+            if (TrackedQueries_ListView.SelectedItems.Count == 0)
             {
                 DisableActionButtons();
                 return;
@@ -62,7 +71,7 @@ namespace DBManager.Views.Engines
 
             EnableActionButtons();
 
-            var selectedItem = trackedQueries_trackedQueriesList.SelectedItems[0].Text;
+            var selectedItem = TrackedQueries_ListView.SelectedItems[0].Text;
 
             var response = _presenter.QueryTrackerDriver.GetTrackedQuery(selectedItem, _databaseName);
             if (response.Type == ResponseType.Error)
@@ -74,24 +83,15 @@ namespace DBManager.Views.Engines
             var payload = response.Payload as TrackedQueryResponseDto;
 
             var actualQueryResult = payload.TrackedQuery.ActualQueryResult;
-            trackedQueries_actualQuery.DataSource = actualQueryResult.DataTableResult;
-            trackedQueries_actualQueryInfoLabel.Text = $"Actual query | Updated: {actualQueryResult.Updated}";
+            ActualQuery_DataGridView.DataSource = actualQueryResult.DataTableResult;
+            ActualQuery_Label.Text = $"Actual query | Updated: {actualQueryResult.Updated}";
 
             var previousQueryResult = payload.TrackedQuery.PreviousQueryResult;
-            trackedQueries_previousQuery.DataSource = previousQueryResult.DataTableResult;
-            trackedQueries_previousQueryInfoLabel.Text = $"Previous query | Updated: {previousQueryResult.Updated}";
+            PreviousQuery_DataGridView.DataSource = previousQueryResult.DataTableResult;
+            PreviousQuery_Label.Text = $"Previous query | Updated: {previousQueryResult.Updated}";
 
             trackedQueries_timePeriodLabel.Text = $"Refresh every {payload.TrackedQuery.TimePeriod} minutes";
-            trackedQueries_queryPreview.Text = payload.TrackedQuery.Query;
-        }
-
-        public void InitializeView()
-        {
-            trackedQueries_trackedQueriesList.Columns[0].Width = -2;
-            trackedQueries_trackedQueriesList.Columns[0].Width = -2;
-
-            DisableActionButtons();
-            GetTrackedQueriesList();
+            TrackedQuery_RichTextBox.Text = payload.TrackedQuery.Query;
         }
 
         private void GetTrackedQueriesList()
@@ -107,32 +107,32 @@ namespace DBManager.Views.Engines
 
             _trackedQueryNames = payload.Names;
 
-            trackedQueries_trackedQueriesList.Items.Clear();
+            TrackedQueries_ListView.Items.Clear();
 
             foreach (var trackedQueryName in _trackedQueryNames)
             {
-                trackedQueries_trackedQueriesList.Items.Add(trackedQueryName);
+                TrackedQueries_ListView.Items.Add(trackedQueryName);
             }
         }
 
         private void DisableActionButtons()
         {
-            trackedQueries_removeButton.Enabled = false;
-            trackedQueries_refreshButton.Enabled = false;
+            Remove_Button.Enabled = false;
+            Refresh_Button.Enabled = false;
 
-            trackedQueries_actualQueryInfoLabel.Text = "";
-            trackedQueries_previousQueryInfoLabel.Text = "";
+            ActualQuery_Label.Text = "";
+            PreviousQuery_Label.Text = "";
             trackedQueries_timePeriodLabel.Text = "Select query from list below";
-            trackedQueries_queryPreview.Text = "";
+            TrackedQuery_RichTextBox.Text = "";
 
-            trackedQueries_previousQuery.DataSource = null;
-            trackedQueries_actualQuery.DataSource = null;
+            PreviousQuery_DataGridView.DataSource = null;
+            ActualQuery_DataGridView.DataSource = null;
         }
 
         private void EnableActionButtons()
         {
-            trackedQueries_removeButton.Enabled = true;
-            trackedQueries_refreshButton.Enabled = true;
+            Remove_Button.Enabled = true;
+            Refresh_Button.Enabled = true;
         }
     }
 }

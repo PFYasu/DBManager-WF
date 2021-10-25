@@ -21,11 +21,6 @@ namespace DBManager.Views.Engines
             InitializeComponent();
         }
 
-        private async void MySqlConnectionView_Load(object sender, EventArgs e)
-        {
-            await InitializeView();
-        }
-
         public async Task InitializeView()
         {
             var response = await _presenter.GetConnectionDetails();
@@ -37,23 +32,28 @@ namespace DBManager.Views.Engines
 
             var payload = response.Payload as ConnectionDetailsResponseDto;
 
-            structure_connectionParametersDataGridView.Rows.Clear();
+            Structure_Structure_DataGridView.Rows.Clear();
 
             for (int i = 0; i < payload.DatabasesStructure.Count; i++)
             {
-                structure_connectionParametersDataGridView.Rows.Insert(
+                Structure_Structure_DataGridView.Rows.Insert(
                     i,
                     i,
                     payload.DatabasesStructure[i].Name);
             }
 
-            structure_databasesCountLabel.Text = $"Databases: {payload.DatabasesCount}";
+            Databases_Structure_Label.Text = $"Databases: {payload.DatabasesCount}";
 
-            informations_connectionNameLabel.Text = $"Name: {payload.Name}";
-            informations_typeLabel.Text = $"Type: {payload.Type}";
-            informations_loggedAsLabel.Text = $"Logged as: {payload.Uid}";
-            informations_serverLabel.Text = $"Server: {payload.Server}";
-            informations_portLabel.Text = $"Port: {payload.Port}";
+            Name_Structure_Label.Text = $"Name: {payload.Name}";
+            Type_Structure_Label.Text = $"Type: {payload.Type}";
+            LoggedAs_Structure_Label.Text = $"Logged as: {payload.Uid}";
+            Server_Structure_Label.Text = $"Server: {payload.Server}";
+            Port_Structure_Label.Text = $"Port: {payload.Port}";
+        }
+
+        private async void MySqlConnectionView_Load(object sender, EventArgs e)
+        {
+            await InitializeView();
         }
     }
 }

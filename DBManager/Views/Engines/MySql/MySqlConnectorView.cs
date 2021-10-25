@@ -22,7 +22,7 @@ namespace DBManager.Views.Engines.MySql
             _messageHelper = new MessageHelper("DBManager - MySQL connector");
 
             InitializeComponent();
-            port.Controls[0].Hide();
+            Port_NumericUpDown.Controls[0].Hide();
         }
 
         public MySqlConnectorView(DBManagerPresenterBase presenter, string connectionName)
@@ -35,10 +35,10 @@ namespace DBManager.Views.Engines.MySql
             InitializeComponent();
             FillForm(connectionName);
 
-            port.Controls[0].Hide();
+            Port_NumericUpDown.Controls[0].Hide();
         }
 
-        private async void save_Click(object sender, EventArgs e)
+        private async void Save_Button_Click(object sender, EventArgs e)
         {
             if (IsValidForm(out string error) == false)
             {
@@ -48,7 +48,7 @@ namespace DBManager.Views.Engines.MySql
 
             var connectionParameters = PrepareConnectionParameters();
             var type = EngineType.MySql;
-            var connectionName = name.Text;
+            var connectionName = Name_TextBox.Text;
 
             Response response;
 
@@ -87,7 +87,7 @@ namespace DBManager.Views.Engines.MySql
             DialogResult = DialogResult.OK;
         }
 
-        private void cancel_Click(object sender, EventArgs e)
+        private void Cancel_Button_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -105,11 +105,11 @@ namespace DBManager.Views.Engines.MySql
 
             try
             {
-                name.Text = payload.Name;
-                serverUrl.Text = payload.ConnectionParameters["Server"];
-                port.Value = decimal.Parse(payload.ConnectionParameters["Port"]);
-                username.Text = payload.ConnectionParameters["Uid"];
-                password.Text = payload.ConnectionParameters["Pwd"];
+                Name_TextBox.Text = payload.Name;
+                ServerUrl_TextBox.Text = payload.ConnectionParameters["Server"];
+                Port_NumericUpDown.Value = decimal.Parse(payload.ConnectionParameters["Port"]);
+                Username_TextBox.Text = payload.ConnectionParameters["Uid"];
+                Password_TextBox.Text = payload.ConnectionParameters["Pwd"];
             }
             catch (Exception exception)
             {
@@ -119,15 +119,15 @@ namespace DBManager.Views.Engines.MySql
 
         private bool IsValidForm(out string error)
         {
-            if (string.IsNullOrEmpty(name.Text))
+            if (string.IsNullOrEmpty(Name_TextBox.Text))
                 error = "Name cannot be empty.";
-            else if (string.IsNullOrEmpty(serverUrl.Text))
+            else if (string.IsNullOrEmpty(ServerUrl_TextBox.Text))
                 error = "Server URL cannot be empty.";
-            else if (string.IsNullOrEmpty(port.Value.ToString()))
+            else if (string.IsNullOrEmpty(Port_NumericUpDown.Value.ToString()))
                 error = "Port cannot be empty.";
-            else if (string.IsNullOrEmpty(username.Text))
+            else if (string.IsNullOrEmpty(Username_TextBox.Text))
                 error = "Username cannot be empty.";
-            else if (string.IsNullOrEmpty(password.Text))
+            else if (string.IsNullOrEmpty(Password_TextBox.Text))
                 error = "Password cannot be empty.";
             else
             {
@@ -141,10 +141,10 @@ namespace DBManager.Views.Engines.MySql
         {
             var parameters = new Dictionary<string, string>();
 
-            parameters["Server"] = serverUrl.Text;
-            parameters["Port"] = port.Value.ToString();
-            parameters["Uid"] = username.Text;
-            parameters["Pwd"] = password.Text;
+            parameters["Server"] = ServerUrl_TextBox.Text;
+            parameters["Port"] = Port_NumericUpDown.Value.ToString();
+            parameters["Uid"] = Username_TextBox.Text;
+            parameters["Pwd"] = Password_TextBox.Text;
 
             return parameters;
         }
