@@ -114,6 +114,8 @@
     <Compile Include="Models\Engines\QueryTracker.cs" />
     <Compile Include="Presenters\DBManagerPresenter.cs" />
     <Compile Include="Presenters\DBManagerPresenterBase.cs" />
+    <Compile Include="Presenters\Engines\DataTransferDriver.cs" />
+    <Compile Include="Presenters\Engines\DataTransferDriverBase.cs" />
     <Compile Include="Presenters\Engines\EnginePresenterBase.cs" />
     <Compile Include="Presenters\Engines\MySqlPresenter.cs" />
     <Compile Include="Presenters\Engines\PostgreSQLPresenter.cs" />
@@ -130,6 +132,12 @@
     <Compile Include="Utils\ModelExtensions.cs" />
     <Compile Include="Utils\QueryHelper.cs" />
     <Compile Include="Utils\QueryType.cs" />
+    <Compile Include="Views\ConnectionTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ConnectionTreeView.Designer.cs">
+      <DependentUpon>ConnectionTreeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectorSelectorView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +155,12 @@
     </Compile>
     <Compile Include="Views\Engines\ConnectionView.designer.cs">
       <DependentUpon>ConnectionView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Engines\DataTransferView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Engines\DataTransferView.Designer.cs">
+      <DependentUpon>DataTransferView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Engines\MySql\MySqlConnectorView.cs">
       <SubType>Form</SubType>
@@ -190,6 +204,7 @@
     <Compile Include="Views\Engines\TrackedQueriesView.Designer.cs">
       <DependentUpon>TrackedQueriesView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Helpers\ConnectionImageListHelper.cs" />
     <Compile Include="Views\Helpers\ConnectorMode.cs" />
     <Compile Include="Views\Helpers\MessageHelper.cs" />
     <Compile Include="Views\Helpers\TreeNodeHelper.cs" />
@@ -202,6 +217,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\ConnectionTreeView.resx">
+      <DependentUpon>ConnectionTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ConnectorSelectorView.resx">
       <DependentUpon>ConnectorSelectorView.cs</DependentUpon>
     </EmbeddedResource>
@@ -210,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Engines\ConnectionView.resx">
       <DependentUpon>ConnectionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Engines\DataTransferView.resx">
+      <DependentUpon>DataTransferView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Engines\MySql\MySqlConnectorView.resx">
       <DependentUpon>MySqlConnectorView.cs</DependentUpon>

@@ -8,7 +8,6 @@ using DBManager.Views.Engines.MySql;
 using DBManager.Views.Engines.PostgreSQL;
 using DBManager.Views.Helpers;
 using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,8 +30,81 @@ namespace DBManager.Views
             removeConnection.Enabled = false;
             setConnectionConfig.Enabled = false;
 
-            connectionTree.ImageList = GetImageList();
-            statusStrip.ImageList = GetImageList();
+            var imageList = ConnectionImageListHelper.GetImageList();
+            statusStrip.ImageList = imageList;
+            connectionTreeView.InitializeView(imageList);
+
+            connectionTreeView.OnSelectedNodeChanged += ConnectionTreeView_OnSelectedNodeChanged;
+        }
+
+        private async void ConnectionTreeView_OnSelectedNodeChanged(object sender, TreeNodeElements e)
+        {
+            if (e.Mode == TreeNodeMode.NotSupported)
+            {
+                removeConnection.Enabled = false;
+                setConnectionConfig.Enabled = false;
+                return;
+            }
+
+            var response = _presenter.GetPresenter(e.Connection.Text);
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to get {e.Connection.Text} connection", response);
+                return;
+            }
+
+            var payload = response.Payload as PresenterResponseDto;
+            Form form;
+
+            switch (e.Mode)
+            {
+                case TreeNodeMode.ConnectionSelected:
+                    if (e.Connection.IsExpanded)
+                    {
+                        e.Connection.Collapse();
+                        return;
+                    }
+
+                    form = new ConnectionView(payload.Presenter);
+                    await LoadDatabases(payload.Presenter);
+                    e.Connection.Expand();
+                    break;
+                case TreeNodeMode.DatabaseSelected:
+                    if (e.Database.IsExpanded)
+                    {
+                        e.Database.Collapse();
+                        return;
+                    }
+
+                    form = new DatabaseView(payload.Presenter, e.Database.Text);
+                    await LoadTables(payload.Presenter, e.Database.Text);
+                    e.Database.Expand();
+                    break;
+                case TreeNodeMode.TableSelected:
+                    form = new TableView(payload.Presenter, e.Database.Text, e.Table.Text);
+                    break;
+                default:
+                    _messageHelper.ShowError("Unable to create view - incorrect engine type");
+                    return;
+            }
+
+            removeConnection.Enabled = true;
+            setConnectionConfig.Enabled = true;
+
+            UpdateStatusStrip(e);
+
+            form.TopLevel = false;
+            form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            form.Text = e.Connection.Text;
+
+            if (connectionsLayout.Controls.Count == 1)
+            {
+                connectionsLayout.Controls[0].Dispose();
+                connectionsLayout.Controls.Clear();
+            }
+            connectionsLayout.Controls.Add(form);
+
+            form.Show();
         }
 
         private void addConnection_Click(object sender, EventArgs e)
@@ -45,10 +117,10 @@ namespace DBManager.Views
 
         private async void removeConnection_Click(object sender, EventArgs e)
         {
-            if (connectionTree.SelectedNode == null)
-                return;
+            var nodes = connectionTreeView.LastSelectedNode;
 
-            var nodes = TreeNodeHelper.GetElements(connectionTree.SelectedNode);
+            if (nodes == null)
+                return;
 
             if (nodes.Mode == TreeNodeMode.NotSupported)
                 return;
@@ -79,10 +151,10 @@ namespace DBManager.Views
 
         private void setConnectionConfig_Click(object sender, EventArgs e)
         {
-            if (connectionTree.SelectedNode == null)
-                return;
+            var nodes = connectionTreeView.LastSelectedNode;
 
-            var nodes = TreeNodeHelper.GetElements(connectionTree.SelectedNode);
+            if (nodes == null)
+                return;
 
             if (nodes.Mode == TreeNodeMode.NotSupported)
                 return;
@@ -119,78 +191,6 @@ namespace DBManager.Views
                 LoadConnections();
         }
 
-        private async void connectionTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            var nodes = TreeNodeHelper.GetElements(e.Node);
-
-            if (nodes.Mode == TreeNodeMode.NotSupported)
-            {
-                removeConnection.Enabled = false;
-                setConnectionConfig.Enabled = false;
-                return;
-            }
-
-            var response = _presenter.GetPresenter(nodes.Connection.Text);
-            if (response.Type == ResponseType.Error)
-            {
-                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection", response);
-                return;
-            }
-
-            var payload = response.Payload as PresenterResponseDto;
-            Form form;
-
-            switch (nodes.Mode)
-            {
-                case TreeNodeMode.ConnectionSelected:
-                    if (nodes.Connection.IsExpanded)
-                    {
-                        nodes.Connection.Collapse();
-                        return;
-                    }
-
-                    form = new ConnectionView(payload.Presenter);
-                    await LoadDatabases(payload.Presenter);
-                    nodes.Connection.Expand();
-                    break;
-                case TreeNodeMode.DatabaseSelected:
-                    if (nodes.Database.IsExpanded)
-                    {
-                        nodes.Database.Collapse();
-                        return;
-                    }
-
-                    form = new DatabaseView(payload.Presenter, nodes.Database.Text);
-                    await LoadTables(payload.Presenter, nodes.Database.Text);
-                    nodes.Database.Expand();
-                    break;
-                case TreeNodeMode.TableSelected:
-                    form = new TableView(payload.Presenter, nodes.Database.Text, nodes.Table.Text);
-                    break;
-                default:
-                    _messageHelper.ShowError("Unable to create view - incorrect engine type");
-                    return;
-            }
-
-            removeConnection.Enabled = true;
-            setConnectionConfig.Enabled = true;
-
-            UpdateStatusStrip(nodes);
-
-            form.TopLevel = false;
-            form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            form.Text = nodes.Connection.Text;
-
-            if (connectionsLayout.Controls.Count == 1)
-            {
-                connectionsLayout.Controls[0].Dispose();
-                connectionsLayout.Controls.Clear();
-            }
-            connectionsLayout.Controls.Add(form);
-
-            form.Show();
-        }
-
         private void LoadConnections()
         {
             var response = _presenter.GetConnectionNames();
@@ -200,19 +200,9 @@ namespace DBManager.Views
                 return;
             }
 
-            connectionTree.Nodes.Clear();
-
             var dto = response.Payload as ConnectionNamesDto;
 
-            foreach (var name in dto.Names)
-            {
-                var node = connectionTree
-                    .Nodes.Add(name);
-
-                node.Name = name.ToString();
-                node.ImageIndex = 0;
-                node.SelectedImageIndex = 0;
-            }
+            connectionTreeView.LoadConnections(dto.Names);
 
             statusStrip.Items["numberOfConnections"].Text = $"Connections: {dto.Names.Count}";
             statusStrip.Items["numberOfConnections"].ImageIndex = 0;
@@ -223,26 +213,13 @@ namespace DBManager.Views
             var response = await presenter.GetDatabaseNames();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get databases for {presenter.ConnectionName} connection", response);
+                _messageHelper.ShowError($"Unable to load database list for {presenter.ConnectionName} connection", response);
                 return;
             }
 
             var payload = response.Payload as DatabaseNamesResponseDto;
 
-            connectionTree
-                .Nodes[presenter.ConnectionName]
-                .Nodes.Clear();
-
-            foreach (var name in payload.Names)
-            {
-                var node = connectionTree
-                    .Nodes[presenter.ConnectionName]
-                    .Nodes.Add(name);
-
-                node.Name = name.ToString();
-                node.ImageIndex = 1;
-                node.SelectedImageIndex = 1;
-            }
+            connectionTreeView.LoadDatabases(presenter.ConnectionName, payload.Names);
         }
 
         private async Task LoadTables(EnginePresenterBase presenter, string databaseName)
@@ -250,39 +227,13 @@ namespace DBManager.Views
             var response = await presenter.GetTableNames(databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get tables for {presenter.ConnectionName} connection", response);
+                _messageHelper.ShowError($"Unable to load table list for {presenter.ConnectionName} connection", response);
                 return;
             }
 
             var payload = response.Payload as TableNamesResponseDto;
 
-            connectionTree
-                .Nodes[presenter.ConnectionName]
-                .Nodes[databaseName]
-                .Nodes.Clear();
-
-            foreach (var name in payload.Names)
-            {
-                var node = connectionTree
-                    .Nodes[presenter.ConnectionName]
-                    .Nodes[databaseName]
-                    .Nodes.Add(name);
-
-                node.Name = name.ToString();
-                node.ImageIndex = 2;
-                node.SelectedImageIndex = 2;
-            }
-        }
-
-        private ImageList GetImageList()
-        {
-            var imageList = new ImageList();
-
-            imageList.Images.Add(Image.FromFile($"{Constants.Paths.Resources}/connection.png"));
-            imageList.Images.Add(Image.FromFile($"{Constants.Paths.Resources}/database.png"));
-            imageList.Images.Add(Image.FromFile($"{Constants.Paths.Resources}/table.png"));
-
-            return imageList;
+            connectionTreeView.LoadTables(presenter.ConnectionName, databaseName, payload.Names);
         }
 
         private void UpdateStatusStrip(TreeNodeElements nodes)

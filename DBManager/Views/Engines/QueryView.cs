@@ -6,6 +6,7 @@ using DBManager.Views.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Windows.Forms;
 
 namespace DBManager.Views.Engines
@@ -13,7 +14,7 @@ namespace DBManager.Views.Engines
     [ToolboxItem(true)]
     public partial class QueryView : UserControl
     {
-        private EnginePresenterBase _presenter;
+        private readonly EnginePresenterBase _presenter;
         private readonly string _databaseName;
         private readonly Dictionary<string, List<string>> _databaseTableColumns;
         private readonly MessageHelper _messageHelper;
@@ -115,7 +116,10 @@ namespace DBManager.Views.Engines
 
             query_DataGridView.DataSource = payload.Table;
 
+            query_queryTypeLabel.Visible = true;
             query_queryTypeLabel.Text = $"Type: {payload.Type}";
+
+            query_copyDataButton.Visible = payload.Type == QueryType.Query;
         }
 
         private void query_addTrackedQueryButton_Click(object sender, EventArgs e)
@@ -134,6 +138,14 @@ namespace DBManager.Views.Engines
 
             if (result == DialogResult.OK)
                 _messageHelper.ShowInformation("Tracked query was added successfully.");
+        }
+
+        private void query_copyDataButton_Click(object sender, EventArgs e)
+        {
+            var dataToTransfer = query_DataGridView.DataSource as DataTable;
+
+            using var form = new DataTransferView(_presenter, dataToTransfer);
+            form.ShowDialog();
         }
 
         private void structure_tablesView_SelectedIndexChanged(object sender, EventArgs e)
@@ -171,6 +183,9 @@ namespace DBManager.Views.Engines
         {
             structure_tablesView.Columns[0].Width = -2;
             structure_columnsView.Columns[0].Width = -2;
+
+            query_copyDataButton.Visible = false;
+            query_queryTypeLabel.Visible = false;
 
             query_databaseNameLabel.Text = $"Name: {_databaseName}";
 

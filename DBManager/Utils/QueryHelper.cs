@@ -39,7 +39,7 @@ namespace DBManager.Utils
                 {
                     query += $"{column}, ";
                 }
-                query = query.Remove(query.Length - 2) + " ";
+                query = query.RemoveLastCharacters(2) + " ";
 
                 query += "\r\nFROM ";
 
@@ -59,7 +59,7 @@ namespace DBManager.Utils
                 {
                     query += $"{column}, ";
                 }
-                query = query.Remove(query.Length - 2) + " ";
+                query = query.RemoveLastCharacters(2) + " ";
                 query += ")";
 
                 query += "\r\nVALUES\r\n";
@@ -69,7 +69,7 @@ namespace DBManager.Utils
                 {
                     query += $"expression{i}, ";
                 }
-                query = query.Remove(query.Length - 2) + " ";
+                query = query.RemoveLastCharacters(2) + " ";
                 query += ");";
 
                 return query;
@@ -97,7 +97,7 @@ namespace DBManager.Utils
                 {
                     query += $"{column} = value{i++}, ";
                 }
-                query = query.Remove(query.Length - 2) + " ";
+                query = query.RemoveLastCharacters(2) + " ";
 
                 query += "\r\nWHERE condition;";
 

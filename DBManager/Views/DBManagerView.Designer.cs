@@ -40,8 +40,8 @@ namespace DBManager.Views
             this.removeConnection = new System.Windows.Forms.Button();
             this.addConnection = new System.Windows.Forms.Button();
             this.connectionsLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.connectionTree = new System.Windows.Forms.TreeView();
             this.connectionSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.connectionTreeView = new DBManager.Views.ConnectionTreeView();
             this.statusStrip.SuspendLayout();
             this.connectionServiceLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.connectionSplitContainer)).BeginInit();
@@ -159,23 +159,6 @@ namespace DBManager.Views
             this.connectionsLayout.Size = new System.Drawing.Size(410, 321);
             this.connectionsLayout.TabIndex = 3;
             // 
-            // connectionTree
-            // 
-            this.connectionTree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.connectionTree.BackColor = System.Drawing.Color.White;
-            this.connectionTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.connectionTree.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.connectionTree.ForeColor = System.Drawing.Color.Black;
-            this.connectionTree.Indent = 8;
-            this.connectionTree.Location = new System.Drawing.Point(3, 3);
-            this.connectionTree.Name = "connectionTree";
-            this.connectionTree.ShowPlusMinus = false;
-            this.connectionTree.Size = new System.Drawing.Size(130, 315);
-            this.connectionTree.TabIndex = 4;
-            this.connectionTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.connectionTree_NodeMouseClick);
-            // 
             // connectionSplitContainer
             // 
             this.connectionSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -188,7 +171,7 @@ namespace DBManager.Views
             // 
             // connectionSplitContainer.Panel1
             // 
-            this.connectionSplitContainer.Panel1.Controls.Add(this.connectionTree);
+            this.connectionSplitContainer.Panel1.Controls.Add(this.connectionTreeView);
             this.connectionSplitContainer.Panel1MinSize = 140;
             // 
             // connectionSplitContainer.Panel2
@@ -198,6 +181,14 @@ namespace DBManager.Views
             this.connectionSplitContainer.SplitterDistance = 140;
             this.connectionSplitContainer.SplitterWidth = 9;
             this.connectionSplitContainer.TabIndex = 5;
+            // 
+            // connectionTreeView
+            // 
+            this.connectionTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.connectionTreeView.Location = new System.Drawing.Point(0, 0);
+            this.connectionTreeView.Name = "connectionTreeView";
+            this.connectionTreeView.Size = new System.Drawing.Size(136, 321);
+            this.connectionTreeView.TabIndex = 0;
             // 
             // DBManagerView
             // 
@@ -234,9 +225,9 @@ namespace DBManager.Views
         private System.Windows.Forms.ToolStripStatusLabel numberOfConnections;
         private System.Windows.Forms.ToolStripStatusLabel activeConnection;
         private System.Windows.Forms.TableLayoutPanel connectionsLayout;
-        private System.Windows.Forms.TreeView connectionTree;
         private System.Windows.Forms.SplitContainer connectionSplitContainer;
         private System.Windows.Forms.ToolStripStatusLabel activeDatabase;
         private System.Windows.Forms.ToolStripStatusLabel activeTable;
+        private ConnectionTreeView connectionTreeView;
     }
 }

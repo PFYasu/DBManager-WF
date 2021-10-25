@@ -5,7 +5,7 @@ namespace DBManager.Tests.Helpers
 {
     public static class MySQLHelper
     {
-        public async static Task RemoveDatabase(MySqlConnection connection, string databaseName)
+        public static async Task RemoveDatabase(MySqlConnection connection, string databaseName)
         {
             using (var command = connection.CreateCommand())
             {
