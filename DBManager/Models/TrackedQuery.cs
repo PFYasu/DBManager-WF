@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBManager.Dto.Engines;
+using System;
 using System.Data;
 
 namespace DBManager.Models
@@ -12,15 +13,21 @@ namespace DBManager.Models
         public QueryResult ActualQueryResult { get; set; }
         public QueryResult PreviousQueryResult { get; set; }
 
-        public TrackedQuery(string name, string databaseName, string query, uint timePeriod)
+        public TrackedQuery()
         {
-            Name = name;
-            DatabaseName = databaseName;
-            Query = query;
-            TimePeriod = timePeriod;
-
             ActualQueryResult = new QueryResult();
             PreviousQueryResult = new QueryResult();
+        }
+
+        public static TrackedQuery FromModel(NewTrackedQueryDto dto)
+        {
+            return new TrackedQuery
+            {
+                Name = dto.Name,
+                DatabaseName = dto.DatabaseName,
+                Query = dto.Query,
+                TimePeriod = dto.TimePeriod,
+            };
         }
     }
 

@@ -107,11 +107,9 @@
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\DBManagerModel.cs" />
     <Compile Include="Models\Engines\IEngineModel.cs" />
-    <Compile Include="Models\Engines\IQueryTracker.cs" />
     <Compile Include="Models\Engines\MySqlModel.cs" />
     <Compile Include="Models\Engines\PostgreSQLModel.cs" />
     <Compile Include="Models\IDBManagerModel.cs" />
-    <Compile Include="Models\Engines\QueryTracker.cs" />
     <Compile Include="Presenters\DBManagerPresenter.cs" />
     <Compile Include="Presenters\DBManagerPresenterBase.cs" />
     <Compile Include="Presenters\Engines\DataTransferDriver.cs" />
