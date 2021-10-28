@@ -12,15 +12,13 @@ namespace DBManager.Presenters.Engines
     public class PostgreSQLPresenter : EnginePresenterBase
     {
         private readonly IEngineModel _model;
-        private readonly DBManagerPresenterBase _dbManagerPresenter;
 
         public PostgreSQLPresenter(IEngineModel model, DBManagerPresenterBase dbManagerPresenter)
         {
             _model = model;
-            _dbManagerPresenter = dbManagerPresenter;
 
             QueryTrackerDriver = new QueryTrackerDriver(_model);
-            DataTransferDriver = new DataTransferDriver(_dbManagerPresenter);
+            DataTransferDriver = new DataTransferDriver(dbManagerPresenter);
         }
 
         public override string ConnectionName => _model.Name;
@@ -42,11 +40,12 @@ namespace DBManager.Presenters.Engines
                 return Error(exception.Message);
             }
 
-            var dto = new DatabaseNamesResponseDto();
-            dto.Names = result
+            var names = result
                 .AsEnumerable()
                 .Select(x => x.Field<string>("datname"))
                 .ToList();
+
+            var dto = new DatabaseNamesResponseDto { Names = names };
 
             return Ok(dto);
         }
@@ -332,7 +331,7 @@ namespace DBManager.Presenters.Engines
                 databasesStructure.Add(databaseStructure);
             }
 
-            var dto = new ConnectionDetailsResponseDto()
+            var dto = new ConnectionDetailsResponseDto
             {
                 Name = name,
                 Type = type,
