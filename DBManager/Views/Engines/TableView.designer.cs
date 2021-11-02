@@ -38,6 +38,7 @@ namespace DBManager.Views.Engines
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableView_TabControl = new System.Windows.Forms.TabControl();
             this.Browse = new System.Windows.Forms.TabPage();
+            this.UnsupportedColumns_Browse_Button = new System.Windows.Forms.Button();
             this.Name_Browse_Label = new System.Windows.Forms.Label();
             this.Structure_Browse_DataGridView = new System.Windows.Forms.DataGridView();
             this.Elements_Browse_Label = new System.Windows.Forms.Label();
@@ -79,6 +80,7 @@ namespace DBManager.Views.Engines
             // Browse
             // 
             this.Browse.BackColor = System.Drawing.Color.White;
+            this.Browse.Controls.Add(this.UnsupportedColumns_Browse_Button);
             this.Browse.Controls.Add(this.Name_Browse_Label);
             this.Browse.Controls.Add(this.Structure_Browse_DataGridView);
             this.Browse.Controls.Add(this.Elements_Browse_Label);
@@ -89,6 +91,19 @@ namespace DBManager.Views.Engines
             this.Browse.Size = new System.Drawing.Size(678, 364);
             this.Browse.TabIndex = 0;
             this.Browse.Text = "Browse";
+            // 
+            // UnsupportedColumns_Browse_Button
+            // 
+            this.UnsupportedColumns_Browse_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.UnsupportedColumns_Browse_Button.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.UnsupportedColumns_Browse_Button.ForeColor = System.Drawing.Color.Black;
+            this.UnsupportedColumns_Browse_Button.Location = new System.Drawing.Point(540, 6);
+            this.UnsupportedColumns_Browse_Button.Name = "UnsupportedColumns_Browse_Button";
+            this.UnsupportedColumns_Browse_Button.Size = new System.Drawing.Size(130, 23);
+            this.UnsupportedColumns_Browse_Button.TabIndex = 22;
+            this.UnsupportedColumns_Browse_Button.Text = "Unsupported columns";
+            this.UnsupportedColumns_Browse_Button.UseVisualStyleBackColor = true;
+            this.UnsupportedColumns_Browse_Button.Click += new System.EventHandler(this.UnsupportedColumns_Browse_Button_Click);
             // 
             // Name_Browse_Label
             // 
@@ -151,8 +166,9 @@ namespace DBManager.Views.Engines
             this.Structure_Browse_DataGridView.RowHeadersVisible = false;
             this.Structure_Browse_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.Structure_Browse_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Structure_Browse_DataGridView.Size = new System.Drawing.Size(678, 335);
+            this.Structure_Browse_DataGridView.Size = new System.Drawing.Size(678, 331);
             this.Structure_Browse_DataGridView.TabIndex = 6;
+            this.Structure_Browse_DataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.Structure_Browse_DataGridView_DataError);
             // 
             // Elements_Browse_Label
             // 
@@ -410,5 +426,6 @@ namespace DBManager.Views.Engines
         private System.Windows.Forms.DataGridViewTextBoxColumn structure_comparingSubtitlesMethod;
         private System.Windows.Forms.Label Name_Browse_Label;
         private System.Windows.Forms.Label Name_Structure_Label;
+        private System.Windows.Forms.Button UnsupportedColumns_Browse_Button;
     }
 }
