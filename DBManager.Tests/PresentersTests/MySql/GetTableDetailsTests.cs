@@ -1,52 +1,34 @@
 ﻿using DBManager.Dto.Engines;
-using DBManager.Models;
-using DBManager.Models.Engines;
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Tests.Helpers;
-using DBManager.Utils;
-using MySqlConnector;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DBManager.Tests.PresentersTests.MySql
 {
-    public class GetTableDetailsTests
+    public class GetTableDetailsTests : IDisposable
     {
-        private readonly MySqlPresenter _presenter;
+        private readonly MySqlHelper _mySqlHelper;
 
         public GetTableDetailsTests()
         {
-            var connection = new Connection
-            {
-                Name = "dbmanager_mysql_test",
-                Type = EngineType.MySql,
-                ConnectionParameters = ConnectionParameters.MySql.ConnectionParameters,
-                TrackedQueries = new List<TrackedQuery>()
-            };
-
-            var model = new MySqlModel(connection);
-            _presenter = new MySqlPresenter(model, null);
+            _mySqlHelper = new MySqlHelper();
         }
 
         [Fact]
         public async Task ForSpecificTable_GetTableDetails()
         {
-            var databaseName = NamesGenerator.Generate();
+            var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
+            var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
+            var databaseName = await _mySqlHelper.CreateDatabase(connection);
             const string tableName = "employees";
-
-            var connection = new MySqlConnection(ConnectionParameters.MySql.ConnectionString);
-
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
 
             using (var command = connection.CreateCommand())
             {
                 await connection.OpenAsync();
-
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{databaseName}`;";
-                await command.ExecuteNonQueryAsync();
 
                 await connection.ChangeDatabaseAsync(databaseName);
 
@@ -63,7 +45,7 @@ namespace DBManager.Tests.PresentersTests.MySql
             }
 
 
-            var result = await Act(databaseName, tableName);
+            var result = await Act(presenter, databaseName, tableName);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
@@ -75,16 +57,20 @@ namespace DBManager.Tests.PresentersTests.MySql
             Assert.Equal(1, payload.RowsCount);
             Assert.Equal(2, payload.ColumnsCount);
             Assert.Equal(2, payload.ColumnsStructure.Count);
-
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
         }
 
 
-        public async Task<Response> Act(string databaseName, string tableName)
+        public async Task<Response> Act(MySqlPresenter presenter, string databaseName, string tableName)
         {
-            var result = await _presenter.GetTableDetails(databaseName, tableName);
+            var result = await presenter.GetTableDetails(databaseName, tableName);
 
             return result;
+        }
+
+
+        public void Dispose()
+        {
+            _mySqlHelper.Dispose();
         }
     }
 }

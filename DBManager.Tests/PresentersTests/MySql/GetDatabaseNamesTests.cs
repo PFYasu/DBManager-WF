@@ -1,61 +1,33 @@
 ﻿using DBManager.Dto.Engines;
-using DBManager.Models;
-using DBManager.Models.Engines;
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Tests.Helpers;
-using DBManager.Utils;
-using MySqlConnector;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DBManager.Tests.PresentersTests.MySql
 {
-    public class GetDatabaseNamesTests
+    public class GetDatabaseNamesTests : IDisposable
     {
-        private readonly MySqlPresenter _presenter;
+        private readonly MySqlHelper _mySqlHelper;
 
         public GetDatabaseNamesTests()
         {
-            var connection = new Connection
-            {
-                Name = "dbmanager_mysql_test",
-                Type = EngineType.MySql,
-                ConnectionParameters = ConnectionParameters.MySql.ConnectionParameters,
-                TrackedQueries = new List<TrackedQuery>()
-            };
-
-            var model = new MySqlModel(connection);
-            _presenter = new MySqlPresenter(model, null);
+            _mySqlHelper = new MySqlHelper();
         }
 
         [Fact]
         public async Task ForSpecificDatabases_GetCorrectDatabaseNames()
         {
-            var firstDatabaseName = NamesGenerator.Generate();
-            var secondDatabaseName = NamesGenerator.Generate();
+            var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
+            var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
-            var connection = new MySqlConnection(ConnectionParameters.MySql.ConnectionString);
-
-            await MySQLHelper.RemoveDatabase(connection, firstDatabaseName);
-            await MySQLHelper.RemoveDatabase(connection, secondDatabaseName);
-
-            using (var command = connection.CreateCommand())
-            {
-                await connection.OpenAsync();
-
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{firstDatabaseName}`;";
-                await command.ExecuteNonQueryAsync();
-
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{secondDatabaseName}`;";
-                await command.ExecuteNonQueryAsync();
-
-                await connection.CloseAsync();
-            }
+            var firstDatabaseName = await _mySqlHelper.CreateDatabase(connection);
+            var secondDatabaseName = await _mySqlHelper.CreateDatabase(connection);
 
 
-            var result = await Act();
+            var result = await Act(presenter);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
@@ -64,17 +36,20 @@ namespace DBManager.Tests.PresentersTests.MySql
             Assert.NotNull(payload);
             Assert.Contains(firstDatabaseName, payload.Names);
             Assert.Contains(secondDatabaseName, payload.Names);
-
-            await MySQLHelper.RemoveDatabase(connection, firstDatabaseName);
-            await MySQLHelper.RemoveDatabase(connection, secondDatabaseName);
         }
 
 
-        public async Task<Response> Act()
+        public async Task<Response> Act(MySqlPresenter presenter)
         {
-            var result = await _presenter.GetDatabaseNames();
+            var result = await presenter.GetDatabaseNames();
 
             return result;
+        }
+
+
+        public void Dispose()
+        {
+            _mySqlHelper.Dispose();
         }
     }
 }
