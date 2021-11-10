@@ -1,56 +1,38 @@
 ﻿using DBManager.Dto.Engines;
-using DBManager.Models;
-using DBManager.Models.Engines;
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Tests.Helpers;
 using DBManager.Utils;
-using MySqlConnector;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DBManager.Tests.PresentersTests.MySql
 {
-    public class SendQueryTests
+    public class SendQueryTests : IDisposable
     {
-        private readonly MySqlPresenter _presenter;
+        private readonly MySqlHelper _mySqlHelper;
 
         public SendQueryTests()
         {
-            var connection = new Connection
-            {
-                Name = "dbmanager_mysql_test",
-                Type = EngineType.MySql,
-                ConnectionParameters = ConnectionParameters.MySql.ConnectionParameters,
-                TrackedQueries = new List<TrackedQuery>()
-            };
-
-            var model = new MySqlModel(connection);
-            _presenter = new MySqlPresenter(model, null);
+            _mySqlHelper = new MySqlHelper();
         }
 
         [Fact]
         public async Task ForSpecificQuery_GetDataTable_WithCorrectRows_AndSelectedColumns()
         {
-            var databaseName = NamesGenerator.Generate();
+            var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
+            var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
+            var databaseName = await _mySqlHelper.CreateDatabase(connection);
             const string tableName = "employees";
             const string firstColumn = "id";
             const string secondColumn = "name";
-
             const string query = "SELECT * FROM employees";
-
-            var connection = new MySqlConnection(ConnectionParameters.MySql.ConnectionString);
-
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
 
             using (var command = connection.CreateCommand())
             {
                 await connection.OpenAsync();
-
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{databaseName}`;";
-                await command.ExecuteNonQueryAsync();
 
                 await connection.ChangeDatabaseAsync(databaseName);
 
@@ -67,7 +49,7 @@ namespace DBManager.Tests.PresentersTests.MySql
             }
 
 
-            var result = await Act(databaseName, query);
+            var result = await Act(presenter, databaseName, query);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
@@ -81,29 +63,21 @@ namespace DBManager.Tests.PresentersTests.MySql
             Assert.NotNull(dataTable.Columns[firstColumn]);
             Assert.NotNull(dataTable.Columns[secondColumn]);
             Assert.Equal(1, dataTable.Rows.Count);
-
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
         }
 
         [Fact]
         public async Task ForSpecificNonQuery_GetDataTable_WithRowAffectedColumn_AndCorrectNumberOfAffectedRows()
         {
-            var databaseName = NamesGenerator.Generate();
+            var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
+            var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
+            var databaseName = await _mySqlHelper.CreateDatabase(connection);
             const string tableName = "employees";
-
             string query = $"INSERT INTO {tableName} VALUES (2, 'test')";
-
-            var connection = new MySqlConnection(ConnectionParameters.MySql.ConnectionString);
-
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
 
             using (var command = connection.CreateCommand())
             {
                 await connection.OpenAsync();
-
-                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{databaseName}`;";
-                await command.ExecuteNonQueryAsync();
 
                 await connection.ChangeDatabaseAsync(databaseName);
 
@@ -117,7 +91,7 @@ namespace DBManager.Tests.PresentersTests.MySql
             }
 
 
-            var result = await Act(databaseName, query);
+            var result = await Act(presenter, databaseName, query);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
@@ -131,16 +105,20 @@ namespace DBManager.Tests.PresentersTests.MySql
             Assert.NotNull(dataTable.Columns["AFFECTED ROWS"]);
             Assert.Single(dataTable.Rows);
             Assert.Equal("1", dataTable.Rows[0].ItemArray[0]);
-
-            await MySQLHelper.RemoveDatabase(connection, databaseName);
         }
 
 
-        public async Task<Response> Act(string databaseName, string query)
+        public async Task<Response> Act(MySqlPresenter presenter, string databaseName, string query)
         {
-            var result = await _presenter.SendQuery(databaseName, query);
+            var result = await presenter.SendQuery(databaseName, query);
 
             return result;
+        }
+
+
+        public void Dispose()
+        {
+            _mySqlHelper.Dispose();
         }
     }
 }

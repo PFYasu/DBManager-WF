@@ -1,67 +1,33 @@
 ﻿using DBManager.Dto.Engines;
-using DBManager.Models;
-using DBManager.Models.Engines;
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Tests.Helpers;
-using DBManager.Utils;
-using Npgsql;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DBManager.Tests.PresentersTests.PostgreSQL
 {
-    public class GetDatabaseNamesTests
+    public class GetDatabaseNamesTests : IDisposable
     {
-        private readonly PostgreSQLPresenter _presenter;
+        private readonly PostgreSQLHelper _postgreSQLHelper;
 
         public GetDatabaseNamesTests()
         {
-            var connection = new Connection
-            {
-                Name = "dbmanager_postgresql_test",
-                Type = EngineType.PostgreSQL,
-                ConnectionParameters = ConnectionParameters.PostgreSQL.ConnectionParameters,
-                TrackedQueries = new List<TrackedQuery>()
-            };
-
-            var model = new PostgreSQLModel(connection);
-            _presenter = new PostgreSQLPresenter(model, null);
+            _postgreSQLHelper = new PostgreSQLHelper(ConnectionParameters.PostgreSQL.EscapeDatabase);
         }
 
         [Fact]
         public async Task ForSpecificDatabases_GetCorrectDatabaseNames()
         {
-            var firstDatabaseName = NamesGenerator.Generate();
-            var secondDatabaseName = NamesGenerator.Generate();
+            var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
+            var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
 
-            var databasesToDelete = new List<string>
-            {
-                firstDatabaseName,
-                secondDatabaseName
-            };
-
-            var connection = new NpgsqlConnection(ConnectionParameters.PostgreSQL.ConnectionString);
-
-            await PostgreSQLHelper.RemoveDatabase(connection, firstDatabaseName);
-            await PostgreSQLHelper.RemoveDatabase(connection, secondDatabaseName);
-
-            using (var command = connection.CreateCommand())
-            {
-                await connection.OpenAsync();
-
-                command.CommandText = $"CREATE DATABASE {firstDatabaseName};";
-                await command.ExecuteNonQueryAsync();
-
-                command.CommandText = $"CREATE DATABASE {secondDatabaseName};";
-                await command.ExecuteNonQueryAsync();
-
-                await connection.CloseAsync();
-            }
+            var firstDatabaseName = await _postgreSQLHelper.CreateDatabase(connection);
+            var secondDatabaseName = await _postgreSQLHelper.CreateDatabase(connection);
 
 
-            var result = await Act();
+            var result = await Act(presenter);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
@@ -70,17 +36,20 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
             Assert.NotNull(payload);
             Assert.Contains(firstDatabaseName, payload.Names);
             Assert.Contains(secondDatabaseName, payload.Names);
-
-            await PostgreSQLHelper.RemoveDatabase(connection, firstDatabaseName);
-            await PostgreSQLHelper.RemoveDatabase(connection, secondDatabaseName);
         }
 
 
-        public async Task<Response> Act()
+        public async Task<Response> Act(PostgreSQLPresenter presenter)
         {
-            var result = await _presenter.GetDatabaseNames();
+            var result = await presenter.GetDatabaseNames();
 
             return result;
+        }
+
+
+        public void Dispose()
+        {
+            _postgreSQLHelper.Dispose();
         }
     }
 }

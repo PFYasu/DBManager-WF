@@ -1,53 +1,35 @@
 ﻿using DBManager.Dto.Engines;
-using DBManager.Models;
-using DBManager.Models.Engines;
 using DBManager.Presenters;
 using DBManager.Presenters.Engines;
 using DBManager.Tests.Helpers;
-using DBManager.Utils;
-using Npgsql;
-using System.Collections.Generic;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DBManager.Tests.PresentersTests.PostgreSQL
 {
-    public class GetDatabaseDetailsTests
+    public class GetDatabaseDetailsTests : IDisposable
     {
-        private readonly PostgreSQLPresenter _presenter;
+        private readonly PostgreSQLHelper _postgreSQLHelper;
 
         public GetDatabaseDetailsTests()
         {
-            var connection = new Connection
-            {
-                Name = "dbmanager_postgresql_test",
-                Type = EngineType.PostgreSQL,
-                ConnectionParameters = ConnectionParameters.PostgreSQL.ConnectionParameters,
-                TrackedQueries = new List<TrackedQuery>()
-            };
-
-            var model = new PostgreSQLModel(connection);
-            _presenter = new PostgreSQLPresenter(model, null);
+            _postgreSQLHelper = new PostgreSQLHelper(ConnectionParameters.PostgreSQL.EscapeDatabase);
         }
 
         [Fact]
         public async Task ForSpecificDatabase_GetDatabaseDetails()
         {
-            var databaseName = NamesGenerator.Generate();
+            var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
+            var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
 
+            var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
             const string tableName = "employees";
-
-            var connection = new NpgsqlConnection(ConnectionParameters.PostgreSQL.ConnectionString);
-
-            await PostgreSQLHelper.RemoveDatabase(connection, databaseName);
 
             using (var command = connection.CreateCommand())
             {
                 await connection.OpenAsync();
-
-                command.CommandText = $"CREATE DATABASE {databaseName};";
-                await command.ExecuteNonQueryAsync();
 
                 await connection.ChangeDatabaseAsync(databaseName);
 
@@ -63,10 +45,8 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
                 await connection.CloseAsync();
             }
 
-            WaitForApplyChangesToDatabase();
 
-
-            var result = await Act(databaseName);
+            var result = await Act(presenter, databaseName);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
@@ -80,8 +60,6 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
             var tableStructure = payload.TablesStructure[0];
             Assert.Equal(tableName, tableStructure.Name);
             Assert.Equal((ulong)1, tableStructure.Records);
-
-            await PostgreSQLHelper.RemoveDatabase(connection, databaseName);
         }
 
 
@@ -91,11 +69,19 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
         }
 
 
-        public async Task<Response> Act(string databaseName)
+        public async Task<Response> Act(PostgreSQLPresenter presenter, string databaseName)
         {
-            var result = await _presenter.GetDatabaseDetails(databaseName);
+            WaitForApplyChangesToDatabase();
+
+            var result = await presenter.GetDatabaseDetails(databaseName);
 
             return result;
+        }
+
+
+        public void Dispose()
+        {
+            _postgreSQLHelper.Dispose();
         }
     }
 }
