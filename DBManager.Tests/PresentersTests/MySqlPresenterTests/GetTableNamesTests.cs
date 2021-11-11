@@ -6,27 +6,26 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.MySql
+namespace DBManager.Tests.PresentersTests.MySqlPresenterTests
 {
-    public class GetDatabaseTableColumnsTests : IDisposable
+    public class GetTableNamesTests : IDisposable
     {
         private readonly MySqlHelper _mySqlHelper;
 
-        public GetDatabaseTableColumnsTests()
+        public GetTableNamesTests()
         {
             _mySqlHelper = new MySqlHelper();
         }
 
         [Fact]
-        public async Task ForSpecificDatabase_GetTableColumns_FromAllTables()
+        public async Task ForSpecificDatabase_GetCorrectTableNames()
         {
             var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
             var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
             var databaseName = await _mySqlHelper.CreateDatabase(connection);
-            const string tableName = "employees";
-            const string firstColumn = "id";
-            const string secondColumn = "name";
+            const string firstTableName = "employees";
+            const string secondTableName = "orders";
 
             using (var command = connection.CreateCommand())
             {
@@ -34,13 +33,10 @@ namespace DBManager.Tests.PresentersTests.MySql
 
                 await connection.ChangeDatabaseAsync(databaseName);
 
-                command.CommandText =
-                    $"CREATE TABLE IF NOT EXISTS `{tableName}` (" +
-                        $"{firstColumn} INT," +
-                        $"{secondColumn} VARCHAR(20));";
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS `{firstTableName}` (id INT);";
                 await command.ExecuteNonQueryAsync();
 
-                command.CommandText = $"INSERT INTO `{tableName}` VALUES (1, 'test');";
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS `{secondTableName}` (id INT);";
                 await command.ExecuteNonQueryAsync();
 
                 await connection.CloseAsync();
@@ -52,21 +48,17 @@ namespace DBManager.Tests.PresentersTests.MySql
 
             Assert.Equal(ResponseType.Ok, result.Type);
 
-            var payload = result.Payload as DatabaseTableColumnsResponseDto;
+            var payload = result.Payload as TableNamesResponseDto;
             Assert.NotNull(payload);
-
-            Assert.Single(payload.DatabaseTableColumns);
-
-            var databaseTablesColumns = payload.DatabaseTableColumns;
-            Assert.NotNull(databaseTablesColumns[tableName]);
-            Assert.Contains(firstColumn, databaseTablesColumns[tableName]);
-            Assert.Contains(secondColumn, databaseTablesColumns[tableName]);
+            Assert.Equal(2, payload.Names.Count);
+            Assert.Contains(firstTableName, payload.Names);
+            Assert.Contains(secondTableName, payload.Names);
         }
 
 
         public async Task<Response> Act(MySqlPresenter presenter, string databaseName)
         {
-            var result = await presenter.GetDatabaseTableColumns(databaseName);
+            var result = await presenter.GetTableNames(databaseName);
 
             return result;
         }

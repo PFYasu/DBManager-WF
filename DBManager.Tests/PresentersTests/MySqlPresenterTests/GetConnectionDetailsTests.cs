@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.MySql
+namespace DBManager.Tests.PresentersTests.MySqlPresenterTests
 {
     public class GetConnectionDetailsTests : IDisposable
     {

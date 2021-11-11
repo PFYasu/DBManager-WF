@@ -7,6 +7,6 @@ namespace DBManager.Models.Engines
     {
         List<TrackedQuery> TrackedQueries { get; }
         DataTable GetDataTableDifferences(DataTable first, DataTable second);
-        void TryApplyNewSnapshot(TrackedQuery trackedQuery, DataTable dataTable);
+        void TryApplyNewSnapshot(TrackedQuery trackedQuery, DataTable dataTable, bool skipDataNormalization = false);
     }
 }

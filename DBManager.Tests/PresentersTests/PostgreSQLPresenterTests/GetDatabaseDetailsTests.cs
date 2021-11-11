@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.PostgreSQL
+namespace DBManager.Tests.PresentersTests.PostgreSQLPresenterTests
 {
     public class GetDatabaseDetailsTests : IDisposable
     {
