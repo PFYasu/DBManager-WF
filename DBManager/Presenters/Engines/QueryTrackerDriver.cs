@@ -3,6 +3,7 @@ using DBManager.Models;
 using DBManager.Models.Engines;
 using DBManager.Utils;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
@@ -28,14 +29,120 @@ namespace DBManager.Presenters.Engines
             _minutesAfterStart = 0;
         }
 
-        public override Response GetTrackedQueryNames(string databaseName)
+        public override Response GetTrackedQueriesDetails(string databaseName)
         {
-            var names = _model.TrackedQueries
+            var trackedQueries = _model.QueryTrackerDriverModel.TrackedQueries
                 .Where(x => x.DatabaseName == databaseName)
-                .Select(x => x.Name)
                 .ToList();
 
-            var dto = new TrackedQueryNamesResponseDto { Names = names };
+            var trackedQueriesDetails = new List<TrackedQueryDetails>();
+
+            foreach (var trackedQuery in trackedQueries)
+            {
+                var trackedQueryDetails = new TrackedQueryDetails
+                {
+                    Name = trackedQuery.Name,
+                    TimePeriod = trackedQuery.TimePeriod
+                };
+
+                trackedQueriesDetails.Add(trackedQueryDetails);
+            }
+
+            var dto = new TrackedQueriesDetailsResponseDto { TrackedQueriesDetails = trackedQueriesDetails };
+
+            return Ok(dto);
+        }
+
+        public override Response GetTrackedQuerySnapshotsDetails(string trackedQueryName, string databaseName)
+        {
+            if (TrackedQueryExists(trackedQueryName, databaseName) == false)
+                return Error($"Tracked query with {trackedQueryName} name does not exist");
+
+            var trackedQuery = _model.QueryTrackerDriverModel.TrackedQueries
+                .Single(x => x.Name == trackedQueryName && x.DatabaseName == databaseName);
+
+            var snapshotNames = trackedQuery.QuerySnapshots
+                .Select(x => x.Updated.ToString())
+                .ToList();
+
+            var timePeriod = trackedQuery.TimePeriod;
+
+            var dto = new TrackedQuerySnapshotsDetailsResponseDto
+            {
+                SnapshotNames = snapshotNames,
+                TimePeriod = timePeriod
+            };
+
+            return Ok(dto);
+        }
+
+        public override Response GetSnapshot(string snapshotName, string trackedQueryName, string databaseName)
+        {
+            if (TrackedQueryExists(trackedQueryName, databaseName) == false)
+                return Error($"Tracked query with {trackedQueryName} name does not exist");
+
+            var trackedQuery = _model.QueryTrackerDriverModel.TrackedQueries
+                .Single(x => x.Name == trackedQueryName && x.DatabaseName == databaseName);
+
+            var snapshot = trackedQuery.QuerySnapshots
+                .SingleOrDefault(x => x.Updated.ToString() == snapshotName);
+
+            if (snapshot == null)
+                return Error($"Snapshot {snapshotName} in {trackedQueryName} does not exist");
+
+            var updated = snapshot.Updated;
+            var data = snapshot.Data;
+
+            var dto = new TrackedQuerySnapshotResponseDto
+            {
+                Updated = updated,
+                Data = data
+            };
+
+            return Ok(dto);
+        }
+
+        public override Response GetSnapshotDifferences(string firstSnapshotName, string secondSnapshotName, string trackedQueryName, string databaseName)
+        {
+            if (TrackedQueryExists(trackedQueryName, databaseName) == false)
+                return Error($"Tracked query with {trackedQueryName} name does not exist");
+
+            var trackedQuery = _model.QueryTrackerDriverModel.TrackedQueries
+                .Single(x => x.Name == trackedQueryName && x.DatabaseName == databaseName);
+
+            var firstSnapshot = trackedQuery.QuerySnapshots
+                .SingleOrDefault(x => x.Updated.ToString() == firstSnapshotName);
+
+            if (firstSnapshot == null)
+                return Error($"Snapshot {firstSnapshotName} in {trackedQueryName} does not exist");
+
+            var secondSnapshot = trackedQuery.QuerySnapshots
+                .SingleOrDefault(x => x.Updated.ToString() == secondSnapshotName);
+
+            if (secondSnapshot == null)
+                return Error($"Snapshot {secondSnapshotName} in {trackedQueryName} does not exist");
+
+            var firstSnapshotData = firstSnapshot.Data;
+            var secondSnapshotData = secondSnapshot.Data;
+
+            DataTable snapshotDifferencesResult;
+
+            try
+            {
+                snapshotDifferencesResult = _model.QueryTrackerDriverModel.GetDataTableDifferences(firstSnapshotData, secondSnapshotData);
+            }
+            catch (Exception exception)
+            {
+                return Error(exception.Message);
+            }
+
+            var differentRows = snapshotDifferencesResult.Rows.Count;
+
+            var dto = new TrackedQuerySnapshotDifferencesResponseDto
+            {
+                Differences = snapshotDifferencesResult,
+                DifferentRows = differentRows
+            };
 
             return Ok(dto);
         }
@@ -45,77 +152,57 @@ namespace DBManager.Presenters.Engines
             if (TrackedQueryExists(dto.Name, dto.DatabaseName))
                 return Error($"Tracked query with {dto.Name} name already exists");
 
-            var trackedQuery = TrackedQuery.FromModel(dto);
+            var trackedQuery = TrackedQuery.FromDto(dto);
 
-            _model.TrackedQueries.Add(trackedQuery);
+            _model.QueryTrackerDriverModel.TrackedQueries
+                .Add(trackedQuery);
 
             return Ok();
         }
 
-        public override Response RemoveTrackedQuery(string name, string databaseName)
+        public override Response RemoveTrackedQuery(string trackedQueryName, string databaseName)
         {
-            if (TrackedQueryExists(name, databaseName) == false)
-                return Error($"Tracked query with {name} name does not exist");
+            if (TrackedQueryExists(trackedQueryName, databaseName) == false)
+                return Error($"Tracked query with {trackedQueryName} name does not exist");
 
-            var result = _model.TrackedQueries
-                .RemoveAll(x => x.Name == name && x.DatabaseName == databaseName);
+            var result = _model.QueryTrackerDriverModel.TrackedQueries
+                .RemoveAll(x => x.Name == trackedQueryName && x.DatabaseName == databaseName);
 
             if (result != 1)
-                return Error("Removed more than one tracked query.");
+                throw new InvalidOperationException("Removed more than one tracked query.");
 
             return Ok();
-        }
-
-        public override Response GetTrackedQuery(string name, string databaseName)
-        {
-            if (TrackedQueryExists(name, databaseName) == false)
-                return Error($"Tracked query with {name} name does not exist");
-
-            var result = _model.TrackedQueries
-                .Where(x => x.Name == name && x.DatabaseName == databaseName)
-                .Single();
-
-            var dto = new TrackedQueryResponseDto
-            {
-                TrackedQuery = result
-            };
-
-            return Ok(dto);
         }
 
         private bool TrackedQueryExists(string name, string databaseName)
         {
-            var names = _model.TrackedQueries
-                .Where(x => x.DatabaseName == databaseName)
-                .Select(x => x.Name)
-                .ToList();
+            var trackedQuery = _model.QueryTrackerDriverModel.TrackedQueries
+                .Where(x => x.Name == name && x.DatabaseName == databaseName)
+                .SingleOrDefault();
 
-            return names.Contains(name);
+            return trackedQuery != null;
         }
 
         private async void OnUpdateRequest(object state)
         {
             _minutesAfterStart++;
 
-            foreach (var trackedQuery in _model.TrackedQueries)
+            var trackedQueries = _model.QueryTrackerDriverModel.TrackedQueries;
+
+            foreach (var trackedQuery in trackedQueries)
             {
                 if (_minutesAfterStart % trackedQuery.TimePeriod == 0)
                 {
-                    DataTable result = null;
+                    DataTable executeQueryResult;
+
                     try
                     {
-                        result = await _model.ExecuteQuery(trackedQuery.Query, trackedQuery.DatabaseName);
+                        executeQueryResult = await _model.ExecuteQuery(trackedQuery.Query, trackedQuery.DatabaseName);
+                        _model.QueryTrackerDriverModel.TryApplyNewSnapshot(trackedQuery, executeQueryResult);
                     }
-                    catch (Exception)
+                    catch
                     {
-
                     }
-
-                    trackedQuery.PreviousQueryResult.DataTableResult = trackedQuery.ActualQueryResult.DataTableResult;
-                    trackedQuery.PreviousQueryResult.Updated = trackedQuery.ActualQueryResult.Updated;
-
-                    trackedQuery.ActualQueryResult.DataTableResult = result;
-                    trackedQuery.ActualQueryResult.Updated = DateTime.Now;
                 }
             }
         }
