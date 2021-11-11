@@ -6,26 +6,25 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.PostgreSQL
+namespace DBManager.Tests.PresentersTests.PostgreSQLPresenterTests
 {
-    public class GetTableNamesTests : IDisposable
+    public class GetTableDetailsTests : IDisposable
     {
         private readonly PostgreSQLHelper _postgreSQLHelper;
 
-        public GetTableNamesTests()
+        public GetTableDetailsTests()
         {
             _postgreSQLHelper = new PostgreSQLHelper(ConnectionParameters.PostgreSQL.EscapeDatabase);
         }
 
         [Fact]
-        public async Task ForSpecificDatabase_GetCorrectTableNames()
+        public async Task ForSpecificTable_GetTableDetails()
         {
             var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
             var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
 
             var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
-            const string firstTableName = "employees";
-            const string secondTableName = "orders";
+            const string tableName = "employees";
 
             using (var command = connection.CreateCommand())
             {
@@ -33,32 +32,37 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
 
                 await connection.ChangeDatabaseAsync(databaseName);
 
-                command.CommandText = $"CREATE TABLE {firstTableName} (id INT);";
+                command.CommandText =
+                    $"CREATE TABLE {tableName} (" +
+                        $"id INT," +
+                        $"name VARCHAR(20));";
                 await command.ExecuteNonQueryAsync();
 
-                command.CommandText = $"CREATE TABLE {secondTableName} (id INT);";
+                command.CommandText = $"INSERT INTO {tableName} VALUES (1, 'test');";
                 await command.ExecuteNonQueryAsync();
 
                 await connection.CloseAsync();
             }
 
 
-            var result = await Act(presenter, databaseName);
+            var result = await Act(presenter, databaseName, tableName);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
 
-            var payload = result.Payload as TableNamesResponseDto;
+            var payload = result.Payload as TableDetailsResponseDto;
             Assert.NotNull(payload);
-            Assert.Equal(2, payload.Names.Count);
-            Assert.Contains(firstTableName, payload.Names);
-            Assert.Contains(secondTableName, payload.Names);
+
+            Assert.NotNull(payload.Table);
+            Assert.Equal(1, payload.RowsCount);
+            Assert.Equal(2, payload.ColumnsCount);
+            Assert.Equal(2, payload.ColumnsStructure.Count);
         }
 
 
-        public async Task<Response> Act(PostgreSQLPresenter presenter, string databaseName)
+        public async Task<Response> Act(PostgreSQLPresenter presenter, string databaseName, string tableName)
         {
-            var result = await presenter.GetTableNames(databaseName);
+            var result = await presenter.GetTableDetails(databaseName, tableName);
 
             return result;
         }

@@ -7,24 +7,24 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.PostgreSQL
+namespace DBManager.Tests.PresentersTests.MySqlPresenterTests
 {
     public class SendQueryTests : IDisposable
     {
-        private readonly PostgreSQLHelper _postgreSQLHelper;
+        private readonly MySqlHelper _mySqlHelper;
 
         public SendQueryTests()
         {
-            _postgreSQLHelper = new PostgreSQLHelper(ConnectionParameters.PostgreSQL.EscapeDatabase);
+            _mySqlHelper = new MySqlHelper();
         }
 
         [Fact]
         public async Task ForSpecificQuery_GetDataTable_WithCorrectRows_AndSelectedColumns()
         {
-            var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
-            var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+            var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
+            var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
-            var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
+            var databaseName = await _mySqlHelper.CreateDatabase(connection);
             const string tableName = "employees";
             const string firstColumn = "id";
             const string secondColumn = "name";
@@ -37,12 +37,12 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
                 await connection.ChangeDatabaseAsync(databaseName);
 
                 command.CommandText =
-                    $"CREATE TABLE {tableName} (" +
+                    $"CREATE TABLE IF NOT EXISTS `{tableName}` (" +
                         $"{firstColumn} INT," +
                         $"{secondColumn} VARCHAR(20));";
                 await command.ExecuteNonQueryAsync();
 
-                command.CommandText = $"INSERT INTO {tableName} VALUES (1, 'test');";
+                command.CommandText = $"INSERT INTO `{tableName}` VALUES (1, 'test');";
                 await command.ExecuteNonQueryAsync();
 
                 await connection.CloseAsync();
@@ -68,10 +68,10 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
         [Fact]
         public async Task ForSpecificNonQuery_GetDataTable_WithRowAffectedColumn_AndCorrectNumberOfAffectedRows()
         {
-            var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
-            var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+            var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
+            var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
-            var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
+            var databaseName = await _mySqlHelper.CreateDatabase(connection);
             const string tableName = "employees";
             string query = $"INSERT INTO {tableName} VALUES (2, 'test')";
 
@@ -82,7 +82,7 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
                 await connection.ChangeDatabaseAsync(databaseName);
 
                 command.CommandText =
-                    $"CREATE TABLE {tableName} (" +
+                    $"CREATE TABLE IF NOT EXISTS `{tableName}` (" +
                         $"id INT," +
                         $"name VARCHAR(20));";
                 await command.ExecuteNonQueryAsync();
@@ -108,7 +108,7 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
         }
 
 
-        public async Task<Response> Act(PostgreSQLPresenter presenter, string databaseName, string query)
+        public async Task<Response> Act(MySqlPresenter presenter, string databaseName, string query)
         {
             var result = await presenter.SendQuery(databaseName, query);
 
@@ -118,7 +118,7 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
 
         public void Dispose()
         {
-            _postgreSQLHelper.Dispose();
+            _mySqlHelper.Dispose();
         }
     }
 }

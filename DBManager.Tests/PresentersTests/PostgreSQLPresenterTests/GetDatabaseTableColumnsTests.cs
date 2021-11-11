@@ -6,25 +6,27 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.PostgreSQL
+namespace DBManager.Tests.PresentersTests.PostgreSQLPresenterTests
 {
-    public class GetTableDetailsTests : IDisposable
+    public class GetDatabaseTableColumnsTests : IDisposable
     {
         private readonly PostgreSQLHelper _postgreSQLHelper;
 
-        public GetTableDetailsTests()
+        public GetDatabaseTableColumnsTests()
         {
             _postgreSQLHelper = new PostgreSQLHelper(ConnectionParameters.PostgreSQL.EscapeDatabase);
         }
 
         [Fact]
-        public async Task ForSpecificTable_GetTableDetails()
+        public async Task ForSpecificDatabase_GetTableColumns_FromAllTables()
         {
             var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
             var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
 
             var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
             const string tableName = "employees";
+            const string firstColumn = "id";
+            const string secondColumn = "name";
 
             using (var command = connection.CreateCommand())
             {
@@ -34,8 +36,8 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
 
                 command.CommandText =
                     $"CREATE TABLE {tableName} (" +
-                        $"id INT," +
-                        $"name VARCHAR(20));";
+                        $"{firstColumn} INT," +
+                        $"{secondColumn} VARCHAR(20));";
                 await command.ExecuteNonQueryAsync();
 
                 command.CommandText = $"INSERT INTO {tableName} VALUES (1, 'test');";
@@ -45,24 +47,26 @@ namespace DBManager.Tests.PresentersTests.PostgreSQL
             }
 
 
-            var result = await Act(presenter, databaseName, tableName);
+            var result = await Act(presenter, databaseName);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
 
-            var payload = result.Payload as TableDetailsResponseDto;
+            var payload = result.Payload as DatabaseTableColumnsResponseDto;
             Assert.NotNull(payload);
 
-            Assert.NotNull(payload.Table);
-            Assert.Equal(1, payload.RowsCount);
-            Assert.Equal(2, payload.ColumnsCount);
-            Assert.Equal(2, payload.ColumnsStructure.Count);
+            Assert.Single(payload.DatabaseTableColumns);
+
+            var databaseTablesColumns = payload.DatabaseTableColumns;
+            Assert.NotNull(databaseTablesColumns[tableName]);
+            Assert.Contains(firstColumn, databaseTablesColumns[tableName]);
+            Assert.Contains(secondColumn, databaseTablesColumns[tableName]);
         }
 
 
-        public async Task<Response> Act(PostgreSQLPresenter presenter, string databaseName, string tableName)
+        public async Task<Response> Act(PostgreSQLPresenter presenter, string databaseName)
         {
-            var result = await presenter.GetTableDetails(databaseName, tableName);
+            var result = await presenter.GetDatabaseTableColumns(databaseName);
 
             return result;
         }

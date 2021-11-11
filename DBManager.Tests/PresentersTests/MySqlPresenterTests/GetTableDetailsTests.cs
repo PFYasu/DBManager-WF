@@ -6,25 +6,24 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DBManager.Tests.PresentersTests.MySql
+namespace DBManager.Tests.PresentersTests.MySqlPresenterTests
 {
-    public class GetDatabaseDetailsTests : IDisposable
+    public class GetTableDetailsTests : IDisposable
     {
         private readonly MySqlHelper _mySqlHelper;
 
-        public GetDatabaseDetailsTests()
+        public GetTableDetailsTests()
         {
             _mySqlHelper = new MySqlHelper();
         }
 
         [Fact]
-        public async Task ForSpecificDatabase_GetDatabaseDetails()
+        public async Task ForSpecificTable_GetTableDetails()
         {
             var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
             var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
 
             var databaseName = await _mySqlHelper.CreateDatabase(connection);
-
             const string tableName = "employees";
 
             using (var command = connection.CreateCommand())
@@ -46,26 +45,24 @@ namespace DBManager.Tests.PresentersTests.MySql
             }
 
 
-            var result = await Act(presenter, databaseName);
+            var result = await Act(presenter, databaseName, tableName);
 
 
             Assert.Equal(ResponseType.Ok, result.Type);
 
-            var payload = result.Payload as DatabaseDetailsResponseDto;
+            var payload = result.Payload as TableDetailsResponseDto;
             Assert.NotNull(payload);
 
-            Assert.Equal(1, payload.TablesCount);
-            Assert.Single(payload.TablesStructure);
-
-            var tableStructure = payload.TablesStructure[0];
-            Assert.Equal(tableName, tableStructure.Name);
-            Assert.Equal((ulong)1, tableStructure.Records);
+            Assert.NotNull(payload.Table);
+            Assert.Equal(1, payload.RowsCount);
+            Assert.Equal(2, payload.ColumnsCount);
+            Assert.Equal(2, payload.ColumnsStructure.Count);
         }
 
 
-        public async Task<Response> Act(MySqlPresenter presenter, string databaseName)
+        public async Task<Response> Act(MySqlPresenter presenter, string databaseName, string tableName)
         {
-            var result = await presenter.GetDatabaseDetails(databaseName);
+            var result = await presenter.GetTableDetails(databaseName, tableName);
 
             return result;
         }
