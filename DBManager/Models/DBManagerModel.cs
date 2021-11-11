@@ -61,8 +61,7 @@ namespace DBManager.Models
         public Connection GetConnection(string connectionName)
         {
             return _connections
-                .Where(x => x.Name == connectionName)
-                .Single();
+                .Single(x => x.Name == connectionName);
         }
 
         public async Task RemoveConnection(string connectionName)

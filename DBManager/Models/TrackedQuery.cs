@@ -1,5 +1,6 @@
 ﻿using DBManager.Dto.Engines;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace DBManager.Models
@@ -10,16 +11,14 @@ namespace DBManager.Models
         public string DatabaseName { get; set; }
         public string Query { get; set; }
         public uint TimePeriod { get; set; }
-        public QueryResult ActualQueryResult { get; set; }
-        public QueryResult PreviousQueryResult { get; set; }
+        public List<QuerySnapshot> QuerySnapshots { get; set; }
 
         public TrackedQuery()
         {
-            ActualQueryResult = new QueryResult();
-            PreviousQueryResult = new QueryResult();
+            QuerySnapshots = new List<QuerySnapshot>();
         }
 
-        public static TrackedQuery FromModel(NewTrackedQueryDto dto)
+        public static TrackedQuery FromDto(NewTrackedQueryDto dto)
         {
             return new TrackedQuery
             {
@@ -31,9 +30,9 @@ namespace DBManager.Models
         }
     }
 
-    public class QueryResult
+    public class QuerySnapshot
     {
-        public DataTable DataTableResult { get; set; }
+        public DataTable Data;
         public DateTime? Updated { get; set; }
     }
 }

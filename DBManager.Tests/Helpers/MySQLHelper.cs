@@ -81,7 +81,6 @@ namespace DBManager.Tests.Helpers
 
                     using (var command = connection.CreateCommand())
                     {
-
                         command.CommandText = $"DROP DATABASE IF EXISTS `{databaseName}`;";
                         command.ExecuteNonQuery();
                     }

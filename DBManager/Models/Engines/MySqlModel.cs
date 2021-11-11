@@ -18,13 +18,13 @@ namespace DBManager.Models.Engines
             Name = connection.Name;
             Type = connection.Type;
             ConnectionParameters = connectionParameters;
-            TrackedQueries = connection.TrackedQueries;
+            QueryTrackerDriverModel = new QueryTrackerDriverModel(connection.TrackedQueries);
         }
 
         public string Name { get; }
         public EngineType Type { get; }
         public Dictionary<string, string> ConnectionParameters { get; }
-        public List<TrackedQuery> TrackedQueries { get; }
+        public IQueryTrackerDriverModel QueryTrackerDriverModel { get; }
 
         public async Task<DataTable> ExecuteQuery(string query)
         {

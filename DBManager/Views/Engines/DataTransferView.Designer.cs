@@ -31,13 +31,13 @@ namespace DBManager.Views.Engines
         {
             this.TryCopyData_Button = new System.Windows.Forms.Button();
             this.SelectTable_Label = new System.Windows.Forms.Label();
-            this.ConnectionTree_ConnectionTreeView = new DBManager.Views.ConnectionTreeView();
             this.Information_RichTextBox = new System.Windows.Forms.RichTextBox();
+            this.ConnectionTree_ConnectionTreeView = new DBManager.Views.ConnectionTreeView();
             this.SuspendLayout();
             // 
             // TryCopyData_Button
             // 
-            this.TryCopyData_Button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TryCopyData_Button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TryCopyData_Button.Location = new System.Drawing.Point(12, 366);
             this.TryCopyData_Button.Name = "TryCopyData_Button";
@@ -57,16 +57,6 @@ namespace DBManager.Views.Engines
             this.SelectTable_Label.TabIndex = 16;
             this.SelectTable_Label.Text = "Select table";
             // 
-            // ConnectionTree_ConnectionTreeView
-            // 
-            this.ConnectionTree_ConnectionTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ConnectionTree_ConnectionTreeView.Location = new System.Drawing.Point(12, 69);
-            this.ConnectionTree_ConnectionTreeView.Name = "ConnectionTree_ConnectionTreeView";
-            this.ConnectionTree_ConnectionTreeView.Size = new System.Drawing.Size(201, 291);
-            this.ConnectionTree_ConnectionTreeView.TabIndex = 1;
-            // 
             // Information_RichTextBox
             // 
             this.Information_RichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -78,6 +68,16 @@ namespace DBManager.Views.Engines
             this.Information_RichTextBox.Size = new System.Drawing.Size(200, 33);
             this.Information_RichTextBox.TabIndex = 17;
             this.Information_RichTextBox.Text = "The selected table must match the query result.";
+            // 
+            // ConnectionTree_ConnectionTreeView
+            // 
+            this.ConnectionTree_ConnectionTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ConnectionTree_ConnectionTreeView.Location = new System.Drawing.Point(12, 69);
+            this.ConnectionTree_ConnectionTreeView.Name = "ConnectionTree_ConnectionTreeView";
+            this.ConnectionTree_ConnectionTreeView.Size = new System.Drawing.Size(201, 291);
+            this.ConnectionTree_ConnectionTreeView.TabIndex = 1;
             // 
             // DataTransferView
             // 

@@ -31,6 +31,9 @@ namespace DBManager.Views
 
         public void LoadConnections(List<string> connectionNames)
         {
+            ConnectionTree_TreeView
+                .Nodes.Clear();
+
             foreach (var name in connectionNames)
             {
                 var node = ConnectionTree_TreeView
