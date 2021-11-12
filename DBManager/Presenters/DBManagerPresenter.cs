@@ -27,12 +27,7 @@ namespace DBManager.Presenters
 
             var connectionParameters = dto.ConnectionParameters;
 
-            var connection = new Connection
-            {
-                Name = dto.Name,
-                Type = dto.Type,
-                ConnectionParameters = connectionParameters
-            };
+            var connection = Connection.FromDto(dto);
 
             try
             {
@@ -138,14 +133,7 @@ namespace DBManager.Presenters
                 && ConnectionExists(dto.Name))
                 return Error($"Unable to change {dto.OldName} connection - {dto.Name} connection already exists");
 
-            var connectionParameters = dto.ConnectionParameters;
-
-            var connection = new Connection
-            {
-                Name = dto.Name,
-                Type = dto.Type,
-                ConnectionParameters = connectionParameters
-            };
+            var connection = Connection.FromDto(dto);
 
             try
             {
@@ -176,7 +164,7 @@ namespace DBManager.Presenters
                 return Error(exception.Message);
             }
 
-            var dto = new ConnectionNamesDto { Names = names };
+            var dto = new ConnectionNamesResponseDto { Names = names };
 
             return Ok(dto);
         }

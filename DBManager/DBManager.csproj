@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\AddConnectionDto.cs" />
-    <Compile Include="Dto\ConnectionNamesDto.cs" />
+    <Compile Include="Dto\ConnectionNamesResponseDto.cs" />
     <Compile Include="Dto\Engines\ConnectionDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseDetailsResponseDto.cs" />
     <Compile Include="Dto\Engines\DatabaseNamesResponseDto.cs" />
