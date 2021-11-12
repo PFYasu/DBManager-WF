@@ -1,4 +1,5 @@
-﻿using DBManager.Utils;
+﻿using DBManager.Dto;
+using DBManager.Utils;
 using System.Collections.Generic;
 
 namespace DBManager.Models
@@ -14,6 +15,26 @@ namespace DBManager.Models
         {
             ConnectionParameters = new Dictionary<string, string>();
             TrackedQueries = new List<TrackedQuery>();
+        }
+
+        public static Connection FromDto(AddConnectionDto dto)
+        {
+            return new Connection
+            {
+                Name = dto.Name,
+                Type = dto.Type,
+                ConnectionParameters = dto.ConnectionParameters,
+            };
+        }
+
+        public static Connection FromDto(UpdateConnectionDto dto)
+        {
+            return new Connection
+            {
+                Name = dto.Name,
+                Type = dto.Type,
+                ConnectionParameters = dto.ConnectionParameters
+            };
         }
     }
 }

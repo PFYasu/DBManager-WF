@@ -95,7 +95,7 @@ namespace DBManager.Views.Engines
                 return;
             }
 
-            var dto = response.Payload as ConnectionNamesDto;
+            var dto = response.Payload as ConnectionNamesResponseDto;
 
             ConnectionTree_ConnectionTreeView.LoadConnections(dto.Names);
         }
