@@ -11,7 +11,7 @@ namespace DBManager.Views.Engines
     [ToolboxItem(true)]
     public partial class TrackedQueriesView : UserControl
     {
-        private readonly EnginePresenterBase _presenter;
+        private readonly IEnginePresenter _presenter;
         private readonly string _databaseName;
         private readonly MessageHelper _messageHelper;
         private string _selectedTrackedQuery;
@@ -19,7 +19,7 @@ namespace DBManager.Views.Engines
         private string _aboveTrackedQuerySnapshotName;
         private string _belowTrackedQuerySnapshotName;
 
-        public TrackedQueriesView(EnginePresenterBase presenter, string databaseName)
+        public TrackedQueriesView(IEnginePresenter presenter, string databaseName)
         {
             _presenter = presenter;
             _databaseName = databaseName;

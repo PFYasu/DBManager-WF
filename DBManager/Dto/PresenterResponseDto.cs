@@ -6,6 +6,6 @@ namespace DBManager.Dto
     public class PresenterResponseDto
     {
         public EngineType Type { get; set; }
-        public EnginePresenterBase Presenter { get; set; }
+        public IEnginePresenter Presenter { get; set; }
     }
 }

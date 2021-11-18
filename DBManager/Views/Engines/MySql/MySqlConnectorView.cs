@@ -10,12 +10,12 @@ namespace DBManager.Views.Engines.MySql
 {
     public partial class MySqlConnectorView : Form
     {
-        private readonly DBManagerPresenterBase _presenter;
+        private readonly IDBManagerPresenter _presenter;
         private readonly ConnectorMode _connectorMode;
         private readonly MessageHelper _messageHelper;
         private readonly string _connectionName;
 
-        public MySqlConnectorView(DBManagerPresenterBase presenter)
+        public MySqlConnectorView(IDBManagerPresenter presenter)
         {
             _presenter = presenter;
             _connectorMode = ConnectorMode.NewConnection;
@@ -25,7 +25,7 @@ namespace DBManager.Views.Engines.MySql
             Port_NumericUpDown.Controls[0].Hide();
         }
 
-        public MySqlConnectorView(DBManagerPresenterBase presenter, string connectionName)
+        public MySqlConnectorView(IDBManagerPresenter presenter, string connectionName)
         {
             _presenter = presenter;
             _connectorMode = ConnectorMode.UpdateConnection;

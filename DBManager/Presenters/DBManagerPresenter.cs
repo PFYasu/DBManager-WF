@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace DBManager.Presenters
 {
-    public class DBManagerPresenter : DBManagerPresenterBase
+    public class DBManagerPresenter : IDBManagerPresenter
     {
         private readonly IDBManagerModel _model;
-        private readonly Dictionary<string, EnginePresenterBase> _presenters;
+        private readonly Dictionary<string, IEnginePresenter> _presenters;
 
         public DBManagerPresenter(IDBManagerModel model)
         {
             _model = model;
-            _presenters = new Dictionary<string, EnginePresenterBase>();
+            _presenters = new Dictionary<string, IEnginePresenter>();
         }
 
-        public override async Task<Response> AddConnection(AddConnectionDto dto)
+        public async Task<Response> AddConnection(AddConnectionDto dto)
         {
             if (ConnectionExists(dto.Name))
-                return Error($"Connection with {dto.Name} name already exists");
+                return Response.Error($"Connection with {dto.Name} name already exists");
 
             var connectionParameters = dto.ConnectionParameters;
 
@@ -36,18 +36,18 @@ namespace DBManager.Presenters
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
-            return Ok();
+            return Response.Ok();
         }
 
-        public override Response GetPresenter(string connectionName)
+        public Response GetPresenter(string connectionName)
         {
             PresenterResponseDto dto;
-            EnginePresenterBase presenter;
+            IEnginePresenter presenter;
 
-            if (_presenters.TryGetValue(connectionName, out EnginePresenterBase presenterFromDictionary))
+            if (_presenters.TryGetValue(connectionName, out IEnginePresenter presenterFromDictionary))
             {
                 dto = new PresenterResponseDto
                 {
@@ -55,11 +55,11 @@ namespace DBManager.Presenters
                     Presenter = presenterFromDictionary
                 };
 
-                return Ok(dto);
+                return Response.Ok(dto);
             }
 
             if (ConnectionExists(connectionName) == false)
-                return Error($"Connection with {connectionName} name does not exist");
+                return Response.Error($"Connection with {connectionName} name does not exist");
 
             Connection connection;
 
@@ -69,7 +69,7 @@ namespace DBManager.Presenters
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             IEngineModel model;
@@ -85,7 +85,7 @@ namespace DBManager.Presenters
                     presenter = new PostgreSQLPresenter(model, this);
                     break;
                 default:
-                    return Error("Unable to create presenter. Incorrect engine type.");
+                    return Response.Error("Unable to create presenter. Incorrect engine type.");
             }
 
             var type = connection.Type;
@@ -97,17 +97,17 @@ namespace DBManager.Presenters
             };
 
             if (_presenters.ContainsKey(connectionName))
-                return Error($"Connection {connectionName} already exists in dictionary.");
+                return Response.Error($"Connection {connectionName} already exists in dictionary.");
             else
                 _presenters.Add(connectionName, presenter);
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> RemoveConnection(string connectionName)
+        public async Task<Response> RemoveConnection(string connectionName)
         {
             if (ConnectionExists(connectionName) == false)
-                return Error($"Connection with {connectionName} name does not exist");
+                return Response.Error($"Connection with {connectionName} name does not exist");
 
             try
             {
@@ -116,22 +116,22 @@ namespace DBManager.Presenters
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             _presenters.Remove(connectionName);
 
-            return Ok();
+            return Response.Ok();
         }
 
-        public override async Task<Response> UpdateConnection(UpdateConnectionDto dto)
+        public async Task<Response> UpdateConnection(UpdateConnectionDto dto)
         {
             if (ConnectionExists(dto.OldName) == false)
-                return Error($"{dto.OldName} connection does not exist");
+                return Response.Error($"{dto.OldName} connection does not exist");
 
             if (dto.OldName != dto.Name
                 && ConnectionExists(dto.Name))
-                return Error($"Unable to change {dto.OldName} connection - {dto.Name} connection already exists");
+                return Response.Error($"Unable to change {dto.OldName} connection - {dto.Name} connection already exists");
 
             var connection = Connection.FromDto(dto);
 
@@ -143,15 +143,15 @@ namespace DBManager.Presenters
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             _presenters.Remove(dto.OldName);
 
-            return Ok();
+            return Response.Ok();
         }
 
-        public override Response GetConnectionNames()
+        public Response GetConnectionNames()
         {
             List<string> names;
 
@@ -161,18 +161,18 @@ namespace DBManager.Presenters
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var dto = new ConnectionNamesResponseDto { Names = names };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override Response GetConnectionSettings(string connectionName)
+        public Response GetConnectionSettings(string connectionName)
         {
             if (ConnectionExists(connectionName) == false)
-                return Error($"Connection with {connectionName} does not exist");
+                return Response.Error($"Connection with {connectionName} does not exist");
 
             Connection connection;
 
@@ -182,7 +182,7 @@ namespace DBManager.Presenters
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var type = connection.Type;
@@ -196,7 +196,7 @@ namespace DBManager.Presenters
                 Name = name
             };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
         private bool ConnectionExists(string connectionName)

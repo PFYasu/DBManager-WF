@@ -10,10 +10,10 @@ namespace DBManager.Views.Engines
 {
     public partial class ConnectionView : Form
     {
-        private readonly EnginePresenterBase _presenter;
+        private readonly IEnginePresenter _presenter;
         private readonly MessageHelper _messageHelper;
 
-        public ConnectionView(EnginePresenterBase presenter)
+        public ConnectionView(IEnginePresenter presenter)
         {
             _presenter = presenter;
             _messageHelper = new MessageHelper("DBManager - connection view");

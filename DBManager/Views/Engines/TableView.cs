@@ -11,13 +11,13 @@ namespace DBManager.Views.Engines
 {
     public partial class TableView : Form
     {
-        private readonly EnginePresenterBase _presenter;
+        private readonly IEnginePresenter _presenter;
         private readonly string _databaseName;
         private readonly string _tableName;
         private readonly List<string> _unsupportedColumns;
         private readonly MessageHelper _messageHelper;
 
-        public TableView(EnginePresenterBase presenter, string databaseName, string tableName)
+        public TableView(IEnginePresenter presenter, string databaseName, string tableName)
         {
             _presenter = presenter;
             _databaseName = databaseName;

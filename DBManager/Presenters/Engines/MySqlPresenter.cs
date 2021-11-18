@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DBManager.Presenters.Engines
 {
-    public class MySqlPresenter : EnginePresenterBase
+    public class MySqlPresenter : IEnginePresenter
     {
         private readonly IEngineModel _model;
 
-        public MySqlPresenter(IEngineModel model, DBManagerPresenterBase dbManagerPresenter)
+        public MySqlPresenter(IEngineModel model, IDBManagerPresenter dbManagerPresenter)
         {
             _model = model;
 
@@ -21,12 +21,12 @@ namespace DBManager.Presenters.Engines
             DataTransferDriver = new DataTransferDriver(dbManagerPresenter);
         }
 
-        public override string ConnectionName => _model.Name;
-        public override EngineType EngineType => _model.Type;
-        public override QueryTrackerDriverBase QueryTrackerDriver { get; }
-        public override DataTransferDriverBase DataTransferDriver { get; }
+        public string ConnectionName => _model.Name;
+        public EngineType EngineType => _model.Type;
+        public IQueryTrackerDriver QueryTrackerDriver { get; }
+        public IDataTransferDriver DataTransferDriver { get; }
 
-        public override async Task<Response> GetDatabaseNames()
+        public async Task<Response> GetDatabaseNames()
         {
             const string query = "SHOW DATABASES;";
             DataTable result;
@@ -37,7 +37,7 @@ namespace DBManager.Presenters.Engines
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var names = result
@@ -47,10 +47,10 @@ namespace DBManager.Presenters.Engines
 
             var dto = new DatabaseNamesResponseDto { Names = names };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> GetTableNames(string databaseName)
+        public async Task<Response> GetTableNames(string databaseName)
         {
             var query =
                 $"SELECT " +
@@ -65,7 +65,7 @@ namespace DBManager.Presenters.Engines
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var names = result
@@ -75,10 +75,10 @@ namespace DBManager.Presenters.Engines
 
             var dto = new TableNamesResponseDto { Names = names };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> SendQuery(string databaseName, string query)
+        public async Task<Response> SendQuery(string databaseName, string query)
         {
             var queryType = QueryHelper.QueryTypeResolver.GetQueryType(query);
             var result = new DataTable();
@@ -97,12 +97,12 @@ namespace DBManager.Presenters.Engines
                         result.Rows.Add(executeNonQueryResult);
                         break;
                     default:
-                        return Error("Invalid query type.");
+                        return Response.Error("Invalid query type.");
                 }
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var dto = new QueryResponseDto
@@ -111,10 +111,10 @@ namespace DBManager.Presenters.Engines
                 Table = result
             };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> GetTableDetails(string databaseName, string tableName)
+        public async Task<Response> GetTableDetails(string databaseName, string tableName)
         {
             var tableQuery =
                 $"SELECT " +
@@ -142,7 +142,7 @@ namespace DBManager.Presenters.Engines
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var table = fullTableResult;
@@ -182,10 +182,10 @@ namespace DBManager.Presenters.Engines
                 LastUpdate = lastUpdate
             };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> GetDatabaseDetails(string databaseName)
+        public async Task<Response> GetDatabaseDetails(string databaseName)
         {
             var query =
                 $"SELECT " +
@@ -205,7 +205,7 @@ namespace DBManager.Presenters.Engines
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var tablesStructure = new List<TableStructure>();
@@ -238,10 +238,10 @@ namespace DBManager.Presenters.Engines
                 TablesStructure = tablesStructure
             };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> GetDatabaseTableColumns(string databaseName)
+        public async Task<Response> GetDatabaseTableColumns(string databaseName)
         {
             var query =
                 $"SELECT " +
@@ -257,7 +257,7 @@ namespace DBManager.Presenters.Engines
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var databaseTableColumns = new Dictionary<string, List<string>>();
@@ -278,10 +278,10 @@ namespace DBManager.Presenters.Engines
                 DatabaseTableColumns = databaseTableColumns
             };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> GetConnectionDetails()
+        public async Task<Response> GetConnectionDetails()
         {
             var query = "SHOW DATABASES;";
             DataTable result;
@@ -292,7 +292,7 @@ namespace DBManager.Presenters.Engines
             }
             catch (Exception exception)
             {
-                return Error(exception.Message);
+                return Response.Error(exception.Message);
             }
 
             var name = _model.Name;
@@ -327,7 +327,7 @@ namespace DBManager.Presenters.Engines
                 DatabasesStructure = databasesStructure
             };
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
     }
 }

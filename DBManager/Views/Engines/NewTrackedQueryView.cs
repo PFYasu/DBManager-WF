@@ -10,11 +10,11 @@ namespace DBManager.Views.Engines
 {
     public partial class NewTrackedQueryView : Form
     {
-        private readonly EnginePresenterBase _presenter;
+        private readonly IEnginePresenter _presenter;
         private readonly MessageHelper _messageHelper;
         private readonly string _databaseName;
 
-        public NewTrackedQueryView(EnginePresenterBase presenter, string databaseName, string queryPreview = null)
+        public NewTrackedQueryView(IEnginePresenter presenter, string databaseName, string queryPreview = null)
         {
             _presenter = presenter;
             _databaseName = databaseName;

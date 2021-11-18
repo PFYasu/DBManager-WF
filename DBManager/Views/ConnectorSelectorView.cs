@@ -9,10 +9,10 @@ namespace DBManager.Views
 {
     public partial class ConnectorSelectorView : Form
     {
-        private readonly DBManagerPresenterBase _presenter;
+        private readonly IDBManagerPresenter _presenter;
         private readonly MessageHelper _messageHelper;
 
-        public ConnectorSelectorView(DBManagerPresenterBase presenter)
+        public ConnectorSelectorView(IDBManagerPresenter presenter)
         {
             _presenter = presenter;
             _messageHelper = new MessageHelper("DBManager - new connection");

@@ -15,10 +15,10 @@ namespace DBManager.Views
 {
     public partial class DBManagerView : Form
     {
-        private readonly DBManagerPresenterBase _presenter;
+        private readonly IDBManagerPresenter _presenter;
         private readonly MessageHelper _messageHelper;
 
-        public DBManagerView(DBManagerPresenterBase presenter)
+        public DBManagerView(IDBManagerPresenter presenter)
         {
             _presenter = presenter;
             _messageHelper = new MessageHelper("DbManager");
@@ -208,7 +208,7 @@ namespace DBManager.Views
             Status_StatusStrip.Items["numberOfConnections"].ImageIndex = 0;
         }
 
-        private async Task LoadDatabases(EnginePresenterBase presenter)
+        private async Task LoadDatabases(IEnginePresenter presenter)
         {
             var response = await presenter.GetDatabaseNames();
             if (response.Type == ResponseType.Error)
@@ -222,7 +222,7 @@ namespace DBManager.Views
             ConnectionTree_ConnectionTreeView.LoadDatabases(presenter.ConnectionName, payload.Names);
         }
 
-        private async Task LoadTables(EnginePresenterBase presenter, string databaseName)
+        private async Task LoadTables(IEnginePresenter presenter, string databaseName)
         {
             var response = await presenter.GetTableNames(databaseName);
             if (response.Type == ResponseType.Error)
