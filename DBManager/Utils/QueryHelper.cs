@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DBManager.Utils
@@ -31,77 +32,80 @@ namespace DBManager.Utils
         {
             public static string Select(string tableName, List<string> columns)
             {
-                var query = "";
+                var queryStringBuilder = new StringBuilder();
 
-                query += "SELECT\r\n";
+                queryStringBuilder.Append("SELECT\r\n");
 
                 foreach (var column in columns)
                 {
-                    query += $"{column}, ";
+                    queryStringBuilder.Append($"{column}, ");
                 }
-                query = query.RemoveLastCharacters(2) + " ";
 
-                query += "\r\nFROM ";
+                queryStringBuilder.Remove(queryStringBuilder.Length - 2, 2);
+                queryStringBuilder.Append(" ");
 
-                query += $"{tableName};";
+                queryStringBuilder.Append("\r\nFROM ");
+                queryStringBuilder.Append($"{tableName};");
 
-                return query;
+                return queryStringBuilder.ToString();
             }
 
             public static string InsertInto(string tableName, List<string> columns)
             {
-                var query = "";
+                var queryStringBuilder = new StringBuilder();
 
-                query += $"INSERT INTO {tableName}\r\n";
+                queryStringBuilder.Append($"INSERT INTO {tableName}\r\n");
+                queryStringBuilder.Append("(");
 
-                query += "(";
                 foreach (var column in columns)
                 {
-                    query += $"{column}, ";
+                    queryStringBuilder.Append($"{column}, ");
                 }
-                query = query.RemoveLastCharacters(2) + " ";
-                query += ")";
 
-                query += "\r\nVALUES\r\n";
+                queryStringBuilder.Remove(queryStringBuilder.Length - 2, 2);
+                queryStringBuilder.Append(" )");
 
-                query += "(";
+                queryStringBuilder.Append("\r\nVALUES\r\n");
+                queryStringBuilder.Append("(");
+
                 for (int i = 0; i < columns.Count; i++)
                 {
-                    query += $"expression{i}, ";
+                    queryStringBuilder.Append($"expression{i}, ");
                 }
-                query = query.RemoveLastCharacters(2) + " ";
-                query += ");";
 
-                return query;
+                queryStringBuilder.Remove(queryStringBuilder.Length - 2, 2);
+                queryStringBuilder.Append(" );");
+
+                return queryStringBuilder.ToString();
             }
 
             public static string Delete(string tableName)
             {
-                var query = "";
+                var queryStringBuilder = new StringBuilder();
 
-                query += $"DELETE FROM {tableName}\r\n";
+                queryStringBuilder.Append($"DELETE FROM {tableName}\r\n");
+                queryStringBuilder.Append("WHERE condition;");
 
-                query += "WHERE condition;";
-
-                return query;
+                return queryStringBuilder.ToString();
             }
 
             public static string Update(string tableName, List<string> columns)
             {
-                var query = "";
+                var queryStringBuilder = new StringBuilder();
 
-                query += $"UPDATE {tableName} SET \r\n";
+                queryStringBuilder.Append($"UPDATE {tableName} SET \r\n");
 
-                int i = 0;
-                foreach (var column in columns)
+                for (int i = 0; i < columns.Count; i++)
                 {
-                    query += $"{column} = value{i++}, ";
+                    queryStringBuilder.Append($"{columns[i]} = value{i}, ");
                 }
-                query = query.RemoveLastCharacters(2) + " ";
 
-                query += "\r\nWHERE condition;";
+                queryStringBuilder.Remove(queryStringBuilder.Length - 2, 2);
+                queryStringBuilder.Append(" ");
 
-                return query;
+                queryStringBuilder.Append("\r\nWHERE condition;");
+
+                return queryStringBuilder.ToString();
             }
         }
     }

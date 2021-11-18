@@ -20,10 +20,5 @@ namespace DBManager.Utils
 
             return value;
         }
-
-        public static string RemoveLastCharacters(this string text, int numberOfCharacters)
-        {
-            return text.Remove(text.Length - numberOfCharacters);
-        }
     }
 }
