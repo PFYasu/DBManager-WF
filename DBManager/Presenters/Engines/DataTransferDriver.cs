@@ -1,6 +1,6 @@
 ﻿using DBManager.Dto;
-using DBManager.Utils;
 using System.Data;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DBManager.Presenters.Engines
@@ -86,33 +86,36 @@ namespace DBManager.Presenters.Engines
 
         private string CreateQuery(DataTable dataTable, string tableName)
         {
-            var query = "";
+            var queryStringBuilder = new StringBuilder();
 
-            query += $"INSERT INTO {tableName} ";
+            queryStringBuilder.Append($"INSERT INTO {tableName} ");
+            queryStringBuilder.Append("(");
 
-            query += "(";
             foreach (DataColumn column in dataTable.Columns)
             {
-                query += $"{column.ColumnName},";
+                queryStringBuilder.Append($"{column.ColumnName},");
             }
-            query = query.RemoveLastCharacters(1);
-            query += ") VALUES ";
+
+            queryStringBuilder.Remove(queryStringBuilder.Length - 1, 1);
+            queryStringBuilder.Append(") VALUES ");
 
             foreach (DataRow row in dataTable.Rows)
             {
-                query += "(";
-                foreach (var test in row.ItemArray)
+                queryStringBuilder.Append("(");
+
+                foreach (var item in row.ItemArray)
                 {
-                    query += $"'{test}',";
+                    queryStringBuilder.Append($"'{item}',");
                 }
-                query = query.RemoveLastCharacters(1);
-                query += "),";
+
+                queryStringBuilder.Remove(queryStringBuilder.Length - 1, 1);
+                queryStringBuilder.Append("),");
             }
-            query = query.RemoveLastCharacters(1);
 
-            query += ";";
+            queryStringBuilder.Remove(queryStringBuilder.Length - 1, 1);
+            queryStringBuilder.Append(";");
 
-            return query;
+            return queryStringBuilder.ToString();
         }
     }
 }

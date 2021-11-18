@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace DBManager.Utils
 {
@@ -6,14 +7,14 @@ namespace DBManager.Utils
     {
         public static string Combine(Dictionary<string, string> parameters)
         {
-            string connectionString = "";
+            var connectionStringBuilder = new StringBuilder();
 
             foreach (var key in parameters.Keys)
             {
-                connectionString += $"{key}={parameters[key]};";
+                connectionStringBuilder.Append($"{key}={parameters[key]};");
             }
 
-            return connectionString;
+            return connectionStringBuilder.ToString();
         }
     }
 }

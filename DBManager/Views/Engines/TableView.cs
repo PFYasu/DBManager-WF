@@ -4,6 +4,7 @@ using DBManager.Presenters.Engines;
 using DBManager.Views.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -90,16 +91,18 @@ namespace DBManager.Views.Engines
                 return;
             }
 
-            var message = "List of unsupported columns:\n";
+            var messageStringBuilder = new StringBuilder();
+
+            messageStringBuilder.Append("List of unsupported columns:\n");
 
             foreach (var unsupportedColumn in _unsupportedColumns)
             {
-                message += $"{unsupportedColumn}\n";
+                messageStringBuilder.Append($"{unsupportedColumn}\n");
             }
 
-            message += "\nUnsupported columns contain 'X' symbol in affected rows";
+            messageStringBuilder.Append("\nUnsupported columns contain 'X' symbol in affected rows");
 
-            _messageHelper.ShowWarning(message);
+            _messageHelper.ShowWarning(messageStringBuilder.ToString());
         }
     }
 }
