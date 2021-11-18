@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace DBManager.Presenters.Engines
 {
-    public class DataTransferDriver : DataTransferDriverBase
+    public class DataTransferDriver : IDataTransferDriver
     {
-        private readonly DBManagerPresenterBase _dbManagerPresenter;
+        private readonly IDBManagerPresenter _dbManagerPresenter;
 
-        public DataTransferDriver(DBManagerPresenterBase dbManagerPresenter)
+        public DataTransferDriver(IDBManagerPresenter dbManagerPresenter)
         {
             _dbManagerPresenter = dbManagerPresenter;
         }
 
-        public override async Task<Response> SendData(DataTable dataTable, string connectionName, string databaseName, string tableName)
+        public async Task<Response> SendData(DataTable dataTable, string connectionName, string databaseName, string tableName)
         {
             var response = _dbManagerPresenter.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
-                return Error($"Unable to get {connectionName} connection");
+                return Response.Error($"Unable to get {connectionName} connection");
 
             var payload = response.Payload as PresenterResponseDto;
 
@@ -28,29 +28,29 @@ namespace DBManager.Presenters.Engines
 
             var sendQueryResponse = await presenter.SendQuery(databaseName, query);
             if (sendQueryResponse.Type == ResponseType.Error)
-                return Error($"Unable to send data: {sendQueryResponse.Payload}");
+                return Response.Error($"Unable to send data: {sendQueryResponse.Payload}");
 
             var dto = sendQueryResponse.Payload;
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override Response GetConnectionNames()
+        public Response GetConnectionNames()
         {
             var response = _dbManagerPresenter.GetConnectionNames();
             if (response.Type == ResponseType.Error)
-                return Error("Unable to get connection names");
+                return Response.Error("Unable to get connection names");
 
             var dto = response.Payload;
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> GetDatabaseNames(string connectionName)
+        public async Task<Response> GetDatabaseNames(string connectionName)
         {
             var response = _dbManagerPresenter.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
-                return Error($"Unable to get {connectionName} presenter");
+                return Response.Error($"Unable to get {connectionName} presenter");
 
             var payload = response.Payload as PresenterResponseDto;
 
@@ -58,18 +58,18 @@ namespace DBManager.Presenters.Engines
 
             var databaseNamesResponse = await presenter.GetDatabaseNames();
             if (databaseNamesResponse.Type == ResponseType.Error)
-                return Error($"Unable to get information about databases in {connectionName} connection");
+                return Response.Error($"Unable to get information about databases in {connectionName} connection");
 
             var dto = databaseNamesResponse.Payload;
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
-        public override async Task<Response> GetTableNames(string connectionName, string databaseName)
+        public async Task<Response> GetTableNames(string connectionName, string databaseName)
         {
             var response = _dbManagerPresenter.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
-                return Error($"Unable to get {connectionName} presenter");
+                return Response.Error($"Unable to get {connectionName} presenter");
 
             var payload = response.Payload as PresenterResponseDto;
 
@@ -77,11 +77,11 @@ namespace DBManager.Presenters.Engines
 
             var tableNamesResponse = await presenter.GetTableNames(databaseName);
             if (tableNamesResponse.Type == ResponseType.Error)
-                return Error($"Unable to get information about tables in {databaseName} database in {connectionName} connection");
+                return Response.Error($"Unable to get information about tables in {databaseName} database in {connectionName} connection");
 
             var dto = tableNamesResponse.Payload;
 
-            return Ok(dto);
+            return Response.Ok(dto);
         }
 
         private string CreateQuery(DataTable dataTable, string tableName)

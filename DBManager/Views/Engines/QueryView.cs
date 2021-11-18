@@ -14,13 +14,13 @@ namespace DBManager.Views.Engines
     [ToolboxItem(true)]
     public partial class QueryView : UserControl
     {
-        private readonly EnginePresenterBase _presenter;
+        private readonly IEnginePresenter _presenter;
         private readonly string _databaseName;
         private readonly Dictionary<string, List<string>> _databaseTableColumns;
         private readonly MessageHelper _messageHelper;
 
         public QueryView(
-            EnginePresenterBase presenter,
+            IEnginePresenter presenter,
             string databaseName,
             Dictionary<string, List<string>> databaseTableColumns)
         {

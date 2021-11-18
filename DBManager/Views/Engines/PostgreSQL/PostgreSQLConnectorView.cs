@@ -10,12 +10,12 @@ namespace DBManager.Views.Engines.PostgreSQL
 {
     public partial class PostgreSQLConnectorView : Form
     {
-        private readonly DBManagerPresenterBase _presenter;
+        private readonly IDBManagerPresenter _presenter;
         private readonly ConnectorMode _connectorMode;
         private readonly MessageHelper _messageHelper;
         private readonly string _connectionName;
 
-        public PostgreSQLConnectorView(DBManagerPresenterBase presenter)
+        public PostgreSQLConnectorView(IDBManagerPresenter presenter)
         {
             _presenter = presenter;
             _connectorMode = ConnectorMode.NewConnection;
@@ -25,7 +25,7 @@ namespace DBManager.Views.Engines.PostgreSQL
             Port_NumericUpDown.Controls[0].Hide();
         }
 
-        public PostgreSQLConnectorView(DBManagerPresenterBase presenter, string connectionName)
+        public PostgreSQLConnectorView(IDBManagerPresenter presenter, string connectionName)
         {
             _presenter = presenter;
             _connectorMode = ConnectorMode.UpdateConnection;

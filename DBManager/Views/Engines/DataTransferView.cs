@@ -12,11 +12,11 @@ namespace DBManager.Views.Engines
 {
     public partial class DataTransferView : Form
     {
-        private readonly EnginePresenterBase _presenter;
+        private readonly IEnginePresenter _presenter;
         private readonly DataTable _dataToTransfer;
         private readonly MessageHelper _messageHelper;
 
-        public DataTransferView(EnginePresenterBase presenter, DataTable dataToTransfer)
+        public DataTransferView(IEnginePresenter presenter, DataTable dataToTransfer)
         {
             _presenter = presenter;
             _dataToTransfer = dataToTransfer;
