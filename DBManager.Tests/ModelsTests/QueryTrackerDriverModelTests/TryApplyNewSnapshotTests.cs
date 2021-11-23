@@ -1,5 +1,5 @@
-﻿using DBManager.Models;
-using DBManager.Models.Engines;
+﻿using DBManager.Core.Models;
+using DBManager.Core.Models.Engines;
 using System;
 using System.Collections.Generic;
 using System.Data;

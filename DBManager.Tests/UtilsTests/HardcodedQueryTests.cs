@@ -20,7 +20,7 @@ namespace DBManager.Tests.UtilsTests
             const string correctSelectStatement = "SELECT\r\nLastName, FirstName, Age \r\nFROM Employees;";
 
 
-            var result = QueryHelper.HardcodedQuery.Select(tableName, columns);
+            var result = HardcodedQuery.Select(tableName, columns);
 
 
             Assert.NotNull(result);
@@ -42,7 +42,7 @@ namespace DBManager.Tests.UtilsTests
             const string correctInsertIntoStatement = "INSERT INTO Employees\r\n(LastName, FirstName, Age )\r\nVALUES\r\n(expression0, expression1, expression2 );";
 
 
-            var result = QueryHelper.HardcodedQuery.InsertInto(tableName, columns);
+            var result = HardcodedQuery.InsertInto(tableName, columns);
 
 
             Assert.NotNull(result);
@@ -58,7 +58,7 @@ namespace DBManager.Tests.UtilsTests
             const string correctDeleteStatement = "DELETE FROM Employees\r\nWHERE condition;";
 
 
-            var result = QueryHelper.HardcodedQuery.Delete(tableName);
+            var result = HardcodedQuery.Delete(tableName);
 
 
             Assert.NotNull(result);
@@ -80,7 +80,7 @@ namespace DBManager.Tests.UtilsTests
             const string correctUpdateStatement = "UPDATE Employees SET \r\nLastName = value0, FirstName = value1, Age = value2 \r\nWHERE condition;";
 
 
-            var result = QueryHelper.HardcodedQuery.Update(tableName, columns);
+            var result = HardcodedQuery.Update(tableName, columns);
 
 
             Assert.NotNull(result);

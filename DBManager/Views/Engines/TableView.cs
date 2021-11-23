@@ -1,7 +1,7 @@
-﻿using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
-using DBManager.Views.Helpers;
+﻿using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Views.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;

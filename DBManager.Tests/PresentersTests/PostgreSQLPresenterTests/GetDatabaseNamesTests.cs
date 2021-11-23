@@ -1,6 +1,6 @@
-﻿using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
+﻿using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.EngineModule.PostgreSQL;
 using DBManager.Tests.Helpers;
 using System;
 using System.Threading.Tasks;

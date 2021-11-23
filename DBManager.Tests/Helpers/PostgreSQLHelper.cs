@@ -1,7 +1,5 @@
-﻿using DBManager.Models;
-using DBManager.Models.Engines;
-using DBManager.Presenters.Engines;
-using DBManager.Utils;
+﻿using DBManager.Core.Models;
+using DBManager.EngineModule.PostgreSQL;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -26,7 +24,7 @@ namespace DBManager.Tests.Helpers
             var connection = new Connection
             {
                 Name = NamesGenerator.Generate(),
-                Type = EngineType.PostgreSQL,
+                EngineType = "PostgreSQL",
                 ConnectionParameters = connectionParameters,
                 TrackedQueries = new List<TrackedQuery>()
             };

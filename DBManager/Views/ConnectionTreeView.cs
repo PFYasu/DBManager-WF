@@ -1,4 +1,4 @@
-﻿using DBManager.Views.Helpers;
+﻿using DBManager.Core.Views.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

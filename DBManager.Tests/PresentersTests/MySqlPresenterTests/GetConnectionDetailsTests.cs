@@ -1,8 +1,7 @@
-﻿using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
+﻿using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.EngineModule.MySql;
 using DBManager.Tests.Helpers;
-using DBManager.Utils;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -27,6 +26,7 @@ namespace DBManager.Tests.PresentersTests.MySqlPresenterTests
             var databaseName = await _mySqlHelperTest.CreateDatabase(connection);
 
             const string tableName = "employees";
+            const string engineType = "MySql";
 
             using (var command = connection.CreateCommand())
             {
@@ -53,7 +53,7 @@ namespace DBManager.Tests.PresentersTests.MySqlPresenterTests
             Assert.NotNull(payload);
 
             Assert.Equal(presenter.ConnectionName, payload.Name);
-            Assert.Equal(EngineType.MySql, payload.Type);
+            Assert.Equal(engineType, payload.EngineType);
             Assert.Equal(ConnectionParameters.MySql.ConnectionParameters["Uid"], payload.Uid);
             Assert.Equal(ConnectionParameters.MySql.ConnectionParameters["Server"], payload.Server);
             Assert.Equal(ConnectionParameters.MySql.ConnectionParameters["Port"], payload.Port.ToString());

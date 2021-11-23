@@ -1,7 +1,8 @@
-﻿using DBManager.Dto;
-using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
+﻿using DBManager.Core.Dto;
+using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Views.Helpers;
 using DBManager.Views.Helpers;
 using System;
 using System.Data;

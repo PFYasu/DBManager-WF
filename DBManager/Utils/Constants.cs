@@ -8,9 +8,9 @@
             public const string Resources = "../../Resources";
         }
 
-        public static class QueryTracker
+        public static class EngineModules
         {
-            public const int RefreshTimePeriod = 60000;
+            public const string AssemblyNamePattern = "DBManager.EngineModule.*.dll";
         }
     }
 }

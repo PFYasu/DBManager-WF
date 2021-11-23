@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DBManager.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DBManager.Models

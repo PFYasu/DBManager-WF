@@ -1,8 +1,9 @@
-﻿using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
+﻿using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Utils;
+using DBManager.Core.Views.Helpers;
 using DBManager.Utils;
-using DBManager.Views.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,7 +62,7 @@ namespace DBManager.Views.Engines
             var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
 
-            var query = QueryHelper.HardcodedQuery.Select(tableName, columns);
+            var query = HardcodedQuery.Select(tableName, columns);
 
             Query_RichTextBox.Text = query;
         }
@@ -77,7 +78,7 @@ namespace DBManager.Views.Engines
             var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
 
-            var query = QueryHelper.HardcodedQuery.InsertInto(tableName, columns);
+            var query = HardcodedQuery.InsertInto(tableName, columns);
 
             Query_RichTextBox.Text = query;
         }
@@ -92,7 +93,7 @@ namespace DBManager.Views.Engines
 
             var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
 
-            var query = QueryHelper.HardcodedQuery.Delete(tableName);
+            var query = HardcodedQuery.Delete(tableName);
 
             Query_RichTextBox.Text = query;
         }
@@ -108,7 +109,7 @@ namespace DBManager.Views.Engines
             var tableName = DatabaseStructure_ListView.SelectedItems[0].Text;
             var columns = _databaseTableColumns[tableName];
 
-            var query = QueryHelper.HardcodedQuery.Update(tableName, columns);
+            var query = HardcodedQuery.Update(tableName, columns);
 
             Query_RichTextBox.Text = query;
         }
