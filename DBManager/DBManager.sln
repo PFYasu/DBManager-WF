@@ -5,12 +5,18 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager", "DBManager.csproj", "{AAD786E5-5BAB-4F0E-BD8F-518AF02E0573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.Tests", "..\DBManager.Tests\DBManager.Tests.csproj", "{45BF879F-D082-46B2-B1AD-2FF28A5F0E17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.Tests", "..\DBManager.Tests\DBManager.Tests.csproj", "{45BF879F-D082-46B2-B1AD-2FF28A5F0E17}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD2F983C-7B55-4B53-8337-2584A4CBEF5A}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.Core", "..\DBManager.Core\DBManager.Core.csproj", "{FF5D7C8F-AECF-4FB4-99A7-02AFD67F57EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.EngineModule.PostgreSQL", "..\DBManager.EngineModule.PostgreSQL\DBManager.EngineModule.PostgreSQL.csproj", "{ECDC11BE-55BA-4D27-B0B3-601BE2DBCBCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.EngineModule.MySql", "..\DBManager.EngineModule.MySql\DBManager.EngineModule.MySql.csproj", "{E8E78727-624D-4F8B-81CB-F14DB4A459A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +32,18 @@ Global
 		{45BF879F-D082-46B2-B1AD-2FF28A5F0E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45BF879F-D082-46B2-B1AD-2FF28A5F0E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45BF879F-D082-46B2-B1AD-2FF28A5F0E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF5D7C8F-AECF-4FB4-99A7-02AFD67F57EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5D7C8F-AECF-4FB4-99A7-02AFD67F57EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF5D7C8F-AECF-4FB4-99A7-02AFD67F57EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF5D7C8F-AECF-4FB4-99A7-02AFD67F57EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDC11BE-55BA-4D27-B0B3-601BE2DBCBCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDC11BE-55BA-4D27-B0B3-601BE2DBCBCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDC11BE-55BA-4D27-B0B3-601BE2DBCBCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDC11BE-55BA-4D27-B0B3-601BE2DBCBCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8E78727-624D-4F8B-81CB-F14DB4A459A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8E78727-624D-4F8B-81CB-F14DB4A459A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8E78727-624D-4F8B-81CB-F14DB4A459A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8E78727-624D-4F8B-81CB-F14DB4A459A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,8 @@
-﻿using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
-using DBManager.Utils;
-using DBManager.Views.Helpers;
+﻿using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Utils;
+using DBManager.Core.Views.Helpers;
 using System;
 using System.Windows.Forms;
 
@@ -61,7 +61,7 @@ namespace DBManager.Views.Engines
                 error = "Time period cannot be empty.";
             else if (TimePeriod_NumericUpDown.Value <= 0)
                 error = "Time period must have a positive value";
-            else if (QueryHelper.QueryTypeResolver.GetQueryType(Query_RichTextBox.Text) == QueryType.NonQuery)
+            else if (QueryTypeResolver.GetQueryType(Query_RichTextBox.Text) == QueryType.NonQuery)
                 error = "Query cannot be non query type.";
             else
             {

@@ -1,7 +1,5 @@
-﻿using DBManager.Models;
-using DBManager.Models.Engines;
-using DBManager.Presenters.Engines;
-using DBManager.Utils;
+﻿using DBManager.Core.Models;
+using DBManager.EngineModule.MySql;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -24,7 +22,7 @@ namespace DBManager.Tests.Helpers
             var connection = new Connection
             {
                 Name = NamesGenerator.Generate(),
-                Type = EngineType.MySql,
+                EngineType = "MySql",
                 ConnectionParameters = connectionParameters,
                 TrackedQueries = new List<TrackedQuery>()
             };

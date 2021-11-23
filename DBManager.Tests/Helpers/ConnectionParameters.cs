@@ -1,4 +1,4 @@
-﻿using DBManager.Utils;
+﻿using DBManager.Core.Utils;
 using System.Collections.Generic;
 
 namespace DBManager.Tests.Helpers

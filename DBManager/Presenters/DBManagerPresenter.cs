@@ -1,8 +1,9 @@
-﻿using DBManager.Dto;
+﻿using DBManager.Core.Dto;
+using DBManager.Core.Models;
+using DBManager.Core.Models.Engines;
+using DBManager.Core.Presenters;
+using DBManager.Core.Presenters.Engines;
 using DBManager.Models;
-using DBManager.Models.Engines;
-using DBManager.Presenters.Engines;
-using DBManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,11 +14,18 @@ namespace DBManager.Presenters
     {
         private readonly IDBManagerModel _model;
         private readonly Dictionary<string, IEnginePresenter> _presenters;
+        private readonly DataTransferMethods _dataTransferMethods;
 
         public DBManagerPresenter(IDBManagerModel model)
         {
             _model = model;
             _presenters = new Dictionary<string, IEnginePresenter>();
+
+            _dataTransferMethods = new DataTransferMethods
+            {
+                GetConnectionNames = GetConnectionNames,
+                GetPresenter = GetPresenter
+            };
         }
 
         public async Task<Response> AddConnection(AddConnectionDto dto)
@@ -51,7 +59,7 @@ namespace DBManager.Presenters
             {
                 dto = new PresenterResponseDto
                 {
-                    Type = presenterFromDictionary.EngineType,
+                    EngineType = presenterFromDictionary.EngineType,
                     Presenter = presenterFromDictionary
                 };
 
@@ -72,27 +80,22 @@ namespace DBManager.Presenters
                 return Response.Error(exception.Message);
             }
 
-            IEngineModel model;
+            var engineType = connection.EngineType;
 
-            switch (connection.Type)
-            {
-                case EngineType.MySql:
-                    model = new MySqlModel(connection);
-                    presenter = new MySqlPresenter(model, this);
-                    break;
-                case EngineType.PostgreSQL:
-                    model = new PostgreSQLModel(connection);
-                    presenter = new PostgreSQLPresenter(model, this);
-                    break;
-                default:
-                    return Response.Error("Unable to create presenter. Incorrect engine type.");
-            }
+            if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
+                return Response.Error("Unable to create presenter. Incorrect engine type.");
 
-            var type = connection.Type;
+            var model = (IEngineModel)Activator
+                .CreateInstance(engineModuleAttribute.Model, connection);
+
+            presenter = (IEnginePresenter)Activator.CreateInstance(
+                engineModuleAttribute.Presenter,
+                model,
+                _dataTransferMethods);
 
             dto = new PresenterResponseDto
             {
-                Type = type,
+                EngineType = engineType,
                 Presenter = presenter
             };
 
@@ -185,13 +188,13 @@ namespace DBManager.Presenters
                 return Response.Error(exception.Message);
             }
 
-            var type = connection.Type;
+            var engineType = connection.EngineType;
             var connectionParameters = connection.ConnectionParameters;
             var name = connection.Name;
 
             var dto = new AddConnectionDto
             {
-                Type = type,
+                EngineType = engineType,
                 ConnectionParameters = connectionParameters,
                 Name = name
             };

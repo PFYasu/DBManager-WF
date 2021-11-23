@@ -1,4 +1,4 @@
-﻿using DBManager.Utils;
+﻿using DBManager.Core.Utils;
 using Xunit;
 
 namespace DBManager.Tests.UtilsTests
@@ -59,7 +59,7 @@ namespace DBManager.Tests.UtilsTests
 
         public QueryType Act(string query)
         {
-            var result = QueryHelper.QueryTypeResolver.GetQueryType(query);
+            var result = Core.Utils.QueryTypeResolver.GetQueryType(query);
 
             return result;
         }

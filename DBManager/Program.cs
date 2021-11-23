@@ -18,6 +18,7 @@ namespace DBManager
             await using (var model = await DBManagerModel.Initialize())
             {
                 var presenter = new DBManagerPresenter(model);
+
                 var view = new DBManagerView(presenter);
 
                 Application.Run(view);

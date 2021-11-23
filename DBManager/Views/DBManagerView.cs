@@ -1,11 +1,11 @@
-﻿using DBManager.Dto;
-using DBManager.Dto.Engines;
+﻿using DBManager.Core.Dto;
+using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Views.Engines;
+using DBManager.Core.Views.Helpers;
 using DBManager.Presenters;
-using DBManager.Presenters.Engines;
-using DBManager.Utils;
 using DBManager.Views.Engines;
-using DBManager.Views.Engines.MySql;
-using DBManager.Views.Engines.PostgreSQL;
 using DBManager.Views.Helpers;
 using System;
 using System.Threading.Tasks;
@@ -16,11 +16,20 @@ namespace DBManager.Views
     public partial class DBManagerView : Form
     {
         private readonly IDBManagerPresenter _presenter;
+        private readonly ConnectorMethods _connectorMethods;
         private readonly MessageHelper _messageHelper;
 
         public DBManagerView(IDBManagerPresenter presenter)
         {
             _presenter = presenter;
+
+            _connectorMethods = new ConnectorMethods
+            {
+                AddConnection = presenter.AddConnection,
+                GetConnectionSettings = presenter.GetConnectionSettings,
+                UpdateConnection = presenter.UpdateConnection
+            };
+
             _messageHelper = new MessageHelper("DbManager");
 
             InitializeComponent();
@@ -170,20 +179,18 @@ namespace DBManager.Views
 
             var payload = response.Payload as PresenterResponseDto;
 
-            Form form;
+            var engineType = payload.EngineType;
 
-            switch (payload.Type)
+            if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
             {
-                case EngineType.MySql:
-                    form = new MySqlConnectorView(_presenter, connectionName);
-                    break;
-                case EngineType.PostgreSQL:
-                    form = new PostgreSQLConnectorView(_presenter, connectionName);
-                    break;
-                default:
-                    _messageHelper.ShowError("Unable to create connector update view - incorrect engine type");
-                    return;
+                _messageHelper.ShowError("Unable to create connector update view - incorrect engine type");
+                return;
             }
+
+            var form = (Form)Activator.CreateInstance(
+                engineModuleAttribute.ConnectorView,
+                _connectorMethods,
+                connectionName);
 
             var result = form.ShowDialog();
 

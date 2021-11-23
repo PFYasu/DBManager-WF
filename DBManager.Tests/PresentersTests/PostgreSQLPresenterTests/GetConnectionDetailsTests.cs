@@ -1,8 +1,7 @@
-﻿using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
+﻿using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.EngineModule.PostgreSQL;
 using DBManager.Tests.Helpers;
-using DBManager.Utils;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -27,6 +26,7 @@ namespace DBManager.Tests.PresentersTests.PostgreSQLPresenterTests
             var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
 
             const string tableName = "employees";
+            const string engineType = "PostgreSQL";
 
             using (var command = connection.CreateCommand())
             {
@@ -53,7 +53,7 @@ namespace DBManager.Tests.PresentersTests.PostgreSQLPresenterTests
             Assert.NotNull(payload);
 
             Assert.Equal(presenter.ConnectionName, payload.Name);
-            Assert.Equal(EngineType.PostgreSQL, payload.Type);
+            Assert.Equal(engineType, payload.EngineType);
             Assert.Equal(ConnectionParameters.PostgreSQL.ConnectionParameters["Uid"], payload.Uid);
             Assert.Equal(ConnectionParameters.PostgreSQL.ConnectionParameters["Server"], payload.Server);
             Assert.Equal(ConnectionParameters.PostgreSQL.ConnectionParameters["Port"], payload.Port.ToString());

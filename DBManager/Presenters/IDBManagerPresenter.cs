@@ -1,4 +1,5 @@
-﻿using DBManager.Dto;
+﻿using DBManager.Core.Dto;
+using DBManager.Core.Presenters;
 using System.Threading.Tasks;
 
 namespace DBManager.Presenters

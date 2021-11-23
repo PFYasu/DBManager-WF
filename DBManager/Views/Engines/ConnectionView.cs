@@ -1,7 +1,7 @@
-﻿using DBManager.Dto.Engines;
-using DBManager.Presenters;
-using DBManager.Presenters.Engines;
-using DBManager.Views.Helpers;
+﻿using DBManager.Core.Dto.Engines;
+using DBManager.Core.Presenters;
+using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Views.Helpers;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,7 +45,7 @@ namespace DBManager.Views.Engines
             Databases_Structure_Label.Text = $"Databases: {payload.DatabasesCount}";
 
             Name_Structure_Label.Text = $"Name: {payload.Name}";
-            Type_Structure_Label.Text = $"Type: {payload.Type}";
+            Type_Structure_Label.Text = $"Type: {payload.EngineType}";
             LoggedAs_Structure_Label.Text = $"Logged as: {payload.Uid}";
             Server_Structure_Label.Text = $"Server: {payload.Server}";
             Port_Structure_Label.Text = $"Port: {payload.Port}";
