@@ -33,8 +33,6 @@ namespace DBManager.Presenters
             if (ConnectionExists(dto.Name))
                 return Response.Error($"Connection with {dto.Name} name already exists");
 
-            var connectionParameters = dto.ConnectionParameters;
-
             var connection = Connection.FromDto(dto);
 
             try

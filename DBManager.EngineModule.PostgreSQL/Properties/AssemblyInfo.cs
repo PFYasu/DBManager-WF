@@ -1,5 +1,10 @@
-﻿using System.Reflection;
+﻿using DBManager.Core;
+using DBManager.EngineModule.PostgreSQL;
+using System.Reflection;
 using System.Runtime.InteropServices;
+
+// Information about DBManager compatible assembly
+[assembly: EngineModule("PostgreSQL", typeof(PostgreSQLModel), typeof(PostgreSQLPresenter), typeof(PostgreSQLConnectorView))]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
