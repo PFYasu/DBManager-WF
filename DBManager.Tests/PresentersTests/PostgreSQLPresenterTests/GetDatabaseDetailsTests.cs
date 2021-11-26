@@ -63,9 +63,9 @@ namespace DBManager.Tests.PresentersTests.PostgreSQLPresenterTests
         }
 
 
-        private void WaitForApplyChangesToDatabase(uint time = 500)
+        private void WaitForApplyChangesToDatabase(int time = 500)
         {
-            Thread.Sleep(500);
+            Thread.Sleep(time);
         }
 
 

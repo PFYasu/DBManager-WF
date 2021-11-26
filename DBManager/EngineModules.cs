@@ -24,10 +24,13 @@ namespace DBManager
             foreach (var file in files)
             {
                 var assembly = Assembly.LoadFile(file);
-                var engineModuleAttribute = assembly.GetCustomAttribute<EngineModuleAttribute>();
+                var engineModuleAttributes = assembly.GetCustomAttributes<EngineModuleAttribute>();
 
-                if (engineModuleAttribute != null)
-                    attributes.Add(engineModuleAttribute.EngineType, engineModuleAttribute);
+                foreach (var engineModuleAttribute in engineModuleAttributes)
+                {
+                    if (engineModuleAttribute != null)
+                        attributes.Add(engineModuleAttribute.EngineType, engineModuleAttribute);
+                }
             }
 
             return attributes;
