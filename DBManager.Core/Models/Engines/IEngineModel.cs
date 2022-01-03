@@ -10,9 +10,7 @@ namespace DBManager.Core.Models.Engines
         string EngineType { get; }
         Dictionary<string, string> ConnectionParameters { get; }
         IQueryTrackerDriverModel QueryTrackerDriverModel { get; }
-        Task<DataTable> ExecuteQuery(string query);
-        Task<DataTable> ExecuteQuery(string query, string databaseName);
-        Task<int> ExecuteNonQuery(string query);
-        Task<int> ExecuteNonQuery(string query, string databaseName);
+        Task<DataTable> ExecuteQuery(string query, string databaseName = null);
+        Task<int> ExecuteNonQuery(string query, string databaseName = null);
     }
 }

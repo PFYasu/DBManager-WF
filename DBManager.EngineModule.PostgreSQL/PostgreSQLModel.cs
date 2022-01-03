@@ -28,44 +28,25 @@ namespace DBManager.EngineModule.PostgreSQL
         public Dictionary<string, string> ConnectionParameters { get; }
         public IQueryTrackerDriverModel QueryTrackerDriverModel { get; }
 
-        public async Task<DataTable> ExecuteQuery(string query)
-        {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                var dataTable = StartExecuteQuery(connection, query);
-
-                await connection.CloseAsync();
-                return dataTable;
-            }
-        }
-
         public async Task<DataTable> ExecuteQuery(string query, string databaseName)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
-                connection.ChangeDatabase(databaseName);
+                if (string.IsNullOrEmpty(databaseName) == false)
+                    connection.ChangeDatabase(databaseName);
 
-                var dataTable = StartExecuteQuery(connection, query);
+                using (var command = new NpgsqlCommand(query, connection))
+                using (var dataAdapter = new NpgsqlDataAdapter(command))
+                {
+                    var dataTable = new DataTable();
 
-                await connection.CloseAsync();
-                return dataTable;
-            }
-        }
+                    dataAdapter.Fill(dataTable);
 
-        public async Task<int> ExecuteNonQuery(string query)
-        {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                var affected = await StartExecuteNonQuery(connection, query);
-
-                await connection.CloseAsync();
-                return affected;
+                    await connection.CloseAsync();
+                    return dataTable;
+                }
             }
         }
 
@@ -75,34 +56,15 @@ namespace DBManager.EngineModule.PostgreSQL
             {
                 await connection.OpenAsync();
 
-                connection.ChangeDatabase(databaseName);
+                if (string.IsNullOrEmpty(databaseName) == false)
+                    connection.ChangeDatabase(databaseName);
 
-                var affected = await StartExecuteNonQuery(connection, query);
+                var command = new NpgsqlCommand(query, connection);
+                var affected = await command.ExecuteNonQueryAsync();
 
                 await connection.CloseAsync();
                 return affected;
             }
-        }
-
-        private DataTable StartExecuteQuery(NpgsqlConnection connection, string query)
-        {
-            using (var command = new NpgsqlCommand(query, connection))
-            using (var dataAdapter = new NpgsqlDataAdapter(command))
-            {
-                var dataTable = new DataTable();
-
-                dataAdapter.Fill(dataTable);
-
-                return dataTable;
-            }
-        }
-
-        private async Task<int> StartExecuteNonQuery(NpgsqlConnection connection, string query)
-        {
-            var command = new NpgsqlCommand(query, connection);
-            var affected = await command.ExecuteNonQueryAsync();
-
-            return affected;
         }
     }
 }

@@ -28,44 +28,25 @@ namespace DBManager.EngineModule.MySql
         public Dictionary<string, string> ConnectionParameters { get; }
         public IQueryTrackerDriverModel QueryTrackerDriverModel { get; }
 
-        public async Task<DataTable> ExecuteQuery(string query)
-        {
-            using (var connection = new MySqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                var dataTable = StartExecuteQuery(connection, query);
-
-                await connection.CloseAsync();
-                return dataTable;
-            }
-        }
-
         public async Task<DataTable> ExecuteQuery(string query, string databaseName)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
-                await connection.ChangeDatabaseAsync(databaseName);
+                if (string.IsNullOrEmpty(databaseName) == false)
+                    await connection.ChangeDatabaseAsync(databaseName);
 
-                var dataTable = StartExecuteQuery(connection, query);
+                using (var command = new MySqlCommand(query, connection))
+                using (var dataAdapter = new MySqlDataAdapter(command))
+                {
+                    var dataTable = new DataTable();
 
-                await connection.CloseAsync();
-                return dataTable;
-            }
-        }
+                    dataAdapter.Fill(dataTable);
 
-        public async Task<int> ExecuteNonQuery(string query)
-        {
-            using (var connection = new MySqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                var affected = await StartExecuteNonQuery(connection, query);
-
-                await connection.CloseAsync();
-                return affected;
+                    await connection.CloseAsync();
+                    return dataTable;
+                }
             }
         }
 
@@ -75,34 +56,15 @@ namespace DBManager.EngineModule.MySql
             {
                 await connection.OpenAsync();
 
-                await connection.ChangeDatabaseAsync(databaseName);
+                if(string.IsNullOrEmpty(databaseName) == false)
+                    await connection.ChangeDatabaseAsync(databaseName);
 
-                var affected = await StartExecuteNonQuery(connection, query);
+                var command = new MySqlCommand(query, connection);
+                var affected = await command.ExecuteNonQueryAsync();
 
                 await connection.CloseAsync();
                 return affected;
             }
-        }
-
-        private DataTable StartExecuteQuery(MySqlConnection connection, string query)
-        {
-            using (var command = new MySqlCommand(query, connection))
-            using (var dataAdapter = new MySqlDataAdapter(command))
-            {
-                var dataTable = new DataTable();
-
-                dataAdapter.Fill(dataTable);
-
-                return dataTable;
-            }
-        }
-
-        private async Task<int> StartExecuteNonQuery(MySqlConnection connection, string query)
-        {
-            var command = new MySqlCommand(query, connection);
-            var affected = await command.ExecuteNonQueryAsync();
-
-            return affected;
         }
     }
 }

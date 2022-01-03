@@ -9,10 +9,10 @@ namespace DBManager
 {
     public static class EngineModules
     {
-        private static readonly Lazy<Dictionary<string, EngineModuleAttribute>> attributes
+        private static readonly Lazy<Dictionary<string, EngineModuleAttribute>> _attributes
             = new Lazy<Dictionary<string, EngineModuleAttribute>>(GetAttributes);
 
-        public static Dictionary<string, EngineModuleAttribute> Attributes = attributes.Value;
+        public static Dictionary<string, EngineModuleAttribute> Attributes = _attributes.Value;
 
         private static Dictionary<string, EngineModuleAttribute> GetAttributes()
         {
