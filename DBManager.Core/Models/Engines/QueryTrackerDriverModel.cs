@@ -51,13 +51,13 @@ namespace DBManager.Core.Models.Engines
             return differencesResult;
         }
 
-        public void TryApplyNewSnapshot(TrackedQuery trackedQuery, DataTable dataTable, bool skipDataNormalization = false)
+        public void TryApplyNewSnapshot(TrackedQuery trackedQuery, DataTable dataTable)
         {
             var lastSnapshot = trackedQuery.QuerySnapshots
                         .OrderBy(x => x.Updated)
                         .LastOrDefault();
 
-            var data = skipDataNormalization == false ? NormalizeData(dataTable) : dataTable;
+            var data = NormalizeData(dataTable);
 
             if (lastSnapshot != null)
             {

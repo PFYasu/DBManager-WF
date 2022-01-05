@@ -28,7 +28,7 @@ namespace DBManager.EngineModule.MySql
         public Dictionary<string, string> ConnectionParameters { get; }
         public IQueryTrackerDriverModel QueryTrackerDriverModel { get; }
 
-        public async Task<DataTable> ExecuteQuery(string query, string databaseName)
+        public async Task<DataTable> ExecuteQuery(string query, string databaseName = null)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
@@ -50,7 +50,7 @@ namespace DBManager.EngineModule.MySql
             }
         }
 
-        public async Task<int> ExecuteNonQuery(string query, string databaseName)
+        public async Task<int> ExecuteNonQuery(string query, string databaseName = null)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
