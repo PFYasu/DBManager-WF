@@ -8,8 +8,9 @@ namespace DBManager.Models
     {
         Task LoadConnections();
         List<string> GetConnectionNames();
-        Task AddConnection(Connection connection);
+        void AddConnection(Connection connection);
         Connection GetConnection(string connectionName);
-        Task RemoveConnection(string connectionName);
+        void RemoveConnection(string connectionName);
+        Task SaveConnections();
     }
 }

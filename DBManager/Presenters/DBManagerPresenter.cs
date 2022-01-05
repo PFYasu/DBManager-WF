@@ -37,7 +37,8 @@ namespace DBManager.Presenters
 
             try
             {
-                await _model.AddConnection(connection);
+                _model.AddConnection(connection);
+                await _model.SaveConnections();
                 await _model.LoadConnections();
             }
             catch (Exception exception)
@@ -112,7 +113,8 @@ namespace DBManager.Presenters
 
             try
             {
-                await _model.RemoveConnection(connectionName);
+                _model.RemoveConnection(connectionName);
+                await _model.SaveConnections();
                 await _model.LoadConnections();
             }
             catch (Exception exception)
@@ -138,8 +140,9 @@ namespace DBManager.Presenters
 
             try
             {
-                await _model.RemoveConnection(dto.OldName);
-                await _model.AddConnection(connection);
+                _model.RemoveConnection(dto.OldName);
+                _model.AddConnection(connection);
+                await _model.SaveConnections();
                 await _model.LoadConnections();
             }
             catch (Exception exception)

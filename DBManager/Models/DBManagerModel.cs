@@ -52,30 +52,21 @@ namespace DBManager.Models
                 .ToList();
         }
 
-        public async Task AddConnection(Connection connection)
-        {
-            _connections.Add(connection);
-
-            await SaveConnectionListToFile();
-        }
+        public void AddConnection(Connection connection)
+            => _connections.Add(connection);
 
         public Connection GetConnection(string connectionName)
-        {
-            return _connections
-                .Single(x => x.Name == connectionName);
-        }
+            => _connections.Single(x => x.Name == connectionName);
 
-        public async Task RemoveConnection(string connectionName)
+        public void RemoveConnection(string connectionName)
         {
             var result = _connections.RemoveAll(x => x.Name == connectionName);
 
             if (result != 1)
                 throw new InvalidOperationException("Removed more than one connection.");
-
-            await SaveConnectionListToFile();
         }
 
-        private async Task SaveConnectionListToFile()
+        public async Task SaveConnections()
         {
             using (var fileStream = new FileStream(Constants.Paths.ConnectionData, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
             {
@@ -92,7 +83,7 @@ namespace DBManager.Models
 
         public async ValueTask DisposeAsync()
         {
-            await SaveConnectionListToFile();
+            await SaveConnections();
         }
     }
 }
