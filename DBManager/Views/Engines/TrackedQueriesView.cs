@@ -135,11 +135,16 @@ namespace DBManager.Views.Engines
                 && string.IsNullOrEmpty(_belowTrackedQuerySnapshotName))
                 return;
 
-            var response = _presenter.QueryTrackerDriver.GetSnapshotDifferences(
-                _aboveTrackedQuerySnapshotName,
-                _belowTrackedQuerySnapshotName,
-                _selectedTrackedQuery,
-                _databaseName);
+            var trackedQuerySnapshotDifferencesDto = new TrackedQuerySnapshotDifferencesDto
+            {
+                FirstSnapshotName = _aboveTrackedQuerySnapshotName,
+                SecondSnapshotName = _belowTrackedQuerySnapshotName,
+                TrackedQueryName = _selectedTrackedQuery,
+                DatabaseName = _databaseName
+            };
+
+            var response = _presenter.QueryTrackerDriver
+                .GetSnapshotDifferences(trackedQuerySnapshotDifferencesDto);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get tracked query snapshot.", response.Payload);

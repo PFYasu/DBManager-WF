@@ -1,4 +1,5 @@
 ﻿using DBManager.Core.Dto;
+using DBManager.Core.Dto.Engines;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,13 @@ namespace DBManager.Core.Presenters.Engines
             _dataTransferMethods = dataTransferMethods;
         }
 
-        public async Task<Response> SendData(DataTable dataTable, string connectionName, string databaseName, string tableName)
+        public async Task<Response> SendData(SendDataDto dto)
         {
+            var connectionName = dto.ConnectionName;
+            var databaseName = dto.DatabaseName;
+            var tableName = dto.TableName;
+            var dataTable = dto.DataTable;
+
             var response = _dataTransferMethods.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
                 return Response.Error($"Unable to get {connectionName} connection");
@@ -30,9 +36,9 @@ namespace DBManager.Core.Presenters.Engines
             if (sendQueryResponse.Type == ResponseType.Error)
                 return Response.Error($"Unable to send data: {sendQueryResponse.Payload}");
 
-            var dto = sendQueryResponse.Payload;
+            var responseDto = sendQueryResponse.Payload;
 
-            return Response.Ok(dto);
+            return Response.Ok(responseDto);
         }
 
         public Response GetConnectionNames()

@@ -73,11 +73,15 @@ namespace DBManager.Views.Engines
         {
             var nodes = ConnectionTree_ConnectionTreeView.LastSelectedNode;
 
-            var response = await _presenter.DataTransferDriver.SendData(
-                _dataToTransfer,
-                nodes.Connection.Text,
-                nodes.Database.Text,
-                nodes.Table.Text);
+            var sendDataDto = new SendDataDto
+            {
+                ConnectionName = nodes.Connection.Text,
+                DatabaseName = nodes.Database.Text,
+                TableName = nodes.Table.Text,
+                DataTable = _dataToTransfer
+            };
+
+            var response = await _presenter.DataTransferDriver.SendData(sendDataDto);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to send data to selected table.", response.Payload);

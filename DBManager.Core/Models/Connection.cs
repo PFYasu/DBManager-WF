@@ -22,7 +22,7 @@ namespace DBManager.Core.Models
             {
                 Name = dto.Name,
                 EngineType = dto.EngineType,
-                ConnectionParameters = dto.ConnectionParameters,
+                ConnectionParameters = dto.ConnectionParameters
             };
         }
 

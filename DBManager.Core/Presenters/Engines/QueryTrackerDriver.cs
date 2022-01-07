@@ -102,8 +102,13 @@ namespace DBManager.Core.Presenters.Engines
             return Response.Ok(dto);
         }
 
-        public Response GetSnapshotDifferences(string firstSnapshotName, string secondSnapshotName, string trackedQueryName, string databaseName)
+        public Response GetSnapshotDifferences(TrackedQuerySnapshotDifferencesDto dto)
         {
+            var firstSnapshotName = dto.FirstSnapshotName;
+            var secondSnapshotName = dto.SecondSnapshotName;
+            var trackedQueryName = dto.TrackedQueryName;
+            var databaseName = dto.DatabaseName;
+
             if (TrackedQueryExists(trackedQueryName, databaseName) == false)
                 return Response.Error($"Tracked query with {trackedQueryName} name does not exist");
 
@@ -138,13 +143,13 @@ namespace DBManager.Core.Presenters.Engines
 
             var differentRows = snapshotDifferencesResult.Rows.Count;
 
-            var dto = new TrackedQuerySnapshotDifferencesResponseDto
+            var responseDto = new TrackedQuerySnapshotDifferencesResponseDto
             {
                 Differences = snapshotDifferencesResult,
                 DifferentRows = differentRows
             };
 
-            return Response.Ok(dto);
+            return Response.Ok(responseDto);
         }
 
         public Response AddTrackedQuery(NewTrackedQueryDto dto)

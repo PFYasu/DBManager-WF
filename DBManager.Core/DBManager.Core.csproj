@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Dto\AddConnectionDto.cs" />
     <Compile Include="Dto\ConnectionNamesResponseDto.cs" />
+    <Compile Include="Dto\Engines\SendDataDto.cs" />
+    <Compile Include="Dto\Engines\TrackedQuerySnapshotDifferencesDto.cs" />
     <Compile Include="Dto\PresenterResponseDto.cs" />
     <Compile Include="Dto\UpdateConnectionDto.cs" />
     <Compile Include="Dto\Engines\ConnectionDetailsResponseDto.cs" />

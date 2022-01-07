@@ -56,7 +56,7 @@ namespace DBManager.EngineModule.MySql
             {
                 await connection.OpenAsync();
 
-                if(string.IsNullOrEmpty(databaseName) == false)
+                if (string.IsNullOrEmpty(databaseName) == false)
                     await connection.ChangeDatabaseAsync(databaseName);
 
                 var command = new MySqlCommand(query, connection);
