@@ -1,4 +1,5 @@
-﻿using DBManager.Core.Dto;
+﻿using DBManager.Core;
+using DBManager.Core.Dto;
 using DBManager.Core.Models;
 using DBManager.Core.Models.Engines;
 using DBManager.Core.Presenters;
@@ -26,6 +27,52 @@ namespace DBManager.Presenters
                 GetConnectionNames = GetConnectionNames,
                 GetPresenter = GetPresenter
             };
+
+            InitializeEnginePresenters();
+        }
+
+        private void InitializeEnginePresenters()
+        {
+            List<string> connectionNames;
+
+            try
+            {
+                connectionNames = _model.GetConnectionNames();
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidOperationException(
+                    $"Unable to get connection names for initiate connections.\n{exception.Message}");
+            }
+
+            foreach (var connectionName in connectionNames)
+            {
+                Connection connection;
+
+                try
+                {
+                    connection = _model.GetConnection(connectionName);
+                }
+                catch (Exception exception)
+                {
+                    throw new InvalidOperationException(
+                        $"Unable to initialize {connectionName} connection.\n{exception.Message}");
+                }
+
+                var engineType = connection.EngineType;
+
+                if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
+                    throw new NotImplementedException(
+                        $"{engineType} engine type is not supported.");
+
+                var presenter = CreatePresenter(engineModuleAttribute, connection);
+
+                if (_presenters.ContainsKey(connectionName))
+                    throw new NotImplementedException(
+                        $"{connectionName} connection already exists in dictionary.");
+                else
+                    _presenters.Add(connectionName, presenter);
+            }
         }
 
         public async Task<Response> AddConnection(AddConnectionDto dto)
@@ -52,7 +99,6 @@ namespace DBManager.Presenters
         public Response GetPresenter(string connectionName)
         {
             PresenterResponseDto dto;
-            IEnginePresenter presenter;
 
             if (_presenters.TryGetValue(connectionName, out IEnginePresenter presenterFromDictionary))
             {
@@ -84,13 +130,7 @@ namespace DBManager.Presenters
             if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
                 return Response.Error("Unable to create presenter. Incorrect engine type.");
 
-            var model = (IEngineModel)Activator
-                .CreateInstance(engineModuleAttribute.Model, connection);
-
-            presenter = (IEnginePresenter)Activator.CreateInstance(
-                engineModuleAttribute.Presenter,
-                model,
-                _dataTransferMethods);
+            var presenter = CreatePresenter(engineModuleAttribute, connection);
 
             dto = new PresenterResponseDto
             {
@@ -203,20 +243,34 @@ namespace DBManager.Presenters
             return Response.Ok(dto);
         }
 
+        private IEnginePresenter CreatePresenter(EngineModuleAttribute engineModuleAttribute, Connection connection)
+        {
+            var model = (IEngineModel)Activator.CreateInstance(
+                engineModuleAttribute.Model,
+                connection);
+
+            var presenter = (IEnginePresenter)Activator.CreateInstance(
+                engineModuleAttribute.Presenter,
+                model,
+                _dataTransferMethods);
+
+            return presenter;
+        }
+
         private bool ConnectionExists(string connectionName)
         {
-            List<string> names;
+            List<string> connectionNames;
 
             try
             {
-                names = _model.GetConnectionNames();
+                connectionNames = _model.GetConnectionNames();
             }
             catch (Exception)
             {
                 return false;
             }
 
-            return names.Contains(connectionName);
+            return connectionNames.Contains(connectionName);
         }
     }
 }
