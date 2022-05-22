@@ -122,7 +122,6 @@ namespace DBManager.EngineModule.MySql
                 $"SELECT " +
                     $"TABLE_NAME, " +
                     $"CREATE_TIME, " +
-                    $"UPDATE_TIME, " +
                     $"ROUND(SUM(data_length + index_length) / 1024, 1) AS 'SIZE' " +
                 $"FROM TABLES " +
                 $"WHERE TABLE_SCHEMA = '{databaseName}' AND TABLE_NAME = '{tableName}';";
@@ -149,11 +148,16 @@ namespace DBManager.EngineModule.MySql
 
             var table = fullTableResult;
             var rowsCount = fullTableResult.Rows.Count;
-
             var columnsCount = columnsQueryResult.Rows.Count;
+
             var createdAt = tableQueryResult.Rows[0].TryConvertTo<DateTime>("CREATE_TIME");
-            var lastUpdate = tableQueryResult.Rows[0].TryConvertTo<DateTime?>("UPDATE_TIME");
             var size = tableQueryResult.Rows[0].TryConvertTo<decimal>("SIZE");
+
+            var customInformations = new Dictionary<string, string>()
+            {
+                { "Size", size.ToString() },
+                { "Created at", createdAt.ToString() }
+            };
 
             var columnsStructure = new List<ColumnStructure>();
 
@@ -179,9 +183,7 @@ namespace DBManager.EngineModule.MySql
                 RowsCount = rowsCount,
                 ColumnsCount = columnsCount,
                 ColumnsStructure = columnsStructure,
-                Size = size,
-                CreatedAt = createdAt,
-                LastUpdate = lastUpdate
+                CustomInformations = customInformations
             };
 
             return Response.Ok(dto);

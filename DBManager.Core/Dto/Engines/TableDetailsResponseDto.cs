@@ -10,13 +10,12 @@ namespace DBManager.Core.Dto.Engines
         public int? RowsCount { get; set; }
         public int? ColumnsCount { get; set; }
         public List<ColumnStructure> ColumnsStructure { get; set; }
-        public decimal? Size { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? LastUpdate { get; set; }
+        public Dictionary<string, string> CustomInformations { get; set; }
 
         public TableDetailsResponseDto()
         {
             ColumnsStructure = new List<ColumnStructure>();
+            CustomInformations = new Dictionary<string, string>();
         }
     }
 

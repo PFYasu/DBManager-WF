@@ -170,15 +170,18 @@ namespace DBManager.EngineModule.PostgreSQL
                 columnsStructure.Add(columnStructure);
             }
 
+            var customInformations = new Dictionary<string, string>()
+            {
+                { "Size", size.ToString() }
+            };
+
             var dto = new TableDetailsResponseDto
             {
                 Table = table,
                 RowsCount = rowsCount,
                 ColumnsCount = columnsCount,
                 ColumnsStructure = columnsStructure,
-                Size = size,
-                CreatedAt = null,
-                LastUpdate = null
+                CustomInformations = customInformations
             };
 
             return Response.Ok(dto);

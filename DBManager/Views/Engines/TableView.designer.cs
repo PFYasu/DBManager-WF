@@ -29,13 +29,13 @@ namespace DBManager.Views.Engines
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableView_TabControl = new System.Windows.Forms.TabControl();
             this.Browse = new System.Windows.Forms.TabPage();
             this.UnsupportedColumns_Browse_Button = new System.Windows.Forms.Button();
@@ -44,6 +44,7 @@ namespace DBManager.Views.Engines
             this.Elements_Browse_Label = new System.Windows.Forms.Label();
             this.TableData_Browse_Label = new System.Windows.Forms.Label();
             this.Structure = new System.Windows.Forms.TabPage();
+            this.CustomInformations_Structure_ListView = new System.Windows.Forms.ListView();
             this.Name_Structure_Label = new System.Windows.Forms.Label();
             this.Structure_Structure_DataGridView = new System.Windows.Forms.DataGridView();
             this.structure_columnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,11 +53,9 @@ namespace DBManager.Views.Engines
             this.structure_comparingSubtitlesMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Columns_Structure_Label = new System.Windows.Forms.Label();
             this.Records_Structure_Label = new System.Windows.Forms.Label();
-            this.LastUpdate_Structure_Label = new System.Windows.Forms.Label();
-            this.CreatedAt_Structure_Label = new System.Windows.Forms.Label();
-            this.Size_Structure_Label = new System.Windows.Forms.Label();
             this.Statistics_Structure_Label = new System.Windows.Forms.Label();
             this.TableStructure_Structure_Label = new System.Windows.Forms.Label();
+            this.CustomInformations_Structure_Label = new System.Windows.Forms.Label();
             this.TableView_TabControl.SuspendLayout();
             this.Browse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Structure_Browse_DataGridView)).BeginInit();
@@ -122,47 +121,47 @@ namespace DBManager.Views.Engines
             this.Structure_Browse_DataGridView.AllowUserToAddRows = false;
             this.Structure_Browse_DataGridView.AllowUserToDeleteRows = false;
             this.Structure_Browse_DataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Structure_Browse_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Structure_Browse_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
             this.Structure_Browse_DataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Structure_Browse_DataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.Structure_Browse_DataGridView.BackgroundColor = System.Drawing.Color.White;
             this.Structure_Browse_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Structure_Browse_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Structure_Browse_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.Structure_Browse_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Structure_Browse_DataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Structure_Browse_DataGridView.DefaultCellStyle = dataGridViewCellStyle13;
             this.Structure_Browse_DataGridView.EnableHeadersVisualStyles = false;
             this.Structure_Browse_DataGridView.GridColor = System.Drawing.Color.Silver;
             this.Structure_Browse_DataGridView.Location = new System.Drawing.Point(0, 33);
             this.Structure_Browse_DataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.Structure_Browse_DataGridView.Name = "Structure_Browse_DataGridView";
             this.Structure_Browse_DataGridView.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Structure_Browse_DataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Structure_Browse_DataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.Structure_Browse_DataGridView.RowHeadersVisible = false;
             this.Structure_Browse_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.Structure_Browse_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -197,13 +196,12 @@ namespace DBManager.Views.Engines
             // Structure
             // 
             this.Structure.BackColor = System.Drawing.Color.White;
+            this.Structure.Controls.Add(this.CustomInformations_Structure_Label);
+            this.Structure.Controls.Add(this.CustomInformations_Structure_ListView);
             this.Structure.Controls.Add(this.Name_Structure_Label);
             this.Structure.Controls.Add(this.Structure_Structure_DataGridView);
             this.Structure.Controls.Add(this.Columns_Structure_Label);
             this.Structure.Controls.Add(this.Records_Structure_Label);
-            this.Structure.Controls.Add(this.LastUpdate_Structure_Label);
-            this.Structure.Controls.Add(this.CreatedAt_Structure_Label);
-            this.Structure.Controls.Add(this.Size_Structure_Label);
             this.Structure.Controls.Add(this.Statistics_Structure_Label);
             this.Structure.Controls.Add(this.TableStructure_Structure_Label);
             this.Structure.Location = new System.Drawing.Point(4, 22);
@@ -214,13 +212,24 @@ namespace DBManager.Views.Engines
             this.Structure.TabIndex = 1;
             this.Structure.Text = "Structure";
             // 
+            // CustomInformations_Structure_ListView
+            // 
+            this.CustomInformations_Structure_ListView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CustomInformations_Structure_ListView.HideSelection = false;
+            this.CustomInformations_Structure_ListView.Location = new System.Drawing.Point(426, 33);
+            this.CustomInformations_Structure_ListView.Name = "CustomInformations_Structure_ListView";
+            this.CustomInformations_Structure_ListView.Size = new System.Drawing.Size(244, 93);
+            this.CustomInformations_Structure_ListView.TabIndex = 22;
+            this.CustomInformations_Structure_ListView.UseCompatibleStateImageBehavior = false;
+            this.CustomInformations_Structure_ListView.View = System.Windows.Forms.View.List;
+            // 
             // Name_Structure_Label
             // 
             this.Name_Structure_Label.AutoSize = true;
             this.Name_Structure_Label.BackColor = System.Drawing.Color.White;
             this.Name_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.Name_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Name_Structure_Label.Location = new System.Drawing.Point(113, 10);
+            this.Name_Structure_Label.Location = new System.Drawing.Point(9, 33);
             this.Name_Structure_Label.Name = "Name_Structure_Label";
             this.Name_Structure_Label.Size = new System.Drawing.Size(64, 21);
             this.Name_Structure_Label.TabIndex = 21;
@@ -231,8 +240,8 @@ namespace DBManager.Views.Engines
             this.Structure_Structure_DataGridView.AllowUserToAddRows = false;
             this.Structure_Structure_DataGridView.AllowUserToDeleteRows = false;
             this.Structure_Structure_DataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            this.Structure_Structure_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            this.Structure_Structure_DataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.Structure_Structure_DataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -240,38 +249,38 @@ namespace DBManager.Views.Engines
             this.Structure_Structure_DataGridView.BackgroundColor = System.Drawing.Color.White;
             this.Structure_Structure_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.Structure_Structure_DataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Structure_Structure_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Structure_Structure_DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.Structure_Structure_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Structure_Structure_DataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.structure_columnNumber,
             this.structure_Name,
             this.structure_Type,
             this.structure_comparingSubtitlesMethod});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Structure_Structure_DataGridView.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Structure_Structure_DataGridView.DefaultCellStyle = dataGridViewCellStyle10;
             this.Structure_Structure_DataGridView.EnableHeadersVisualStyles = false;
             this.Structure_Structure_DataGridView.GridColor = System.Drawing.Color.Silver;
-            this.Structure_Structure_DataGridView.Location = new System.Drawing.Point(0, 137);
+            this.Structure_Structure_DataGridView.Location = new System.Drawing.Point(0, 132);
             this.Structure_Structure_DataGridView.Name = "Structure_Structure_DataGridView";
             this.Structure_Structure_DataGridView.ReadOnly = true;
             this.Structure_Structure_DataGridView.RowHeadersVisible = false;
             this.Structure_Structure_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.Structure_Structure_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Structure_Structure_DataGridView.Size = new System.Drawing.Size(678, 231);
+            this.Structure_Structure_DataGridView.Size = new System.Drawing.Size(678, 236);
             this.Structure_Structure_DataGridView.TabIndex = 16;
             // 
             // structure_columnNumber
@@ -304,7 +313,7 @@ namespace DBManager.Views.Engines
             this.Columns_Structure_Label.BackColor = System.Drawing.Color.White;
             this.Columns_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
             this.Columns_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Columns_Structure_Label.Location = new System.Drawing.Point(236, 53);
+            this.Columns_Structure_Label.Location = new System.Drawing.Point(9, 74);
             this.Columns_Structure_Label.Name = "Columns_Structure_Label";
             this.Columns_Structure_Label.Size = new System.Drawing.Size(69, 20);
             this.Columns_Structure_Label.TabIndex = 15;
@@ -316,47 +325,11 @@ namespace DBManager.Views.Engines
             this.Records_Structure_Label.BackColor = System.Drawing.Color.White;
             this.Records_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
             this.Records_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Records_Structure_Label.Location = new System.Drawing.Point(236, 33);
+            this.Records_Structure_Label.Location = new System.Drawing.Point(9, 54);
             this.Records_Structure_Label.Name = "Records_Structure_Label";
             this.Records_Structure_Label.Size = new System.Drawing.Size(69, 20);
             this.Records_Structure_Label.TabIndex = 14;
             this.Records_Structure_Label.Text = "Records: ";
-            // 
-            // LastUpdate_Structure_Label
-            // 
-            this.LastUpdate_Structure_Label.AutoSize = true;
-            this.LastUpdate_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.LastUpdate_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
-            this.LastUpdate_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.LastUpdate_Structure_Label.Location = new System.Drawing.Point(8, 73);
-            this.LastUpdate_Structure_Label.Name = "LastUpdate_Structure_Label";
-            this.LastUpdate_Structure_Label.Size = new System.Drawing.Size(93, 20);
-            this.LastUpdate_Structure_Label.TabIndex = 13;
-            this.LastUpdate_Structure_Label.Text = "Last update: ";
-            // 
-            // CreatedAt_Structure_Label
-            // 
-            this.CreatedAt_Structure_Label.AutoSize = true;
-            this.CreatedAt_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.CreatedAt_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
-            this.CreatedAt_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.CreatedAt_Structure_Label.Location = new System.Drawing.Point(8, 53);
-            this.CreatedAt_Structure_Label.Name = "CreatedAt_Structure_Label";
-            this.CreatedAt_Structure_Label.Size = new System.Drawing.Size(85, 20);
-            this.CreatedAt_Structure_Label.TabIndex = 12;
-            this.CreatedAt_Structure_Label.Text = "Created at: ";
-            // 
-            // Size_Structure_Label
-            // 
-            this.Size_Structure_Label.AutoSize = true;
-            this.Size_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.Size_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
-            this.Size_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Size_Structure_Label.Location = new System.Drawing.Point(8, 33);
-            this.Size_Structure_Label.Name = "Size_Structure_Label";
-            this.Size_Structure_Label.Size = new System.Drawing.Size(75, 20);
-            this.Size_Structure_Label.TabIndex = 11;
-            this.Size_Structure_Label.Text = "Size (KB): ";
             // 
             // Statistics_Structure_Label
             // 
@@ -376,11 +349,24 @@ namespace DBManager.Views.Engines
             this.TableStructure_Structure_Label.BackColor = System.Drawing.Color.White;
             this.TableStructure_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
             this.TableStructure_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.TableStructure_Structure_Label.Location = new System.Drawing.Point(7, 103);
+            this.TableStructure_Structure_Label.Location = new System.Drawing.Point(7, 99);
             this.TableStructure_Structure_Label.Name = "TableStructure_Structure_Label";
             this.TableStructure_Structure_Label.Size = new System.Drawing.Size(158, 30);
             this.TableStructure_Structure_Label.TabIndex = 2;
             this.TableStructure_Structure_Label.Text = "Table structure";
+            // 
+            // CustomInformations_Structure_Label
+            // 
+            this.CustomInformations_Structure_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CustomInformations_Structure_Label.AutoSize = true;
+            this.CustomInformations_Structure_Label.BackColor = System.Drawing.Color.White;
+            this.CustomInformations_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.CustomInformations_Structure_Label.ForeColor = System.Drawing.Color.Black;
+            this.CustomInformations_Structure_Label.Location = new System.Drawing.Point(422, 10);
+            this.CustomInformations_Structure_Label.Name = "CustomInformations_Structure_Label";
+            this.CustomInformations_Structure_Label.Size = new System.Drawing.Size(175, 21);
+            this.CustomInformations_Structure_Label.TabIndex = 23;
+            this.CustomInformations_Structure_Label.Text = "Custom informations:";
             // 
             // TableView
             // 
@@ -414,9 +400,6 @@ namespace DBManager.Views.Engines
         private System.Windows.Forms.Label Elements_Browse_Label;
         private System.Windows.Forms.Label Columns_Structure_Label;
         private System.Windows.Forms.Label Records_Structure_Label;
-        private System.Windows.Forms.Label LastUpdate_Structure_Label;
-        private System.Windows.Forms.Label CreatedAt_Structure_Label;
-        private System.Windows.Forms.Label Size_Structure_Label;
         private System.Windows.Forms.Label Statistics_Structure_Label;
         private System.Windows.Forms.DataGridView Structure_Browse_DataGridView;
         private System.Windows.Forms.DataGridView Structure_Structure_DataGridView;
@@ -427,5 +410,7 @@ namespace DBManager.Views.Engines
         private System.Windows.Forms.Label Name_Browse_Label;
         private System.Windows.Forms.Label Name_Structure_Label;
         private System.Windows.Forms.Button UnsupportedColumns_Browse_Button;
+        private System.Windows.Forms.ListView CustomInformations_Structure_ListView;
+        private System.Windows.Forms.Label CustomInformations_Structure_Label;
     }
 }

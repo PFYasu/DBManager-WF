@@ -60,11 +60,14 @@ namespace DBManager.Views.Engines
             Name_Browse_Label.Text = $"Name: {_tableName}";
 
             Name_Structure_Label.Text = $"Name: {_tableName}";
-            CreatedAt_Structure_Label.Text = $"Created at: {payload.CreatedAt}";
-            LastUpdate_Structure_Label.Text = $"Last update: {payload.LastUpdate}";
-            Size_Structure_Label.Text = $"Size (KB): {payload.Size}";
             Columns_Structure_Label.Text = $"Columns: {payload.ColumnsCount}";
             Records_Structure_Label.Text = $"Records: {payload.RowsCount}";
+
+            foreach (var customInformation in payload.CustomInformations)
+            {
+                CustomInformations_Structure_ListView.Items
+                    .Add($"{customInformation.Key}: {customInformation.Value}");
+            }
         }
 
         private async void MySqlTableView_Load(object sender, EventArgs e)
