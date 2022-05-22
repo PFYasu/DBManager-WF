@@ -43,54 +43,46 @@ namespace DBManager.Views
             Status_StatusStrip.ImageList = imageList;
             ConnectionTree_ConnectionTreeView.InitializeView(imageList);
 
-            ConnectionTree_ConnectionTreeView.OnSelectedNodeChanged += ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged;
+            ConnectionTree_ConnectionTreeView.OnNodeSelected += ConnectionTree_ConnectionTreeView_OnNodeSelected;
+            ConnectionTree_ConnectionTreeView.OnNodeBeforeExpanding += ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding;
         }
 
-        private async void ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged(object sender, TreeNodeElements e)
+        private async void ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding(object sender, TreeNodeElements e)
         {
-            if (e.Mode == TreeNodeMode.NotSupported)
-            {
-                RemoveConnection_Button.Enabled = false;
-                UpdateConnection_Button.Enabled = false;
-                return;
-            }
+            var presenter = GetPresenter(e);
 
-            var response = _presenter.GetPresenter(e.Connection.Text);
-            if (response.Type == ResponseType.Error)
+            switch (e.Mode)
             {
-                _messageHelper.ShowError($"Unable to get {e.Connection.Text} connection", response);
-                return;
+                case TreeNodeMode.ConnectionSelected:
+                    await LoadDatabases(presenter);
+                    break;
+                case TreeNodeMode.DatabaseSelected:
+                    await LoadTables(presenter, e.Database.Text);
+                    break;
+                case TreeNodeMode.TableSelected:
+                    break;
+                default:
+                    _messageHelper.ShowError("Unable to create view - incorrect engine type");
+                    return;
             }
+        }
 
-            var payload = response.Payload as PresenterResponseDto;
+        private void ConnectionTree_ConnectionTreeView_OnNodeSelected(object sender, TreeNodeElements e)
+        {
+            var presenter = GetPresenter(e);
+
             Form form;
 
             switch (e.Mode)
             {
                 case TreeNodeMode.ConnectionSelected:
-                    if (e.Connection.IsExpanded)
-                    {
-                        e.Connection.Collapse();
-                        return;
-                    }
-
-                    form = new ConnectionView(payload.Presenter);
-                    await LoadDatabases(payload.Presenter);
-                    e.Connection.Expand();
+                    form = new ConnectionView(presenter);
                     break;
                 case TreeNodeMode.DatabaseSelected:
-                    if (e.Database.IsExpanded)
-                    {
-                        e.Database.Collapse();
-                        return;
-                    }
-
-                    form = new DatabaseView(payload.Presenter, e.Database.Text);
-                    await LoadTables(payload.Presenter, e.Database.Text);
-                    e.Database.Expand();
+                    form = new DatabaseView(presenter, e.Database.Text);
                     break;
                 case TreeNodeMode.TableSelected:
-                    form = new TableView(payload.Presenter, e.Database.Text, e.Table.Text);
+                    form = new TableView(presenter, e.Database.Text, e.Table.Text);
                     break;
                 default:
                     _messageHelper.ShowError("Unable to create view - incorrect engine type");
@@ -196,6 +188,27 @@ namespace DBManager.Views
 
             if (result == DialogResult.OK)
                 LoadConnections();
+        }
+
+        private IEnginePresenter GetPresenter(TreeNodeElements treeNodeElements)
+        {
+            if (treeNodeElements.Mode == TreeNodeMode.NotSupported)
+            {
+                RemoveConnection_Button.Enabled = false;
+                UpdateConnection_Button.Enabled = false;
+                return null;
+            }
+
+            var response = _presenter.GetPresenter(treeNodeElements.Connection.Text);
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to get {treeNodeElements.Connection.Text} connection", response);
+                return null;
+            }
+
+            var payload = response.Payload as PresenterResponseDto;
+
+            return payload.Presenter;
         }
 
         private void LoadConnections()

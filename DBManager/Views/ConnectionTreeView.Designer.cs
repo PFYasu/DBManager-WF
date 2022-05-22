@@ -42,9 +42,10 @@ namespace DBManager.Views
             this.ConnectionTree_TreeView.Indent = 8;
             this.ConnectionTree_TreeView.Location = new System.Drawing.Point(0, 0);
             this.ConnectionTree_TreeView.Name = "ConnectionTree_TreeView";
-            this.ConnectionTree_TreeView.ShowPlusMinus = false;
             this.ConnectionTree_TreeView.Size = new System.Drawing.Size(150, 150);
             this.ConnectionTree_TreeView.TabIndex = 5;
+            this.ConnectionTree_TreeView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.ConnectionTree_TreeView_BeforeCollapse);
+            this.ConnectionTree_TreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.ConnectionTree_TreeView_BeforeExpand);
             this.ConnectionTree_TreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ConnectionTree_TreeView_NodeMouseClick);
             // 
             // ConnectionTreeView

@@ -31,10 +31,22 @@ namespace DBManager.Views.Engines
 
             TryCopyData_Button.Enabled = false;
 
-            ConnectionTree_ConnectionTreeView.OnSelectedNodeChanged += ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged;
+            ConnectionTree_ConnectionTreeView.OnNodeBeforeExpanding += ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding;
+            ConnectionTree_ConnectionTreeView.OnNodeBeforeCollapsing += ConnectionTree_ConnectionTreeView_OnNodeBeforeCollapsing;
+            ConnectionTree_ConnectionTreeView.OnNodeSelected += ConnectionTree_ConnectionTreeView_OnNodeSelected;
         }
 
-        private async void ConnectionTree_ConnectionTreeView_OnSelectedNodeChanged(object sender, TreeNodeElements e)
+        private void ConnectionTree_ConnectionTreeView_OnNodeBeforeCollapsing(object sender, TreeNodeElements e)
+        {
+            TryCopyData_Button.Enabled = false;
+        }
+
+        private void ConnectionTree_ConnectionTreeView_OnNodeSelected(object sender, TreeNodeElements e)
+        {
+            TryCopyData_Button.Enabled = e.Mode == TreeNodeMode.TableSelected;
+        }
+
+        private async void ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding(object sender, TreeNodeElements e)
         {
             if (e.Mode == TreeNodeMode.NotSupported)
                 return;
@@ -44,30 +56,16 @@ namespace DBManager.Views.Engines
             switch (e.Mode)
             {
                 case TreeNodeMode.ConnectionSelected:
-                    if (e.Connection.IsExpanded)
-                    {
-                        e.Connection.Collapse();
-                        return;
-                    }
-
                     await LoadDatabases(e.Connection.Text);
-                    e.Connection.Expand();
                     break;
                 case TreeNodeMode.DatabaseSelected:
-                    if (e.Database.IsExpanded)
-                    {
-                        e.Database.Collapse();
-                        return;
-                    }
-
                     await LoadTables(e.Connection.Text, e.Database.Text);
-                    e.Database.Expand();
                     break;
                 case TreeNodeMode.TableSelected:
-                    TryCopyData_Button.Enabled = true;
                     break;
             }
         }
+
 
         private async void TryCopyData_Button_Click(object sender, EventArgs e)
         {

@@ -19,14 +19,42 @@ namespace DBManager.Views
             ConnectionTree_TreeView.ImageList = imageList;
         }
 
-        public event EventHandler<TreeNodeElements> OnSelectedNodeChanged;
+        public event EventHandler<TreeNodeElements> OnNodeSelected;
+        public event EventHandler<TreeNodeElements> OnNodeBeforeExpanding;
+        public event EventHandler<TreeNodeElements> OnNodeBeforeCollapsing;
         public TreeNodeElements LastSelectedNode { get; private set; }
+
+        private bool IsGraphicActionExecuting = false;
 
         private void ConnectionTree_TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            LastSelectedNode = TreeNodeHelper.GetElements(e.Node);
+            if (IsGraphicActionExecuting)
+            {
+                IsGraphicActionExecuting = false;
+                return;
+            }
 
-            OnSelectedNodeChanged?.Invoke(this, LastSelectedNode);
+            LastSelectedNode = TreeNodeHelper.GetElements(e.Node);
+            OnNodeSelected?.Invoke(this, LastSelectedNode);
+        }
+
+        private void ConnectionTree_TreeView_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        {
+            IsGraphicActionExecuting = true;
+
+            LastSelectedNode = TreeNodeHelper.GetElements(e.Node);
+            OnNodeBeforeCollapsing?.Invoke(this, LastSelectedNode);
+        }
+
+        private void ConnectionTree_TreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            IsGraphicActionExecuting = true;
+
+            if (e.Node.Nodes.Count == 1 && e.Node.Nodes[0] is EmptyTreeNode)
+            {
+                LastSelectedNode = TreeNodeHelper.GetElements(e.Node);
+                OnNodeBeforeExpanding?.Invoke(this, LastSelectedNode);
+            }
         }
 
         public void LoadConnections(List<string> connectionNames)
@@ -42,6 +70,8 @@ namespace DBManager.Views
                 node.Name = name.ToString();
                 node.ImageIndex = 0;
                 node.SelectedImageIndex = 0;
+
+                node.Nodes.Add(new EmptyTreeNode());
             }
         }
 
@@ -60,6 +90,8 @@ namespace DBManager.Views
                 node.Name = name.ToString();
                 node.ImageIndex = 1;
                 node.SelectedImageIndex = 1;
+
+                node.Nodes.Add(new EmptyTreeNode());
             }
         }
 
@@ -81,6 +113,10 @@ namespace DBManager.Views
                 node.ImageIndex = 2;
                 node.SelectedImageIndex = 2;
             }
+        }
+
+        private class EmptyTreeNode : TreeNode
+        {
         }
     }
 }
