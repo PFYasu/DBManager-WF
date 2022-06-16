@@ -2,6 +2,7 @@
 
 namespace DBManager.Core
 {
+    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public class EngineModuleAttribute : Attribute
     {
         public string EngineType { get; private set; }
