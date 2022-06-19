@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DBManager.Core.Models.Engines;
+using DBManager.Core.Presenters.Engines;
+using System;
+using System.Windows.Forms;
 
 namespace DBManager.Core
 {
@@ -16,6 +19,15 @@ namespace DBManager.Core
             Type presenter,
             Type connectorView)
         {
+            if (typeof(IEngineModel).IsAssignableFrom(model) == false)
+                throw new ArgumentException($"{typeof(Type)} does not implement a {nameof(IEngineModel)} interface.");
+            
+            if (typeof(IEnginePresenter).IsAssignableFrom(presenter) == false)
+                throw new ArgumentException($"{nameof(Type)} does not implement a {nameof(IEnginePresenter)} interface.");
+
+            if (typeof(Form).IsAssignableFrom(connectorView) == false)
+                throw new ArgumentException($"{nameof(Type)} does not inherit from {nameof(Form)} class.");
+
             EngineType = engineType;
             Model = model;
             Presenter = presenter;
