@@ -29,28 +29,30 @@ namespace DBManager.Models
 
         public async Task LoadConnections()
         {
-            using var reader = new StreamReader(Constants.Paths.ConnectionData);
+            if (File.Exists(Constants.Paths.ConnectionData) == false)
+                File.Create(Constants.Paths.ConnectionData).Dispose();
 
-            var json = await reader.ReadToEndAsync();
-            var elements = JsonConvert.DeserializeObject<List<Connection>>(json);
-
-            if (elements == null)
-                return;
-
-            _connections.Clear();
-
-            foreach (var element in elements)
+            using (var reader = new StreamReader(Constants.Paths.ConnectionData))
             {
-                _connections.Add(element);
+                var json = await reader.ReadToEndAsync();
+                var elements = JsonConvert.DeserializeObject<List<Connection>>(json);
+
+                if (elements == null)
+                    return;
+
+                _connections.Clear();
+
+                foreach (var element in elements)
+                {
+                    _connections.Add(element);
+                }
             }
         }
 
         public List<string> GetConnectionNames()
-        {
-            return _connections
-                .Select(x => x.Name)
-                .ToList();
-        }
+            => _connections
+            .Select(x => x.Name)
+            .ToList();
 
         public void AddConnection(Connection connection)
             => _connections.Add(connection);
