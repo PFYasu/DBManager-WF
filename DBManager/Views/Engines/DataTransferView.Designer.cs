@@ -89,6 +89,7 @@ namespace DBManager.Views.Engines
             this.Controls.Add(this.TryCopyData_Button);
             this.Controls.Add(this.ConnectionTree_ConnectionTreeView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(241, 440);
             this.Name = "DataTransferView";
             this.Text = "DBManager - data transfer";
             this.ResumeLayout(false);
