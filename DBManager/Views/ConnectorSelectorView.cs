@@ -43,7 +43,7 @@ namespace DBManager.Views
 
             if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
             {
-                _messageHelper.ShowError("Unable to create connector update view - incorrect engine type");
+                _messageHelper.ShowError("Unable to create connector update view - incorrect engine type.");
                 return;
             }
 

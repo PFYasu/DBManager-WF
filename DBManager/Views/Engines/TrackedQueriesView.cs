@@ -48,7 +48,7 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.RemoveTrackedQuery(trackedQueryName, _databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to remove tracked query.", response.Payload);
+                _messageHelper.ShowError("Unable to remove tracked query.", response);
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.GetSnapshot(snapshotName, _selectedTrackedQuery, _databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query snapshot.", response.Payload);
+                _messageHelper.ShowError("Unable to get tracked query snapshot.", response);
                 return;
             }
 
@@ -147,7 +147,7 @@ namespace DBManager.Views.Engines
                 .GetSnapshotDifferences(trackedQuerySnapshotDifferencesDto);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query snapshot.", response.Payload);
+                _messageHelper.ShowError("Unable to get tracked query snapshot.", response);
                 return;
             }
 
@@ -179,7 +179,7 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.GetTrackedQuerySnapshotsDetails(_selectedTrackedQuery, _databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query snapshots.", response.Payload);
+                _messageHelper.ShowError("Unable to get tracked query snapshots.", response);
                 return;
             }
 
@@ -203,7 +203,7 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.GetTrackedQueriesDetails(_databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query names.", response.Payload);
+                _messageHelper.ShowError("Unable to get tracked query names.", response);
                 return;
             }
 

@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using DBManager.Core.Presenters;
+using System;
+using System.Windows.Forms;
 
 namespace DBManager.Core.Views.Helpers
 {
@@ -11,16 +13,19 @@ namespace DBManager.Core.Views.Helpers
             _viewName = viewName;
         }
 
-        public void ShowError(string comment, object payload)
+        public void ShowError(string comment, Response response)
         {
-            var message = payload as string;
-            var errorMessage = $"{comment}\n{message}";
+            var message = response.Payload as string;
+            var errorMessage = $"{comment}\n\n{message}";
 
-            MessageBox.Show(
-                errorMessage,
-                _viewName,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+            ShowError(errorMessage);
+        }
+
+        public void ShowError(string comment, Exception exception)
+        {
+            var errorMessage = $"{comment}\n\n{exception.Message}";
+
+            ShowError(errorMessage);
         }
 
         public void ShowError(string comment)

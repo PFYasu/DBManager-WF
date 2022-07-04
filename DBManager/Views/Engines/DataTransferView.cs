@@ -82,7 +82,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.DataTransferDriver.SendData(sendDataDto);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to send data to selected table.", response.Payload);
+                _messageHelper.ShowError("Unable to send data to selected table.", response);
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace DBManager.Views.Engines
             var response = _presenter.DataTransferDriver.GetConnectionNames();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to load connection list", response);
+                _messageHelper.ShowError("Unable to load connection list.", response);
                 return;
             }
 
@@ -108,7 +108,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.DataTransferDriver.GetDatabaseNames(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load database list for {connectionName} connection", response);
+                _messageHelper.ShowError($"Unable to load database list for {connectionName} connection.", response);
                 return;
             }
 
@@ -122,7 +122,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.DataTransferDriver.GetTableNames(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load table list for {connectionName} connection", response);
+                _messageHelper.ShowError($"Unable to load table list for {connectionName} connection.", response);
                 return;
             }
 

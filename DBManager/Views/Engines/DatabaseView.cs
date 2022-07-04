@@ -28,7 +28,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.GetDatabaseDetails(_databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get database details.", response.Payload);
+                _messageHelper.ShowError("Unable to get database details.", response);
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.GetDatabaseTableColumns(_databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get database tables columns.", response.Payload);
+                _messageHelper.ShowError("Unable to get database tables columns.", response);
                 return;
             }
 

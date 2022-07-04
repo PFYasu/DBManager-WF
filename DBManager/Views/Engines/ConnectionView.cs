@@ -26,7 +26,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.GetConnectionDetails();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get connection details.", response.Payload);
+                _messageHelper.ShowError("Unable to get connection details.", response);
                 return;
             }
 

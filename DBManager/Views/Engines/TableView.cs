@@ -34,7 +34,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.GetTableDetails(_databaseName, _tableName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get table details.", response.Payload);
+                _messageHelper.ShowError("Unable to get table details.", response);
                 return;
             }
 

@@ -74,13 +74,13 @@ namespace DBManager.EngineModule.MySql
                     response = await _connectorMethods.UpdateConnection(updateConnectionDto);
                     break;
                 default:
-                    _messageHelper.ShowError("Unable to perform connector action - incorrect connector mode");
+                    _messageHelper.ShowError("Unable to perform connector action - incorrect connector mode.");
                     return;
             }
 
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to perform connector action for {connectionName} connection.", response.Payload);
+                _messageHelper.ShowError($"Unable to perform connector action for {connectionName} connection.", response);
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace DBManager.EngineModule.MySql
             var response = _connectorMethods.GetConnectionSettings(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get settings for {connectionName} connection.", response.Payload);
+                _messageHelper.ShowError($"Unable to get settings for {connectionName} connection.", response);
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace DBManager.EngineModule.MySql
             }
             catch (Exception exception)
             {
-                _messageHelper.ShowError($"Unable to show settings for {connectionName} connection.", exception.Message);
+                _messageHelper.ShowError($"Unable to show settings for {connectionName} connection.", exception);
             }
         }
 

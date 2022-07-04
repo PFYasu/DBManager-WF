@@ -127,7 +127,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.SendQuery(_databaseName, query);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get table details.", response.Payload);
+                _messageHelper.ShowError("Unable to get table details.", response);
                 return;
             }
 

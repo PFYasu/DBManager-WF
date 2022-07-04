@@ -62,7 +62,7 @@ namespace DBManager.Views
                 case TreeNodeMode.TableSelected:
                     break;
                 default:
-                    _messageHelper.ShowError("Unable to create view - incorrect engine type");
+                    _messageHelper.ShowError("Unable to create view - incorrect engine type.");
                     return;
             }
         }
@@ -85,7 +85,7 @@ namespace DBManager.Views
                     form = new TableView(presenter, e.Database.Text, e.Table.Text);
                     break;
                 default:
-                    _messageHelper.ShowError("Unable to create view - incorrect engine type");
+                    _messageHelper.ShowError("Unable to create view - incorrect engine type.");
                     return;
             }
 
@@ -135,7 +135,7 @@ namespace DBManager.Views
             var response = await _presenter.RemoveConnection(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to remove {connectionName} connection", response);
+                _messageHelper.ShowError($"Unable to remove {connectionName} connection.", response);
                 return;
             }
 
@@ -165,7 +165,7 @@ namespace DBManager.Views
             var response = _presenter.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection", response);
+                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection.", response);
                 return;
             }
 
@@ -175,7 +175,7 @@ namespace DBManager.Views
 
             if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
             {
-                _messageHelper.ShowError("Unable to create connector update view - incorrect engine type");
+                _messageHelper.ShowError("Unable to create connector update view - incorrect engine type.");
                 return;
             }
 
@@ -202,7 +202,7 @@ namespace DBManager.Views
             var response = _presenter.GetPresenter(treeNodeElements.Connection.Text);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get {treeNodeElements.Connection.Text} connection", response);
+                _messageHelper.ShowError($"Unable to get {treeNodeElements.Connection.Text} connection.", response);
                 return null;
             }
 
@@ -216,7 +216,7 @@ namespace DBManager.Views
             var response = _presenter.GetConnectionNames();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to load connection list", response);
+                _messageHelper.ShowError("Unable to load connection list.", response);
                 return;
             }
 
@@ -233,7 +233,7 @@ namespace DBManager.Views
             var response = await presenter.GetDatabaseNames();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load database list for {presenter.ConnectionName} connection", response);
+                _messageHelper.ShowError($"Unable to load database list for {presenter.ConnectionName} connection.", response);
                 return;
             }
 
@@ -247,7 +247,7 @@ namespace DBManager.Views
             var response = await presenter.GetTableNames(databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load table list for {presenter.ConnectionName} connection", response);
+                _messageHelper.ShowError($"Unable to load table list for {presenter.ConnectionName} connection.", response);
                 return;
             }
 
