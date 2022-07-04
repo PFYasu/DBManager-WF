@@ -216,7 +216,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data.txt" />
     <Content Include="Resources\Add.png" />
     <Content Include="Resources\connection.png" />
     <Content Include="Resources\ConnectionsStart.png" />
