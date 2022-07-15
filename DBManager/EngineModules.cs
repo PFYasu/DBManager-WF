@@ -3,6 +3,7 @@ using DBManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace DBManager
@@ -16,8 +17,10 @@ namespace DBManager
 
         private static Dictionary<string, EngineModuleAttribute> GetAttributes()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var files = Directory.GetFiles(path, Constants.EngineModules.AssemblyNamePattern);
+            var files = Directory.GetFiles(path, Constants.EngineModules.AssemblyNamePattern, SearchOption.AllDirectories);
 
             var attributes = new Dictionary<string, EngineModuleAttribute>();
 
@@ -34,6 +37,20 @@ namespace DBManager
             }
 
             return attributes;
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var dllName = new AssemblyName(args.Name).Name;
+            var fullDllName = $"{dllName}.dll";
+            var currentDirectoryPath = Directory.GetCurrentDirectory();
+
+            var dllPaths = Directory.GetFiles(currentDirectoryPath, fullDllName, SearchOption.AllDirectories);
+            var dllPath = dllPaths.FirstOrDefault();
+
+            return dllPath == null
+                ? null
+                : Assembly.LoadFile(dllPath);
         }
     }
 }
