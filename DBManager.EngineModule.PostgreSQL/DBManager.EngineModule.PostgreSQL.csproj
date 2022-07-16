@@ -121,4 +121,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.Text.Json.6.0.5\build\System.Text.Json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Text.Json.6.0.5\build\System.Text.Json.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(SolutionDir)$(SolutionName)\$(OutDir)PostgreSQL
+xcopy /y $(TargetDir) $(SolutionDir)$(SolutionName)\$(OutDir)PostgreSQL</PostBuildEvent>
+  </PropertyGroup>
 </Project>
