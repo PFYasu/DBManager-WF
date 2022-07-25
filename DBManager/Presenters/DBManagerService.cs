@@ -112,7 +112,10 @@ namespace DBManager.Presenters
             if (dto.OldName != dto.Name && ConnectionExists(dto.Name))
                 throw new InvalidOperationException($"Unable to change {dto.OldName} connection - {dto.Name} connection already exists.");
 
+            var oldConnection = _model.GetConnection(dto.OldName);
+
             var newConnection = Connection.FromDto(dto);
+            newConnection.TrackedQueries = oldConnection.TrackedQueries;
 
             _model.RemoveConnection(dto.OldName);
             _model.AddConnection(newConnection);
