@@ -87,6 +87,7 @@
     <Compile Include="Models\IDBManagerModel.cs" />
     <Compile Include="EngineModules.cs" />
     <Compile Include="Presenters\DBManagerPresenter.cs" />
+    <Compile Include="Presenters\DBManagerService.cs" />
     <Compile Include="Presenters\IDBManagerPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
