@@ -166,6 +166,12 @@
     <Compile Include="Views\ExceptionView.Designer.cs">
       <DependentUpon>ExceptionView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\StatusStripView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\StatusStripView.Designer.cs">
+      <DependentUpon>StatusStripView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Utils\ModelExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -211,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ExceptionView.resx">
       <DependentUpon>ExceptionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StatusStripView.resx">
+      <DependentUpon>StatusStripView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

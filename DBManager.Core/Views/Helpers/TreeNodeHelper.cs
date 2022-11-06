@@ -7,42 +7,38 @@ namespace DBManager.Core.Views.Helpers
     {
         public static TreeNodeElements GetElements(TreeNode treeNode)
         {
-            if (treeNode == null)
+            var firstNode = treeNode;
+            var secondNode = firstNode?.Parent;
+            var thirdNode = secondNode?.Parent;
+
+            if (firstNode == null)
                 return new TreeNodeElements
                 {
-                    Mode = TreeNodeMode.NotSupported,
-                    Connection = null,
-                    Database = null,
-                    Table = null
+                    Mode = TreeNodeMode.NotSupported
                 };
 
-            if (treeNode != null
-                && treeNode.Parent == null)
+            if (firstNode != null && secondNode == null)
                 return new TreeNodeElements
                 {
                     Mode = TreeNodeMode.ConnectionSelected,
-                    Connection = treeNode,
-                    Database = null,
-                    Table = null
+                    Connection = firstNode
                 };
 
-            if (treeNode.Parent != null
-                && treeNode.Parent.Parent == null)
+            if (secondNode != null && thirdNode == null)
                 return new TreeNodeElements
                 {
                     Mode = TreeNodeMode.DatabaseSelected,
-                    Connection = treeNode.Parent,
-                    Database = treeNode,
-                    Table = null
+                    Connection = secondNode,
+                    Database = firstNode
                 };
 
-            if (treeNode.Parent.Parent != null)
+            if (thirdNode != null)
                 return new TreeNodeElements
                 {
                     Mode = TreeNodeMode.TableSelected,
-                    Connection = treeNode.Parent.Parent,
-                    Database = treeNode.Parent,
-                    Table = treeNode
+                    Connection = thirdNode,
+                    Database = secondNode,
+                    Table = firstNode
                 };
 
             throw new InvalidOperationException("This TreeNode is not supported.");

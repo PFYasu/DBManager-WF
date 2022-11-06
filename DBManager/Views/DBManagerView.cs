@@ -30,18 +30,15 @@ namespace DBManager.Views
             };
 
             InitializeComponent();
-            LoadConnections();
-
-            AddConnection_Button.Enabled = true;
-            RemoveConnection_Button.Enabled = false;
-            UpdateConnection_Button.Enabled = false;
 
             var imageList = ConnectionImageListHelper.GetImageList();
-            Status_StatusStrip.ImageList = imageList;
+            Status_StatusStripView.InitializeView(imageList);
             ConnectionTree_ConnectionTreeView.InitializeView(imageList);
 
             ConnectionTree_ConnectionTreeView.OnNodeSelected += ConnectionTree_ConnectionTreeView_OnNodeSelected;
             ConnectionTree_ConnectionTreeView.OnNodeBeforeExpanding += ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding;
+
+            LoadConnections();
         }
 
         private async void ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding(object sender, TreeNodeElements e)
@@ -73,8 +70,7 @@ namespace DBManager.Views
             RemoveConnection_Button.Enabled = true;
             UpdateConnection_Button.Enabled = true;
 
-            UpdateStatusStrip(e);
-
+            Status_StatusStripView.UpdateNodeStatus(e);
         }
 
         private void AddConnection_Button_Click(object sender, EventArgs e)
@@ -109,7 +105,7 @@ namespace DBManager.Views
             }
 
             if (Content_ContentManagerView.ClearViewIfNeeded(connectionName))
-                Status_StatusStrip.Items["activeConnection"].Text = string.Empty;
+                Status_StatusStripView.ClearNodeStatus();
 
             LoadConnections();
         }
@@ -188,8 +184,7 @@ namespace DBManager.Views
 
             ConnectionTree_ConnectionTreeView.LoadConnections(dto.Names);
 
-            Status_StatusStrip.Items["numberOfConnections"].Text = $"Connections: {dto.Names.Count}";
-            Status_StatusStrip.Items["numberOfConnections"].ImageIndex = 0;
+            Status_StatusStripView.UpdateNumberOfConnectionsStatus(dto.Names.Count);
         }
 
         private async Task LoadDatabases(IEnginePresenter presenter)
@@ -218,35 +213,6 @@ namespace DBManager.Views
             var payload = response.Payload as TableNamesResponseDto;
 
             ConnectionTree_ConnectionTreeView.LoadTables(presenter.ConnectionName, databaseName, payload.Names);
-        }
-
-        private void UpdateStatusStrip(TreeNodeElements nodes)
-        {
-            Status_StatusStrip.Items["activeConnection"].Text = string.Empty;
-            Status_StatusStrip.Items["activeDatabase"].Text = string.Empty;
-            Status_StatusStrip.Items["activeTable"].Text = string.Empty;
-
-            Status_StatusStrip.Items["activeConnection"].ImageIndex = -1;
-            Status_StatusStrip.Items["activeDatabase"].ImageIndex = -1;
-            Status_StatusStrip.Items["activeTable"].ImageIndex = -1;
-
-            if (nodes.Connection != null)
-            {
-                Status_StatusStrip.Items["activeConnection"].Text = $"Connection: {nodes.Connection.Text}";
-                Status_StatusStrip.Items["activeConnection"].ImageIndex = 0;
-            }
-
-            if (nodes.Database != null)
-            {
-                Status_StatusStrip.Items["activeDatabase"].Text = $"Database: {nodes.Database.Text}";
-                Status_StatusStrip.Items["activeDatabase"].ImageIndex = 1;
-            }
-
-            if (nodes.Table != null)
-            {
-                Status_StatusStrip.Items["activeTable"].Text = $"Table: {nodes.Table.Text}";
-                Status_StatusStrip.Items["activeTable"].ImageIndex = 2;
-            }
         }
     }
 }
