@@ -93,6 +93,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\HardcodedQuery.cs" />
+    <Compile Include="Views\ContentManagerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ContentManagerView.Designer.cs">
+      <DependentUpon>ContentManagerView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectionTreeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -160,6 +166,7 @@
     <Compile Include="Views\ExceptionView.Designer.cs">
       <DependentUpon>ExceptionView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Utils\ModelExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -169,6 +176,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\ContentManagerView.resx">
+      <DependentUpon>ContentManagerView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ConnectionTreeView.resx">
       <DependentUpon>ConnectionTreeView.cs</DependentUpon>
     </EmbeddedResource>

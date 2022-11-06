@@ -5,7 +5,6 @@ using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using DBManager.Presenters;
-using DBManager.Views.Engines;
 using DBManager.Views.Helpers;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace DBManager.Views
     {
         private readonly IDBManagerPresenter _presenter;
         private readonly ConnectorMethods _connectorMethods;
-        private readonly MessageHelper _messageHelper;
+        private readonly MessageHelper _messageHelper = new MessageHelper("DBManager");
 
         public DBManagerView(IDBManagerPresenter presenter)
         {
@@ -29,8 +28,6 @@ namespace DBManager.Views
                 GetConnectionSettings = presenter.GetConnectionSettings,
                 UpdateConnection = presenter.UpdateConnection
             };
-
-            _messageHelper = new MessageHelper("DbManager");
 
             InitializeComponent();
             LoadConnections();
@@ -71,41 +68,13 @@ namespace DBManager.Views
         {
             var presenter = GetPresenter(e);
 
-            Form form;
-
-            switch (e.Mode)
-            {
-                case TreeNodeMode.ConnectionSelected:
-                    form = new ConnectionView(presenter);
-                    break;
-                case TreeNodeMode.DatabaseSelected:
-                    form = new DatabaseView(presenter, e.Database.Text);
-                    break;
-                case TreeNodeMode.TableSelected:
-                    form = new TableView(presenter, e.Database.Text, e.Table.Text);
-                    break;
-                default:
-                    _messageHelper.ShowError("Unable to create view - incorrect engine type.");
-                    return;
-            }
+            Content_ContentManagerView.ChangeContent(presenter, e);
 
             RemoveConnection_Button.Enabled = true;
             UpdateConnection_Button.Enabled = true;
 
             UpdateStatusStrip(e);
 
-            form.TopLevel = false;
-            form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            form.Text = e.Connection.Text;
-
-            if (ConnectionManager_TableLayoutPanel.Controls.Count == 1)
-            {
-                ConnectionManager_TableLayoutPanel.Controls[0].Dispose();
-                ConnectionManager_TableLayoutPanel.Controls.Clear();
-            }
-            ConnectionManager_TableLayoutPanel.Controls.Add(form);
-
-            form.Show();
         }
 
         private void AddConnection_Button_Click(object sender, EventArgs e)
@@ -126,7 +95,7 @@ namespace DBManager.Views
             if (nodes.Mode == TreeNodeMode.NotSupported)
                 return;
 
-            string connectionName = nodes.Connection.Text;
+            var connectionName = nodes.Connection.Text;
             var status = _messageHelper.ShowQuestion($"Are you sure you want to delete the {connectionName} connection?");
 
             if (status == DialogResult.No)
@@ -139,13 +108,8 @@ namespace DBManager.Views
                 return;
             }
 
-            if (ConnectionManager_TableLayoutPanel.Controls.Count == 1
-                && ConnectionManager_TableLayoutPanel.Controls[0].Text == connectionName)
-            {
-                ConnectionManager_TableLayoutPanel.Controls[0].Dispose();
-                ConnectionManager_TableLayoutPanel.Controls.Clear();
+            if (Content_ContentManagerView.ClearViewIfNeeded(connectionName))
                 Status_StatusStrip.Items["activeConnection"].Text = string.Empty;
-            }
 
             LoadConnections();
         }
