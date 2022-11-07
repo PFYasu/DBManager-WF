@@ -15,7 +15,7 @@ namespace DBManager.Core.Presenters.Engines
         private readonly IEngineModel _model;
         private readonly Timer _timer;
 
-        private uint _minutesAfterStart;
+        private uint _minutesAfterStart = 0;
 
         public QueryTrackerDriver(IEngineModel model)
         {
@@ -25,8 +25,6 @@ namespace DBManager.Core.Presenters.Engines
                null,
                Constants.QueryTracker.RefreshTimePeriod,
                Constants.QueryTracker.RefreshTimePeriod);
-
-            _minutesAfterStart = 0;
         }
 
         public Response GetTrackedQueriesDetails(string databaseName)
@@ -42,7 +40,8 @@ namespace DBManager.Core.Presenters.Engines
                 var trackedQueryDetails = new TrackedQueryDetails
                 {
                     Name = trackedQuery.Name,
-                    TimePeriod = trackedQuery.TimePeriod
+                    TimePeriod = trackedQuery.TimePeriod,
+                    SnapshotsCount = trackedQuery.QuerySnapshots.Count
                 };
 
                 trackedQueriesDetails.Add(trackedQueryDetails);
@@ -198,11 +197,9 @@ namespace DBManager.Core.Presenters.Engines
             {
                 if (_minutesAfterStart % trackedQuery.TimePeriod == 0)
                 {
-                    DataTable executeQueryResult;
-
                     try
                     {
-                        executeQueryResult = await _model.ExecuteQuery(trackedQuery.Query, trackedQuery.DatabaseName);
+                        var executeQueryResult = await _model.ExecuteQuery(trackedQuery.Query, trackedQuery.DatabaseName);
                         _model.QueryTrackerDriverModel.TryApplyNewSnapshot(trackedQuery, executeQueryResult);
                     }
                     catch

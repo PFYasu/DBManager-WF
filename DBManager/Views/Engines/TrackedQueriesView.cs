@@ -13,7 +13,7 @@ namespace DBManager.Views.Engines
     {
         private readonly IEnginePresenter _presenter;
         private readonly string _databaseName;
-        private readonly MessageHelper _messageHelper;
+        private readonly MessageHelper _messageHelper = new MessageHelper("DBManager - tracked queries view");
         private string _selectedTrackedQuery;
         private TrackedQuerySnapshotResponseDto _selectedTrackedQuerySnapshot;
         private string _aboveTrackedQuerySnapshotName;
@@ -23,7 +23,6 @@ namespace DBManager.Views.Engines
         {
             _presenter = presenter;
             _databaseName = databaseName;
-            _messageHelper = new MessageHelper("DBManager - tracked queries view");
 
             InitializeComponent();
         }
@@ -143,8 +142,7 @@ namespace DBManager.Views.Engines
                 DatabaseName = _databaseName
             };
 
-            var response = _presenter.QueryTrackerDriver
-                .GetSnapshotDifferences(trackedQuerySnapshotDifferencesDto);
+            var response = _presenter.QueryTrackerDriver.GetSnapshotDifferences(trackedQuerySnapshotDifferencesDto);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get tracked query snapshot.", response);
@@ -215,7 +213,12 @@ namespace DBManager.Views.Engines
 
             foreach (var trackedQueryDetails in trackedQueriesDetails)
             {
-                var listViewItem = new ListViewItem(new[] { trackedQueryDetails.Name, trackedQueryDetails.TimePeriod.ToString() });
+                var listViewItem = new ListViewItem(new[] 
+                { 
+                    trackedQueryDetails.Name, 
+                    trackedQueryDetails.TimePeriod.ToString(),
+                    trackedQueryDetails.SnapshotsCount.ToString()
+                });
 
                 TrackedQueries_ListView.Items.Add(listViewItem);
             }
