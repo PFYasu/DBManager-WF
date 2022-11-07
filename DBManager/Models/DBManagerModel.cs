@@ -11,11 +11,10 @@ namespace DBManager.Models
 {
     public class DBManagerModel : IDBManagerModel, IAsyncDisposable
     {
-        private readonly List<Connection> _connections;
+        private readonly List<Connection> _connections = new List<Connection>();
 
         private DBManagerModel()
         {
-            _connections = new List<Connection>();
         }
 
         public static async Task<DBManagerModel> Initialize()
@@ -29,22 +28,19 @@ namespace DBManager.Models
 
         public async Task LoadConnections()
         {
-            if (File.Exists(Constants.Paths.ConnectionData) == false)
-                File.Create(Constants.Paths.ConnectionData).Dispose();
+            if (Directory.Exists(Constants.Paths.ConnectionsRespository) == false)
+                Directory.CreateDirectory(Constants.Paths.ConnectionsRespository);
 
-            using (var reader = new StreamReader(Constants.Paths.ConnectionData))
+            _connections.Clear();
+
+            foreach (var connectionRepositoryPath in Directory.GetFiles(Constants.Paths.ConnectionsRespository, "*.json"))
             {
-                var json = await reader.ReadToEndAsync();
-                var elements = JsonConvert.DeserializeObject<List<Connection>>(json);
-
-                if (elements == null)
-                    return;
-
-                _connections.Clear();
-
-                foreach (var element in elements)
+                using (var reader = new StreamReader(connectionRepositoryPath))
                 {
-                    _connections.Add(element);
+                    var json = await reader.ReadToEndAsync();
+                    var connection = JsonConvert.DeserializeObject<Connection>(json);
+
+                    _connections.Add(connection);
                 }
             }
         }
@@ -66,19 +62,24 @@ namespace DBManager.Models
 
             if (result != 1)
                 throw new InvalidOperationException("Removed more than one connection.");
+
+            File.Delete(ConnectionRepositoryPath(connectionName));
         }
 
         public async Task SaveConnections()
         {
-            using (var fileStream = new FileStream(Constants.Paths.ConnectionData, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+            foreach (var connection in _connections)
             {
-                var streamReader = new StreamReader(fileStream);
-                using (var streamWriter = new StreamWriter(fileStream))
+                using (var fileStream = new FileStream(ConnectionRepositoryPath(connection.Name), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
                 {
-                    var serializedList = JsonConvert.SerializeObject(_connections);
+                    var streamReader = new StreamReader(fileStream);
+                    using (var streamWriter = new StreamWriter(fileStream))
+                    {
+                        var serializedConnection = JsonConvert.SerializeObject(connection);
 
-                    fileStream.SetLength(0);
-                    await streamWriter.WriteAsync(serializedList);
+                        fileStream.SetLength(0);
+                        await streamWriter.WriteAsync(serializedConnection);
+                    }
                 }
             }
         }
@@ -87,5 +88,7 @@ namespace DBManager.Models
         {
             await SaveConnections();
         }
+
+        private string ConnectionRepositoryPath(string connectionName) => Path.Combine(Constants.Paths.ConnectionsRespository, $"{connectionName}.json");
     }
 }
