@@ -151,12 +151,13 @@ namespace DBManager.Views.Engines
                 return;
             }
 
-            using var form = new NewTrackedQueryView(_presenter, _databaseName, query);
+            using (var form = new NewTrackedQueryView(_presenter, _databaseName, query))
+            {
+                var result = form.ShowDialog();
 
-            var result = form.ShowDialog();
-
-            if (result == DialogResult.OK)
-                _messageHelper.ShowInformation("Tracked query was added successfully.");
+                if (result == DialogResult.OK)
+                    _messageHelper.ShowInformation("Tracked query was added successfully.");
+            }
         }
 
         private void CopyData_Button_Click(object sender, EventArgs e)

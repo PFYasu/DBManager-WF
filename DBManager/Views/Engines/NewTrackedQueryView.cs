@@ -14,7 +14,7 @@ namespace DBManager.Views.Engines
         private readonly MessageHelper _messageHelper;
         private readonly string _databaseName;
 
-        public NewTrackedQueryView(IEnginePresenter presenter, string databaseName, string queryPreview = null)
+        public NewTrackedQueryView(IEnginePresenter presenter, string databaseName, string queryPreview)
         {
             _presenter = presenter;
             _databaseName = databaseName;
@@ -22,8 +22,7 @@ namespace DBManager.Views.Engines
 
             InitializeComponent();
 
-            if (queryPreview != null)
-                Query_RichTextBox.Text = queryPreview;
+            Query_RichTextBox.Text = queryPreview;
         }
 
         private void Save_Button_Click(object sender, EventArgs e)
