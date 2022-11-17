@@ -3,7 +3,6 @@ using DBManager.Core.Dto.Engines;
 using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Helpers;
-using DBManager.Views.Helpers;
 using System;
 using System.Data;
 using System.Threading.Tasks;
@@ -25,11 +24,6 @@ namespace DBManager.Views.Engines
 
             InitializeComponent();
             LoadConnections();
-
-            var imageList = ConnectionImageListHelper.GetImageList();
-            ConnectionTree_ConnectionTreeView.InitializeView(imageList);
-
-            TryCopyData_Button.Enabled = false;
 
             ConnectionTree_ConnectionTreeView.OnNodeBeforeExpanding += ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding;
             ConnectionTree_ConnectionTreeView.OnNodeBeforeCollapsing += ConnectionTree_ConnectionTreeView_OnNodeBeforeCollapsing;

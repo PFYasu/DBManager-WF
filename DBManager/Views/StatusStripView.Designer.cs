@@ -46,36 +46,46 @@
             this.Table_ToolStripStatusLabel});
             this.Status_StatusStrip.Location = new System.Drawing.Point(0, 0);
             this.Status_StatusStrip.Name = "Status_StatusStrip";
-            this.Status_StatusStrip.Size = new System.Drawing.Size(150, 150);
+            this.Status_StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            this.Status_StatusStrip.Size = new System.Drawing.Size(175, 173);
             this.Status_StatusStrip.TabIndex = 0;
             this.Status_StatusStrip.Text = "statusStrip1";
             // 
             // Connections_ToolStripStatusLabel
             // 
+            this.Connections_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.ConnectionIcon;
             this.Connections_ToolStripStatusLabel.Name = "Connections_ToolStripStatusLabel";
-            this.Connections_ToolStripStatusLabel.Size = new System.Drawing.Size(0, 145);
+            this.Connections_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 168);
             // 
             // Connection_ToolStripStatusLabel
             // 
+            this.Connection_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.ConnectionIcon;
             this.Connection_ToolStripStatusLabel.Name = "Connection_ToolStripStatusLabel";
-            this.Connection_ToolStripStatusLabel.Size = new System.Drawing.Size(0, 145);
+            this.Connection_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 168);
+            this.Connection_ToolStripStatusLabel.Visible = false;
             // 
             // Database_ToolStripStatusLabel
             // 
+            this.Database_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.DatabaseIcon;
             this.Database_ToolStripStatusLabel.Name = "Database_ToolStripStatusLabel";
-            this.Database_ToolStripStatusLabel.Size = new System.Drawing.Size(0, 145);
+            this.Database_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 168);
+            this.Database_ToolStripStatusLabel.Visible = false;
             // 
             // Table_ToolStripStatusLabel
             // 
+            this.Table_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.TableIcon;
             this.Table_ToolStripStatusLabel.Name = "Table_ToolStripStatusLabel";
-            this.Table_ToolStripStatusLabel.Size = new System.Drawing.Size(0, 145);
+            this.Table_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 168);
+            this.Table_ToolStripStatusLabel.Visible = false;
             // 
             // StatusStripView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.Status_StatusStrip);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "StatusStripView";
+            this.Size = new System.Drawing.Size(175, 173);
             this.Status_StatusStrip.ResumeLayout(false);
             this.Status_StatusStrip.PerformLayout();
             this.ResumeLayout(false);

@@ -5,7 +5,6 @@ using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using DBManager.Presenters;
-using DBManager.Views.Helpers;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -30,10 +29,6 @@ namespace DBManager.Views
             };
 
             InitializeComponent();
-
-            var imageList = ConnectionImageListHelper.GetImageList();
-            Status_StatusStripView.InitializeView(imageList);
-            ConnectionTree_ConnectionTreeView.InitializeView(imageList);
 
             ConnectionTree_ConnectionTreeView.OnNodeSelected += ConnectionTree_ConnectionTreeView_OnNodeSelected;
             ConnectionTree_ConnectionTreeView.OnNodeBeforeExpanding += ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding;

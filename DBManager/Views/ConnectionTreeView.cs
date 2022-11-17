@@ -14,11 +14,6 @@ namespace DBManager.Views
             InitializeComponent();
         }
 
-        public void InitializeView(ImageList imageList)
-        {
-            ConnectionTree_TreeView.ImageList = imageList;
-        }
-
         public event EventHandler<TreeNodeElements> OnNodeSelected;
         public event EventHandler<TreeNodeElements> OnNodeBeforeExpanding;
         public event EventHandler<TreeNodeElements> OnNodeBeforeCollapsing;

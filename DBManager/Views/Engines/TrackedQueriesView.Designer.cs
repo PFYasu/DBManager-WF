@@ -47,12 +47,13 @@ namespace DBManager.Views.Engines
             this.Delete_Button = new System.Windows.Forms.Button();
             this.Refresh_Button = new System.Windows.Forms.Button();
             this.TrackedQueries_ListView = new System.Windows.Forms.ListView();
-            this.TrackedQueryNames = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.TimePeriod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TrackedQueryNames = new System.Windows.Forms.ColumnHeader();
+            this.TimePeriod = new System.Windows.Forms.ColumnHeader();
+            this.SnapshotsCount = new System.Windows.Forms.ColumnHeader();
             this.Below_Button = new System.Windows.Forms.Button();
             this.Above_Button = new System.Windows.Forms.Button();
             this.TrackedQueriesSnapshots_ListView = new System.Windows.Forms.ListView();
-            this.Snapshots = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Snapshots = new System.Windows.Forms.ColumnHeader();
             this.TrackedQueriesSection_SplitContainer = new System.Windows.Forms.SplitContainer();
             this.TrackedQueriesResult_SplitContainer = new System.Windows.Forms.SplitContainer();
             this.FirstQueryUpdateTime_Label = new System.Windows.Forms.Label();
@@ -61,7 +62,6 @@ namespace DBManager.Views.Engines
             this.SecondQuerySnapshot_DataGridView = new System.Windows.Forms.DataGridView();
             this.QuerySummary_Label = new System.Windows.Forms.Label();
             this.TrackedQueriesDifference_DataGridView = new System.Windows.Forms.DataGridView();
-            this.SnapshotsCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.trackedQueriesContainer)).BeginInit();
             this.trackedQueriesContainer.Panel1.SuspendLayout();
             this.trackedQueriesContainer.Panel2.SuspendLayout();
@@ -88,6 +88,7 @@ namespace DBManager.Views.Engines
             this.trackedQueriesContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.trackedQueriesContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trackedQueriesContainer.Location = new System.Drawing.Point(0, 0);
+            this.trackedQueriesContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackedQueriesContainer.Name = "trackedQueriesContainer";
             // 
             // trackedQueriesContainer.Panel1
@@ -97,9 +98,9 @@ namespace DBManager.Views.Engines
             // trackedQueriesContainer.Panel2
             // 
             this.trackedQueriesContainer.Panel2.Controls.Add(this.TrackedQueriesSection_SplitContainer);
-            this.trackedQueriesContainer.Size = new System.Drawing.Size(929, 371);
-            this.trackedQueriesContainer.SplitterDistance = 310;
-            this.trackedQueriesContainer.SplitterWidth = 9;
+            this.trackedQueriesContainer.Size = new System.Drawing.Size(1084, 428);
+            this.trackedQueriesContainer.SplitterDistance = 361;
+            this.trackedQueriesContainer.SplitterWidth = 10;
             this.trackedQueriesContainer.TabIndex = 1;
             // 
             // TrackedQueriesList_SplitContainer
@@ -107,6 +108,7 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesList_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TrackedQueriesList_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TrackedQueriesList_SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.TrackedQueriesList_SplitContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TrackedQueriesList_SplitContainer.Name = "TrackedQueriesList_SplitContainer";
             this.TrackedQueriesList_SplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -122,17 +124,18 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesList_SplitContainer.Panel2.Controls.Add(this.Below_Button);
             this.TrackedQueriesList_SplitContainer.Panel2.Controls.Add(this.Above_Button);
             this.TrackedQueriesList_SplitContainer.Panel2.Controls.Add(this.TrackedQueriesSnapshots_ListView);
-            this.TrackedQueriesList_SplitContainer.Size = new System.Drawing.Size(310, 371);
-            this.TrackedQueriesList_SplitContainer.SplitterDistance = 202;
-            this.TrackedQueriesList_SplitContainer.SplitterWidth = 9;
+            this.TrackedQueriesList_SplitContainer.Size = new System.Drawing.Size(361, 428);
+            this.TrackedQueriesList_SplitContainer.SplitterDistance = 233;
+            this.TrackedQueriesList_SplitContainer.SplitterWidth = 10;
             this.TrackedQueriesList_SplitContainer.TabIndex = 2;
             // 
             // TimePeriod_Label
             // 
             this.TimePeriod_Label.AutoSize = true;
-            this.TimePeriod_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TimePeriod_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.TimePeriod_Label.ForeColor = System.Drawing.Color.Black;
-            this.TimePeriod_Label.Location = new System.Drawing.Point(3, 28);
+            this.TimePeriod_Label.Location = new System.Drawing.Point(4, 32);
+            this.TimePeriod_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TimePeriod_Label.Name = "TimePeriod_Label";
             this.TimePeriod_Label.Size = new System.Drawing.Size(176, 20);
             this.TimePeriod_Label.TabIndex = 13;
@@ -141,9 +144,10 @@ namespace DBManager.Views.Engines
             // Delete_Button
             // 
             this.Delete_Button.ForeColor = System.Drawing.Color.Black;
-            this.Delete_Button.Location = new System.Drawing.Point(85, 4);
+            this.Delete_Button.Location = new System.Drawing.Point(99, 5);
+            this.Delete_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Delete_Button.Name = "Delete_Button";
-            this.Delete_Button.Size = new System.Drawing.Size(75, 23);
+            this.Delete_Button.Size = new System.Drawing.Size(88, 27);
             this.Delete_Button.TabIndex = 3;
             this.Delete_Button.Text = "Delete";
             this.Delete_Button.UseVisualStyleBackColor = true;
@@ -152,9 +156,10 @@ namespace DBManager.Views.Engines
             // Refresh_Button
             // 
             this.Refresh_Button.ForeColor = System.Drawing.Color.Black;
-            this.Refresh_Button.Location = new System.Drawing.Point(4, 4);
+            this.Refresh_Button.Location = new System.Drawing.Point(5, 5);
+            this.Refresh_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Refresh_Button.Name = "Refresh_Button";
-            this.Refresh_Button.Size = new System.Drawing.Size(75, 23);
+            this.Refresh_Button.Size = new System.Drawing.Size(88, 27);
             this.Refresh_Button.TabIndex = 2;
             this.Refresh_Button.Text = "Refresh";
             this.Refresh_Button.UseVisualStyleBackColor = true;
@@ -170,12 +175,12 @@ namespace DBManager.Views.Engines
             this.TrackedQueryNames,
             this.TimePeriod,
             this.SnapshotsCount});
-            this.TrackedQueries_ListView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.TrackedQueries_ListView.HideSelection = false;
-            this.TrackedQueries_ListView.Location = new System.Drawing.Point(0, 51);
+            this.TrackedQueries_ListView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.TrackedQueries_ListView.Location = new System.Drawing.Point(0, 59);
+            this.TrackedQueries_ListView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TrackedQueries_ListView.MultiSelect = false;
             this.TrackedQueries_ListView.Name = "TrackedQueries_ListView";
-            this.TrackedQueries_ListView.Size = new System.Drawing.Size(306, 147);
+            this.TrackedQueries_ListView.Size = new System.Drawing.Size(361, 170);
             this.TrackedQueries_ListView.TabIndex = 1;
             this.TrackedQueries_ListView.UseCompatibleStateImageBehavior = false;
             this.TrackedQueries_ListView.View = System.Windows.Forms.View.Details;
@@ -191,13 +196,19 @@ namespace DBManager.Views.Engines
             this.TimePeriod.Text = "Time period";
             this.TimePeriod.Width = 89;
             // 
+            // SnapshotsCount
+            // 
+            this.SnapshotsCount.Text = "Snapshots count";
+            this.SnapshotsCount.Width = 92;
+            // 
             // Below_Button
             // 
             this.Below_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Below_Button.ForeColor = System.Drawing.Color.Black;
-            this.Below_Button.Location = new System.Drawing.Point(85, 125);
+            this.Below_Button.Location = new System.Drawing.Point(99, 139);
+            this.Below_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Below_Button.Name = "Below_Button";
-            this.Below_Button.Size = new System.Drawing.Size(71, 23);
+            this.Below_Button.Size = new System.Drawing.Size(83, 27);
             this.Below_Button.TabIndex = 15;
             this.Below_Button.Text = "Put below";
             this.Below_Button.UseVisualStyleBackColor = true;
@@ -207,9 +218,10 @@ namespace DBManager.Views.Engines
             // 
             this.Above_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Above_Button.ForeColor = System.Drawing.Color.Black;
-            this.Above_Button.Location = new System.Drawing.Point(3, 125);
+            this.Above_Button.Location = new System.Drawing.Point(4, 139);
+            this.Above_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Above_Button.Name = "Above_Button";
-            this.Above_Button.Size = new System.Drawing.Size(76, 23);
+            this.Above_Button.Size = new System.Drawing.Size(89, 27);
             this.Above_Button.TabIndex = 14;
             this.Above_Button.Text = "Put above";
             this.Above_Button.UseVisualStyleBackColor = true;
@@ -223,12 +235,12 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesSnapshots_ListView.BackColor = System.Drawing.Color.White;
             this.TrackedQueriesSnapshots_ListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Snapshots});
-            this.TrackedQueriesSnapshots_ListView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.TrackedQueriesSnapshots_ListView.HideSelection = false;
+            this.TrackedQueriesSnapshots_ListView.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.TrackedQueriesSnapshots_ListView.Location = new System.Drawing.Point(0, 0);
+            this.TrackedQueriesSnapshots_ListView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TrackedQueriesSnapshots_ListView.MultiSelect = false;
             this.TrackedQueriesSnapshots_ListView.Name = "TrackedQueriesSnapshots_ListView";
-            this.TrackedQueriesSnapshots_ListView.Size = new System.Drawing.Size(306, 119);
+            this.TrackedQueriesSnapshots_ListView.Size = new System.Drawing.Size(359, 132);
             this.TrackedQueriesSnapshots_ListView.TabIndex = 2;
             this.TrackedQueriesSnapshots_ListView.UseCompatibleStateImageBehavior = false;
             this.TrackedQueriesSnapshots_ListView.View = System.Windows.Forms.View.Details;
@@ -244,6 +256,7 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesSection_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TrackedQueriesSection_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TrackedQueriesSection_SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.TrackedQueriesSection_SplitContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TrackedQueriesSection_SplitContainer.Name = "TrackedQueriesSection_SplitContainer";
             // 
             // TrackedQueriesSection_SplitContainer.Panel1
@@ -254,9 +267,9 @@ namespace DBManager.Views.Engines
             // 
             this.TrackedQueriesSection_SplitContainer.Panel2.Controls.Add(this.QuerySummary_Label);
             this.TrackedQueriesSection_SplitContainer.Panel2.Controls.Add(this.TrackedQueriesDifference_DataGridView);
-            this.TrackedQueriesSection_SplitContainer.Size = new System.Drawing.Size(610, 371);
-            this.TrackedQueriesSection_SplitContainer.SplitterDistance = 294;
-            this.TrackedQueriesSection_SplitContainer.SplitterWidth = 9;
+            this.TrackedQueriesSection_SplitContainer.Size = new System.Drawing.Size(713, 428);
+            this.TrackedQueriesSection_SplitContainer.SplitterDistance = 343;
+            this.TrackedQueriesSection_SplitContainer.SplitterWidth = 10;
             this.TrackedQueriesSection_SplitContainer.TabIndex = 1;
             // 
             // TrackedQueriesResult_SplitContainer
@@ -264,6 +277,7 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesResult_SplitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TrackedQueriesResult_SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TrackedQueriesResult_SplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.TrackedQueriesResult_SplitContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TrackedQueriesResult_SplitContainer.Name = "TrackedQueriesResult_SplitContainer";
             this.TrackedQueriesResult_SplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -276,17 +290,18 @@ namespace DBManager.Views.Engines
             // 
             this.TrackedQueriesResult_SplitContainer.Panel2.Controls.Add(this.SecondQueryUpdateTime_Label);
             this.TrackedQueriesResult_SplitContainer.Panel2.Controls.Add(this.SecondQuerySnapshot_DataGridView);
-            this.TrackedQueriesResult_SplitContainer.Size = new System.Drawing.Size(294, 371);
-            this.TrackedQueriesResult_SplitContainer.SplitterDistance = 203;
-            this.TrackedQueriesResult_SplitContainer.SplitterWidth = 9;
+            this.TrackedQueriesResult_SplitContainer.Size = new System.Drawing.Size(343, 428);
+            this.TrackedQueriesResult_SplitContainer.SplitterDistance = 234;
+            this.TrackedQueriesResult_SplitContainer.SplitterWidth = 10;
             this.TrackedQueriesResult_SplitContainer.TabIndex = 2;
             // 
             // FirstQueryUpdateTime_Label
             // 
             this.FirstQueryUpdateTime_Label.AutoSize = true;
-            this.FirstQueryUpdateTime_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.FirstQueryUpdateTime_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.FirstQueryUpdateTime_Label.ForeColor = System.Drawing.Color.Black;
-            this.FirstQueryUpdateTime_Label.Location = new System.Drawing.Point(3, 4);
+            this.FirstQueryUpdateTime_Label.Location = new System.Drawing.Point(4, 5);
+            this.FirstQueryUpdateTime_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.FirstQueryUpdateTime_Label.Name = "FirstQueryUpdateTime_Label";
             this.FirstQueryUpdateTime_Label.Size = new System.Drawing.Size(77, 20);
             this.FirstQueryUpdateTime_Label.TabIndex = 12;
@@ -308,7 +323,7 @@ namespace DBManager.Views.Engines
             this.FirstQuerySnapshot_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
@@ -318,7 +333,7 @@ namespace DBManager.Views.Engines
             this.FirstQuerySnapshot_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
@@ -326,13 +341,13 @@ namespace DBManager.Views.Engines
             this.FirstQuerySnapshot_DataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.FirstQuerySnapshot_DataGridView.EnableHeadersVisualStyles = false;
             this.FirstQuerySnapshot_DataGridView.GridColor = System.Drawing.Color.Silver;
-            this.FirstQuerySnapshot_DataGridView.Location = new System.Drawing.Point(0, 25);
+            this.FirstQuerySnapshot_DataGridView.Location = new System.Drawing.Point(0, 29);
             this.FirstQuerySnapshot_DataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.FirstQuerySnapshot_DataGridView.Name = "FirstQuerySnapshot_DataGridView";
             this.FirstQuerySnapshot_DataGridView.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -341,15 +356,16 @@ namespace DBManager.Views.Engines
             this.FirstQuerySnapshot_DataGridView.RowHeadersVisible = false;
             this.FirstQuerySnapshot_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.FirstQuerySnapshot_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FirstQuerySnapshot_DataGridView.Size = new System.Drawing.Size(290, 174);
+            this.FirstQuerySnapshot_DataGridView.Size = new System.Drawing.Size(341, 201);
             this.FirstQuerySnapshot_DataGridView.TabIndex = 11;
             // 
             // SecondQueryUpdateTime_Label
             // 
             this.SecondQueryUpdateTime_Label.AutoSize = true;
-            this.SecondQueryUpdateTime_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.SecondQueryUpdateTime_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.SecondQueryUpdateTime_Label.ForeColor = System.Drawing.Color.Black;
-            this.SecondQueryUpdateTime_Label.Location = new System.Drawing.Point(3, 4);
+            this.SecondQueryUpdateTime_Label.Location = new System.Drawing.Point(4, 5);
+            this.SecondQueryUpdateTime_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.SecondQueryUpdateTime_Label.Name = "SecondQueryUpdateTime_Label";
             this.SecondQueryUpdateTime_Label.Size = new System.Drawing.Size(77, 20);
             this.SecondQueryUpdateTime_Label.TabIndex = 13;
@@ -371,7 +387,7 @@ namespace DBManager.Views.Engines
             this.SecondQuerySnapshot_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
@@ -381,7 +397,7 @@ namespace DBManager.Views.Engines
             this.SecondQuerySnapshot_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black;
@@ -389,13 +405,13 @@ namespace DBManager.Views.Engines
             this.SecondQuerySnapshot_DataGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.SecondQuerySnapshot_DataGridView.EnableHeadersVisualStyles = false;
             this.SecondQuerySnapshot_DataGridView.GridColor = System.Drawing.Color.Silver;
-            this.SecondQuerySnapshot_DataGridView.Location = new System.Drawing.Point(0, 24);
+            this.SecondQuerySnapshot_DataGridView.Location = new System.Drawing.Point(0, 28);
             this.SecondQuerySnapshot_DataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.SecondQuerySnapshot_DataGridView.Name = "SecondQuerySnapshot_DataGridView";
             this.SecondQuerySnapshot_DataGridView.ReadOnly = true;
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -404,15 +420,16 @@ namespace DBManager.Views.Engines
             this.SecondQuerySnapshot_DataGridView.RowHeadersVisible = false;
             this.SecondQuerySnapshot_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.SecondQuerySnapshot_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SecondQuerySnapshot_DataGridView.Size = new System.Drawing.Size(290, 123);
+            this.SecondQuerySnapshot_DataGridView.Size = new System.Drawing.Size(341, 137);
             this.SecondQuerySnapshot_DataGridView.TabIndex = 12;
             // 
             // QuerySummary_Label
             // 
             this.QuerySummary_Label.AutoSize = true;
-            this.QuerySummary_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.QuerySummary_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.QuerySummary_Label.ForeColor = System.Drawing.Color.Black;
-            this.QuerySummary_Label.Location = new System.Drawing.Point(3, 4);
+            this.QuerySummary_Label.Location = new System.Drawing.Point(4, 5);
+            this.QuerySummary_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.QuerySummary_Label.Name = "QuerySummary_Label";
             this.QuerySummary_Label.Size = new System.Drawing.Size(81, 20);
             this.QuerySummary_Label.TabIndex = 13;
@@ -434,7 +451,7 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesDifference_DataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle10.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
@@ -444,7 +461,7 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesDifference_DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
@@ -452,13 +469,13 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesDifference_DataGridView.DefaultCellStyle = dataGridViewCellStyle11;
             this.TrackedQueriesDifference_DataGridView.EnableHeadersVisualStyles = false;
             this.TrackedQueriesDifference_DataGridView.GridColor = System.Drawing.Color.Silver;
-            this.TrackedQueriesDifference_DataGridView.Location = new System.Drawing.Point(2, 25);
+            this.TrackedQueriesDifference_DataGridView.Location = new System.Drawing.Point(2, 29);
             this.TrackedQueriesDifference_DataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.TrackedQueriesDifference_DataGridView.Name = "TrackedQueriesDifference_DataGridView";
             this.TrackedQueriesDifference_DataGridView.ReadOnly = true;
             dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle12.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -467,21 +484,17 @@ namespace DBManager.Views.Engines
             this.TrackedQueriesDifference_DataGridView.RowHeadersVisible = false;
             this.TrackedQueriesDifference_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.TrackedQueriesDifference_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TrackedQueriesDifference_DataGridView.Size = new System.Drawing.Size(298, 344);
+            this.TrackedQueriesDifference_DataGridView.Size = new System.Drawing.Size(356, 397);
             this.TrackedQueriesDifference_DataGridView.TabIndex = 12;
-            // 
-            // SnapshotsCount
-            // 
-            this.SnapshotsCount.Text = "Snapshots count";
-            this.SnapshotsCount.Width = 92;
             // 
             // TrackedQueriesView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.trackedQueriesContainer);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "TrackedQueriesView";
-            this.Size = new System.Drawing.Size(929, 371);
+            this.Size = new System.Drawing.Size(1084, 428);
             this.trackedQueriesContainer.Panel1.ResumeLayout(false);
             this.trackedQueriesContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trackedQueriesContainer)).EndInit();

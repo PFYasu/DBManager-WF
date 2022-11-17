@@ -6,24 +6,27 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <BaseOutputPath>$(ProjectPath)</BaseOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Resources\Images\PostgreSQLIcon.png" />
+    <None Remove="Resources\Images\MySqlIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Images\PostgreSQLIcon.png" />
+    <Content Include="Resources\Images\MySqlIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBManager.Core\DBManager.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Npgsql" Version="6.0.5" />
+    <PackageReference Include="MySqlConnector" Version="2.1.11" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="6.0.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
-    <PackageReference Include="System.Text.Json" Version="6.0.5" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.346202">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -42,6 +45,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir $(SolutionDir)$(SolutionName)\$(OutDir)PostgreSQL&#xD;&#xA;xcopy /y $(TargetDir) $(SolutionDir)$(SolutionName)\$(OutDir)PostgreSQL" />
+    <Exec Command="mkdir $(SolutionDir)$(SolutionName)\$(OutDir)MySql&#xD;&#xA;xcopy /y /s $(ProjectDir)bin\Debug $(SolutionDir)$(SolutionName)\$(OutDir)MySql" />
+  </Target>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="echo ------- $(ProjectDir)bin\Debug" />
   </Target>
 </Project>
