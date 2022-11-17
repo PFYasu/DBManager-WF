@@ -13,9 +13,10 @@ namespace DBManager.Views.Engines
     {
         private readonly IEnginePresenter _presenter;
         private readonly string _databaseName;
-        private readonly MessageHelper _messageHelper = new MessageHelper("DBManager - tracked queries view");
-        private string _selectedTrackedQuery;
+        private readonly MessageHelper _messageHelper = new("DBManager - tracked queries view");
+
         private TrackedQuerySnapshotResponseDto _selectedTrackedQuerySnapshot;
+        private string _selectedTrackedQuery;
         private string _aboveTrackedQuerySnapshotName;
         private string _belowTrackedQuerySnapshotName;
 
@@ -43,6 +44,11 @@ namespace DBManager.Views.Engines
         private void Delete_Button_Click(object sender, EventArgs e)
         {
             var trackedQueryName = TrackedQueries_ListView.SelectedItems[0].Text;
+
+            var status = _messageHelper.ShowQuestion($"Are you sure you want to delete the {trackedQueryName} tracked query?");
+
+            if (status == DialogResult.No)
+                return;
 
             var response = _presenter.QueryTrackerDriver.RemoveTrackedQuery(trackedQueryName, _databaseName);
             if (response.Type == ResponseType.Error)
