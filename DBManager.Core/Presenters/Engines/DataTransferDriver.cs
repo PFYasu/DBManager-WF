@@ -34,7 +34,7 @@ namespace DBManager.Core.Presenters.Engines
             var sendQueryResponse = await presenter.SendQuery(databaseName, query);
             if (sendQueryResponse.Type == ResponseType.Error)
                 return Response<QueryResponseDto>
-                    .Error($"Unable to send data: {sendQueryResponse.Payload}. Inner error message: {response.ErrorMessage}");
+                    .Error($"Unable to send data: {sendQueryResponse.Payload}. Inner error message: {sendQueryResponse.ErrorMessage}");
 
             var responseDto = sendQueryResponse.Payload;
 
@@ -65,7 +65,7 @@ namespace DBManager.Core.Presenters.Engines
             var databaseNamesResponse = await presenter.GetDatabaseNames();
             if (databaseNamesResponse.Type == ResponseType.Error)
                 return Response<DatabaseNamesResponseDto>
-                    .Error($"Unable to get information about databases in {connectionName} connection. Inner error message: {response.ErrorMessage}");
+                    .Error($"Unable to get information about databases in {connectionName} connection. Inner error message: {databaseNamesResponse.ErrorMessage}");
 
             var dto = databaseNamesResponse.Payload;
 
@@ -84,7 +84,7 @@ namespace DBManager.Core.Presenters.Engines
             var tableNamesResponse = await presenter.GetTableNames(databaseName);
             if (tableNamesResponse.Type == ResponseType.Error)
                 return Response<TableNamesResponseDto> 
-                    .Error($"Unable to get information about tables in {databaseName} database in {connectionName} connection. Inner error message: {response.ErrorMessage}");
+                    .Error($"Unable to get information about tables in {databaseName} database in {connectionName} connection. Inner error message: {tableNamesResponse.ErrorMessage}");
 
             var dto = tableNamesResponse.Payload;
 

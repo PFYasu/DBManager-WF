@@ -32,6 +32,7 @@ namespace DBManager.Views.Engines
             this.TryCopyData_Button = new System.Windows.Forms.Button();
             this.SelectTable_Label = new System.Windows.Forms.Label();
             this.Information_RichTextBox = new System.Windows.Forms.RichTextBox();
+            this.ConnectionTree_ConnectionTreeView = new DBManager.Views.ConnectionTreeView();
             this.SuspendLayout();
             // 
             // TryCopyData_Button
@@ -72,11 +73,23 @@ namespace DBManager.Views.Engines
             this.Information_RichTextBox.TabIndex = 17;
             this.Information_RichTextBox.Text = "The selected table must match the query result.";
             // 
+            // ConnectionTree_ConnectionTreeView
+            // 
+            this.ConnectionTree_ConnectionTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ConnectionTree_ConnectionTreeView.Location = new System.Drawing.Point(10, 88);
+            this.ConnectionTree_ConnectionTreeView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ConnectionTree_ConnectionTreeView.Name = "ConnectionTree_ConnectionTreeView";
+            this.ConnectionTree_ConnectionTreeView.Size = new System.Drawing.Size(238, 328);
+            this.ConnectionTree_ConnectionTreeView.TabIndex = 18;
+            // 
             // DataTransferView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(262, 463);
+            this.Controls.Add(this.ConnectionTree_ConnectionTreeView);
             this.Controls.Add(this.Information_RichTextBox);
             this.Controls.Add(this.SelectTable_Label);
             this.Controls.Add(this.TryCopyData_Button);
@@ -92,9 +105,9 @@ namespace DBManager.Views.Engines
 
         #endregion
 
-        private ConnectionTreeView ConnectionTree_ConnectionTreeView;
         private System.Windows.Forms.Button TryCopyData_Button;
         private System.Windows.Forms.Label SelectTable_Label;
         private System.Windows.Forms.RichTextBox Information_RichTextBox;
+        private ConnectionTreeView ConnectionTree_ConnectionTreeView;
     }
 }
