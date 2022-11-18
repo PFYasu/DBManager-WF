@@ -9,8 +9,8 @@ namespace DBManager.Presenters
         Task<Response> AddConnection(AddConnectionDto dto);
         Task<Response> RemoveConnection(string connectionName);
         Task<Response> UpdateConnection(UpdateConnectionDto dto);
-        Response GetConnectionNames();
-        Response GetPresenter(string connectionName);
-        Response GetConnectionSettings(string connectionName);
+        Response<ConnectionNamesResponseDto> GetConnectionNames();
+        Response<PresenterResponseDto> GetPresenter(string connectionName);
+        Response<AddConnectionDto> GetConnectionSettings(string connectionName);
     }
 }

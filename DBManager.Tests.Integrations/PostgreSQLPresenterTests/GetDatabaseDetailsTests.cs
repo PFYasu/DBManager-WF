@@ -41,7 +41,7 @@ public class GetDatabaseDetailsTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as DatabaseDetailsResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
 
         Assert.Equal(1, payload.TablesCount);
@@ -54,7 +54,7 @@ public class GetDatabaseDetailsTests : IDisposable
 
     private static void WaitForApplyChangesToDatabase(int time = 500) => Thread.Sleep(time);
 
-    public static Task<Response> Act(PostgreSQLPresenter presenter, string databaseName)
+    public static Task<Response<DatabaseDetailsResponseDto>> Act(PostgreSQLPresenter presenter, string databaseName)
     {
         WaitForApplyChangesToDatabase();
         return presenter.GetDatabaseDetails(databaseName);

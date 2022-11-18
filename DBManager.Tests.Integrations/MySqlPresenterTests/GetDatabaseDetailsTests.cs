@@ -42,7 +42,7 @@ public class GetDatabaseDetailsTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as DatabaseDetailsResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
 
         Assert.Equal(1, payload.TablesCount);
@@ -53,7 +53,7 @@ public class GetDatabaseDetailsTests : IDisposable
         Assert.Equal((ulong)1, tableStructure.Records);
     }
 
-    public static Task<Response> Act(MySqlPresenter presenter, string databaseName) 
+    public static Task<Response<DatabaseDetailsResponseDto>> Act(MySqlPresenter presenter, string databaseName) 
         => presenter.GetDatabaseDetails(databaseName);
 
     public void Dispose() => _mySqlHelper.Dispose();

@@ -1,6 +1,4 @@
-﻿using DBManager.Core.Dto;
-using DBManager.Core.Dto.Engines;
-using DBManager.Core.Presenters;
+﻿using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
@@ -15,7 +13,7 @@ namespace DBManager.Views
     {
         private readonly IDBManagerPresenter _presenter;
         private readonly ConnectorMethods _connectorMethods;
-        private readonly MessageHelper _messageHelper = new MessageHelper("DBManager");
+        private readonly MessageHelper _messageHelper = new("DBManager");
 
         public DBManagerView(IDBManagerPresenter presenter)
         {
@@ -95,7 +93,7 @@ namespace DBManager.Views
             var response = await _presenter.RemoveConnection(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to remove {connectionName} connection.", response);
+                _messageHelper.ShowError($"Unable to remove {connectionName} connection.", response.ErrorMessage);
                 return;
             }
 
@@ -120,13 +118,11 @@ namespace DBManager.Views
             var response = _presenter.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection.", response);
+                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as PresenterResponseDto;
-
-            var engineType = payload.EngineType;
+            var engineType = response.Payload.EngineType;
 
             if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
             {
@@ -157,13 +153,11 @@ namespace DBManager.Views
             var response = _presenter.GetPresenter(treeNodeElements.Connection.Text);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get {treeNodeElements.Connection.Text} connection.", response);
+                _messageHelper.ShowError($"Unable to get {treeNodeElements.Connection.Text} connection.", response.ErrorMessage);
                 return null;
             }
 
-            var payload = response.Payload as PresenterResponseDto;
-
-            return payload.Presenter;
+            return response.Payload.Presenter;
         }
 
         private void LoadConnections()
@@ -171,15 +165,15 @@ namespace DBManager.Views
             var response = _presenter.GetConnectionNames();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to load connection list.", response);
+                _messageHelper.ShowError("Unable to load connection list.", response.ErrorMessage);
                 return;
             }
 
-            var dto = response.Payload as ConnectionNamesResponseDto;
+            var payload = response.Payload;
 
-            ConnectionTree_ConnectionTreeView.LoadConnections(dto.Names);
+            ConnectionTree_ConnectionTreeView.LoadConnections(payload.Names);
 
-            Status_StatusStripView.UpdateNumberOfConnectionsStatus(dto.Names.Count);
+            Status_StatusStripView.UpdateNumberOfConnectionsStatus(payload.Names.Count);
         }
 
         private async Task LoadDatabases(IEnginePresenter presenter)
@@ -187,11 +181,11 @@ namespace DBManager.Views
             var response = await presenter.GetDatabaseNames();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load database list for {presenter.ConnectionName} connection.", response);
+                _messageHelper.ShowError($"Unable to load database list for {presenter.ConnectionName} connection.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as DatabaseNamesResponseDto;
+            var payload = response.Payload;
 
             ConnectionTree_ConnectionTreeView.LoadDatabases(presenter.ConnectionName, payload.Names);
         }
@@ -201,11 +195,11 @@ namespace DBManager.Views
             var response = await presenter.GetTableNames(databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load table list for {presenter.ConnectionName} connection.", response);
+                _messageHelper.ShowError($"Unable to load table list for {presenter.ConnectionName} connection.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as TableNamesResponseDto;
+            var payload = response.Payload;
 
             ConnectionTree_ConnectionTreeView.LoadTables(presenter.ConnectionName, databaseName, payload.Names);
         }

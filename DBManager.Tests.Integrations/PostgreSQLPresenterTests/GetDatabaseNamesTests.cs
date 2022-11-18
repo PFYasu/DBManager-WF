@@ -23,13 +23,13 @@ public class GetDatabaseNamesTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as DatabaseNamesResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
         Assert.Contains(firstDatabaseName, payload.Names);
         Assert.Contains(secondDatabaseName, payload.Names);
     }
 
-    public static Task<Response> Act(PostgreSQLPresenter presenter) 
+    public static Task<Response<DatabaseNamesResponseDto>> Act(PostgreSQLPresenter presenter) 
         => presenter.GetDatabaseNames();
 
     public void Dispose() => _postgreSQLHelper.Dispose();

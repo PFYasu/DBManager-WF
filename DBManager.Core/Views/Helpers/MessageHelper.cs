@@ -1,5 +1,4 @@
-﻿using DBManager.Core.Presenters;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace DBManager.Core.Views.Helpers
@@ -13,10 +12,9 @@ namespace DBManager.Core.Views.Helpers
             _viewName = viewName;
         }
 
-        public void ShowError(string comment, Response response)
+        public void ShowError(string comment, string innerErrorMessage)
         {
-            var message = response.Payload as string;
-            var errorMessage = $"{comment}\n\n{message}";
+            var errorMessage = $"{comment}\n\n{innerErrorMessage}";
 
             ShowError(errorMessage);
         }

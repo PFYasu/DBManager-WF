@@ -1,5 +1,4 @@
-﻿using DBManager.Core.Dto;
-using DBManager.Core.Dto.Engines;
+﻿using DBManager.Core.Dto.Engines;
 using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Helpers;
@@ -76,7 +75,7 @@ namespace DBManager.Views.Engines
             var response = await _presenter.DataTransferDriver.SendData(sendDataDto);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to send data to selected table.", response);
+                _messageHelper.ShowError("Unable to send data to selected table.", response.ErrorMessage);
                 return;
             }
 
@@ -88,13 +87,11 @@ namespace DBManager.Views.Engines
             var response = _presenter.DataTransferDriver.GetConnectionNames();
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to load connection list.", response);
+                _messageHelper.ShowError("Unable to load connection list.", response.ErrorMessage);
                 return;
             }
 
-            var dto = response.Payload as ConnectionNamesResponseDto;
-
-            ConnectionTree_ConnectionTreeView.LoadConnections(dto.Names);
+            ConnectionTree_ConnectionTreeView.LoadConnections(response.Payload.Names);
         }
 
         private async Task LoadDatabases(string connectionName)
@@ -102,13 +99,11 @@ namespace DBManager.Views.Engines
             var response = await _presenter.DataTransferDriver.GetDatabaseNames(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load database list for {connectionName} connection.", response);
+                _messageHelper.ShowError($"Unable to load database list for {connectionName} connection.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as DatabaseNamesResponseDto;
-
-            ConnectionTree_ConnectionTreeView.LoadDatabases(connectionName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadDatabases(connectionName, response.Payload.Names);
         }
 
         private async Task LoadTables(string connectionName, string databaseName)
@@ -116,13 +111,11 @@ namespace DBManager.Views.Engines
             var response = await _presenter.DataTransferDriver.GetTableNames(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load table list for {connectionName} connection.", response);
+                _messageHelper.ShowError($"Unable to load table list for {connectionName} connection.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as TableNamesResponseDto;
-
-            ConnectionTree_ConnectionTreeView.LoadTables(connectionName, databaseName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadTables(connectionName, databaseName, response.Payload.Names);
         }
     }
 }

@@ -39,14 +39,14 @@ public class GetTableNamesTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as TableNamesResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
         Assert.Equal(2, payload.Names.Count);
         Assert.Contains(firstTableName, payload.Names);
         Assert.Contains(secondTableName, payload.Names);
     }
 
-    public static Task<Response> Act(MySqlPresenter presenter, string databaseName) 
+    public static Task<Response<TableNamesResponseDto>> Act(MySqlPresenter presenter, string databaseName) 
         => presenter.GetTableNames(databaseName);
 
     public void Dispose() => _mySqlHelper.Dispose();

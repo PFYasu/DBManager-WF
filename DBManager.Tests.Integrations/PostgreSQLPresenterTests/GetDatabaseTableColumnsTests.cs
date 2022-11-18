@@ -43,7 +43,7 @@ public class GetDatabaseTableColumnsTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as DatabaseTableColumnsResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
 
         Assert.Single(payload.DatabaseTableColumns);
@@ -54,7 +54,7 @@ public class GetDatabaseTableColumnsTests : IDisposable
         Assert.Contains(secondColumn, databaseTablesColumns[tableName]);
     }
 
-    public static Task<Response> Act(PostgreSQLPresenter presenter, string databaseName) 
+    public static Task<Response<DatabaseTableColumnsResponseDto>> Act(PostgreSQLPresenter presenter, string databaseName) 
         => presenter.GetDatabaseTableColumns(databaseName);
 
     public void Dispose() => _postgreSQLHelper.Dispose();

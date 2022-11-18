@@ -45,7 +45,7 @@ public class SendQueryTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as QueryResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
         Assert.Equal(QueryType.Query, payload.Type);
 
@@ -85,7 +85,7 @@ public class SendQueryTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as QueryResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
         Assert.Equal(QueryType.NonQuery, payload.Type);
 
@@ -96,7 +96,7 @@ public class SendQueryTests : IDisposable
         Assert.Equal("1", dataTable.Rows[0].ItemArray[0]);
     }
 
-    public static Task<Response> Act(MySqlPresenter presenter, string databaseName, string query) 
+    public static Task<Response<QueryResponseDto>> Act(MySqlPresenter presenter, string databaseName, string query) 
         => presenter.SendQuery(databaseName, query);
 
     public void Dispose() => _mySqlHelper.Dispose();

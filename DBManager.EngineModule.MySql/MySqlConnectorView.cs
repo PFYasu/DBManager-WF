@@ -80,7 +80,7 @@ namespace DBManager.EngineModule.MySql
 
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to perform connector action for {connectionName} connection.", response);
+                _messageHelper.ShowError($"Unable to perform connector action for {connectionName} connection.", response.ErrorMessage);
                 return;
             }
 
@@ -97,11 +97,11 @@ namespace DBManager.EngineModule.MySql
             var response = _connectorMethods.GetConnectionSettings(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get settings for {connectionName} connection.", response);
+                _messageHelper.ShowError($"Unable to get settings for {connectionName} connection.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as AddConnectionDto;
+            var payload = response.Payload;
 
             try
             {

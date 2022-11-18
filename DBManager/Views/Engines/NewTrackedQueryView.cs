@@ -38,7 +38,7 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.AddTrackedQuery(dto);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to add new tracked query.", response);
+                _messageHelper.ShowError($"Unable to add new tracked query.", response.ErrorMessage);
                 return;
             }
 

@@ -41,7 +41,7 @@ public class GetTableDetailsTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as TableDetailsResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
 
         Assert.NotNull(payload.Table);
@@ -50,7 +50,7 @@ public class GetTableDetailsTests : IDisposable
         Assert.Equal(2, payload.ColumnsStructure.Count);
     }
 
-    public static Task<Response> Act(PostgreSQLPresenter presenter, string databaseName, string tableName) 
+    public static Task<Response<TableDetailsResponseDto>> Act(PostgreSQLPresenter presenter, string databaseName, string tableName) 
         => presenter.GetTableDetails(databaseName, tableName);
 
     public void Dispose() => _postgreSQLHelper.Dispose();

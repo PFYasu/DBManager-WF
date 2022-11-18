@@ -53,7 +53,7 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.RemoveTrackedQuery(trackedQueryName, _databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to remove tracked query.", response);
+                _messageHelper.ShowError("Unable to remove tracked query.", response.ErrorMessage);
                 return;
             }
 
@@ -78,11 +78,11 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.GetSnapshot(snapshotName, _selectedTrackedQuery, _databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query snapshot.", response);
+                _messageHelper.ShowError("Unable to get tracked query snapshot.", response.ErrorMessage);
                 return;
             }
 
-            _selectedTrackedQuerySnapshot = response.Payload as TrackedQuerySnapshotResponseDto;
+            _selectedTrackedQuerySnapshot = response.Payload;
 
             Above_Button.Enabled = true;
             Below_Button.Enabled = true;
@@ -151,11 +151,11 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.GetSnapshotDifferences(trackedQuerySnapshotDifferencesDto);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query snapshot.", response);
+                _messageHelper.ShowError("Unable to get tracked query snapshot.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as TrackedQuerySnapshotDifferencesResponseDto;
+            var payload = response.Payload;
 
             var differences = payload.Differences;
             var differentRows = payload.DifferentRows;
@@ -183,11 +183,11 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.GetTrackedQuerySnapshotsDetails(_selectedTrackedQuery, _databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query snapshots.", response);
+                _messageHelper.ShowError("Unable to get tracked query snapshots.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as TrackedQuerySnapshotsDetailsResponseDto;
+            var payload = response.Payload;
 
             var snapshotNames = payload.SnapshotNames;
             var timePeriod = payload.TimePeriod;
@@ -207,11 +207,11 @@ namespace DBManager.Views.Engines
             var response = _presenter.QueryTrackerDriver.GetTrackedQueriesDetails(_databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get tracked query names.", response);
+                _messageHelper.ShowError("Unable to get tracked query names.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as TrackedQueriesDetailsResponseDto;
+            var payload = response.Payload;
 
             var trackedQueriesDetails = payload.TrackedQueriesDetails;
 

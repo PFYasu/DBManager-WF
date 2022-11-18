@@ -1,5 +1,4 @@
-﻿using DBManager.Core.Dto.Engines;
-using DBManager.Core.Presenters;
+﻿using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Utils;
 using DBManager.Core.Views.Helpers;
@@ -127,11 +126,11 @@ namespace DBManager.Views.Engines
             var response = await _presenter.SendQuery(_databaseName, query);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get table details.", response);
+                _messageHelper.ShowError("Unable to get table details.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as QueryResponseDto;
+            var payload = response.Payload;
 
             QueryResult_DataGridView.DataSource = payload.Table;
 

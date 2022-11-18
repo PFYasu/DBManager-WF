@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using DBManager.Core.Dto.Engines;
+using System.Threading.Tasks;
 
 namespace DBManager.Core.Presenters.Engines
 {
@@ -8,12 +9,12 @@ namespace DBManager.Core.Presenters.Engines
         string EngineType { get; }
         IQueryTrackerDriver QueryTrackerDriver { get; }
         IDataTransferDriver DataTransferDriver { get; }
-        Task<Response> GetDatabaseNames();
-        Task<Response> GetTableNames(string databaseName);
-        Task<Response> SendQuery(string databaseName, string query);
-        Task<Response> GetTableDetails(string databaseName, string tableName);
-        Task<Response> GetDatabaseDetails(string databaseName);
-        Task<Response> GetDatabaseTableColumns(string databaseName);
-        Task<Response> GetConnectionDetails();
+        Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames();
+        Task<Response<TableNamesResponseDto>> GetTableNames(string databaseName);
+        Task<Response<QueryResponseDto>> SendQuery(string databaseName, string query);
+        Task<Response<TableDetailsResponseDto>> GetTableDetails(string databaseName, string tableName);
+        Task<Response<DatabaseDetailsResponseDto>> GetDatabaseDetails(string databaseName);
+        Task<Response<DatabaseTableColumnsResponseDto>> GetDatabaseTableColumns(string databaseName);
+        Task<Response<ConnectionDetailsResponseDto>> GetConnectionDetails();
     }
 }

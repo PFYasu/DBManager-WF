@@ -15,7 +15,7 @@ namespace DBManager.Core.Presenters.Engines
             _dataTransferMethods = dataTransferMethods;
         }
 
-        public async Task<Response> SendData(SendDataDto dto)
+        public async Task<Response<QueryResponseDto>> SendData(SendDataDto dto)
         {
             var connectionName = dto.ConnectionName;
             var databaseName = dto.DatabaseName;
@@ -24,73 +24,74 @@ namespace DBManager.Core.Presenters.Engines
 
             var response = _dataTransferMethods.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
-                return Response.Error($"Unable to get {connectionName} connection");
+                return Response<QueryResponseDto>
+                    .Error($"Unable to get {connectionName} connection. Inner error message: {response.ErrorMessage}");
 
-            var payload = response.Payload as PresenterResponseDto;
-
-            var presenter = payload.Presenter;
+            var presenter = response.Payload.Presenter;
 
             var query = CreateQuery(dataTable, tableName);
 
             var sendQueryResponse = await presenter.SendQuery(databaseName, query);
             if (sendQueryResponse.Type == ResponseType.Error)
-                return Response.Error($"Unable to send data: {sendQueryResponse.Payload}");
+                return Response<QueryResponseDto>
+                    .Error($"Unable to send data: {sendQueryResponse.Payload}. Inner error message: {response.ErrorMessage}");
 
             var responseDto = sendQueryResponse.Payload;
 
-            return Response.Ok(responseDto);
+            return Response<QueryResponseDto>.Ok(responseDto);
         }
 
-        public Response GetConnectionNames()
+        public Response<ConnectionNamesResponseDto> GetConnectionNames()
         {
             var response = _dataTransferMethods.GetConnectionNames();
             if (response.Type == ResponseType.Error)
-                return Response.Error("Unable to get connection names");
+                return Response<ConnectionNamesResponseDto>
+                    .Error($"Unable to get connection names. Inner error message: {response.ErrorMessage}");
 
             var dto = response.Payload;
 
-            return Response.Ok(dto);
+            return Response<ConnectionNamesResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> GetDatabaseNames(string connectionName)
+        public async Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames(string connectionName)
         {
             var response = _dataTransferMethods.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
-                return Response.Error($"Unable to get {connectionName} presenter");
+                return Response<DatabaseNamesResponseDto>
+                    .Error($"Unable to get {connectionName} presenter. Inner error message: {response.ErrorMessage}");
 
-            var payload = response.Payload as PresenterResponseDto;
-
-            var presenter = payload.Presenter;
+            var presenter = response.Payload.Presenter;
 
             var databaseNamesResponse = await presenter.GetDatabaseNames();
             if (databaseNamesResponse.Type == ResponseType.Error)
-                return Response.Error($"Unable to get information about databases in {connectionName} connection");
+                return Response<DatabaseNamesResponseDto>
+                    .Error($"Unable to get information about databases in {connectionName} connection. Inner error message: {response.ErrorMessage}");
 
             var dto = databaseNamesResponse.Payload;
 
-            return Response.Ok(dto);
+            return Response<DatabaseNamesResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> GetTableNames(string connectionName, string databaseName)
+        public async Task<Response<TableNamesResponseDto>> GetTableNames(string connectionName, string databaseName)
         {
             var response = _dataTransferMethods.GetPresenter(connectionName);
             if (response.Type == ResponseType.Error)
-                return Response.Error($"Unable to get {connectionName} presenter");
+                return Response<TableNamesResponseDto>
+                    .Error($"Unable to get {connectionName} presenter. Inner error message: {response.ErrorMessage}");
 
-            var payload = response.Payload as PresenterResponseDto;
-
-            var presenter = payload.Presenter;
+            var presenter = response.Payload.Presenter;
 
             var tableNamesResponse = await presenter.GetTableNames(databaseName);
             if (tableNamesResponse.Type == ResponseType.Error)
-                return Response.Error($"Unable to get information about tables in {databaseName} database in {connectionName} connection");
+                return Response<TableNamesResponseDto> 
+                    .Error($"Unable to get information about tables in {databaseName} database in {connectionName} connection. Inner error message: {response.ErrorMessage}");
 
             var dto = tableNamesResponse.Payload;
 
-            return Response.Ok(dto);
+            return Response<TableNamesResponseDto>.Ok(dto);
         }
 
-        private string CreateQuery(DataTable dataTable, string tableName)
+        private static string CreateQuery(DataTable dataTable, string tableName)
         {
             var queryStringBuilder = new StringBuilder();
 

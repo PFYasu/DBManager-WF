@@ -40,7 +40,7 @@ public class GetConnectionDetailsTests : IDisposable
 
         Assert.Equal(ResponseType.Ok, result.Type);
 
-        var payload = result.Payload as ConnectionDetailsResponseDto;
+        var payload = result.Payload;
         Assert.NotNull(payload);
 
         Assert.Equal(presenter.ConnectionName, payload.Name);
@@ -50,7 +50,7 @@ public class GetConnectionDetailsTests : IDisposable
         Assert.Equal(ConnectionParameters.PostgreSQL.ConnectionParameters["Port"], payload.Port.ToString());
     }
 
-    public static Task<Response> Act(PostgreSQLPresenter presenter) 
+    public static Task<Response<ConnectionDetailsResponseDto>> Act(PostgreSQLPresenter presenter) 
         => presenter.GetConnectionDetails();
 
     public void Dispose() => _postgreSQLHelper.Dispose();

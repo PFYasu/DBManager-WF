@@ -22,6 +22,7 @@ namespace DBManager.Presenters
             _service = new DBManagerService(model, dataTransferMethods);
             _service.InitializeEnginePresenters();
         }
+
         public async Task<Response> AddConnection(AddConnectionDto dto)
         {
             try
@@ -35,16 +36,16 @@ namespace DBManager.Presenters
             }
         }
 
-        public Response GetPresenter(string connectionName)
+        public Response<PresenterResponseDto> GetPresenter(string connectionName)
         {
             try
             {
                 var dto = _service.GetPresenter(connectionName);
-                return Response.Ok(dto);
+                return Response<PresenterResponseDto>.Ok(dto);
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<PresenterResponseDto>.Error(exception.Message);
             }
         }
 
@@ -74,29 +75,29 @@ namespace DBManager.Presenters
             }
         }
 
-        public Response GetConnectionNames()
+        public Response<ConnectionNamesResponseDto> GetConnectionNames()
         {
             try
             {
                 var dto = _service.GetConnectionNames();
-                return Response.Ok(dto);
+                return Response<ConnectionNamesResponseDto>.Ok(dto);
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<ConnectionNamesResponseDto>.Error(exception.Message);
             }
         }
 
-        public Response GetConnectionSettings(string connectionName)
+        public Response<AddConnectionDto> GetConnectionSettings(string connectionName)
         {
             try
             {
                 var dto = _service.GetConnectionSettings(connectionName);
-                return Response.Ok(dto);
+                return Response<AddConnectionDto>.Ok(dto);
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<AddConnectionDto>.Error(exception.Message);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using DBManager.Core.Dto.Engines;
-using DBManager.Core.Presenters;
+﻿using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Helpers;
 using System;
@@ -28,11 +27,11 @@ namespace DBManager.Views.Engines
             var response = await _presenter.GetDatabaseDetails(_databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get database details.", response);
+                _messageHelper.ShowError("Unable to get database details.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as DatabaseDetailsResponseDto;
+            var payload = response.Payload;
 
             Structure_Structure_DataGridView.Rows.Clear();
 
@@ -62,11 +61,11 @@ namespace DBManager.Views.Engines
             var response = await _presenter.GetDatabaseTableColumns(_databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to get database tables columns.", response);
+                _messageHelper.ShowError("Unable to get database tables columns.", response.ErrorMessage);
                 return;
             }
 
-            var payload = response.Payload as DatabaseTableColumnsResponseDto;
+            var payload = response.Payload;
 
             var databaseTableColumns = payload.DatabaseTableColumns;
 

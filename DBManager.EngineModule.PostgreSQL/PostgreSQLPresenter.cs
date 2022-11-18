@@ -28,7 +28,7 @@ namespace DBManager.EngineModule.PostgreSQL
         public IQueryTrackerDriver QueryTrackerDriver { get; }
         public IDataTransferDriver DataTransferDriver { get; }
 
-        public async Task<Response> GetDatabaseNames()
+        public async Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames()
         {
             const string query = "SELECT datname FROM pg_database WHERE datistemplate = false;";
             DataTable result;
@@ -39,7 +39,7 @@ namespace DBManager.EngineModule.PostgreSQL
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<DatabaseNamesResponseDto>.Error(exception.Message);
             }
 
             var names = result
@@ -49,10 +49,10 @@ namespace DBManager.EngineModule.PostgreSQL
 
             var dto = new DatabaseNamesResponseDto { Names = names };
 
-            return Response.Ok(dto);
+            return Response<DatabaseNamesResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> GetTableNames(string databaseName)
+        public async Task<Response<TableNamesResponseDto>> GetTableNames(string databaseName)
         {
             string query =
                 $"SELECT " +
@@ -68,7 +68,7 @@ namespace DBManager.EngineModule.PostgreSQL
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<TableNamesResponseDto>.Error(exception.Message);
             }
 
             var names = result
@@ -78,10 +78,10 @@ namespace DBManager.EngineModule.PostgreSQL
 
             var dto = new TableNamesResponseDto { Names = names };
 
-            return Response.Ok(dto);
+            return Response<TableNamesResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> SendQuery(string databaseName, string query)
+        public async Task<Response<QueryResponseDto>> SendQuery(string databaseName, string query)
         {
             var queryType = QueryTypeResolver.GetQueryType(query);
             var result = new DataTable();
@@ -100,12 +100,12 @@ namespace DBManager.EngineModule.PostgreSQL
                         result.Rows.Add(executeNonQueryResult);
                         break;
                     default:
-                        return Response.Error("Invalid query type.");
+                        return Response<QueryResponseDto>.Error("Invalid query type.");
                 }
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<QueryResponseDto>.Error(exception.Message);
             }
 
             var dto = new QueryResponseDto
@@ -114,10 +114,10 @@ namespace DBManager.EngineModule.PostgreSQL
                 Table = result
             };
 
-            return Response.Ok(dto);
+            return Response<QueryResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> GetTableDetails(string databaseName, string tableName)
+        public async Task<Response<TableDetailsResponseDto>> GetTableDetails(string databaseName, string tableName)
         {
             var tableSizeQuery = $"SELECT pg_total_relation_size('{tableName}') AS SIZE;";
             DataTable tableSizeQueryResult;
@@ -142,7 +142,7 @@ namespace DBManager.EngineModule.PostgreSQL
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<TableDetailsResponseDto>.Error(exception.Message);
             }
 
             var table = fullTableQueryResult;
@@ -184,10 +184,10 @@ namespace DBManager.EngineModule.PostgreSQL
                 CustomInformations = customInformations
             };
 
-            return Response.Ok(dto);
+            return Response<TableDetailsResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> GetDatabaseDetails(string databaseName)
+        public async Task<Response<DatabaseDetailsResponseDto>> GetDatabaseDetails(string databaseName)
         {
             var tableQuery =
                 $"SELECT " +
@@ -212,7 +212,7 @@ namespace DBManager.EngineModule.PostgreSQL
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<DatabaseDetailsResponseDto>.Error(exception.Message);
             }
 
             var tablesAndRowsCount = new Dictionary<string, ulong>();
@@ -258,10 +258,10 @@ namespace DBManager.EngineModule.PostgreSQL
                 TablesStructure = tablesStructure
             };
 
-            return Response.Ok(dto);
+            return Response<DatabaseDetailsResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> GetDatabaseTableColumns(string databaseName)
+        public async Task<Response<DatabaseTableColumnsResponseDto>> GetDatabaseTableColumns(string databaseName)
         {
             string query =
                 $"SELECT " +
@@ -277,7 +277,7 @@ namespace DBManager.EngineModule.PostgreSQL
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<DatabaseTableColumnsResponseDto>.Error(exception.Message);
             }
 
             var databaseTableColumns = new Dictionary<string, List<string>>();
@@ -298,10 +298,10 @@ namespace DBManager.EngineModule.PostgreSQL
                 DatabaseTableColumns = databaseTableColumns
             };
 
-            return Response.Ok(dto);
+            return Response<DatabaseTableColumnsResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> GetConnectionDetails()
+        public async Task<Response<ConnectionDetailsResponseDto>> GetConnectionDetails()
         {
             string query = "SELECT datname FROM pg_database WHERE datistemplate = false;";
             DataTable result;
@@ -312,7 +312,7 @@ namespace DBManager.EngineModule.PostgreSQL
             }
             catch (Exception exception)
             {
-                return Response.Error(exception.Message);
+                return Response<ConnectionDetailsResponseDto>.Error(exception.Message);
             }
 
             var name = _model.Name;
@@ -347,7 +347,7 @@ namespace DBManager.EngineModule.PostgreSQL
                 DatabasesStructure = databasesStructure
             };
 
-            return Response.Ok(dto);
+            return Response<ConnectionDetailsResponseDto>.Ok(dto);
         }
     }
 }
