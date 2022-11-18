@@ -40,11 +40,8 @@ namespace DBManager.EngineModule.MySql
 
         private async void Save_Button_Click(object sender, EventArgs e)
         {
-            if (IsValidForm(out string error) == false)
-            {
-                _messageHelper.ShowError(error);
+            if (IsValidForm() == false)
                 return;
-            }
 
             var connectionParameters = PrepareConnectionParameters();
             const string engineType = "MySql";
@@ -117,24 +114,26 @@ namespace DBManager.EngineModule.MySql
             }
         }
 
-        private bool IsValidForm(out string error)
+        private bool IsValidForm()
         {
+            ErrorProvider_DBManagerErrorProvider.Clear();
+
             if (string.IsNullOrEmpty(Name_TextBox.Text))
-                error = "Name cannot be empty.";
-            else if (string.IsNullOrEmpty(ServerUrl_TextBox.Text))
-                error = "Server URL cannot be empty.";
-            else if (string.IsNullOrEmpty(Port_NumericUpDown.Value.ToString()))
-                error = "Port cannot be empty.";
-            else if (string.IsNullOrEmpty(Username_TextBox.Text))
-                error = "Username cannot be empty.";
-            else if (string.IsNullOrEmpty(Password_TextBox.Text))
-                error = "Password cannot be empty.";
-            else
-            {
-                error = null;
-                return true;
-            }
-            return false;
+                ErrorProvider_DBManagerErrorProvider.SetError(Name_Label, "Name cannot be empty");
+
+            if (string.IsNullOrEmpty(ServerUrl_TextBox.Text))
+                ErrorProvider_DBManagerErrorProvider.SetError(ServerUrl_Label, "Server URL cannot be empty.");
+
+            if (string.IsNullOrEmpty(Port_NumericUpDown.Value.ToString()))
+                ErrorProvider_DBManagerErrorProvider.SetError(Port_Label, "Port cannot be empty");
+
+            if (string.IsNullOrEmpty(Username_TextBox.Text))
+                ErrorProvider_DBManagerErrorProvider.SetError(Username_Label, "Username cannot be empty.");
+
+            if (string.IsNullOrEmpty(Password_TextBox.Text))
+                ErrorProvider_DBManagerErrorProvider.SetError(Password_Label, "Password cannot be empty.");
+
+            return ErrorProvider_DBManagerErrorProvider.ErrorCount == 0;
         }
 
         private Dictionary<string, string> PrepareConnectionParameters()

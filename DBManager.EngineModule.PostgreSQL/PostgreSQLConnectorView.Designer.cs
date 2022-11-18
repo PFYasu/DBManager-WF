@@ -1,4 +1,6 @@
-﻿namespace DBManager.EngineModule.PostgreSQL
+﻿using DBManager.Core.Views.OverridedViews;
+
+namespace DBManager.EngineModule.PostgreSQL
 {
     partial class PostgreSQLConnectorView
     {
@@ -43,8 +45,10 @@
             this.ConnectionParameters_Label = new System.Windows.Forms.Label();
             this.ConnectionLogo_PictureBox = new System.Windows.Forms.PictureBox();
             this.Port_NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.ErrorProvider_DBManagerErrorProvider = new DBManager.Core.Views.OverridedViews.DBManagerErrorProvider();
             ((System.ComponentModel.ISupportInitialize)(this.ConnectionLogo_PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Port_NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider_DBManagerErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // ServerUrl_TextBox
@@ -196,6 +200,10 @@
             this.Port_NumericUpDown.Size = new System.Drawing.Size(57, 23);
             this.Port_NumericUpDown.TabIndex = 3;
             // 
+            // ErrorProvider_DBManagerErrorProvider
+            // 
+            this.ErrorProvider_DBManagerErrorProvider.ContainerControl = this;
+            // 
             // PostgreSQLConnectorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -222,6 +230,7 @@
             this.Text = "DBManager - PostgreSQL connector configuration";
             ((System.ComponentModel.ISupportInitialize)(this.ConnectionLogo_PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Port_NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider_DBManagerErrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,5 +253,6 @@
         private System.Windows.Forms.Label ConnectionParameters_Label;
         private System.Windows.Forms.PictureBox ConnectionLogo_PictureBox;
         private System.Windows.Forms.NumericUpDown Port_NumericUpDown;
+        private DBManagerErrorProvider ErrorProvider_DBManagerErrorProvider;
     }
 }
