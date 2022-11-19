@@ -19,7 +19,7 @@ namespace DBManager.Views
         private void InitializeView(Exception exception)
         {
             ExceptionType_Label.Text = exception.GetType().Name;
-            StackTrace_RichTextBox.Text = $"{exception.Message}\n\n{exception.StackTrace}";
+            StackTrace_RichTextBox.Text = $"{exception}";
         }
     }
 }
