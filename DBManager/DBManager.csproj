@@ -29,9 +29,6 @@
     <Compile Update="Views\Engines\TrackedQueriesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Views\StatusStripView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBManager.Core\DBManager.Core.csproj" />

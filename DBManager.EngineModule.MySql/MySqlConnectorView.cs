@@ -116,24 +116,24 @@ namespace DBManager.EngineModule.MySql
 
         private bool IsValidForm()
         {
-            ErrorProvider_DBManagerErrorProvider.Clear();
+            ErrorProvider_FormErrorProvider.Clear();
 
             if (string.IsNullOrEmpty(Name_TextBox.Text))
-                ErrorProvider_DBManagerErrorProvider.SetError(Name_Label, "Name cannot be empty");
+                ErrorProvider_FormErrorProvider.SetError(Name_Label, "Name cannot be empty");
 
             if (string.IsNullOrEmpty(ServerUrl_TextBox.Text))
-                ErrorProvider_DBManagerErrorProvider.SetError(ServerUrl_Label, "Server URL cannot be empty.");
+                ErrorProvider_FormErrorProvider.SetError(ServerUrl_Label, "Server URL cannot be empty.");
 
             if (string.IsNullOrEmpty(Port_NumericUpDown.Value.ToString()))
-                ErrorProvider_DBManagerErrorProvider.SetError(Port_Label, "Port cannot be empty");
+                ErrorProvider_FormErrorProvider.SetError(Port_Label, "Port cannot be empty");
 
             if (string.IsNullOrEmpty(Username_TextBox.Text))
-                ErrorProvider_DBManagerErrorProvider.SetError(Username_Label, "Username cannot be empty.");
+                ErrorProvider_FormErrorProvider.SetError(Username_Label, "Username cannot be empty.");
 
             if (string.IsNullOrEmpty(Password_TextBox.Text))
-                ErrorProvider_DBManagerErrorProvider.SetError(Password_Label, "Password cannot be empty.");
+                ErrorProvider_FormErrorProvider.SetError(Password_Label, "Password cannot be empty.");
 
-            return ErrorProvider_DBManagerErrorProvider.ErrorCount == 0;
+            return ErrorProvider_FormErrorProvider.ErrorCount == 0;
         }
 
         private Dictionary<string, string> PrepareConnectionParameters()

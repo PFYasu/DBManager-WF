@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace DBManager.Core.Views.OverridedViews;
+namespace DBManager.Core.Views.OverridedControls;
 
 [ToolboxItem(true)]
-public class DBManagerErrorProvider : ErrorProvider
+public class FormErrorProvider : ErrorProvider
 {
     public int ErrorCount { get; private set; } = 0;
 

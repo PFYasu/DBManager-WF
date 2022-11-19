@@ -63,7 +63,7 @@ namespace DBManager.Views
             RemoveConnection_Button.Enabled = true;
             UpdateConnection_Button.Enabled = true;
 
-            Status_StatusStripView.UpdateNodeStatus(e);
+            Status_ConnectionStatusStrip.UpdateNodeStatus(e);
         }
 
         private void AddConnection_Button_Click(object sender, EventArgs e)
@@ -98,7 +98,7 @@ namespace DBManager.Views
             }
 
             if (Content_ContentManagerView.ClearViewIfNeeded(connectionName))
-                Status_StatusStripView.ClearNodeStatus();
+                Status_ConnectionStatusStrip.ClearNodeStatus();
 
             LoadConnections();
         }
@@ -173,7 +173,7 @@ namespace DBManager.Views
 
             ConnectionTree_ConnectionTreeView.LoadConnections(payload.Names);
 
-            Status_StatusStripView.UpdateNumberOfConnectionsStatus(payload.Names.Count);
+            Status_ConnectionStatusStrip.UpdateNumberOfConnectionsStatus(payload.Names.Count);
         }
 
         private async Task LoadDatabases(IEnginePresenter presenter)

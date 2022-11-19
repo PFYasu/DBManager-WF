@@ -1,4 +1,4 @@
-﻿using DBManager.Core.Views.OverridedViews;
+﻿using DBManager.Core.Views.OverridedControls;
 
 namespace DBManager.EngineModule.PostgreSQL
 {
@@ -45,10 +45,10 @@ namespace DBManager.EngineModule.PostgreSQL
             this.ConnectionParameters_Label = new System.Windows.Forms.Label();
             this.ConnectionLogo_PictureBox = new System.Windows.Forms.PictureBox();
             this.Port_NumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.ErrorProvider_DBManagerErrorProvider = new DBManager.Core.Views.OverridedViews.DBManagerErrorProvider();
+            this.ErrorProvider_FormErrorProvider = new DBManager.Core.Views.OverridedControls.FormErrorProvider();
             ((System.ComponentModel.ISupportInitialize)(this.ConnectionLogo_PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Port_NumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider_DBManagerErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider_FormErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // ServerUrl_TextBox
@@ -200,9 +200,9 @@ namespace DBManager.EngineModule.PostgreSQL
             this.Port_NumericUpDown.Size = new System.Drawing.Size(57, 23);
             this.Port_NumericUpDown.TabIndex = 3;
             // 
-            // ErrorProvider_DBManagerErrorProvider
+            // ErrorProvider_FormErrorProvider
             // 
-            this.ErrorProvider_DBManagerErrorProvider.ContainerControl = this;
+            this.ErrorProvider_FormErrorProvider.ContainerControl = this;
             // 
             // PostgreSQLConnectorView
             // 
@@ -230,7 +230,7 @@ namespace DBManager.EngineModule.PostgreSQL
             this.Text = "DBManager - PostgreSQL connector configuration";
             ((System.ComponentModel.ISupportInitialize)(this.ConnectionLogo_PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Port_NumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider_DBManagerErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider_FormErrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,6 +253,6 @@ namespace DBManager.EngineModule.PostgreSQL
         private System.Windows.Forms.Label ConnectionParameters_Label;
         private System.Windows.Forms.PictureBox ConnectionLogo_PictureBox;
         private System.Windows.Forms.NumericUpDown Port_NumericUpDown;
-        private DBManagerErrorProvider ErrorProvider_DBManagerErrorProvider;
+        private FormErrorProvider ErrorProvider_FormErrorProvider;
     }
 }

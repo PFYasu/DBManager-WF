@@ -36,12 +36,17 @@ namespace DBManager.Views
             this.Connection_SplitContainer = new System.Windows.Forms.SplitContainer();
             this.ConnectionTree_ConnectionTreeView = new DBManager.Views.ConnectionTreeView();
             this.Content_ContentManagerView = new DBManager.Views.ContentManagerView();
-            this.Status_StatusStripView = new DBManager.Views.StatusStripView();
+            this.Status_ConnectionStatusStrip = new DBManager.Views.OverridedControls.ConnectionStatusStrip();
+            this.Connections_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.Connection_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.Database_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.Table_ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ConnectionAction_TableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Connection_SplitContainer)).BeginInit();
             this.Connection_SplitContainer.Panel1.SuspendLayout();
             this.Connection_SplitContainer.Panel2.SuspendLayout();
             this.Connection_SplitContainer.SuspendLayout();
+            this.Status_ConnectionStatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // ConnectionAction_TableLayoutPanel
@@ -146,14 +151,45 @@ namespace DBManager.Views
             this.Content_ContentManagerView.Size = new System.Drawing.Size(480, 371);
             this.Content_ContentManagerView.TabIndex = 0;
             // 
-            // Status_StatusStripView
+            // Status_ConnectionStatusStrip
             // 
-            this.Status_StatusStripView.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Status_StatusStripView.Location = new System.Drawing.Point(0, 439);
-            this.Status_StatusStripView.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.Status_StatusStripView.Name = "Status_StatusStripView";
-            this.Status_StatusStripView.Size = new System.Drawing.Size(684, 23);
-            this.Status_StatusStripView.TabIndex = 6;
+            this.Status_ConnectionStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Connections_ToolStripStatusLabel,
+            this.Connection_ToolStripStatusLabel,
+            this.Database_ToolStripStatusLabel,
+            this.Table_ToolStripStatusLabel});
+            this.Status_ConnectionStatusStrip.Location = new System.Drawing.Point(0, 440);
+            this.Status_ConnectionStatusStrip.Name = "Status_ConnectionStatusStrip";
+            this.Status_ConnectionStatusStrip.Size = new System.Drawing.Size(684, 22);
+            this.Status_ConnectionStatusStrip.TabIndex = 6;
+            this.Status_ConnectionStatusStrip.Text = "connectionStatusStrip1";
+            // 
+            // Connections_ToolStripStatusLabel
+            // 
+            this.Connections_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.ConnectionIcon;
+            this.Connections_ToolStripStatusLabel.Name = "Connections_ToolStripStatusLabel";
+            this.Connections_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 17);
+            // 
+            // Connection_ToolStripStatusLabel
+            // 
+            this.Connection_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.ConnectionIcon;
+            this.Connection_ToolStripStatusLabel.Name = "Connection_ToolStripStatusLabel";
+            this.Connection_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 17);
+            this.Connection_ToolStripStatusLabel.Visible = false;
+            // 
+            // Database_ToolStripStatusLabel
+            // 
+            this.Database_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.DatabaseIcon;
+            this.Database_ToolStripStatusLabel.Name = "Database_ToolStripStatusLabel";
+            this.Database_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 17);
+            this.Database_ToolStripStatusLabel.Visible = false;
+            // 
+            // Table_ToolStripStatusLabel
+            // 
+            this.Table_ToolStripStatusLabel.Image = global::DBManager.Properties.Resources.TableIcon;
+            this.Table_ToolStripStatusLabel.Name = "Table_ToolStripStatusLabel";
+            this.Table_ToolStripStatusLabel.Size = new System.Drawing.Size(16, 17);
+            this.Table_ToolStripStatusLabel.Visible = false;
             // 
             // DBManagerView
             // 
@@ -161,7 +197,7 @@ namespace DBManager.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(684, 462);
-            this.Controls.Add(this.Status_StatusStripView);
+            this.Controls.Add(this.Status_ConnectionStatusStrip);
             this.Controls.Add(this.Connection_SplitContainer);
             this.Controls.Add(this.ConnectionAction_TableLayoutPanel);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -173,7 +209,10 @@ namespace DBManager.Views
             this.Connection_SplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Connection_SplitContainer)).EndInit();
             this.Connection_SplitContainer.ResumeLayout(false);
+            this.Status_ConnectionStatusStrip.ResumeLayout(false);
+            this.Status_ConnectionStatusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -185,6 +224,10 @@ namespace DBManager.Views
         private System.Windows.Forms.SplitContainer Connection_SplitContainer;
         private ConnectionTreeView ConnectionTree_ConnectionTreeView;
         private ContentManagerView Content_ContentManagerView;
-        private StatusStripView Status_StatusStripView;
+        private OverridedControls.ConnectionStatusStrip Status_ConnectionStatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel Connections_ToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel Connection_ToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel Database_ToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel Table_ToolStripStatusLabel;
     }
 }
