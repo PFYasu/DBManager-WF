@@ -1,5 +1,6 @@
 ﻿using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using System;
 using System.Threading.Tasks;
@@ -10,21 +11,20 @@ namespace DBManager.Views.Engines
     public partial class DatabaseView : Form
     {
         private readonly IEnginePresenter _presenter;
-        private readonly string _databaseName;
-        private readonly MessageHelper _messageHelper;
+        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly MessageHelper _messageHelper = new("DBManager - database view");
 
-        public DatabaseView(IEnginePresenter presenter, string databaseName)
+        public DatabaseView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
         {
             _presenter = presenter;
-            _databaseName = databaseName;
-            _messageHelper = new MessageHelper("DBManager - database view");
+            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }
 
         public async Task InitializeView()
         {
-            var response = await _presenter.GetDatabaseDetails(_databaseName);
+            var response = await _presenter.GetDatabaseDetails(_connectionElementIdentity.DatabaseName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get database details.", response.ErrorMessage);
@@ -48,7 +48,7 @@ namespace DBManager.Views.Engines
             }
 
             Tables_Structure_Label.Text = $"Tables: {payload.TablesCount}";
-            Name_Structure_Label.Text = $"Name: {_databaseName}";
+            Name_Structure_Label.Text = $"Name: {_connectionElementIdentity.DatabaseName}";
         }
 
         private async void MySqlDatabaseView_Load(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace DBManager.Views.Engines
 
         private async void Query_Enter(object sender, EventArgs e)
         {
-            var response = await _presenter.GetDatabaseTableColumns(_databaseName);
+            var response = await _presenter.GetDatabaseTableColumns(_connectionElementIdentity.DatabaseName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get database tables columns.", response.ErrorMessage);
@@ -69,7 +69,7 @@ namespace DBManager.Views.Engines
 
             var databaseTableColumns = payload.DatabaseTableColumns;
 
-            var queryView = new QueryView(_presenter, _databaseName, databaseTableColumns)
+            var queryView = new QueryView(_presenter, _connectionElementIdentity.DatabaseName, databaseTableColumns)
             {
                 Dock = DockStyle.Fill
             };
@@ -83,7 +83,7 @@ namespace DBManager.Views.Engines
 
         private void TrackedQueries_Enter(object sender, EventArgs e)
         {
-            var trackedQueriesView = new TrackedQueriesView(_presenter, _databaseName)
+            var trackedQueriesView = new TrackedQueriesView(_presenter, _connectionElementIdentity.DatabaseName)
             {
                 Dock = DockStyle.Fill
             };

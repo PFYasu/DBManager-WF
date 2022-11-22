@@ -15,11 +15,13 @@ public class ContentTableLayoutPanel : TableLayoutPanel
 
     public void ChangeContent(IEnginePresenter presenter, TreeNodeElements treeNodeElements)
     {
+        var connectionElementIdentity = treeNodeElements.ToConnectionElementIdentity();
+
         Form form = treeNodeElements.Mode switch
         {
-            TreeNodeMode.ConnectionSelected => new ConnectionView(presenter),
-            TreeNodeMode.DatabaseSelected => new DatabaseView(presenter, treeNodeElements.Database.Text),
-            TreeNodeMode.TableSelected => new TableView(presenter, treeNodeElements.Database.Text, treeNodeElements.Table.Text),
+            TreeNodeMode.ConnectionSelected => new ConnectionView(presenter, connectionElementIdentity),
+            TreeNodeMode.DatabaseSelected => new DatabaseView(presenter, connectionElementIdentity),
+            TreeNodeMode.TableSelected => new TableView(presenter, connectionElementIdentity),
             _ => throw new NotImplementedException("Unable to create view - incorrect tree node mode.")
         };
 

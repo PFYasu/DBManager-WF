@@ -1,5 +1,6 @@
 ﻿using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using System;
 using System.Collections.Generic;
@@ -12,25 +13,21 @@ namespace DBManager.Views.Engines
     public partial class TableView : Form
     {
         private readonly IEnginePresenter _presenter;
-        private readonly string _databaseName;
-        private readonly string _tableName;
-        private readonly List<string> _unsupportedColumns;
-        private readonly MessageHelper _messageHelper;
+        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly List<string> _unsupportedColumns = new();
+        private readonly MessageHelper _messageHelper = new("DBManager - table view");
 
-        public TableView(IEnginePresenter presenter, string databaseName, string tableName)
+        public TableView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
         {
             _presenter = presenter;
-            _databaseName = databaseName;
-            _tableName = tableName;
-            _unsupportedColumns = new List<string>();
-            _messageHelper = new MessageHelper("DBManager - table view");
+            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }
 
         public async Task InitializeView()
         {
-            var response = await _presenter.GetTableDetails(_databaseName, _tableName);
+            var response = await _presenter.GetTableDetails(_connectionElementIdentity.DatabaseName, _connectionElementIdentity.TableName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get table details.", response.ErrorMessage);
@@ -56,9 +53,9 @@ namespace DBManager.Views.Engines
             Structure_Browse_DataGridView.DataSource = payload.Table;
 
             Elements_Browse_Label.Text = $"Elements: {payload.RowsCount}";
-            Name_Browse_Label.Text = $"Name: {_tableName}";
+            Name_Browse_Label.Text = $"Name: {_connectionElementIdentity.TableName}";
 
-            Name_Structure_Label.Text = $"Name: {_tableName}";
+            Name_Structure_Label.Text = $"Name: {_connectionElementIdentity.TableName}";
             Columns_Structure_Label.Text = $"Columns: {payload.ColumnsCount}";
             Records_Structure_Label.Text = $"Records: {payload.RowsCount}";
 

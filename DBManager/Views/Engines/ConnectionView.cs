@@ -1,5 +1,6 @@
 ﻿using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
+using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using System;
 using System.Threading.Tasks;
@@ -10,12 +11,13 @@ namespace DBManager.Views.Engines
     public partial class ConnectionView : Form
     {
         private readonly IEnginePresenter _presenter;
-        private readonly MessageHelper _messageHelper;
+        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly MessageHelper _messageHelper = new("DBManager - connection view");
 
-        public ConnectionView(IEnginePresenter presenter)
+        public ConnectionView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
         {
             _presenter = presenter;
-            _messageHelper = new MessageHelper("DBManager - connection view");
+            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }

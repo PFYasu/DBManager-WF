@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBManager.Core.Views.Engines;
+using System;
 using System.Windows.Forms;
 
 namespace DBManager.Core.Views.Helpers
@@ -51,6 +52,14 @@ namespace DBManager.Core.Views.Helpers
         public TreeNode Connection { get; set; }
         public TreeNode Database { get; set; }
         public TreeNode Table { get; set; }
+
+        public ConnectionElementIdentity ToConnectionElementIdentity()
+            => new()
+            {
+                ConnectionName = Connection?.Name,
+                DatabaseName = Database?.Name,
+                TableName = Table?.Name
+            };
     }
 
     public enum TreeNodeMode
