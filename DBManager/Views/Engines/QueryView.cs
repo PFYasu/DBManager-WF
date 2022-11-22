@@ -1,6 +1,7 @@
 ﻿using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Utils;
+using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using DBManager.Utils;
 using System;
@@ -15,24 +16,19 @@ namespace DBManager.Views.Engines
     public partial class QueryView : UserControl
     {
         private readonly IEnginePresenter _presenter;
-        private readonly string _databaseName;
-        private readonly Dictionary<string, List<string>> _databaseTableColumns;
-        private readonly MessageHelper _messageHelper;
+        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly MessageHelper _messageHelper = new("DBManager - database query view");
+        private Dictionary<string, List<string>> _databaseTableColumns = new();
 
-        public QueryView(
-            IEnginePresenter presenter,
-            string databaseName,
-            Dictionary<string, List<string>> databaseTableColumns)
+        public QueryView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
         {
             _presenter = presenter;
-            _databaseName = databaseName;
-            _databaseTableColumns = databaseTableColumns;
-            _messageHelper = new MessageHelper("DBManager - database query view");
+            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }
 
-        public void InitializeView()
+        public async void InitializeView()
         {
             DatabaseStructure_ListView.Columns[0].Width = -2;
             TableStructure_ListView.Columns[0].Width = -2;
@@ -40,9 +36,18 @@ namespace DBManager.Views.Engines
             CopyData_Button.Visible = false;
             QueryType_Label.Visible = false;
 
-            Name_Label.Text = $"Name: {_databaseName}";
+            Name_Label.Text = $"Name: {_connectionElementIdentity.DatabaseName}";
 
             DatabaseStructure_ListView.Items.Clear();
+
+            var response = await _presenter.GetDatabaseTableColumns(_connectionElementIdentity.DatabaseName);
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to get {_connectionElementIdentity.DatabaseName} database table columns.", response.ErrorMessage);
+                return;
+            }
+
+            _databaseTableColumns = response.Payload.DatabaseTableColumns;
 
             foreach (var table in _databaseTableColumns.Keys)
             {
@@ -123,7 +128,7 @@ namespace DBManager.Views.Engines
                 return;
             }
 
-            var response = await _presenter.SendQuery(_databaseName, query);
+            var response = await _presenter.SendQuery(_connectionElementIdentity.DatabaseName, query);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get table details.", response.ErrorMessage);
@@ -150,7 +155,7 @@ namespace DBManager.Views.Engines
                 return;
             }
 
-            using (var form = new NewTrackedQueryView(_presenter, _databaseName, query))
+            using (var form = new NewTrackedQueryView(_presenter, _connectionElementIdentity.DatabaseName, query))
             {
                 var result = form.ShowDialog();
 

@@ -56,24 +56,16 @@ namespace DBManager.Views.Engines
             await InitializeView();
         }
 
-        private async void Query_Enter(object sender, EventArgs e)
+        private void Query_Enter(object sender, EventArgs e)
         {
-            var response = await _presenter.GetDatabaseTableColumns(_connectionElementIdentity.DatabaseName);
-            if (response.Type == ResponseType.Error)
+            var queryView = new QueryView(_presenter, new ConnectionElementIdentity
             {
-                _messageHelper.ShowError("Unable to get database tables columns.", response.ErrorMessage);
-                return;
-            }
-
-            var payload = response.Payload;
-
-            var databaseTableColumns = payload.DatabaseTableColumns;
-
-            var queryView = new QueryView(_presenter, _connectionElementIdentity.DatabaseName, databaseTableColumns)
+                ConnectionName = _connectionElementIdentity.ConnectionName,
+                DatabaseName = _connectionElementIdentity.DatabaseName
+            })
             {
                 Dock = DockStyle.Fill
             };
-
             queryView.InitializeView();
 
             Query.Controls.Clear();
