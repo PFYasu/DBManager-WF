@@ -48,6 +48,11 @@ namespace DBManager.EngineModule.PostgreSQL
             if (IsValidForm() == false)
                 return;
 
+            var status = _messageHelper.ShowQuestion("Are you sure you want to save the connection configuration?");
+
+            if (status == DialogResult.No)
+                return;
+
             var connectionParameters = PrepareConnectionParameters();
             const string engineType = "PostgreSQL";
             var connectionName = Name_TextBox.Text;
