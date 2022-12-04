@@ -10,6 +10,7 @@
         public static class Logs
         {
             public const string TestAssemblyPrefix = "xunit";
+            public const string LogFileName = "LoggerData.txt";
         }
     }
 }
