@@ -8,6 +8,7 @@ namespace DBManager.Core.Presenters.Engines
         Response<TrackedQuerySnapshotsDetailsResponseDto> GetTrackedQuerySnapshotsDetails(string trackedQueryName, string databaseName);
         Response<TrackedQuerySnapshotResponseDto> GetSnapshot(string snapshotName, string trackedQueryName, string databaseName);
         Response<TrackedQuerySnapshotDifferencesResponseDto> GetSnapshotDifferences(TrackedQuerySnapshotDifferencesDto dto);
+        Response<TrackedQueryPreviewResponseDto> GetPreview(string trackedQueryName, string databaseName);
         Response AddTrackedQuery(NewTrackedQueryDto dto);
         Response RemoveTrackedQuery(string trackedQueryName, string databaseName);
     }

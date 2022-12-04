@@ -41,6 +41,20 @@ namespace DBManager.Views.Engines
             FillTrackedQueryDetails();
         }
 
+        private void Preview_Button_Click(object sender, EventArgs e)
+        {
+            var trackedQueryName = TrackedQueries_ListView.SelectedItems[0].Text;
+
+            var response = _presenter.QueryTrackerDriver.GetPreview(trackedQueryName, _databaseName);
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError("Unable to remove tracked query.", response.ErrorMessage);
+                return;
+            }
+
+            _messageHelper.ShowInformation(response.Payload.QueryPreview);
+        }
+
         private void Delete_Button_Click(object sender, EventArgs e)
         {
             var trackedQueryName = TrackedQueries_ListView.SelectedItems[0].Text;
@@ -177,6 +191,7 @@ namespace DBManager.Views.Engines
 
             Delete_Button.Enabled = true;
             Refresh_Button.Enabled = true;
+            Preview_Button.Enabled = true;
 
             _selectedTrackedQuery = TrackedQueries_ListView.SelectedItems[0].Text;
 
@@ -236,6 +251,7 @@ namespace DBManager.Views.Engines
         {
             Delete_Button.Enabled = false;
             Refresh_Button.Enabled = false;
+            Preview_Button.Enabled = false;
             Above_Button.Enabled = false;
             Below_Button.Enabled = false;
 
