@@ -6,5 +6,10 @@
         {
             public const int RefreshTimePeriod = 60000;
         }
+
+        public static class Logs
+        {
+            public const string TestAssemblyPrefix = "xunit";
+        }
     }
 }
