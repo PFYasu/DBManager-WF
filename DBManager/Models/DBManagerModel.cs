@@ -1,4 +1,5 @@
 ﻿using DBManager.Core.Models;
+using DBManager.Core.Utils.Log;
 using DBManager.Utils;
 using Newtonsoft.Json;
 using System;
@@ -41,6 +42,8 @@ namespace DBManager.Models
                     var connection = JsonConvert.DeserializeObject<Connection>(json);
 
                     _connections.Add(connection);
+
+                    Logger.Log(LogType.Information, $"Loaded connection: {connection.Name}. Engine type: {connection.EngineType}.");
                 }
             }
         }
@@ -79,6 +82,8 @@ namespace DBManager.Models
 
                         fileStream.SetLength(0);
                         await streamWriter.WriteAsync(serializedConnection);
+
+                        Logger.Log(LogType.Information, $"Saved connection: {connection.Name}. Engine type: {connection.EngineType}.");
                     }
                 }
             }
@@ -87,6 +92,7 @@ namespace DBManager.Models
         public async ValueTask DisposeAsync()
         {
             await SaveConnections();
+            Logger.Log(LogType.Information, $"Shutdown.");
         }
 
         private string ConnectionRepositoryPath(string connectionName) => Path.Combine(Constants.Paths.ConnectionsRespository, $"{connectionName}.json");

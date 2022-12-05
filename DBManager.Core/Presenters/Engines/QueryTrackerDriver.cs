@@ -2,6 +2,7 @@
 using DBManager.Core.Models;
 using DBManager.Core.Models.Engines;
 using DBManager.Core.Utils;
+using DBManager.Core.Utils.Log;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -217,9 +218,21 @@ namespace DBManager.Core.Presenters.Engines
                     {
                         var executeQueryResult = await _model.ExecuteQuery(trackedQuery.Query, trackedQuery.DatabaseName);
                         _model.QueryTrackerDriverModel.TryApplyNewSnapshot(trackedQuery, executeQueryResult);
+
+                        Logger.Log(
+                            LogType.Information,
+                            "Successfully received Tracked Query result.\n" +
+                            $"Query: {trackedQuery.Query}\n" +
+                            $"Database: {trackedQuery.DatabaseName}");
                     }
-                    catch
+                    catch (Exception exception)
                     {
+                        Logger.Log(
+                            LogType.Error, 
+                            "Error updating Tracked Query.\n" +
+                            $"Query: {trackedQuery.Query}\n" +
+                            $"Database: {trackedQuery.DatabaseName}\n" +
+                            $"Message:\n{exception.Message}");
                     }
                 }
             }

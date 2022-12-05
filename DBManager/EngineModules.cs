@@ -1,4 +1,5 @@
 ﻿using DBManager.Core;
+using DBManager.Core.Utils.Log;
 using DBManager.Utils;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,11 @@ namespace DBManager
 
                 foreach (var engineModuleAttribute in engineModuleAttributes)
                 {
-                    if (engineModuleAttribute != null)
-                        attributes.Add(engineModuleAttribute.EngineType, engineModuleAttribute);
+                    if (engineModuleAttribute == null)
+                        continue;
+
+                    attributes.Add(engineModuleAttribute.EngineType, engineModuleAttribute);
+                    Logger.Log(LogType.Information, $"Found {engineModuleAttribute.EngineType} engine type.");
                 }
             }
 
@@ -48,9 +52,13 @@ namespace DBManager
             var dllPaths = Directory.GetFiles(currentDirectoryPath, fullDllName, SearchOption.AllDirectories);
             var dllPath = dllPaths.FirstOrDefault();
 
-            return dllPath == null
-                ? null
-                : Assembly.LoadFile(dllPath);
+            if (dllPath != null)
+            {
+                Logger.Log(LogType.Information, $"Discovered {dllPath} to load.");
+                return Assembly.LoadFile(dllPath);
+            }
+
+            return null;
         }
     }
 }

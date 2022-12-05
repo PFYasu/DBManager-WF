@@ -1,4 +1,5 @@
-﻿using DBManager.Models;
+﻿using DBManager.Core.Utils.Log;
+using DBManager.Models;
 using DBManager.Presenters;
 using DBManager.Views;
 using System;
@@ -28,6 +29,8 @@ namespace DBManager
 
         private static async Task RunDBManagerComponents()
         {
+            Logger.Log(LogType.Information, "DBManager has been started. Initializing DBManager subsystems.");
+
             await using (var model = await DBManagerModel.Initialize())
             {
                 var presenter = new DBManagerPresenter(model);
