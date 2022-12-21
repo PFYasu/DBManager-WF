@@ -1,7 +1,7 @@
 ﻿using DBManager.Core.Utils.Log;
-using DBManager.Models;
 using DBManager.Presenters;
 using DBManager.Views;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +19,8 @@ namespace DBManager
 
             try
             {
-                await RunDBManagerComponents();
+                var serviceProvider = Startup.Configure();
+                await RunDBManagerComponents(serviceProvider);
             }
             catch (Exception exception)
             {
@@ -27,16 +28,15 @@ namespace DBManager
             }
         }
 
-        private static async Task RunDBManagerComponents()
+        private static async Task RunDBManagerComponents(IServiceProvider serviceProvider)
         {
             Logger.Log(LogType.Information, "DBManager has been started. Initializing DBManager subsystems.");
 
-            await using (var model = await DBManagerModel.Initialize())
-            {
-                var presenter = new DBManagerPresenter(model);
-                var view = new DBManagerView(presenter);
-                Application.Run(view);
-            }
+            var presenter = (DBManagerPresenter)serviceProvider.GetService<IDBManagerPresenter>();
+            presenter.InitializeEnginePresenters();
+
+            var view = new DBManagerView(presenter);
+            Application.Run(view);
         }
 
         private static void ShowException(Exception exception)

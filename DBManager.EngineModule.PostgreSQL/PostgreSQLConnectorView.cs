@@ -43,7 +43,7 @@ namespace DBManager.EngineModule.PostgreSQL
             Close();
         }
 
-        private async void Save_Button_Click(object sender, EventArgs e)
+        private void Save_Button_Click(object sender, EventArgs e)
         {
             if (IsValidForm() == false)
                 return;
@@ -68,7 +68,7 @@ namespace DBManager.EngineModule.PostgreSQL
                         ConnectionParameters = connectionParameters,
                         Name = connectionName
                     };
-                    response = await _connectorMethods.AddConnection(addConnectionDto);
+                    response = _connectorMethods.AddConnection(addConnectionDto);
                     break;
                 case ConnectorMode.UpdateConnection:
                     var updateConnectionDto = new UpdateConnectionDto
@@ -78,7 +78,7 @@ namespace DBManager.EngineModule.PostgreSQL
                         Name = connectionName,
                         OldName = _connectionName
                     };
-                    response = await _connectorMethods.UpdateConnection(updateConnectionDto);
+                    response = _connectorMethods.UpdateConnection(updateConnectionDto);
                     break;
                 default:
                     _messageHelper.ShowError("Unable to perform connector action - incorrect connector mode.");

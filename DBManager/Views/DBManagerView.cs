@@ -74,7 +74,7 @@ namespace DBManager.Views
             LoadConnections();
         }
 
-        private async void RemoveConnection_Button_Click(object sender, EventArgs e)
+        private void RemoveConnection_Button_Click(object sender, EventArgs e)
         {
             var nodes = ConnectionTree_ConnectionTreeView.LastSelectedNode;
 
@@ -90,7 +90,7 @@ namespace DBManager.Views
             if (status == DialogResult.No)
                 return;
 
-            var response = await _presenter.RemoveConnection(connectionName);
+            var response = _presenter.RemoveConnection(connectionName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to remove {connectionName} connection.", response.ErrorMessage);

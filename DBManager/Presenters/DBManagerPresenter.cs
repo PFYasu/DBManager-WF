@@ -1,104 +1,189 @@
-﻿using DBManager.Core.Dto;
+﻿using DBManager.Core;
+using DBManager.Core.Dto;
+using DBManager.Core.Models;
+using DBManager.Core.Models.Engines;
 using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
-using DBManager.Models;
+using DBManager.Utils.Files;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DBManager.Presenters
 {
     public class DBManagerPresenter : IDBManagerPresenter
     {
-        private readonly DBManagerService _service;
+        private readonly IFileManager _fileManager;
+        private readonly DataTransferMethods _dataTransferMethods;
+        private readonly Dictionary<string, IEnginePresenter> _presenters = new();
 
-        public DBManagerPresenter(IDBManagerModel model)
+        public DBManagerPresenter(IFileManager fileManager)
         {
-            var dataTransferMethods = new DataTransferMethods
+            _fileManager = fileManager;
+            _dataTransferMethods = new DataTransferMethods
             {
                 GetConnectionNames = GetConnectionNames,
                 GetPresenter = GetPresenter
             };
-
-            _service = new DBManagerService(model, dataTransferMethods);
-            _service.InitializeEnginePresenters();
         }
 
-        public async Task<Response> AddConnection(AddConnectionDto dto)
+        public void InitializeEnginePresenters()
         {
-            try
+            var connections = _fileManager.LoadMany<Connection>(Router.ToConnectionRepository());
+
+            foreach (var connection in connections)
             {
-                await _service.AddConnection(dto);
-                return Response.Ok();
+                var engineType = connection.EngineType;
+
+                if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
+                    throw new NotSupportedException($"{engineType} engine type is not supported.");
+
+                var presenter = CreatePresenter(engineModuleAttribute, connection);
+
+                if (_presenters.ContainsKey(connection.Name))
+                    throw new NotImplementedException($"{connection.Name} connection already exists in dictionary.");
+
+                _presenters.Add(connection.Name, presenter);
             }
-            catch (Exception exception)
-            {
-                return Response.Error(exception.Message);
-            }
+        }
+
+        public Response AddConnection(AddConnectionDto dto)
+        {
+            if (ConnectionExists(dto.Name))
+                return Response.Error($"Connection with {dto.Name} name already exists.");
+
+            var connection = Connection.FromDto(dto);
+
+            _fileManager.Save(connection, Router.ToConnection(dto.Name));
+
+            return Response.Ok();
         }
 
         public Response<PresenterResponseDto> GetPresenter(string connectionName)
         {
-            try
+            if (_presenters.TryGetValue(connectionName, out IEnginePresenter presenterFromDictionary))
             {
-                var dto = _service.GetPresenter(connectionName);
-                return Response<PresenterResponseDto>.Ok(dto);
+                return Response<PresenterResponseDto>.Ok(new PresenterResponseDto
+                {
+                    EngineType = presenterFromDictionary.EngineType,
+                    Presenter = presenterFromDictionary
+                });
             }
-            catch (Exception exception)
+
+            if (ConnectionExists(connectionName) == false)
+                return Response<PresenterResponseDto>.Error($"Connection with {connectionName} name does not exist.");
+
+            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+            var engineType = connection.EngineType;
+
+            if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
+                return Response<PresenterResponseDto>.Error("Unable to create presenter. Incorrect engine type.");
+
+            var presenter = CreatePresenter(engineModuleAttribute, connection);
+
+            if (_presenters.ContainsKey(connectionName))
+                return Response<PresenterResponseDto>.Error($"Connection {connectionName} already exists in dictionary.");
+
+            _presenters.Add(connectionName, presenter);
+
+            var dto = new PresenterResponseDto
             {
-                return Response<PresenterResponseDto>.Error(exception.Message);
-            }
+                EngineType = engineType,
+                Presenter = presenter
+            };
+
+            return Response<PresenterResponseDto>.Ok(dto);
         }
 
-        public async Task<Response> RemoveConnection(string connectionName)
+        public Response RemoveConnection(string connectionName)
         {
-            try
-            {
-                await _service.RemoveConnection(connectionName);
-                return Response.Ok();
-            }
-            catch (Exception exception)
-            {
-                return Response.Error(exception.Message);
-            }
+            if (ConnectionExists(connectionName) == false)
+                return Response.Error($"Connection with {connectionName} name does not exist.");
+
+            _fileManager.Delete(Router.ToConnection(connectionName));
+
+            _presenters.Remove(connectionName);
+
+            return Response.Ok();
         }
 
-        public async Task<Response> UpdateConnection(UpdateConnectionDto dto)
+        public Response UpdateConnection(UpdateConnectionDto dto)
         {
-            try
-            {
-                await _service.UpdateConnection(dto);
-                return Response.Ok();
-            }
-            catch (Exception exception)
-            {
-                return Response.Error(exception.Message);
-            }
+            if (ConnectionExists(dto.OldName) == false)
+                return Response.Error($"{dto.OldName} connection does not exist.");
+
+            if (dto.OldName != dto.Name && ConnectionExists(dto.Name))
+                return Response.Error($"Unable to change {dto.OldName} connection - {dto.Name} connection already exists.");
+
+            var oldConnection = _fileManager.Load<Connection>(Router.ToConnection(dto.OldName));
+
+            var newConnection = Connection.FromDto(dto);
+            newConnection.TrackedQueries = oldConnection.TrackedQueries;
+
+            _fileManager.Delete(Router.ToConnection(dto.OldName));
+            _fileManager.Save(newConnection, Router.ToConnection(newConnection.Name));
+
+            _presenters.Remove(dto.OldName);
+            return Response.Ok();
         }
 
         public Response<ConnectionNamesResponseDto> GetConnectionNames()
         {
-            try
-            {
-                var dto = _service.GetConnectionNames();
-                return Response<ConnectionNamesResponseDto>.Ok(dto);
-            }
-            catch (Exception exception)
-            {
-                return Response<ConnectionNamesResponseDto>.Error(exception.Message);
-            }
+            var names = _fileManager
+                .LoadMany<Connection>(Router.ToConnectionRepository())
+                .Select(x => x.Name)
+                .ToList();
+
+            var dto = new ConnectionNamesResponseDto { Names = names };
+
+            return Response<ConnectionNamesResponseDto>.Ok(dto);
         }
 
         public Response<AddConnectionDto> GetConnectionSettings(string connectionName)
         {
+            if (ConnectionExists(connectionName) == false)
+                return Response<AddConnectionDto>.Error($"Connection with {connectionName} does not exist");
+
+            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+
+            var dto = new AddConnectionDto
+            {
+                EngineType = connection.EngineType,
+                ConnectionParameters = connection.ConnectionParameters,
+                Name = connection.Name
+            };
+
+            return Response<AddConnectionDto>.Ok(dto);
+        }
+
+        private bool ConnectionExists(string connectionName)
+        {
             try
             {
-                var dto = _service.GetConnectionSettings(connectionName);
-                return Response<AddConnectionDto>.Ok(dto);
+                var exists = _fileManager
+                    .LoadMany<Connection>(Router.ToConnectionRepository())
+                    .Exists(x => x.Name == connectionName);
+
+                return exists;
             }
-            catch (Exception exception)
+            catch
             {
-                return Response<AddConnectionDto>.Error(exception.Message);
+                return false;
             }
+        }
+
+        private IEnginePresenter CreatePresenter(EngineModuleAttribute engineModuleAttribute, Connection connection)
+        {
+            var model = (IEngineModel)Activator.CreateInstance(
+                engineModuleAttribute.Model,
+                connection);
+
+            var presenter = (IEnginePresenter)Activator.CreateInstance(
+                engineModuleAttribute.Presenter,
+                model,
+                _dataTransferMethods);
+
+            return presenter;
         }
     }
 }
