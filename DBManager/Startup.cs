@@ -1,5 +1,6 @@
 ﻿using DBManager.Presenters;
 using DBManager.Utils.Files;
+using DBManager.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -11,11 +12,26 @@ public static class Startup
     {
         var serviceCollection = new ServiceCollection();
 
+        ConfigureViews(serviceCollection);
+
         serviceCollection.AddSingleton<IFileManager, FileManager>();
-        serviceCollection.AddSingleton<IDBManagerPresenter, DBManagerPresenter>();
+        serviceCollection.AddSingleton<IDBManagerPresenter, DBManagerPresenter>(service =>
+        {
+            var fileManager = service.GetService<IFileManager>();
+
+            var dbManagerPresenter = new DBManagerPresenter(fileManager);
+            dbManagerPresenter.InitializeEnginePresenters();
+
+            return dbManagerPresenter;
+        });
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         return serviceProvider;
+    }
+
+    private static void ConfigureViews(IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<DBManagerView>();
     }
 }

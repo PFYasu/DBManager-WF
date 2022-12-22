@@ -1,9 +1,7 @@
 ﻿using DBManager.Core.Utils.Log;
-using DBManager.Presenters;
 using DBManager.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DBManager
@@ -11,7 +9,7 @@ namespace DBManager
     public static class Program
     {
         [STAThread]
-        public static async Task Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
@@ -19,24 +17,17 @@ namespace DBManager
 
             try
             {
+                Logger.Log(LogType.Information, "DBManager has been started. Initializing DBManager subsystems.");
+
                 var serviceProvider = Startup.Configure();
-                await RunDBManagerComponents(serviceProvider);
+                var view = serviceProvider.GetService<DBManagerView>();
+
+                Application.Run(view);
             }
             catch (Exception exception)
             {
                 ShowException(exception);
             }
-        }
-
-        private static async Task RunDBManagerComponents(IServiceProvider serviceProvider)
-        {
-            Logger.Log(LogType.Information, "DBManager has been started. Initializing DBManager subsystems.");
-
-            var presenter = (DBManagerPresenter)serviceProvider.GetService<IDBManagerPresenter>();
-            presenter.InitializeEnginePresenters();
-
-            var view = new DBManagerView(presenter);
-            Application.Run(view);
         }
 
         private static void ShowException(Exception exception)
