@@ -6,16 +6,19 @@ namespace DBManager.Utils.Files;
 
 public interface IFileManager
 {
-    T Load<T>(string path);
-    List<T> LoadMany<T>(string directoryPath);
-    void Save<T>(T entity, string path);
+    T Load<T>(string path) where T : class;
+    List<T> LoadMany<T>(string directoryPath) where T : class;
+    void Save<T>(T entity, string path) where T : class;
     void Delete(string path);
 }
 
 public class FileManager : IFileManager
 {
-    public T Load<T>(string path)
+    public T Load<T>(string path) where T : class
     {
+        if (File.Exists(path) == false)
+            return null;
+
         using (var reader = new StreamReader(path))
         {
             var json = reader.ReadToEnd();
@@ -25,7 +28,7 @@ public class FileManager : IFileManager
         }
     }
 
-    public List<T> LoadMany<T>(string directoryPath)
+    public List<T> LoadMany<T>(string directoryPath) where T : class
     {
         if (Directory.Exists(directoryPath) == false)
             return null;
@@ -42,8 +45,8 @@ public class FileManager : IFileManager
         return entities;
     }
 
-    public void Save<T>(T entity, string path)
-    {
+    public void Save<T>(T entity, string path) where T : class
+{
         using (var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
         using (var streamWriter = new StreamWriter(fileStream))
         {
