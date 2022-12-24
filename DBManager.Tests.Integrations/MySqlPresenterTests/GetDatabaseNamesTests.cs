@@ -10,11 +10,11 @@ public class GetDatabaseNamesTests : IDisposable
 {
     private readonly MySqlHelper _mySqlHelper = new();
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificDatabases_GetCorrectDatabaseNames()
     {
-        var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
-        var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
+        var presenter = _mySqlHelper.CreatePresenter();
+        var connection = _mySqlHelper.CreateConnection();
 
         var firstDatabaseName = await _mySqlHelper.CreateDatabase(connection);
         var secondDatabaseName = await _mySqlHelper.CreateDatabase(connection);

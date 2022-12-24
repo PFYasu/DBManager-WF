@@ -30,7 +30,7 @@ namespace DBManager.Tests.UtilsTests
 
         public string Act(Dictionary<string, string> parameters)
         {
-            var result = ConnectorHelper.Combine(parameters);
+            var result = ConnectorHelper.CombineToConnectionString(parameters);
 
             return result;
         }

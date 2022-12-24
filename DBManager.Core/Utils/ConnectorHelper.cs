@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DBManager.Core.Utils
 {
     public static class ConnectorHelper
     {
-        public static string Combine(Dictionary<string, string> parameters)
+        public static string CombineToConnectionString(Dictionary<string, string> parameters)
         {
             var connectionStringBuilder = new StringBuilder();
 
@@ -15,6 +16,22 @@ namespace DBManager.Core.Utils
             }
 
             return connectionStringBuilder.ToString();
+        }
+
+        public static Dictionary<string, string> CombineToDictionary(string connectionString)
+        {
+            var splittedValues = connectionString.Split(";");
+
+            var parameters = new Dictionary<string, string>();
+
+            foreach (var splittedValue in splittedValues)
+            {
+                var keyValue = splittedValue.Split('=');
+
+                parameters[keyValue.First()] = keyValue.Last();
+            }
+
+            return parameters;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace DBManager.EngineModule.PostgreSQL
         public PostgreSQLModel(Connection connection)
         {
             var connectionParameters = connection.ConnectionParameters;
-            _connectionString = ConnectorHelper.Combine(connectionParameters);
+            _connectionString = ConnectorHelper.CombineToConnectionString(connectionParameters);
 
             Name = connection.Name;
             EngineType = connection.EngineType;

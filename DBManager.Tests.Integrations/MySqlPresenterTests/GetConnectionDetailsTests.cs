@@ -10,11 +10,11 @@ public class GetConnectionDetailsTests : IDisposable
 {
     private readonly MySqlHelper _mySqlHelper = new();
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificConnection_GetConnectionDetails()
     {
-        var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
-        var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
+        var presenter = _mySqlHelper.CreatePresenter();
+        var connection = _mySqlHelper.CreateConnection();
 
         var databaseName = await _mySqlHelper.CreateDatabase(connection);
 
@@ -45,9 +45,9 @@ public class GetConnectionDetailsTests : IDisposable
 
         Assert.Equal(presenter.ConnectionName, payload.Name);
         Assert.Equal(engineType, payload.EngineType);
-        Assert.Equal(ConnectionParameters.MySql.ConnectionParameters["Uid"], payload.Uid);
-        Assert.Equal(ConnectionParameters.MySql.ConnectionParameters["Server"], payload.Server);
-        Assert.Equal(ConnectionParameters.MySql.ConnectionParameters["Port"], payload.Port.ToString());
+        Assert.Equal(_mySqlHelper.ConnectionParameters["Uid"], payload.Uid);
+        Assert.Equal(_mySqlHelper.ConnectionParameters["Server"], payload.Server);
+        Assert.Equal(_mySqlHelper.ConnectionParameters["Port"], payload.Port.ToString());
     }
 
     public static Task<Response<ConnectionDetailsResponseDto>> Act(MySqlPresenter presenter) 

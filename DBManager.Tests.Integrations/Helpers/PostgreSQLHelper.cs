@@ -1,4 +1,5 @@
 ﻿using DBManager.Core.Models;
+using DBManager.Core.Utils;
 using DBManager.EngineModule.PostgreSQL;
 using Npgsql;
 
@@ -7,20 +8,30 @@ namespace DBManager.Tests.Integrations.Helpers;
 public class PostgreSQLHelper : IDisposable
 {
     private readonly List<ConnectionStructure> _connectionStructures = new();
-    private readonly string _escapeDatabaseName;
+    private readonly string _connectionString;
+    private readonly string _escapeDatabase;
+    public readonly Dictionary<string, string> ConnectionParameters = new();
 
-    public PostgreSQLHelper(string escapeDatabaseName)
+    public PostgreSQLHelper()
     {
-        _escapeDatabaseName = escapeDatabaseName;
+        var connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+        var escapeDatabase = Environment.GetEnvironmentVariable(EscapeDatabaseEnvironmentVariable);
+
+        _connectionString = connectionString;
+        _escapeDatabase = escapeDatabase;
+        ConnectionParameters = ConnectorHelper.CombineToDictionary(connectionString);
     }
 
-    public PostgreSQLPresenter CreatePresenter(Dictionary<string, string> connectionParameters)
+    public const string ConnectionStringEnvironmentVariable = "DBM_POSTGRESQL_CS";
+    public const string EscapeDatabaseEnvironmentVariable = "DBM_POSTGRESQL_ED";
+
+    public PostgreSQLPresenter CreatePresenter()
     {
         var connection = new Connection
         {
             Name = NamesGenerator.Generate(),
             EngineType = "PostgreSQL",
-            ConnectionParameters = connectionParameters,
+            ConnectionParameters = ConnectionParameters,
             TrackedQueries = new List<TrackedQuery>()
         };
 
@@ -30,9 +41,9 @@ public class PostgreSQLHelper : IDisposable
         return presenter;
     }
 
-    public NpgsqlConnection CreateConnection(string connectionString)
+    public NpgsqlConnection CreateConnection()
     {
-        var connection = new NpgsqlConnection(connectionString);
+        var connection = new NpgsqlConnection(_connectionString);
 
         var connectionStructure = new ConnectionStructure { Connection = connection };
 
@@ -76,7 +87,7 @@ public class PostgreSQLHelper : IDisposable
 
                 using (var command = connection.CreateCommand())
                 {
-                    connection.ChangeDatabase(_escapeDatabaseName);
+                    connection.ChangeDatabase(_escapeDatabase);
 
                     command.CommandText =
                         $"SELECT " +

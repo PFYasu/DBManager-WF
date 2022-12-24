@@ -1,4 +1,5 @@
 ﻿using DBManager.Core.Models;
+using DBManager.Core.Utils;
 using DBManager.EngineModule.MySql;
 using MySqlConnector;
 
@@ -6,15 +7,27 @@ namespace DBManager.Tests.Integrations.Helpers;
 
 public class MySqlHelper : IDisposable
 {
-    private readonly List<ConnectionStructure> _connectionStructures = new();
+    public readonly List<ConnectionStructure> _connectionStructures = new();
+    private readonly string _connectionString;
+    public readonly Dictionary<string, string> ConnectionParameters = new();
 
-    public MySqlPresenter CreatePresenter(Dictionary<string, string> connectionParameters)
+    public MySqlHelper()
+    {
+        var connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+
+        _connectionString = connectionString;
+        ConnectionParameters = ConnectorHelper.CombineToDictionary(connectionString);
+    }
+
+    public const string ConnectionStringEnvironmentVariable = "DBM_MYSQL_CS";
+
+    public MySqlPresenter CreatePresenter()
     {
         var connection = new Connection
         {
             Name = NamesGenerator.Generate(),
             EngineType = "MySql",
-            ConnectionParameters = connectionParameters,
+            ConnectionParameters = ConnectionParameters,
             TrackedQueries = new List<TrackedQuery>()
         };
 
@@ -24,9 +37,9 @@ public class MySqlHelper : IDisposable
         return presenter;
     }
 
-    public MySqlConnection CreateConnection(string connectionString)
+    public MySqlConnection CreateConnection()
     {
-        var connection = new MySqlConnection(connectionString);
+        var connection = new MySqlConnection(_connectionString);
 
         var connectionStructure = new ConnectionStructure { Connection = connection };
 

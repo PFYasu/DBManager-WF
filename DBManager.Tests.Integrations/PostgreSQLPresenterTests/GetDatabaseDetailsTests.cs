@@ -8,13 +8,13 @@ namespace DBManager.Tests.Integrations.PostgreSQLPresenterTests;
 
 public class GetDatabaseDetailsTests : IDisposable
 {
-    private readonly PostgreSQLHelper _postgreSQLHelper = new(ConnectionParameters.PostgreSQL.EscapeDatabase);
+    private readonly PostgreSQLHelper _postgreSQLHelper = new();
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificDatabase_GetDatabaseDetails()
     {
-        var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
-        var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+        var presenter = _postgreSQLHelper.CreatePresenter();
+        var connection = _postgreSQLHelper.CreateConnection();
 
         var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
         const string tableName = "employees";

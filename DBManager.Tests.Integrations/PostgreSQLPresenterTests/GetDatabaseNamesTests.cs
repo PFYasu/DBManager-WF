@@ -8,13 +8,13 @@ namespace DBManager.Tests.Integrations.PostgreSQLPresenterTests;
 
 public class GetDatabaseNamesTests : IDisposable
 {
-    private readonly PostgreSQLHelper _postgreSQLHelper = new(ConnectionParameters.PostgreSQL.EscapeDatabase);
+    private readonly PostgreSQLHelper _postgreSQLHelper = new();
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificDatabases_GetCorrectDatabaseNames()
     {
-        var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
-        var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+        var presenter = _postgreSQLHelper.CreatePresenter();
+        var connection = _postgreSQLHelper.CreateConnection();
 
         var firstDatabaseName = await _postgreSQLHelper.CreateDatabase(connection);
         var secondDatabaseName = await _postgreSQLHelper.CreateDatabase(connection);

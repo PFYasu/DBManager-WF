@@ -8,13 +8,13 @@ namespace DBManager.Tests.Integrations.PostgreSQLPresenterTests;
 
 public class GetConnectionDetailsTests : IDisposable
 {
-    private readonly PostgreSQLHelper _postgreSQLHelper = new(ConnectionParameters.PostgreSQL.EscapeDatabase);
+    private readonly PostgreSQLHelper _postgreSQLHelper = new();
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificConnection_GetConnectionDetails()
     {
-        var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
-        var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+        var presenter = _postgreSQLHelper.CreatePresenter();
+        var connection = _postgreSQLHelper.CreateConnection();
 
         var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
 
@@ -45,9 +45,9 @@ public class GetConnectionDetailsTests : IDisposable
 
         Assert.Equal(presenter.ConnectionName, payload.Name);
         Assert.Equal(engineType, payload.EngineType);
-        Assert.Equal(ConnectionParameters.PostgreSQL.ConnectionParameters["Uid"], payload.Uid);
-        Assert.Equal(ConnectionParameters.PostgreSQL.ConnectionParameters["Server"], payload.Server);
-        Assert.Equal(ConnectionParameters.PostgreSQL.ConnectionParameters["Port"], payload.Port.ToString());
+        Assert.Equal(_postgreSQLHelper.ConnectionParameters["Uid"], payload.Uid);
+        Assert.Equal(_postgreSQLHelper.ConnectionParameters["Server"], payload.Server);
+        Assert.Equal(_postgreSQLHelper.ConnectionParameters["Port"], payload.Port.ToString());
     }
 
     public static Task<Response<ConnectionDetailsResponseDto>> Act(PostgreSQLPresenter presenter) 

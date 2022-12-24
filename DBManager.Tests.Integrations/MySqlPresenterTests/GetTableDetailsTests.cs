@@ -10,11 +10,11 @@ public class GetTableDetailsTests : IDisposable
 {
     private readonly MySqlHelper _mySqlHelper = new();
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificTable_GetTableDetails()
     {
-        var presenter = _mySqlHelper.CreatePresenter(ConnectionParameters.MySql.ConnectionParameters);
-        var connection = _mySqlHelper.CreateConnection(ConnectionParameters.MySql.ConnectionString);
+        var presenter = _mySqlHelper.CreatePresenter();
+        var connection = _mySqlHelper.CreateConnection();
 
         var databaseName = await _mySqlHelper.CreateDatabase(connection);
         const string tableName = "employees";

@@ -9,13 +9,13 @@ namespace DBManager.Tests.Integrations.PostgreSQLPresenterTests;
 
 public class SendQueryTests : IDisposable
 {
-    private readonly PostgreSQLHelper _postgreSQLHelper = new(ConnectionParameters.PostgreSQL.EscapeDatabase);
+    private readonly PostgreSQLHelper _postgreSQLHelper = new();
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificQuery_GetDataTable_WithCorrectRows_AndSelectedColumns()
     {
-        var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
-        var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+        var presenter = _postgreSQLHelper.CreatePresenter();
+        var connection = _postgreSQLHelper.CreateConnection();
 
         var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
         const string tableName = "employees";
@@ -56,11 +56,11 @@ public class SendQueryTests : IDisposable
         Assert.Equal(1, dataTable.Rows.Count);
     }
 
-    [Fact]
+    [IntegrationTestFact]
     public async Task ForSpecificNonQuery_GetDataTable_WithRowAffectedColumn_AndCorrectNumberOfAffectedRows()
     {
-        var presenter = _postgreSQLHelper.CreatePresenter(ConnectionParameters.PostgreSQL.ConnectionParameters);
-        var connection = _postgreSQLHelper.CreateConnection(ConnectionParameters.PostgreSQL.ConnectionString);
+        var presenter = _postgreSQLHelper.CreatePresenter();
+        var connection = _postgreSQLHelper.CreateConnection();
 
         var databaseName = await _postgreSQLHelper.CreateDatabase(connection);
         const string tableName = "employees";
