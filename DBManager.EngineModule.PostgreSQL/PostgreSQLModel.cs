@@ -35,7 +35,7 @@ namespace DBManager.EngineModule.PostgreSQL
                 await connection.OpenAsync();
 
                 if (string.IsNullOrEmpty(databaseName) == false)
-                    connection.ChangeDatabase(databaseName);
+                    await connection.ChangeDatabaseAsync(databaseName);
 
                 using (var command = new NpgsqlCommand(query, connection))
                 using (var dataAdapter = new NpgsqlDataAdapter(command))
@@ -57,7 +57,7 @@ namespace DBManager.EngineModule.PostgreSQL
                 await connection.OpenAsync();
 
                 if (string.IsNullOrEmpty(databaseName) == false)
-                    connection.ChangeDatabase(databaseName);
+                    await connection.ChangeDatabaseAsync(databaseName);
 
                 var command = new NpgsqlCommand(query, connection);
                 var affected = await command.ExecuteNonQueryAsync();
