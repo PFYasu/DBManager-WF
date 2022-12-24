@@ -26,6 +26,9 @@ namespace DBManager.Core.Utils
 
             foreach (var splittedValue in splittedValues)
             {
+                if (string.IsNullOrEmpty(splittedValue))
+                    continue;
+
                 var keyValue = splittedValue.Split('=');
 
                 parameters[keyValue.First()] = keyValue.Last();

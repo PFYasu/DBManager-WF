@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace DBManager.Tests.UtilsTests
+namespace DBManager.Tests.UtilsTests.ConnectorHelperTests
 {
-    public class ConnectorHelperTests
+    public class CombineToConnectionStringTests
     {
         [Fact]
         public void ForParametersInDictionary_ReturnsCorrectConnectionString()
