@@ -124,14 +124,17 @@ namespace DBManager.Views
 
             var engineType = response.Payload.EngineType;
 
-            if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
+            var connectorViewTypeResponse = _presenter.GetConnectorViewType(engineType);
+            if (connectorViewTypeResponse.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to create connector update view - incorrect engine type.");
+                _messageHelper.ShowError($"Unable to get connector view type for {engineType} engine type.", connectorViewTypeResponse.ErrorMessage);
                 return;
             }
 
+            var connectorViewType = connectorViewTypeResponse.Payload.ConnectorViewType;
+
             var form = (Form)Activator.CreateInstance(
-                engineModuleAttribute.ConnectorView,
+                connectorViewType,
                 _connectorMethods,
                 connectionName);
 

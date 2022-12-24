@@ -11,5 +11,7 @@ namespace DBManager.Presenters
         Response<ConnectionNamesResponseDto> GetConnectionNames();
         Response<PresenterResponseDto> GetPresenter(string connectionName);
         Response<AddConnectionDto> GetConnectionSettings(string connectionName);
+        Response<ConnectorViewTypeResponseDto> GetConnectorViewType(string engineType);
+        Response<EngineModuleNamesResponseDto> GetEngineModuleNames();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using DBManager.Presenters;
-using DBManager.Utils;
 using DBManager.Utils.Files;
 using DBManager.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,15 +14,15 @@ public static class Startup
 
         ConfigureViews(serviceCollection);
 
-        serviceCollection.AddSingleton<IDBManagerActivator, DBManagerActivator>();
+        serviceCollection.AddSingleton<IEngineModuleResolver, EngineModuleResolver>();
         serviceCollection.AddSingleton<IFileManager, FileManager>();
 
         serviceCollection.AddSingleton<IDBManagerPresenter, DBManagerPresenter>(service =>
         {
             var fileManager = service.GetService<IFileManager>();
-            var dbManagerActivator = service.GetService<IDBManagerActivator>();
+            var engineModuleResolver = service.GetService<IEngineModuleResolver>();
 
-            var dbManagerPresenter = new DBManagerPresenter(fileManager, dbManagerActivator);
+            var dbManagerPresenter = new DBManagerPresenter(fileManager, engineModuleResolver);
             dbManagerPresenter.InitializeEnginePresenters();
 
             return dbManagerPresenter;

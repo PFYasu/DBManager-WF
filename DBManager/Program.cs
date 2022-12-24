@@ -2,6 +2,9 @@
 using DBManager.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace DBManager
@@ -19,6 +22,8 @@ namespace DBManager
             {
                 Logger.Log(LogType.Information, "DBManager has been started. Initializing DBManager subsystems.");
 
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
                 var serviceProvider = Startup.Configure();
                 var view = serviceProvider.GetService<DBManagerView>();
 
@@ -34,6 +39,24 @@ namespace DBManager
         {
             var exceptionView = new ExceptionView(exception);
             Application.Run(exceptionView);
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var dllName = new AssemblyName(args.Name).Name;
+            var fullDllName = $"{dllName}.dll";
+            var currentDirectoryPath = Directory.GetCurrentDirectory();
+
+            var dllPaths = Directory.GetFiles(currentDirectoryPath, fullDllName, SearchOption.AllDirectories);
+            var dllPath = dllPaths.FirstOrDefault();
+
+            if (dllPath != null)
+            {
+                Logger.Log(LogType.Information, $"Discovered {dllPath} to load.");
+                return Assembly.LoadFile(dllPath);
+            }
+
+            return null;
         }
     }
 }

@@ -2,7 +2,6 @@
 using DBManager.Core.Models;
 using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
-using DBManager.Utils;
 using DBManager.Utils.Files;
 using System;
 using System.Collections.Generic;
@@ -13,14 +12,14 @@ namespace DBManager.Presenters
     public class DBManagerPresenter : IDBManagerPresenter
     {
         private readonly IFileManager _fileManager;
-        private readonly IDBManagerActivator _activator;
+        private readonly IEngineModuleResolver _engineModuleResolver;
         private readonly DataTransferMethods _dataTransferMethods;
         private readonly Dictionary<string, IEnginePresenter> _presenters = new();
 
-        public DBManagerPresenter(IFileManager fileManager, IDBManagerActivator activator)
+        public DBManagerPresenter(IFileManager fileManager, IEngineModuleResolver engineModuleResolver)
         {
             _fileManager = fileManager;
-            _activator = activator;
+            _engineModuleResolver = engineModuleResolver;
             _dataTransferMethods = new DataTransferMethods
             {
                 GetConnectionNames = GetConnectionNames,
@@ -36,10 +35,7 @@ namespace DBManager.Presenters
             {
                 var engineType = connection.EngineType;
 
-                if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
-                    throw new NotSupportedException($"{engineType} engine type is not supported.");
-
-                var presenter = _activator.ActivateEnginePresenter(engineModuleAttribute, connection, _dataTransferMethods);
+                var presenter = _engineModuleResolver.CreateEnginePresenter(connection, _dataTransferMethods);
 
                 if (_presenters.ContainsKey(connection.Name))
                     throw new NotImplementedException($"{connection.Name} connection already exists in dictionary.");
@@ -77,10 +73,15 @@ namespace DBManager.Presenters
             var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
             var engineType = connection.EngineType;
 
-            if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
-                return Response<PresenterResponseDto>.Error("Unable to create presenter. Incorrect engine type.");
-
-            var presenter = _activator.ActivateEnginePresenter(engineModuleAttribute, connection, _dataTransferMethods);
+            IEnginePresenter presenter;
+            try
+            {
+                presenter = _engineModuleResolver.CreateEnginePresenter(connection, _dataTransferMethods);
+            }
+            catch (Exception exception)
+            {
+                return Response<PresenterResponseDto>.Error(exception.Message);
+            }
 
             if (_presenters.ContainsKey(connectionName))
                 return Response<PresenterResponseDto>.Error($"Connection {connectionName} already exists in dictionary.");
@@ -155,6 +156,27 @@ namespace DBManager.Presenters
             };
 
             return Response<AddConnectionDto>.Ok(dto);
+        }
+
+        public Response<ConnectorViewTypeResponseDto> GetConnectorViewType(string engineType)
+        {
+            var type = _engineModuleResolver.GetConnectorViewType(engineType);
+
+            var dto = new ConnectorViewTypeResponseDto
+            {
+                ConnectorViewType = type
+            };
+
+            return Response<ConnectorViewTypeResponseDto>.Ok(dto);
+        }
+
+        public Response<EngineModuleNamesResponseDto> GetEngineModuleNames()
+        {
+            var names = _engineModuleResolver.GetEngineModuleNames();
+
+            var dto = new EngineModuleNamesResponseDto { Names = names };
+
+            return Response<EngineModuleNamesResponseDto>.Ok(dto);
         }
 
         private bool ConnectionExists(string connectionName)

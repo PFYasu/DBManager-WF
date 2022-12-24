@@ -1,4 +1,5 @@
-﻿using DBManager.Core.Views.Engines;
+﻿using DBManager.Core.Presenters;
+using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using DBManager.Presenters;
 using System;
@@ -8,11 +9,13 @@ namespace DBManager.Views
 {
     public partial class ConnectorSelectorView : Form
     {
+        private readonly IDBManagerPresenter _presenter;
         private readonly ConnectorMethods _connectorMethods;
         private readonly MessageHelper _messageHelper;
 
         public ConnectorSelectorView(IDBManagerPresenter presenter)
         {
+            _presenter = presenter;
             _connectorMethods = new ConnectorMethods
             {
                 AddConnection = presenter.AddConnection,
@@ -41,14 +44,17 @@ namespace DBManager.Views
 
             var engineType = AvailableConnectionTypes_ListView.SelectedItems[0].Text;
 
-            if (EngineModules.Attributes.TryGetValue(engineType, out var engineModuleAttribute) == false)
+            var response = _presenter.GetConnectorViewType(engineType);
+            if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError("Unable to create connector update view - incorrect engine type.");
+                _messageHelper.ShowError($"Unable to get connector view type for {engineType} engine type.", response.ErrorMessage);
                 return;
             }
 
+            var connectorViewType = response.Payload.ConnectorViewType;
+
             var form = (Form)Activator.CreateInstance(
-                engineModuleAttribute.ConnectorView,
+                connectorViewType,
                 _connectorMethods);
 
             var result = form.ShowDialog();
@@ -73,7 +79,16 @@ namespace DBManager.Views
             AvailableConnectionTypes_ListView.Columns[0].Width = -2;
             ConfigureConnection_Button.Enabled = false;
 
-            foreach (var engineModuleName in EngineModules.Attributes.Keys)
+            var response = _presenter.GetEngineModuleNames();
+            if (response.Type == ResponseType.Error)
+            {
+                _messageHelper.ShowError($"Unable to get engine module names.", response.ErrorMessage);
+                return;
+            }
+
+            var engineModuleNames = response.Payload.Names;
+
+            foreach (var engineModuleName in engineModuleNames)
             {
                 var engineType_ListViewItem = new ListViewItem
                 {

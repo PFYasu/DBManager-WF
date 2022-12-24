@@ -1,6 +1,7 @@
 ﻿using DBManager.Utils.Files;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace DBManager.Tests;
 
@@ -40,4 +41,19 @@ public class FileManagerTestDriver : IFileManager
 
     public void Delete(string path)
         => _entities.Remove(path);
+
+    public T AssertFileExists<T>(string path) where T : class
+    {
+        var entity = _entities[path];
+
+        Assert.NotNull(entity);
+        return (T)entity;
+    }
+
+    public void AssertFileNotExist(string path)
+    {
+        var entity = _entities.Keys.SingleOrDefault(x => x == path);
+
+        Assert.Null(entity);
+    }
 }
