@@ -36,7 +36,7 @@ public class PostgreSQLHelper : IDisposable
         };
 
         var model = new PostgreSQLModel(connection);
-        var presenter = new PostgreSQLPresenter(model, null);
+        var presenter = new PostgreSQLPresenter(model);
 
         return presenter;
     }

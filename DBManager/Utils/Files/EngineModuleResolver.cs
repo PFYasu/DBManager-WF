@@ -13,7 +13,7 @@ namespace DBManager.Utils.Files;
 
 public interface IEngineModuleResolver
 {
-    IEnginePresenter CreateEnginePresenter(Connection connection, DataTransferMethods dataTransferMethods);
+    IEnginePresenter CreateEnginePresenter(Connection connection);
     Type GetConnectorViewType(string engineType);
     List<string> GetEngineModuleNames();
 }
@@ -43,7 +43,7 @@ public class EngineModuleResolver : IEngineModuleResolver
         }
     }
 
-    public IEnginePresenter CreateEnginePresenter(Connection connection, DataTransferMethods dataTransferMethods)
+    public IEnginePresenter CreateEnginePresenter(Connection connection)
     {
         var engineModuleAttribute = _engineModuleAttributes[connection.EngineType];
 
@@ -53,8 +53,7 @@ public class EngineModuleResolver : IEngineModuleResolver
 
         var presenter = (IEnginePresenter)Activator.CreateInstance(
             engineModuleAttribute.Presenter,
-            model,
-            dataTransferMethods);
+            model);
 
         return presenter;
     }

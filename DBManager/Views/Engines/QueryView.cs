@@ -168,8 +168,8 @@ namespace DBManager.Views.Engines
         {
             var dataToTransfer = QueryResult_DataGridView.DataSource as DataTable;
 
-            using var form = new DataTransferView(_presenter, dataToTransfer);
-            form.ShowDialog();
+            //using var form = new DataTransferView(_presenter, dataToTransfer);
+            //form.ShowDialog();
         }
 
         private void DatabaseStructure_ListView_SelectedIndexChanged(object sender, EventArgs e)

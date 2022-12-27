@@ -32,7 +32,7 @@ public class MySqlHelper : IDisposable
         };
 
         var model = new MySqlModel(connection);
-        var presenter = new MySqlPresenter(model, null);
+        var presenter = new MySqlPresenter(model);
 
         return presenter;
     }

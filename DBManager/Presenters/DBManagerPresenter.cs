@@ -13,18 +13,12 @@ namespace DBManager.Presenters
     {
         private readonly IFileManager _fileManager;
         private readonly IEngineModuleResolver _engineModuleResolver;
-        private readonly DataTransferMethods _dataTransferMethods;
         private readonly Dictionary<string, IEnginePresenter> _presenters = new();
 
         public DBManagerPresenter(IFileManager fileManager, IEngineModuleResolver engineModuleResolver)
         {
             _fileManager = fileManager;
             _engineModuleResolver = engineModuleResolver;
-            _dataTransferMethods = new DataTransferMethods
-            {
-                GetConnectionNames = GetConnectionNames,
-                GetPresenter = GetPresenter
-            };
         }
 
         public void InitializeEnginePresenters()
@@ -35,7 +29,7 @@ namespace DBManager.Presenters
             {
                 var engineType = connection.EngineType;
 
-                var presenter = _engineModuleResolver.CreateEnginePresenter(connection, _dataTransferMethods);
+                var presenter = _engineModuleResolver.CreateEnginePresenter(connection);
 
                 if (_presenters.ContainsKey(connection.Name))
                     throw new NotImplementedException($"{connection.Name} connection already exists in dictionary.");
@@ -76,7 +70,7 @@ namespace DBManager.Presenters
             IEnginePresenter presenter;
             try
             {
-                presenter = _engineModuleResolver.CreateEnginePresenter(connection, _dataTransferMethods);
+                presenter = _engineModuleResolver.CreateEnginePresenter(connection);
             }
             catch (Exception exception)
             {

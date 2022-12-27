@@ -34,15 +34,14 @@ public class MockEngineModuleResolver
     {
         var mock = new Mock<IEngineModuleResolver>();
 
-        mock.Setup(x => x.CreateEnginePresenter(
-                It.Is<Connection>(o => _engineModules.ContainsKey(o.EngineType)), It.IsAny<DataTransferMethods>()))
-            .Returns((Connection connection, DataTransferMethods _) =>
+        mock.Setup(x => x.CreateEnginePresenter(It.Is<Connection>(o => _engineModules.ContainsKey(o.EngineType))))
+            .Returns((Connection connection) =>
             {
                 return _enginePresenters.SingleOrDefault(x => x.ConnectionName == connection.Name);
             });
 
         mock.Setup(x => x.CreateEnginePresenter(
-                It.Is<Connection>(o => _engineModules.ContainsKey(o.EngineType) == false), It.IsAny<DataTransferMethods>()))
+                It.Is<Connection>(o => _engineModules.ContainsKey(o.EngineType) == false)))
             .Throws<InvalidOperationException>();
 
         mock.Setup(x => x.GetEngineModuleNames())

@@ -21,6 +21,7 @@ public static class Startup
         serviceCollection.AddTransient<IConnectionPresenter, ConnectionPresenter>();
         serviceCollection.AddTransient<IDatabasePresenter, DatabasePresenter>();
         serviceCollection.AddTransient<ITablePresenter, TablePresenter>();
+        serviceCollection.AddTransient<IDataTransferPresenter, DataTransferPresenter>();
 
         serviceCollection.AddSingleton<IDBManagerPresenter, DBManagerPresenter>(service =>
         {
@@ -45,5 +46,6 @@ public static class Startup
         serviceCollection.AddSingleton<ConnectionView>();
         serviceCollection.AddSingleton<DatabaseView>();
         serviceCollection.AddSingleton<TableView>();
+        serviceCollection.AddSingleton<DataTransferView>();
     }
 }

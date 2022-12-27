@@ -29,7 +29,7 @@ public class TablePresenter : ITablePresenter
         if (connection == null)
             return Response<TableDetailsResponseDto>.Error($"Connection with {connectionName} connection name does not exist.");
 
-        var presenter = _engineModuleResolver.CreateEnginePresenter(connection, null);
+        var presenter = _engineModuleResolver.CreateEnginePresenter(connection);
 
         var dto = await presenter.GetTableDetails(databaseName, tableName);
 

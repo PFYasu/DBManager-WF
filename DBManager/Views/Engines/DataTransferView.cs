@@ -1,7 +1,7 @@
 ﻿using DBManager.Core.Dto.Engines;
 using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Helpers;
+using DBManager.Presenters.Engines;
 using System;
 using System.Data;
 using System.Threading.Tasks;
@@ -11,22 +11,26 @@ namespace DBManager.Views.Engines
 {
     public partial class DataTransferView : Form
     {
-        private readonly IEnginePresenter _presenter;
-        private readonly DataTable _dataToTransfer;
+        private readonly IDataTransferPresenter _presenter;
         private readonly MessageHelper _messageHelper;
+        private DataTable _dataToTransfer;
 
-        public DataTransferView(IEnginePresenter presenter, DataTable dataToTransfer)
+        public DataTransferView(IDataTransferPresenter presenter)
         {
             _presenter = presenter;
-            _dataToTransfer = dataToTransfer;
             _messageHelper = new MessageHelper("DBManager - data transfer");
 
             InitializeComponent();
-            LoadConnections();
 
             ConnectionTree_ConnectionTreeView.OnNodeBeforeExpanding += ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding;
             ConnectionTree_ConnectionTreeView.OnNodeBeforeCollapsing += ConnectionTree_ConnectionTreeView_OnNodeBeforeCollapsing;
             ConnectionTree_ConnectionTreeView.OnNodeSelected += ConnectionTree_ConnectionTreeView_OnNodeSelected;
+        }
+
+        public void InitializeView(DataTable dataToTransfer)
+        {
+            _dataToTransfer = dataToTransfer;
+            LoadConnections();
         }
 
         private void ConnectionTree_ConnectionTreeView_OnNodeBeforeCollapsing(object sender, TreeNodeElements e)
@@ -59,7 +63,6 @@ namespace DBManager.Views.Engines
             }
         }
 
-
         private async void TryCopyData_Button_Click(object sender, EventArgs e)
         {
             var nodes = ConnectionTree_ConnectionTreeView.LastSelectedNode;
@@ -72,7 +75,7 @@ namespace DBManager.Views.Engines
                 DataTable = _dataToTransfer
             };
 
-            var response = await _presenter.DataTransferDriver.SendData(sendDataDto);
+            var response = await _presenter.SendData(sendDataDto);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to send data to selected table.", response.ErrorMessage);
@@ -84,7 +87,7 @@ namespace DBManager.Views.Engines
 
         private void LoadConnections()
         {
-            var response = _presenter.DataTransferDriver.GetConnectionNames();
+            var response = _presenter.GetConnectionNames();
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to load connection list.", response.ErrorMessage);
@@ -96,7 +99,7 @@ namespace DBManager.Views.Engines
 
         private async Task LoadDatabases(string connectionName)
         {
-            var response = await _presenter.DataTransferDriver.GetDatabaseNames(connectionName);
+            var response = await _presenter.GetDatabaseNames(connectionName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to load database list for {connectionName} connection.", response.ErrorMessage);
@@ -108,7 +111,7 @@ namespace DBManager.Views.Engines
 
         private async Task LoadTables(string connectionName, string databaseName)
         {
-            var response = await _presenter.DataTransferDriver.GetTableNames(connectionName, databaseName);
+            var response = await _presenter.GetTableNames(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to load table list for {connectionName} connection.", response.ErrorMessage);

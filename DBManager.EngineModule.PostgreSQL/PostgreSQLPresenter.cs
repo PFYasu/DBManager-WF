@@ -15,18 +15,16 @@ namespace DBManager.EngineModule.PostgreSQL
     {
         private readonly IEngineModel _model;
 
-        public PostgreSQLPresenter(IEngineModel model, DataTransferMethods dataTransferMethods)
+        public PostgreSQLPresenter(IEngineModel model)
         {
             _model = model;
 
             QueryTrackerDriver = new QueryTrackerDriver(_model);
-            DataTransferDriver = new DataTransferDriver(dataTransferMethods);
         }
 
         public string ConnectionName => _model.Name;
         public string EngineType => _model.EngineType;
         public IQueryTrackerDriver QueryTrackerDriver { get; }
-        public IDataTransferDriver DataTransferDriver { get; }
 
         public async Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames()
         {
