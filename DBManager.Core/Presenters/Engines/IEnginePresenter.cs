@@ -7,7 +7,6 @@ namespace DBManager.Core.Presenters.Engines
     {
         string ConnectionName { get; }
         string EngineType { get; }
-        IQueryTrackerDriver QueryTrackerDriver { get; }
         Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames();
         Task<Response<TableNamesResponseDto>> GetTableNames(string databaseName);
         Task<Response<QueryResponseDto>> SendQuery(string databaseName, string query);

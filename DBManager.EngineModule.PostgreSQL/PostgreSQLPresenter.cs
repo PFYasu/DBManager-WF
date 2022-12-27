@@ -18,13 +18,10 @@ namespace DBManager.EngineModule.PostgreSQL
         public PostgreSQLPresenter(IEngineModel model)
         {
             _model = model;
-
-            QueryTrackerDriver = new QueryTrackerDriver(_model);
         }
 
         public string ConnectionName => _model.Name;
         public string EngineType => _model.EngineType;
-        public IQueryTrackerDriver QueryTrackerDriver { get; }
 
         public async Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames()
         {

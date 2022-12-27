@@ -61,4 +61,12 @@ public static class ViewRouter
 
         return view;
     }
+
+    public static TrackedQueriesView GetTrackedQueriesView(string connectionName, string databaseName)
+    {
+        var view = (TrackedQueriesView)_serviceProvider.GetService(typeof(TrackedQueriesView));
+        view.InitializeView(connectionName, databaseName);
+
+        return view;
+    }
 }

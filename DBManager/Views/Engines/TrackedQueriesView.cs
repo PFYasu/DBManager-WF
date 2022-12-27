@@ -1,7 +1,7 @@
 ﻿using DBManager.Core.Dto.Engines;
 using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Helpers;
+using DBManager.Presenters.Engines;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -11,25 +11,28 @@ namespace DBManager.Views.Engines
     [ToolboxItem(true)]
     public partial class TrackedQueriesView : UserControl
     {
-        private readonly IEnginePresenter _presenter;
-        private readonly string _databaseName;
+        private readonly ITrackedQueriesPresenter _presenter;
         private readonly MessageHelper _messageHelper = new("DBManager - tracked queries view");
+        private string _connectionName;
+        private string _databaseName;
 
         private TrackedQuerySnapshotResponseDto _selectedTrackedQuerySnapshot;
         private string _selectedTrackedQuery;
         private string _aboveTrackedQuerySnapshotName;
         private string _belowTrackedQuerySnapshotName;
 
-        public TrackedQueriesView(IEnginePresenter presenter, string databaseName)
+        public TrackedQueriesView(ITrackedQueriesPresenter presenter)
         {
             _presenter = presenter;
-            _databaseName = databaseName;
 
             InitializeComponent();
         }
 
-        public void InitializeView()
+        public void InitializeView(string connectionName, string databaseName)
         {
+            _connectionName = connectionName;
+            _databaseName = databaseName;
+
             ExpandColumnSize();
             HideAll();
 
@@ -45,7 +48,7 @@ namespace DBManager.Views.Engines
         {
             var trackedQueryName = TrackedQueries_ListView.SelectedItems[0].Text;
 
-            var response = _presenter.QueryTrackerDriver.GetPreview(trackedQueryName, _databaseName);
+            var response = _presenter.GetPreview(_connectionName, _databaseName, trackedQueryName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to remove tracked query.", response.ErrorMessage);
@@ -64,7 +67,7 @@ namespace DBManager.Views.Engines
             if (status == DialogResult.No)
                 return;
 
-            var response = _presenter.QueryTrackerDriver.RemoveTrackedQuery(trackedQueryName, _databaseName);
+            var response = _presenter.RemoveTrackedQuery(_connectionName, _databaseName, trackedQueryName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to remove tracked query.", response.ErrorMessage);
@@ -89,7 +92,7 @@ namespace DBManager.Views.Engines
 
             var snapshotName = TrackedQueriesSnapshots_ListView.SelectedItems[0].Text;
 
-            var response = _presenter.QueryTrackerDriver.GetSnapshot(snapshotName, _selectedTrackedQuery, _databaseName);
+            var response = _presenter.GetSnapshot(_connectionName, _databaseName, snapshotName, _selectedTrackedQuery);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get tracked query snapshot.", response.ErrorMessage);
@@ -159,10 +162,11 @@ namespace DBManager.Views.Engines
                 FirstSnapshotName = _aboveTrackedQuerySnapshotName,
                 SecondSnapshotName = _belowTrackedQuerySnapshotName,
                 TrackedQueryName = _selectedTrackedQuery,
+                ConnectionName = _connectionName,
                 DatabaseName = _databaseName
             };
 
-            var response = _presenter.QueryTrackerDriver.GetSnapshotDifferences(trackedQuerySnapshotDifferencesDto);
+            var response = _presenter.GetSnapshotDifferences(trackedQuerySnapshotDifferencesDto);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get tracked query snapshot.", response.ErrorMessage);
@@ -195,7 +199,7 @@ namespace DBManager.Views.Engines
 
             _selectedTrackedQuery = TrackedQueries_ListView.SelectedItems[0].Text;
 
-            var response = _presenter.QueryTrackerDriver.GetTrackedQuerySnapshotsDetails(_selectedTrackedQuery, _databaseName);
+            var response = _presenter.GetTrackedQuerySnapshotsDetails(_connectionName, _databaseName, _selectedTrackedQuery);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get tracked query snapshots.", response.ErrorMessage);
@@ -219,7 +223,7 @@ namespace DBManager.Views.Engines
 
         private void GetTrackedQueriesList()
         {
-            var response = _presenter.QueryTrackerDriver.GetTrackedQueriesDetails(_databaseName);
+            var response = _presenter.GetTrackedQueriesDetails(_connectionName, _databaseName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get tracked query names.", response.ErrorMessage);

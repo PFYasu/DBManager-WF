@@ -20,13 +20,11 @@ namespace DBManager.EngineModule.PostgreSQL
             Name = connection.Name;
             EngineType = connection.EngineType;
             ConnectionParameters = connectionParameters;
-            QueryTrackerDriverModel = new QueryTrackerDriverModel(connection.TrackedQueries);
         }
 
         public string Name { get; }
         public string EngineType { get; }
         public Dictionary<string, string> ConnectionParameters { get; }
-        public IQueryTrackerDriverModel QueryTrackerDriverModel { get; }
 
         public async Task<DataTable> ExecuteQuery(string query, string databaseName = null)
         {

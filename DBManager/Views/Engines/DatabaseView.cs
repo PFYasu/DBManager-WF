@@ -66,16 +66,12 @@ namespace DBManager.Views.Engines
 
         private void TrackedQueries_Enter(object sender, EventArgs e)
         {
-            //var trackedQueriesView = new TrackedQueriesView(_presenter, _connectionElementIdentity.DatabaseName)
-            //{
-            //    Dock = DockStyle.Fill
-            //};
+            var form = ViewRouter.GetTrackedQueriesView(_connectionName, _databaseName);
+            form.Dock = DockStyle.Fill;
 
-            //trackedQueriesView.InitializeView();
+            TrackedQueries.Controls.Clear();
 
-            //TrackedQueries.Controls.Clear();
-
-            //TrackedQueries.Controls.Add(trackedQueriesView);
+            TrackedQueries.Controls.Add(form);
         }
     }
 }
