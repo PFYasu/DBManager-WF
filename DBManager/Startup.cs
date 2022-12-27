@@ -26,18 +26,8 @@ public static class Startup
         serviceCollection.AddTransient<IQueryPresenter, QueryPresenter>();
         serviceCollection.AddTransient<INewTrackedQueryPresenter, NewTrackedQueryPresenter>();
         serviceCollection.AddTransient<ITrackedQueriesPresenter, TrackedQueriesPresenter>();
+        serviceCollection.AddTransient<IDBManagerPresenter, DBManagerPresenter>();
         serviceCollection.AddSingleton<TrackedQueriesRefresher>();
-
-        serviceCollection.AddTransient<IDBManagerPresenter, DBManagerPresenter>(service =>
-        {
-            var fileManager = service.GetService<IFileManager>();
-            var engineModuleResolver = service.GetService<IEngineModuleResolver>();
-
-            var dbManagerPresenter = new DBManagerPresenter(fileManager, engineModuleResolver);
-            dbManagerPresenter.InitializeEnginePresenters();
-
-            return dbManagerPresenter;
-        });
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 

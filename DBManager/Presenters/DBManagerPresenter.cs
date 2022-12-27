@@ -4,7 +4,6 @@ using DBManager.Core.Presenters;
 using DBManager.Core.Presenters.Engines;
 using DBManager.Utils.Files;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DBManager.Presenters
@@ -13,29 +12,11 @@ namespace DBManager.Presenters
     {
         private readonly IFileManager _fileManager;
         private readonly IEngineModuleResolver _engineModuleResolver;
-        private readonly Dictionary<string, IEnginePresenter> _presenters = new();
 
         public DBManagerPresenter(IFileManager fileManager, IEngineModuleResolver engineModuleResolver)
         {
             _fileManager = fileManager;
             _engineModuleResolver = engineModuleResolver;
-        }
-
-        public void InitializeEnginePresenters()
-        {
-            var connections = _fileManager.LoadMany<Connection>(Router.ToConnectionRepository());
-
-            foreach (var connection in connections)
-            {
-                var engineType = connection.EngineType;
-
-                var presenter = _engineModuleResolver.CreateEnginePresenter(connection);
-
-                if (_presenters.ContainsKey(connection.Name))
-                    throw new NotImplementedException($"{connection.Name} connection already exists in dictionary.");
-
-                _presenters.Add(connection.Name, presenter);
-            }
         }
 
         public Response AddConnection(AddConnectionDto dto)
@@ -52,15 +33,6 @@ namespace DBManager.Presenters
 
         public Response<PresenterResponseDto> GetPresenter(string connectionName)
         {
-            if (_presenters.TryGetValue(connectionName, out IEnginePresenter presenterFromDictionary))
-            {
-                return Response<PresenterResponseDto>.Ok(new PresenterResponseDto
-                {
-                    EngineType = presenterFromDictionary.EngineType,
-                    Presenter = presenterFromDictionary
-                });
-            }
-
             if (ConnectionExists(connectionName) == false)
                 return Response<PresenterResponseDto>.Error($"Connection with {connectionName} name does not exist.");
 
@@ -77,11 +49,6 @@ namespace DBManager.Presenters
                 return Response<PresenterResponseDto>.Error(exception.Message);
             }
 
-            if (_presenters.ContainsKey(connectionName))
-                return Response<PresenterResponseDto>.Error($"Connection {connectionName} already exists in dictionary.");
-
-            _presenters.Add(connectionName, presenter);
-
             var dto = new PresenterResponseDto
             {
                 EngineType = engineType,
@@ -97,8 +64,6 @@ namespace DBManager.Presenters
                 return Response.Error($"Connection with {connectionName} name does not exist.");
 
             _fileManager.Delete(Router.ToConnection(connectionName));
-
-            _presenters.Remove(connectionName);
 
             return Response.Ok();
         }
@@ -119,7 +84,6 @@ namespace DBManager.Presenters
             _fileManager.Delete(Router.ToConnection(dto.OldName));
             _fileManager.Save(newConnection, Router.ToConnection(newConnection.Name));
 
-            _presenters.Remove(dto.OldName);
             return Response.Ok();
         }
 
