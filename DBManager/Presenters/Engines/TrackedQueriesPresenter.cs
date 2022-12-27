@@ -6,7 +6,7 @@ using System.Data;
 using System;
 using DBManager.Utils.Files;
 using System.Linq;
-using Newtonsoft.Json;
+using DBManager.Utils;
 
 namespace DBManager.Presenters.Engines;
 
@@ -167,7 +167,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
 
         try
         {
-            snapshotDifferencesResult = GetDataTableDifferences(firstSnapshotData, secondSnapshotData);
+            snapshotDifferencesResult = TrackedQueriesUtils.GetDataTableDifferences(firstSnapshotData, secondSnapshotData);
         }
         catch (Exception exception)
         {
@@ -227,76 +227,5 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
         _fileManager.Save(connection, Router.ToConnection(connection.Name));
 
         return Response.Ok();
-    }
-
-    private static DataTable GetDataTableDifferences(DataTable first, DataTable second)
-    {
-        var firstDifferences = first
-            .AsEnumerable()
-            .Except(second.AsEnumerable(), DataRowComparer.Default);
-
-        var secondDifferences = second
-            .AsEnumerable()
-            .Except(first.AsEnumerable(), DataRowComparer.Default);
-
-        DataTable differencesResult;
-
-        if (firstDifferences.Any() == false && secondDifferences.Any() == false)
-            differencesResult = new DataTable();
-
-        else if (firstDifferences.Any() && secondDifferences.Any())
-        {
-            firstDifferences
-                .CopyToDataTable()
-                .Merge(secondDifferences.CopyToDataTable());
-
-            differencesResult = firstDifferences.CopyToDataTable();
-        }
-
-        else if (firstDifferences.Any() == false)
-            differencesResult = secondDifferences.CopyToDataTable();
-
-        else if (secondDifferences.Any() == false)
-            differencesResult = firstDifferences.CopyToDataTable();
-
-        else
-            throw new InvalidOperationException("Unsupported compare mode for QueryTrackerDriver");
-
-        return differencesResult;
-    }
-
-    private static void TryApplyNewSnapshot(TrackedQuery trackedQuery, DataTable dataTable)
-    {
-        var lastSnapshot = trackedQuery.QuerySnapshots
-                    .OrderBy(x => x.Updated)
-                    .LastOrDefault();
-
-        var data = NormalizeData(dataTable);
-
-        if (lastSnapshot != null)
-        {
-            var differences = GetDataTableDifferences(data, lastSnapshot.Data);
-
-            if (differences.Rows.Count == 0)
-                return;
-        }
-
-        var updated = DateTime.Now;
-
-        var querySnapshot = new QuerySnapshot
-        {
-            Data = data,
-            Updated = updated
-        };
-
-        trackedQuery.QuerySnapshots.Add(querySnapshot);
-    }
-
-    private static DataTable NormalizeData(DataTable dataTable)
-    {
-        var serialization = JsonConvert.SerializeObject(dataTable);
-        var deserialization = JsonConvert.DeserializeObject<DataTable>(serialization);
-
-        return deserialization;
     }
 }

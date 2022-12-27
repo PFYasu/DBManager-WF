@@ -1,5 +1,6 @@
 ﻿using DBManager.Presenters;
 using DBManager.Presenters.Engines;
+using DBManager.Utils;
 using DBManager.Utils.Files;
 using DBManager.Views;
 using DBManager.Views.Engines;
@@ -25,6 +26,7 @@ public static class Startup
         serviceCollection.AddTransient<IQueryPresenter, QueryPresenter>();
         serviceCollection.AddTransient<INewTrackedQueryPresenter, NewTrackedQueryPresenter>();
         serviceCollection.AddTransient<ITrackedQueriesPresenter, TrackedQueriesPresenter>();
+        serviceCollection.AddSingleton<TrackedQueriesRefresher>();
 
         serviceCollection.AddTransient<IDBManagerPresenter, DBManagerPresenter>(service =>
         {
@@ -38,7 +40,9 @@ public static class Startup
         });
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
-            
+
+        RunBackgroundTasks(serviceProvider);
+
         return serviceProvider;
     }
 
@@ -53,5 +57,12 @@ public static class Startup
         serviceCollection.AddTransient<NewTrackedQueryView>();
         serviceCollection.AddTransient<QueryView>();
         serviceCollection.AddTransient<TrackedQueriesView>();
+    }
+
+    private static void RunBackgroundTasks(IServiceProvider serviceProvider)
+    {
+        ViewRouter.Initialize(serviceProvider);
+
+        _ = serviceProvider.GetService<TrackedQueriesRefresher>();
     }
 }

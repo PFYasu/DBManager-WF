@@ -13,6 +13,7 @@ namespace DBManager.Utils.Files;
 
 public interface IEngineModuleResolver
 {
+    IEngineModel CreateEngineModel(Connection connection);
     IEnginePresenter CreateEnginePresenter(Connection connection);
     Type GetConnectorViewType(string engineType);
     List<string> GetEngineModuleNames();
@@ -43,13 +44,22 @@ public class EngineModuleResolver : IEngineModuleResolver
         }
     }
 
-    public IEnginePresenter CreateEnginePresenter(Connection connection)
+    public IEngineModel CreateEngineModel(Connection connection)
     {
         var engineModuleAttribute = _engineModuleAttributes[connection.EngineType];
 
         var model = (IEngineModel)Activator.CreateInstance(
             engineModuleAttribute.Model,
             connection);
+
+        return model;
+    }
+
+    public IEnginePresenter CreateEnginePresenter(Connection connection)
+    {
+        var engineModuleAttribute = _engineModuleAttributes[connection.EngineType];
+
+        var model = CreateEngineModel(connection);
 
         var presenter = (IEnginePresenter)Activator.CreateInstance(
             engineModuleAttribute.Presenter,
