@@ -1,8 +1,6 @@
 ﻿using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
-using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
-using System;
+using DBManager.Presenters.Engines;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,21 +8,19 @@ namespace DBManager.Views.Engines
 {
     public partial class ConnectionView : Form
     {
-        private readonly IEnginePresenter _presenter;
-        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly IConnectionPresenter _presenter;
         private readonly MessageHelper _messageHelper = new("DBManager - connection view");
 
-        public ConnectionView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
+        public ConnectionView(IConnectionPresenter presenter)
         {
             _presenter = presenter;
-            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }
 
-        public async Task InitializeView()
+        public async Task InitializeView(string connectionName)
         {
-            var response = await _presenter.GetConnectionDetails();
+            var response = await _presenter.GetConnectionDetails(connectionName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get connection details.", response.ErrorMessage);
@@ -50,11 +46,6 @@ namespace DBManager.Views.Engines
             LoggedAs_Structure_Label.Text = $"Logged as: {payload.Uid}";
             Server_Structure_Label.Text = $"Server: {payload.Server}";
             Port_Structure_Label.Text = $"Port: {payload.Port}";
-        }
-
-        private async void MySqlConnectionView_Load(object sender, EventArgs e)
-        {
-            await InitializeView();
         }
     }
 }

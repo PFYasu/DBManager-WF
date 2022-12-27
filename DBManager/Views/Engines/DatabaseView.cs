@@ -1,7 +1,6 @@
 ﻿using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
-using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
+using DBManager.Presenters.Engines;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,21 +9,19 @@ namespace DBManager.Views.Engines
 {
     public partial class DatabaseView : Form
     {
-        private readonly IEnginePresenter _presenter;
-        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly IDatabasePresenter _presenter;
         private readonly MessageHelper _messageHelper = new("DBManager - database view");
 
-        public DatabaseView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
+        public DatabaseView(IDatabasePresenter presenter)
         {
             _presenter = presenter;
-            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }
 
-        public async Task InitializeView()
+        public async Task InitializeView(string connectionName, string databaseName)
         {
-            var response = await _presenter.GetDatabaseDetails(_connectionElementIdentity.DatabaseName);
+            var response = await _presenter.GetDatabaseDetails(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get database details.", response.ErrorMessage);
@@ -48,43 +45,38 @@ namespace DBManager.Views.Engines
             }
 
             Tables_Structure_Label.Text = $"Tables: {payload.TablesCount}";
-            Name_Structure_Label.Text = $"Name: {_connectionElementIdentity.DatabaseName}";
-        }
-
-        private async void MySqlDatabaseView_Load(object sender, EventArgs e)
-        {
-            await InitializeView();
+            Name_Structure_Label.Text = $"Name: {databaseName}";
         }
 
         private void Query_Enter(object sender, EventArgs e)
         {
-            var queryView = new QueryView(_presenter, new ConnectionElementIdentity
-            {
-                ConnectionName = _connectionElementIdentity.ConnectionName,
-                DatabaseName = _connectionElementIdentity.DatabaseName
-            })
-            {
-                Dock = DockStyle.Fill
-            };
-            queryView.InitializeView();
+            //var queryView = new QueryView(_presenter, new ConnectionElementIdentity
+            //{
+            //    ConnectionName = _connectionElementIdentity.ConnectionName,
+            //    DatabaseName = _connectionElementIdentity.DatabaseName
+            //})
+            //{
+            //    Dock = DockStyle.Fill
+            //};
+            //queryView.InitializeView();
 
-            Query.Controls.Clear();
+            //Query.Controls.Clear();
 
-            Query.Controls.Add(queryView);
+            //Query.Controls.Add(queryView);
         }
 
         private void TrackedQueries_Enter(object sender, EventArgs e)
         {
-            var trackedQueriesView = new TrackedQueriesView(_presenter, _connectionElementIdentity.DatabaseName)
-            {
-                Dock = DockStyle.Fill
-            };
+            //var trackedQueriesView = new TrackedQueriesView(_presenter, _connectionElementIdentity.DatabaseName)
+            //{
+            //    Dock = DockStyle.Fill
+            //};
 
-            trackedQueriesView.InitializeView();
+            //trackedQueriesView.InitializeView();
 
-            TrackedQueries.Controls.Clear();
+            //TrackedQueries.Controls.Clear();
 
-            TrackedQueries.Controls.Add(trackedQueriesView);
+            //TrackedQueries.Controls.Add(trackedQueriesView);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
-using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
+using DBManager.Presenters.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,22 +11,20 @@ namespace DBManager.Views.Engines
 {
     public partial class TableView : Form
     {
-        private readonly IEnginePresenter _presenter;
-        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly ITablePresenter _presenter;
         private readonly List<string> _unsupportedColumns = new();
         private readonly MessageHelper _messageHelper = new("DBManager - table view");
 
-        public TableView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
+        public TableView(ITablePresenter presenter)
         {
             _presenter = presenter;
-            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }
 
-        public async Task InitializeView()
+        public async Task InitializeView(string connectionName, string databaseName, string tableName)
         {
-            var response = await _presenter.GetTableDetails(_connectionElementIdentity.DatabaseName, _connectionElementIdentity.TableName);
+            var response = await _presenter.GetTableDetails(connectionName, databaseName, tableName);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get table details.", response.ErrorMessage);
@@ -53,9 +50,9 @@ namespace DBManager.Views.Engines
             Structure_Browse_DataGridView.DataSource = payload.Table;
 
             Elements_Browse_Label.Text = $"Elements: {payload.RowsCount}";
-            Name_Browse_Label.Text = $"Name: {_connectionElementIdentity.TableName}";
+            Name_Browse_Label.Text = $"Name: {tableName}";
 
-            Name_Structure_Label.Text = $"Name: {_connectionElementIdentity.TableName}";
+            Name_Structure_Label.Text = $"Name: {tableName}";
             Columns_Structure_Label.Text = $"Columns: {payload.ColumnsCount}";
             Records_Structure_Label.Text = $"Records: {payload.RowsCount}";
 
@@ -64,11 +61,6 @@ namespace DBManager.Views.Engines
                 CustomInformations_Structure_ListView.Items
                     .Add($"{customInformation.Key}: {customInformation.Value}");
             }
-        }
-
-        private async void MySqlTableView_Load(object sender, EventArgs e)
-        {
-            await InitializeView();
         }
 
         private void Structure_Browse_DataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)

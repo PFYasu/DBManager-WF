@@ -1,6 +1,8 @@
 ﻿using DBManager.Presenters;
+using DBManager.Presenters.Engines;
 using DBManager.Utils.Files;
 using DBManager.Views;
+using DBManager.Views.Engines;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -16,6 +18,9 @@ public static class Startup
 
         serviceCollection.AddSingleton<IEngineModuleResolver, EngineModuleResolver>();
         serviceCollection.AddSingleton<IFileManager, FileManager>();
+        serviceCollection.AddTransient<IConnectionPresenter, ConnectionPresenter>();
+        serviceCollection.AddTransient<IDatabasePresenter, DatabasePresenter>();
+        serviceCollection.AddTransient<ITablePresenter, TablePresenter>();
 
         serviceCollection.AddSingleton<IDBManagerPresenter, DBManagerPresenter>(service =>
         {
@@ -29,12 +34,16 @@ public static class Startup
         });
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
-
+            
         return serviceProvider;
     }
 
     private static void ConfigureViews(IServiceCollection serviceCollection)
     {
+        serviceCollection.AddSingleton<ViewRouter>();
         serviceCollection.AddSingleton<DBManagerView>();
+        serviceCollection.AddSingleton<ConnectionView>();
+        serviceCollection.AddSingleton<DatabaseView>();
+        serviceCollection.AddSingleton<TableView>();
     }
 }

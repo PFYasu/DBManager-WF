@@ -1,9 +1,8 @@
-﻿using DBManager.Core.Presenters.Engines;
-using DBManager.Core.Views.Helpers;
-using DBManager.Views.Engines;
+﻿using DBManager.Core.Views.Helpers;
 using DBManager.Views.Utils;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DBManager.Views.OverridedControls;
@@ -13,15 +12,13 @@ public class ContentTableLayoutPanel : TableLayoutPanel
 {
     public event EventHandler<bool> OnFormRequestedChange;
 
-    public void ChangeContent(IEnginePresenter presenter, TreeNodeElements treeNodeElements)
+    public async Task ChangeContent(ViewRouter viewRouter, TreeNodeElements treeNodeElements)
     {
-        var connectionElementIdentity = treeNodeElements.ToConnectionElementIdentity();
-
         Form form = treeNodeElements.Mode switch
         {
-            TreeNodeMode.ConnectionSelected => new ConnectionView(presenter, connectionElementIdentity),
-            TreeNodeMode.DatabaseSelected => new DatabaseView(presenter, connectionElementIdentity),
-            TreeNodeMode.TableSelected => new TableView(presenter, connectionElementIdentity),
+            TreeNodeMode.ConnectionSelected => await viewRouter.GetConnectionView(treeNodeElements.Connection.Name),
+            TreeNodeMode.DatabaseSelected => await viewRouter.GetDatabaseView(treeNodeElements.Connection.Name, treeNodeElements.Database.Name),
+            TreeNodeMode.TableSelected => await viewRouter.GetTableView(treeNodeElements.Connection.Name, treeNodeElements.Database.Name, treeNodeElements.Table.Name),
             _ => throw new NotImplementedException("Unable to create view - incorrect tree node mode.")
         };
 
@@ -29,12 +26,7 @@ public class ContentTableLayoutPanel : TableLayoutPanel
         form.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         form.Text = treeNodeElements.Connection.Text;
 
-        if (this.TryGetControl(out var control))
-        {
-            control.Dispose();
-            Controls.Clear();
-        }
-
+        Controls.Clear();
         Controls.Add(form);
 
         form.Show();

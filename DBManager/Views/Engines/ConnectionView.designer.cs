@@ -59,7 +59,7 @@ namespace DBManager.Views.Engines
             this.ConnectionView_TabControl.Name = "ConnectionView_TabControl";
             this.ConnectionView_TabControl.Padding = new System.Drawing.Point(10, 3);
             this.ConnectionView_TabControl.SelectedIndex = 0;
-            this.ConnectionView_TabControl.Size = new System.Drawing.Size(686, 390);
+            this.ConnectionView_TabControl.Size = new System.Drawing.Size(800, 450);
             this.ConnectionView_TabControl.TabIndex = 5;
             // 
             // Structure
@@ -74,11 +74,11 @@ namespace DBManager.Views.Engines
             this.Structure.Controls.Add(this.Databases_Structure_Label);
             this.Structure.Controls.Add(this.Structure_Structure_DataGridView);
             this.Structure.Controls.Add(this.ConnectionStructure_Structure_Label);
-            this.Structure.Location = new System.Drawing.Point(4, 22);
+            this.Structure.Location = new System.Drawing.Point(4, 24);
             this.Structure.Margin = new System.Windows.Forms.Padding(0);
             this.Structure.Name = "Structure";
-            this.Structure.Padding = new System.Windows.Forms.Padding(3);
-            this.Structure.Size = new System.Drawing.Size(678, 364);
+            this.Structure.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Structure.Size = new System.Drawing.Size(792, 422);
             this.Structure.TabIndex = 1;
             this.Structure.Text = "Structure";
             // 
@@ -86,9 +86,10 @@ namespace DBManager.Views.Engines
             // 
             this.Type_Structure_Label.AutoSize = true;
             this.Type_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.Type_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.Type_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Type_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Type_Structure_Label.Location = new System.Drawing.Point(8, 53);
+            this.Type_Structure_Label.Location = new System.Drawing.Point(9, 61);
+            this.Type_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Type_Structure_Label.Name = "Type_Structure_Label";
             this.Type_Structure_Label.Size = new System.Drawing.Size(43, 20);
             this.Type_Structure_Label.TabIndex = 23;
@@ -98,9 +99,10 @@ namespace DBManager.Views.Engines
             // 
             this.Name_Structure_Label.AutoSize = true;
             this.Name_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.Name_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.Name_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Name_Structure_Label.Location = new System.Drawing.Point(8, 33);
+            this.Name_Structure_Label.Location = new System.Drawing.Point(9, 38);
+            this.Name_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Name_Structure_Label.Name = "Name_Structure_Label";
             this.Name_Structure_Label.Size = new System.Drawing.Size(56, 20);
             this.Name_Structure_Label.TabIndex = 22;
@@ -110,9 +112,10 @@ namespace DBManager.Views.Engines
             // 
             this.Port_Structure_Label.AutoSize = true;
             this.Port_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.Port_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.Port_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Port_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Port_Structure_Label.Location = new System.Drawing.Point(229, 73);
+            this.Port_Structure_Label.Location = new System.Drawing.Point(267, 84);
+            this.Port_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Port_Structure_Label.Name = "Port_Structure_Label";
             this.Port_Structure_Label.Size = new System.Drawing.Size(42, 20);
             this.Port_Structure_Label.TabIndex = 21;
@@ -122,9 +125,10 @@ namespace DBManager.Views.Engines
             // 
             this.Server_Structure_Label.AutoSize = true;
             this.Server_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.Server_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.Server_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Server_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Server_Structure_Label.Location = new System.Drawing.Point(229, 53);
+            this.Server_Structure_Label.Location = new System.Drawing.Point(267, 61);
+            this.Server_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Server_Structure_Label.Name = "Server_Structure_Label";
             this.Server_Structure_Label.Size = new System.Drawing.Size(57, 20);
             this.Server_Structure_Label.TabIndex = 20;
@@ -134,9 +138,10 @@ namespace DBManager.Views.Engines
             // 
             this.LoggedAs_Structure_Label.AutoSize = true;
             this.LoggedAs_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.LoggedAs_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.LoggedAs_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LoggedAs_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.LoggedAs_Structure_Label.Location = new System.Drawing.Point(229, 33);
+            this.LoggedAs_Structure_Label.Location = new System.Drawing.Point(267, 38);
+            this.LoggedAs_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LoggedAs_Structure_Label.Name = "LoggedAs_Structure_Label";
             this.LoggedAs_Structure_Label.Size = new System.Drawing.Size(81, 20);
             this.LoggedAs_Structure_Label.TabIndex = 19;
@@ -146,9 +151,10 @@ namespace DBManager.Views.Engines
             // 
             this.Informations_Structure_Label.AutoSize = true;
             this.Informations_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.Informations_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.Informations_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Informations_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Informations_Structure_Label.Location = new System.Drawing.Point(5, 3);
+            this.Informations_Structure_Label.Location = new System.Drawing.Point(6, 3);
+            this.Informations_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Informations_Structure_Label.Name = "Informations_Structure_Label";
             this.Informations_Structure_Label.Size = new System.Drawing.Size(141, 30);
             this.Informations_Structure_Label.TabIndex = 18;
@@ -158,9 +164,10 @@ namespace DBManager.Views.Engines
             // 
             this.Databases_Structure_Label.AutoSize = true;
             this.Databases_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.Databases_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.Databases_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.Databases_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.Databases_Structure_Label.Location = new System.Drawing.Point(229, 101);
+            this.Databases_Structure_Label.Location = new System.Drawing.Point(267, 117);
+            this.Databases_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Databases_Structure_Label.Name = "Databases_Structure_Label";
             this.Databases_Structure_Label.Size = new System.Drawing.Size(96, 21);
             this.Databases_Structure_Label.TabIndex = 17;
@@ -182,7 +189,7 @@ namespace DBManager.Views.Engines
             this.Structure_Structure_DataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
@@ -195,7 +202,7 @@ namespace DBManager.Views.Engines
             this.structure_Name});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
@@ -203,13 +210,14 @@ namespace DBManager.Views.Engines
             this.Structure_Structure_DataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.Structure_Structure_DataGridView.EnableHeadersVisualStyles = false;
             this.Structure_Structure_DataGridView.GridColor = System.Drawing.Color.Silver;
-            this.Structure_Structure_DataGridView.Location = new System.Drawing.Point(0, 127);
+            this.Structure_Structure_DataGridView.Location = new System.Drawing.Point(0, 147);
+            this.Structure_Structure_DataGridView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Structure_Structure_DataGridView.Name = "Structure_Structure_DataGridView";
             this.Structure_Structure_DataGridView.ReadOnly = true;
             this.Structure_Structure_DataGridView.RowHeadersVisible = false;
             this.Structure_Structure_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.Structure_Structure_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Structure_Structure_DataGridView.Size = new System.Drawing.Size(678, 241);
+            this.Structure_Structure_DataGridView.Size = new System.Drawing.Size(791, 278);
             this.Structure_Structure_DataGridView.TabIndex = 16;
             // 
             // structure_columnNumber
@@ -228,9 +236,10 @@ namespace DBManager.Views.Engines
             // 
             this.ConnectionStructure_Structure_Label.AutoSize = true;
             this.ConnectionStructure_Structure_Label.BackColor = System.Drawing.Color.White;
-            this.ConnectionStructure_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.ConnectionStructure_Structure_Label.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ConnectionStructure_Structure_Label.ForeColor = System.Drawing.Color.Black;
-            this.ConnectionStructure_Structure_Label.Location = new System.Drawing.Point(3, 94);
+            this.ConnectionStructure_Structure_Label.Location = new System.Drawing.Point(4, 108);
+            this.ConnectionStructure_Structure_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.ConnectionStructure_Structure_Label.Name = "ConnectionStructure_Structure_Label";
             this.ConnectionStructure_Structure_Label.Size = new System.Drawing.Size(220, 30);
             this.ConnectionStructure_Structure_Label.TabIndex = 2;
@@ -238,15 +247,15 @@ namespace DBManager.Views.Engines
             // 
             // ConnectionView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(686, 390);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.ConnectionView_TabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ConnectionView";
             this.Text = "MySqlConnectionView";
-            this.Load += new System.EventHandler(this.MySqlConnectionView_Load);
             this.ConnectionView_TabControl.ResumeLayout(false);
             this.Structure.ResumeLayout(false);
             this.Structure.PerformLayout();

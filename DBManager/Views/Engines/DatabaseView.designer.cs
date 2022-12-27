@@ -240,7 +240,6 @@ namespace DBManager.Views.Engines
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "DatabaseView";
             this.Text = "MySqlDatabaseView";
-            this.Load += new System.EventHandler(this.MySqlDatabaseView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Structure_Structure_DataGridView)).EndInit();
             this.Structure.ResumeLayout(false);
             this.Structure.PerformLayout();
