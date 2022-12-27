@@ -1,49 +1,48 @@
 ﻿using DBManager.Views.Engines;
+using System;
 using System.Data;
 using System.Threading.Tasks;
 
 namespace DBManager.Views;
 
-public class ViewRouter
+public static class ViewRouter
 {
-    private readonly ConnectionView _connectionView;
-    private readonly DatabaseView _databaseView;
-    private readonly TableView _tableView;
-    private readonly DataTransferView _dataTransferView;
+    private static IServiceProvider _serviceProvider;
 
-    public ViewRouter(
-        ConnectionView connectionView,
-        DatabaseView databaseView,
-        TableView tableView,
-        DataTransferView dataTransferView)
+    public static void Initialize(IServiceProvider serviceProvider)
     {
-        _connectionView = connectionView;
-        _databaseView = databaseView;
-        _tableView = tableView;
-        _dataTransferView = dataTransferView;
+        _serviceProvider = serviceProvider;
     }
 
-    public async Task<ConnectionView> GetConnectionView(string connectionName)
+    public static async Task<ConnectionView> GetConnectionView(string connectionName)
     {
-        await _connectionView.InitializeView(connectionName);
-        return _connectionView;
+        var view = (ConnectionView)_serviceProvider.GetService(typeof(ConnectionView));
+        await view.InitializeView(connectionName);
+
+        return view;
     }
 
-    public async Task<DatabaseView> GetDatabaseView(string connectionName, string databaseName)
+    public static async Task<DatabaseView> GetDatabaseView(string connectionName, string databaseName)
     {
-        await _databaseView.InitializeView(connectionName, databaseName);
-        return _databaseView;
+        var view = (DatabaseView)_serviceProvider.GetService(typeof(DatabaseView));
+        await view.InitializeView(connectionName, databaseName);
+
+        return view;
     }
 
-    public async Task<TableView> GetTableView(string connectionName, string databaseName, string tableName)
+    public static async Task<TableView> GetTableView(string connectionName, string databaseName, string tableName)
     {
-        await _tableView.InitializeView(connectionName, databaseName, tableName);
-        return _tableView;
+        var view = (TableView)_serviceProvider.GetService(typeof(TableView));
+        await view.InitializeView(connectionName, databaseName, tableName);
+
+        return view;
     }
 
-    public TableView GetDataTransferView(DataTable dataToTransfer)
+    public static DataTransferView GetDataTransferView(DataTable dataToTransfer)
     {
-        _dataTransferView.InitializeView(dataToTransfer);
-        return _tableView;
+        var view = (DataTransferView)_serviceProvider.GetService(typeof(DataTransferView));
+        view.InitializeView(dataToTransfer);
+
+        return view;
     }
 }

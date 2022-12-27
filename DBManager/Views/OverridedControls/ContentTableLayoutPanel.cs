@@ -12,13 +12,13 @@ public class ContentTableLayoutPanel : TableLayoutPanel
 {
     public event EventHandler<bool> OnFormRequestedChange;
 
-    public async Task ChangeContent(ViewRouter viewRouter, TreeNodeElements treeNodeElements)
+    public async Task ChangeContent(TreeNodeElements treeNodeElements)
     {
         Form form = treeNodeElements.Mode switch
         {
-            TreeNodeMode.ConnectionSelected => await viewRouter.GetConnectionView(treeNodeElements.Connection.Name),
-            TreeNodeMode.DatabaseSelected => await viewRouter.GetDatabaseView(treeNodeElements.Connection.Name, treeNodeElements.Database.Name),
-            TreeNodeMode.TableSelected => await viewRouter.GetTableView(treeNodeElements.Connection.Name, treeNodeElements.Database.Name, treeNodeElements.Table.Name),
+            TreeNodeMode.ConnectionSelected => await ViewRouter.GetConnectionView(treeNodeElements.Connection.Name),
+            TreeNodeMode.DatabaseSelected => await ViewRouter.GetDatabaseView(treeNodeElements.Connection.Name, treeNodeElements.Database.Name),
+            TreeNodeMode.TableSelected => await ViewRouter.GetTableView(treeNodeElements.Connection.Name, treeNodeElements.Database.Name, treeNodeElements.Table.Name),
             _ => throw new NotImplementedException("Unable to create view - incorrect tree node mode.")
         };
 

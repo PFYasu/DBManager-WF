@@ -41,7 +41,6 @@ public static class Startup
 
     private static void ConfigureViews(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddSingleton<ViewRouter>();
         serviceCollection.AddSingleton<DBManagerView>();
         serviceCollection.AddSingleton<ConnectionView>();
         serviceCollection.AddSingleton<DatabaseView>();

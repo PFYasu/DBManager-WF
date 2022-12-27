@@ -12,14 +12,12 @@ namespace DBManager.Views
     public partial class DBManagerView : Form
     {
         private readonly IDBManagerPresenter _presenter;
-        private readonly ViewRouter _viewRouter;
         private readonly ConnectorMethods _connectorMethods;
         private readonly MessageHelper _messageHelper = new("DBManager");
 
-        public DBManagerView(IDBManagerPresenter presenter, ViewRouter viewRouter)
+        public DBManagerView(IDBManagerPresenter presenter)
         {
             _presenter = presenter;
-            _viewRouter = viewRouter;
 
             _connectorMethods = new ConnectorMethods
             {
@@ -58,7 +56,7 @@ namespace DBManager.Views
 
         private async void ConnectionTree_ConnectionTreeView_OnNodeSelected(object sender, TreeNodeElements e)
         {
-            await Content_ContentManagerView.ChangeContent(_viewRouter, e);
+            await Content_ContentManagerView.ChangeContent(e);
 
             RemoveConnection_Button.Enabled = true;
             UpdateConnection_Button.Enabled = true;

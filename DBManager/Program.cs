@@ -25,8 +25,9 @@ namespace DBManager
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
                 var serviceProvider = Startup.Configure();
-                var view = serviceProvider.GetService<DBManagerView>();
+                ViewRouter.Initialize(serviceProvider);
 
+                var view = serviceProvider.GetService<DBManagerView>();
                 Application.Run(view);
             }
             catch (Exception exception)
