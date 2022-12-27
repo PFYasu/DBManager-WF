@@ -1,8 +1,8 @@
 ﻿using DBManager.Core.Dto.Engines;
 using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Utils;
 using DBManager.Core.Views.Helpers;
+using DBManager.Presenters.Engines;
 using System;
 using System.Windows.Forms;
 
@@ -10,17 +10,23 @@ namespace DBManager.Views.Engines
 {
     public partial class NewTrackedQueryView : Form
     {
-        private readonly IEnginePresenter _presenter;
+        private readonly INewTrackedQueryPresenter _presenter;
         private readonly MessageHelper _messageHelper;
-        private readonly string _databaseName;
+        private string _connectionName;
+        private string _databaseName;
 
-        public NewTrackedQueryView(IEnginePresenter presenter, string databaseName, string queryPreview)
+        public NewTrackedQueryView(INewTrackedQueryPresenter presenter)
         {
             _presenter = presenter;
-            _databaseName = databaseName;
             _messageHelper = new MessageHelper("DBManager - Tracked query configuration");
 
             InitializeComponent();
+        }
+
+        public void InitializeView(string connectionName, string databaseName, string queryPreview)
+        {
+            _connectionName = connectionName;
+            _databaseName = databaseName;
 
             Query_RichTextBox.Text = queryPreview;
         }
@@ -35,7 +41,7 @@ namespace DBManager.Views.Engines
 
             var dto = PrepareDto();
 
-            var response = _presenter.QueryTrackerDriver.AddTrackedQuery(dto);
+            var response = _presenter.AddTrackedQuery(dto);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError($"Unable to add new tracked query.", response.ErrorMessage);
@@ -75,6 +81,7 @@ namespace DBManager.Views.Engines
             var dto = new NewTrackedQueryDto
             {
                 Name = Name_TextBox.Text,
+                ConnectionName = _connectionName,
                 DatabaseName = _databaseName,
                 Query = Query_RichTextBox.Text,
                 TimePeriod = (uint)TimePeriod_NumericUpDown.Value

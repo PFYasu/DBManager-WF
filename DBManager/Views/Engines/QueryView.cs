@@ -1,13 +1,13 @@
 ﻿using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Utils;
-using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
+using DBManager.Presenters.Engines;
 using DBManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DBManager.Views.Engines
@@ -15,35 +15,38 @@ namespace DBManager.Views.Engines
     [ToolboxItem(true)]
     public partial class QueryView : UserControl
     {
-        private readonly IEnginePresenter _presenter;
-        private readonly ConnectionElementIdentity _connectionElementIdentity;
+        private readonly IQueryPresenter _presenter;
         private readonly MessageHelper _messageHelper = new("DBManager - database query view");
         private Dictionary<string, List<string>> _databaseTableColumns = new();
+        private string _connectionName;
+        private string _databaseName;
 
-        public QueryView(IEnginePresenter presenter, ConnectionElementIdentity connectionElementIdentity)
+        public QueryView(IQueryPresenter presenter)
         {
             _presenter = presenter;
-            _connectionElementIdentity = connectionElementIdentity;
 
             InitializeComponent();
         }
 
-        public async void InitializeView()
+        public async Task InitializeView(string connectionName, string databaseName)
         {
+            _connectionName = connectionName;
+            _databaseName = databaseName;
+
             DatabaseStructure_ListView.Columns[0].Width = -2;
             TableStructure_ListView.Columns[0].Width = -2;
 
             CopyData_Button.Visible = false;
             QueryType_Label.Visible = false;
 
-            Name_Label.Text = $"Name: {_connectionElementIdentity.DatabaseName}";
+            Name_Label.Text = $"Name: {databaseName}";
 
             DatabaseStructure_ListView.Items.Clear();
 
-            var response = await _presenter.GetDatabaseTableColumns(_connectionElementIdentity.DatabaseName);
+            var response = await _presenter.GetDatabaseTableColumns(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get {_connectionElementIdentity.DatabaseName} database table columns.", response.ErrorMessage);
+                _messageHelper.ShowError($"Unable to get {databaseName} database table columns.", response.ErrorMessage);
                 return;
             }
 
@@ -128,7 +131,7 @@ namespace DBManager.Views.Engines
                 return;
             }
 
-            var response = await _presenter.SendQuery(_connectionElementIdentity.DatabaseName, query);
+            var response = await _presenter.SendQuery(_connectionName, _databaseName, query);
             if (response.Type == ResponseType.Error)
             {
                 _messageHelper.ShowError("Unable to get table details.", response.ErrorMessage);
@@ -155,21 +158,19 @@ namespace DBManager.Views.Engines
                 return;
             }
 
-            using (var form = new NewTrackedQueryView(_presenter, _connectionElementIdentity.DatabaseName, query))
-            {
-                var result = form.ShowDialog();
+            var form = ViewRouter.GetNewTrackedQueryView(_connectionName, _databaseName, query);
+            var result = form.ShowDialog();
 
-                if (result == DialogResult.OK)
-                    _messageHelper.ShowInformation("Tracked query was added successfully.");
-            }
+            if (result == DialogResult.OK)
+                _messageHelper.ShowInformation("Tracked query was added successfully.");
         }
 
         private void CopyData_Button_Click(object sender, EventArgs e)
         {
             var dataToTransfer = QueryResult_DataGridView.DataSource as DataTable;
 
-            //using var form = new DataTransferView(_presenter, dataToTransfer);
-            //form.ShowDialog();
+            var form = ViewRouter.GetDataTransferView(dataToTransfer);
+            form.ShowDialog();
         }
 
         private void DatabaseStructure_ListView_SelectedIndexChanged(object sender, EventArgs e)

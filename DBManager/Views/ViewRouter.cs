@@ -45,4 +45,20 @@ public static class ViewRouter
 
         return view;
     }
+
+    public static NewTrackedQueryView GetNewTrackedQueryView(string connectionName, string databaseName, string queryPreview)
+    {
+        var view = (NewTrackedQueryView)_serviceProvider.GetService(typeof(NewTrackedQueryView));
+        view.InitializeView(connectionName, databaseName, queryPreview);
+
+        return view;
+    }
+
+    public static async Task<QueryView> GetQueryView(string connectionName, string databaseName)
+    {
+        var view = (QueryView)_serviceProvider.GetService(typeof(QueryView));
+        await view.InitializeView(connectionName, databaseName);
+
+        return view;
+    }
 }

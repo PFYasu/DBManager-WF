@@ -11,6 +11,8 @@ namespace DBManager.Views.Engines
     {
         private readonly IDatabasePresenter _presenter;
         private readonly MessageHelper _messageHelper = new("DBManager - database view");
+        private string _connectionName;
+        private string _databaseName;
 
         public DatabaseView(IDatabasePresenter presenter)
         {
@@ -21,6 +23,9 @@ namespace DBManager.Views.Engines
 
         public async Task InitializeView(string connectionName, string databaseName)
         {
+            _connectionName = connectionName;
+            _databaseName = databaseName;
+
             var response = await _presenter.GetDatabaseDetails(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
@@ -48,21 +53,15 @@ namespace DBManager.Views.Engines
             Name_Structure_Label.Text = $"Name: {databaseName}";
         }
 
-        private void Query_Enter(object sender, EventArgs e)
+        private async void Query_Enter(object sender, EventArgs e)
         {
-            //var queryView = new QueryView(_presenter, new ConnectionElementIdentity
-            //{
-            //    ConnectionName = _connectionElementIdentity.ConnectionName,
-            //    DatabaseName = _connectionElementIdentity.DatabaseName
-            //})
-            //{
-            //    Dock = DockStyle.Fill
-            //};
-            //queryView.InitializeView();
+            var form = await ViewRouter.GetQueryView(_connectionName, _databaseName);
 
-            //Query.Controls.Clear();
+            form.Dock = DockStyle.Fill;
 
-            //Query.Controls.Add(queryView);
+            Query.Controls.Clear();
+
+            Query.Controls.Add(form);
         }
 
         private void TrackedQueries_Enter(object sender, EventArgs e)

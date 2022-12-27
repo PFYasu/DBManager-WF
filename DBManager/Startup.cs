@@ -22,6 +22,8 @@ public static class Startup
         serviceCollection.AddTransient<IDatabasePresenter, DatabasePresenter>();
         serviceCollection.AddTransient<ITablePresenter, TablePresenter>();
         serviceCollection.AddTransient<IDataTransferPresenter, DataTransferPresenter>();
+        serviceCollection.AddTransient<IQueryPresenter, QueryPresenter>();
+        serviceCollection.AddTransient<INewTrackedQueryPresenter, NewTrackedQueryPresenter>();
 
         serviceCollection.AddSingleton<IDBManagerPresenter, DBManagerPresenter>(service =>
         {
@@ -46,5 +48,8 @@ public static class Startup
         serviceCollection.AddSingleton<DatabaseView>();
         serviceCollection.AddSingleton<TableView>();
         serviceCollection.AddSingleton<DataTransferView>();
+        serviceCollection.AddSingleton<QueryPresenter>();
+        serviceCollection.AddSingleton<NewTrackedQueryView>();
+        serviceCollection.AddSingleton<QueryView>();
     }
 }
