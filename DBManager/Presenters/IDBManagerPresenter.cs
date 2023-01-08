@@ -1,5 +1,7 @@
 ﻿using DBManager.Core.Dto;
+using DBManager.Core.Dto.Engines;
 using DBManager.Core.Presenters;
+using System.Threading.Tasks;
 
 namespace DBManager.Presenters
 {
@@ -9,9 +11,10 @@ namespace DBManager.Presenters
         Response RemoveConnection(string connectionName);
         Response UpdateConnection(UpdateConnectionDto dto);
         Response<ConnectionNamesResponseDto> GetConnectionNames();
-        Response<PresenterResponseDto> GetPresenter(string connectionName);
         Response<AddConnectionDto> GetConnectionSettings(string connectionName);
         Response<ConnectorViewTypeResponseDto> GetConnectorViewType(string engineType);
         Response<EngineModuleNamesResponseDto> GetEngineModuleNames();
+        Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames(string connectionName);
+        Task<Response<TableNamesResponseDto>> GetTableNames(string connectionName, string databaseName);
     }
 }

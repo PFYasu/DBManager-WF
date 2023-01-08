@@ -1,5 +1,4 @@
 ﻿using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
 using DBManager.Core.Views.Engines;
 using DBManager.Core.Views.Helpers;
 using DBManager.Presenters;
@@ -36,15 +35,13 @@ namespace DBManager.Views
 
         private async void ConnectionTree_ConnectionTreeView_OnNodeBeforeExpanding(object sender, TreeNodeElements e)
         {
-            var presenter = GetPresenter(e);
-
             switch (e.Mode)
             {
                 case TreeNodeMode.ConnectionSelected:
-                    await LoadDatabases(presenter);
+                    await LoadDatabases(e.Connection.Text);
                     break;
                 case TreeNodeMode.DatabaseSelected:
-                    await LoadTables(presenter, e.Database.Text);
+                    await LoadTables(e.Connection.Name, e.Database.Text);
                     break;
                 case TreeNodeMode.TableSelected:
                     break;
@@ -113,14 +110,14 @@ namespace DBManager.Views
 
             string connectionName = nodes.Connection.Text;
 
-            var response = _presenter.GetPresenter(connectionName);
-            if (response.Type == ResponseType.Error)
+            var connectionSettingsResponse = _presenter.GetConnectionSettings(connectionName);
+            if (connectionSettingsResponse.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection.", response.ErrorMessage);
+                _messageHelper.ShowError($"Unable to get {nodes.Connection.Text} connection settings.", connectionSettingsResponse.ErrorMessage);
                 return;
             }
 
-            var engineType = response.Payload.EngineType;
+            var engineType = connectionSettingsResponse.Payload.EngineType;
 
             var connectorViewTypeResponse = _presenter.GetConnectorViewType(engineType);
             if (connectorViewTypeResponse.Type == ResponseType.Error)
@@ -142,25 +139,6 @@ namespace DBManager.Views
                 LoadConnections();
         }
 
-        private IEnginePresenter GetPresenter(TreeNodeElements treeNodeElements)
-        {
-            if (treeNodeElements.Mode == TreeNodeMode.NotSupported)
-            {
-                RemoveConnection_Button.Enabled = false;
-                UpdateConnection_Button.Enabled = false;
-                return null;
-            }
-
-            var response = _presenter.GetPresenter(treeNodeElements.Connection.Text);
-            if (response.Type == ResponseType.Error)
-            {
-                _messageHelper.ShowError($"Unable to get {treeNodeElements.Connection.Text} connection.", response.ErrorMessage);
-                return null;
-            }
-
-            return response.Payload.Presenter;
-        }
-
         private void LoadConnections()
         {
             var response = _presenter.GetConnectionNames();
@@ -177,32 +155,32 @@ namespace DBManager.Views
             Status_ConnectionStatusStrip.UpdateNumberOfConnectionsStatus(payload.Names.Count);
         }
 
-        private async Task LoadDatabases(IEnginePresenter presenter)
+        private async Task LoadDatabases(string connectionName)
         {
-            var response = await presenter.GetDatabaseNames();
+            var response = await _presenter.GetDatabaseNames(connectionName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load database list for {presenter.ConnectionName} connection.", response.ErrorMessage);
+                _messageHelper.ShowError($"Unable to load database list for {connectionName} connection.", response.ErrorMessage);
                 return;
             }
 
             var payload = response.Payload;
 
-            ConnectionTree_ConnectionTreeView.LoadDatabases(presenter.ConnectionName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadDatabases(connectionName, payload.Names);
         }
 
-        private async Task LoadTables(IEnginePresenter presenter, string databaseName)
+        private async Task LoadTables(string connectionName, string databaseName)
         {
-            var response = await presenter.GetTableNames(databaseName);
+            var response = await _presenter.GetTableNames(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
-                _messageHelper.ShowError($"Unable to load table list for {presenter.ConnectionName} connection.", response.ErrorMessage);
+                _messageHelper.ShowError($"Unable to load table list for {connectionName} connection and {databaseName} database.", response.ErrorMessage);
                 return;
             }
 
             var payload = response.Payload;
 
-            ConnectionTree_ConnectionTreeView.LoadTables(presenter.ConnectionName, databaseName, payload.Names);
+            ConnectionTree_ConnectionTreeView.LoadTables(connectionName, databaseName, payload.Names);
         }
     }
 }

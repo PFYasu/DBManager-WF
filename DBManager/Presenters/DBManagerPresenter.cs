@@ -1,10 +1,10 @@
 ﻿using DBManager.Core.Dto;
+using DBManager.Core.Dto.Engines;
 using DBManager.Core.Models;
 using DBManager.Core.Presenters;
-using DBManager.Core.Presenters.Engines;
 using DBManager.Utils.Files;
-using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DBManager.Presenters
 {
@@ -29,33 +29,6 @@ namespace DBManager.Presenters
             _fileManager.Save(connection, Router.ToConnection(dto.Name));
 
             return Response.Ok();
-        }
-
-        public Response<PresenterResponseDto> GetPresenter(string connectionName)
-        {
-            if (ConnectionExists(connectionName) == false)
-                return Response<PresenterResponseDto>.Error($"Connection with {connectionName} name does not exist.");
-
-            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
-            var engineType = connection.EngineType;
-
-            IEnginePresenter presenter;
-            try
-            {
-                presenter = _engineModuleResolver.CreateEnginePresenter(connection);
-            }
-            catch (Exception exception)
-            {
-                return Response<PresenterResponseDto>.Error(exception.Message);
-            }
-
-            var dto = new PresenterResponseDto
-            {
-                EngineType = engineType,
-                Presenter = presenter
-            };
-
-            return Response<PresenterResponseDto>.Ok(dto);
         }
 
         public Response RemoveConnection(string connectionName)
@@ -135,6 +108,44 @@ namespace DBManager.Presenters
             var dto = new EngineModuleNamesResponseDto { Names = names };
 
             return Response<EngineModuleNamesResponseDto>.Ok(dto);
+        }
+
+        public async Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames(string connectionName)
+        {
+            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+
+            if (connection == null)
+                return Response<DatabaseNamesResponseDto>
+                    .Error($"Connection {connectionName} does not exist.");
+
+            var presenter = _engineModuleResolver.CreateEnginePresenter(connection);
+
+            if (presenter == null)
+                return Response<DatabaseNamesResponseDto>
+                    .Error($"Unable to activate {connectionName} presenter. Engine type:{connection.EngineType}.");
+
+            var dto = await presenter.GetDatabaseNames();
+
+            return dto;
+        }
+
+        public async Task<Response<TableNamesResponseDto>> GetTableNames(string connectionName, string databaseName)
+        {
+            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+
+            if (connection == null)
+                return Response<TableNamesResponseDto>
+                    .Error($"Connection {connectionName} does not exist.");
+
+            var presenter = _engineModuleResolver.CreateEnginePresenter(connection);
+
+            if (presenter == null)
+                return Response<TableNamesResponseDto>
+                    .Error($"Unable to activate {connectionName} presenter. Engine type:{connection.EngineType}.");
+
+            var dto = await presenter.GetTableNames(databaseName);
+
+            return dto;
         }
 
         private bool ConnectionExists(string connectionName)
