@@ -4,7 +4,7 @@ using DBManager.Core.Presenters;
 using DBManager.Utils.Files;
 using System.Threading.Tasks;
 
-namespace DBManager.Presenters.Engines;
+namespace DBManager.Presenters.Engines; //
 
 public interface IDatabasePresenter
 {
