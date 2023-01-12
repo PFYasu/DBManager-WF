@@ -12,6 +12,11 @@
     <None Remove="Resources\Images\MySqlIcon.png" />
   </ItemGroup>
   <ItemGroup>
+    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App" IsWindowsOnly="false" />
+	<KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WPF" IsWindowsOnly="false" />
+	<KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WindowsForms" IsWindowsOnly="false" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Resources\Images\MySqlIcon.png" />
   </ItemGroup>
   <ItemGroup>
