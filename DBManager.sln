@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager", "DBManager\DBManager.csproj", "{AAD786E5-5BAB-4F0E-BD8F-518AF02E0573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager", "DBManager\DBManager.csproj", "{AAD786E5-5BAB-4F0E-BD8F-518AF02E0573}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.Tests", "DBManager.Tests\DBManager.Tests.csproj", "{45BF879F-D082-46B2-B1AD-2FF28A5F0E17}"
 EndProject
@@ -12,13 +12,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.Core", "DBManager.Core\DBManager.Core.csproj", "{FF5D7C8F-AECF-4FB4-99A7-02AFD67F57EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.Core", "DBManager.Core\DBManager.Core.csproj", "{FF5D7C8F-AECF-4FB4-99A7-02AFD67F57EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.EngineModule.PostgreSQL", "DBManager.EngineModule.PostgreSQL\DBManager.EngineModule.PostgreSQL.csproj", "{ECDC11BE-55BA-4D27-B0B3-601BE2DBCBCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.EngineModule.PostgreSQL", "DBManager.EngineModule.PostgreSQL\DBManager.EngineModule.PostgreSQL.csproj", "{ECDC11BE-55BA-4D27-B0B3-601BE2DBCBCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.EngineModule.MySql", "DBManager.EngineModule.MySql\DBManager.EngineModule.MySql.csproj", "{E8E78727-624D-4F8B-81CB-F14DB4A459A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.EngineModule.MySql", "DBManager.EngineModule.MySql\DBManager.EngineModule.MySql.csproj", "{E8E78727-624D-4F8B-81CB-F14DB4A459A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.Tests.Integrations", "DBManager.Tests.Integrations\DBManager.Tests.Integrations.csproj", "{FA409096-7AB5-42AD-9142-9F15F87A8609}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.Tests.Integrations", "DBManager.Tests.Integrations\DBManager.Tests.Integrations.csproj", "{FA409096-7AB5-42AD-9142-9F15F87A8609}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.EngineModule.SQLite", "DBManager.EngineModule.SQLite\DBManager.EngineModule.SQLite.csproj", "{47CDB8CA-A88D-4E1E-AD5A-E0DE77F9A0DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{FA409096-7AB5-42AD-9142-9F15F87A8609}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA409096-7AB5-42AD-9142-9F15F87A8609}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA409096-7AB5-42AD-9142-9F15F87A8609}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47CDB8CA-A88D-4E1E-AD5A-E0DE77F9A0DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47CDB8CA-A88D-4E1E-AD5A-E0DE77F9A0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47CDB8CA-A88D-4E1E-AD5A-E0DE77F9A0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47CDB8CA-A88D-4E1E-AD5A-E0DE77F9A0DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
