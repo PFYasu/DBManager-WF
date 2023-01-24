@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 
 namespace DBManager.Core.Dto.Engines
@@ -22,7 +21,5 @@ namespace DBManager.Core.Dto.Engines
     public class ColumnStructure
     {
         public string Name { get; set; }
-        public string Type { get; set; }
-        public string ComparingSubtitlesMethod { get; set; }
     }
 }

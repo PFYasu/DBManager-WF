@@ -122,7 +122,7 @@ namespace DBManager.EngineModule.MySql
                 $"WHERE TABLE_SCHEMA = '{databaseName}' AND TABLE_NAME = '{tableName}';";
             DataTable tableQueryResult;
 
-            var columnsQuery = $"SELECT COLUMN_NAME, DATA_TYPE, COLLATION_NAME " +
+            var columnsQuery = $"SELECT COLUMN_NAME " +
                 $"FROM COLUMNS " +
                 $"WHERE TABLE_NAME = '{tableName}' AND TABLE_SCHEMA = '{databaseName}';";
             DataTable columnsQueryResult;
@@ -159,14 +159,10 @@ namespace DBManager.EngineModule.MySql
             foreach (DataRow row in columnsQueryResult.Rows)
             {
                 var name = row.TryConvertTo<string>("COLUMN_NAME");
-                var type = row.TryConvertTo<string>("DATA_TYPE");
-                var comparingSubtitlesMethod = row.TryConvertTo<string>("COLLATION_NAME");
 
                 var columnStructure = new ColumnStructure
                 {
                     Name = name,
-                    Type = type,
-                    ComparingSubtitlesMethod = comparingSubtitlesMethod
                 };
 
                 columnsStructure.Add(columnStructure);
@@ -189,10 +185,7 @@ namespace DBManager.EngineModule.MySql
             var query =
                 $"SELECT " +
                     $"TABLE_NAME, " +
-                    $"TABLE_TYPE, " +
-                    $"ROUND(SUM(DATA_LENGTH + INDEX_LENGTH) / 1024, 1) AS 'SIZE', " +
-                    $"TABLE_ROWS, " +
-                    $"TABLE_COLLATION " +
+                    $"TABLE_ROWS " +
                 $"FROM TABLES " +
                 $"WHERE TABLE_SCHEMA = '{databaseName}' " +
                 $"GROUP BY TABLE_NAME;";
@@ -212,18 +205,12 @@ namespace DBManager.EngineModule.MySql
             foreach (DataRow row in result.Rows)
             {
                 var name = row.TryConvertTo<string>("TABLE_NAME");
-                var type = row.TryConvertTo<string>("TABLE_TYPE");
-                var records = row.TryConvertTo<UInt64?>("TABLE_ROWS");
-                var size = row.TryConvertTo<decimal?>("SIZE");
-                var comparingSubtitlesMethod = row.TryConvertTo<string>("TABLE_COLLATION");
+                var records = row.TryConvertTo<ulong?>("TABLE_ROWS");
 
                 var columnStructure = new TableStructure
                 {
                     Name = name,
-                    Type = type,
-                    Records = records,
-                    Size = size,
-                    ComparingSubtitlesMethod = comparingSubtitlesMethod
+                    Records = records
                 };
 
                 tablesStructure.Add(columnStructure);
