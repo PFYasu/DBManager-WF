@@ -173,6 +173,9 @@ namespace DBManager.Views.Engines
             form.ShowDialog();
         }
 
+        private void ClearQuery_Button_Click(object sender, EventArgs e)
+            => Query_RichTextBox.Clear();
+
         private void DatabaseStructure_ListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DatabaseStructure_ListView.SelectedItems.Count == 0)

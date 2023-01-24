@@ -58,6 +58,7 @@ namespace DBManager.Views.Engines
             this.query_queryLabel = new System.Windows.Forms.Label();
             this.Database_Label = new System.Windows.Forms.Label();
             this.Name_Label = new System.Windows.Forms.Label();
+            this.ClearQuery_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.StructureView)).BeginInit();
             this.StructureView.Panel1.SuspendLayout();
             this.StructureView.Panel2.SuspendLayout();
@@ -168,7 +169,7 @@ namespace DBManager.Views.Engines
             this.TableStructure_ListView.Margin = new System.Windows.Forms.Padding(0);
             this.TableStructure_ListView.MultiSelect = false;
             this.TableStructure_ListView.Name = "TableStructure_ListView";
-            this.TableStructure_ListView.Size = new System.Drawing.Size(705, 137);
+            this.TableStructure_ListView.Size = new System.Drawing.Size(699, 137);
             this.TableStructure_ListView.TabIndex = 2;
             this.TableStructure_ListView.UseCompatibleStateImageBehavior = false;
             this.TableStructure_ListView.View = System.Windows.Forms.View.Details;
@@ -188,6 +189,7 @@ namespace DBManager.Views.Engines
             // 
             // QueryContainer_SplitContainer.Panel1
             // 
+            this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.ClearQuery_Button);
             this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.QueryAction_TableLayoutPanel);
             this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.Query_Label);
             this.QueryContainer_SplitContainer.Panel1.Controls.Add(this.Crud_TableLayoutPanel);
@@ -442,7 +444,7 @@ namespace DBManager.Views.Engines
             this.QueryResult_DataGridView.RowHeadersVisible = false;
             this.QueryResult_DataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.QueryResult_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.QueryResult_DataGridView.Size = new System.Drawing.Size(683, 178);
+            this.QueryResult_DataGridView.Size = new System.Drawing.Size(677, 178);
             this.QueryResult_DataGridView.TabIndex = 10;
             // 
             // query_queryLabel
@@ -483,6 +485,18 @@ namespace DBManager.Views.Engines
             this.Name_Label.Size = new System.Drawing.Size(64, 21);
             this.Name_Label.TabIndex = 20;
             this.Name_Label.Text = "Name: ";
+            // 
+            // ClearQuery_Button
+            // 
+            this.ClearQuery_Button.ForeColor = System.Drawing.Color.Black;
+            this.ClearQuery_Button.Location = new System.Drawing.Point(85, 4);
+            this.ClearQuery_Button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ClearQuery_Button.Name = "ClearQuery_Button";
+            this.ClearQuery_Button.Size = new System.Drawing.Size(57, 27);
+            this.ClearQuery_Button.TabIndex = 20;
+            this.ClearQuery_Button.Text = "Clear";
+            this.ClearQuery_Button.UseVisualStyleBackColor = true;
+            this.ClearQuery_Button.Click += new System.EventHandler(this.ClearQuery_Button_Click);
             // 
             // QueryView
             // 
@@ -545,5 +559,6 @@ namespace DBManager.Views.Engines
         private System.Windows.Forms.Button AddTrackedQuery_Button;
         private System.Windows.Forms.TableLayoutPanel QueryAction_TableLayoutPanel;
         private System.Windows.Forms.Button CopyData_Button;
+        private System.Windows.Forms.Button ClearQuery_Button;
     }
 }
