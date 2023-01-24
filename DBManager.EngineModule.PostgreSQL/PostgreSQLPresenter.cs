@@ -187,7 +187,6 @@ namespace DBManager.EngineModule.PostgreSQL
             var tableQuery =
                 $"SELECT " +
                     $"table_name, " +
-                    $"table_type, " +
                     $"pg_total_relation_size(\'\"\'||table_schema||\'\".\"\'||table_name||\'\"\') AS SIZE " +
                 $"FROM information_schema.tables " +
                 $"WHERE table_catalog = '{databaseName}' AND table_schema = 'public';";
@@ -216,7 +215,7 @@ namespace DBManager.EngineModule.PostgreSQL
             {
                 var name = row.TryConvertTo<string>("name");
 
-                var rowsInt64 = row.TryConvertTo<Int64>("rows");
+                var rowsInt64 = row.TryConvertTo<long>("rows");
                 var rows = (ulong)rowsInt64;
 
                 tablesAndRowsCount.Add(name, rows);
@@ -227,19 +226,12 @@ namespace DBManager.EngineModule.PostgreSQL
             foreach (DataRow row in tableQueryResult.Rows)
             {
                 var name = row.TryConvertTo<string>("table_name");
-                var type = row.TryConvertTo<string>("table_type");
                 var records = tablesAndRowsCount[name];
-
-                var sizeInt64Format = row.TryConvertTo<Int64>("SIZE");
-                var size = (decimal)(sizeInt64Format * 0.001);
 
                 var columnStructure = new TableStructure
                 {
                     Name = name,
-                    Type = type,
-                    Records = records,
-                    Size = size,
-                    ComparingSubtitlesMethod = null
+                    Records = records
                 };
 
                 tablesStructure.Add(columnStructure);

@@ -34,18 +34,15 @@ namespace DBManager.Views.Engines
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DatabaseStructure_Structure_Label = new System.Windows.Forms.Label();
             this.Structure_Structure_DataGridView = new System.Windows.Forms.DataGridView();
-            this.structure_columnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.structure_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.structure_Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.structure_Records = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.structure_size = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.structure_comparingSubtitlesMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Structure = new System.Windows.Forms.TabPage();
             this.Name_Structure_Label = new System.Windows.Forms.Label();
             this.Tables_Structure_Label = new System.Windows.Forms.Label();
             this.DatabaseView_TabControl = new System.Windows.Forms.TabControl();
             this.Query = new System.Windows.Forms.TabPage();
             this.TrackedQueries = new System.Windows.Forms.TabPage();
+            this.structure_columnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.structure_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.structure_Records = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.Structure_Structure_DataGridView)).BeginInit();
             this.Structure.SuspendLayout();
             this.DatabaseView_TabControl.SuspendLayout();
@@ -91,10 +88,7 @@ namespace DBManager.Views.Engines
             this.Structure_Structure_DataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.structure_columnNumber,
             this.structure_Name,
-            this.structure_Type,
-            this.structure_Records,
-            this.structure_size,
-            this.structure_comparingSubtitlesMethod});
+            this.structure_Records});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -114,42 +108,6 @@ namespace DBManager.Views.Engines
             this.Structure_Structure_DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Structure_Structure_DataGridView.Size = new System.Drawing.Size(806, 383);
             this.Structure_Structure_DataGridView.TabIndex = 16;
-            // 
-            // structure_columnNumber
-            // 
-            this.structure_columnNumber.HeaderText = "#";
-            this.structure_columnNumber.Name = "structure_columnNumber";
-            this.structure_columnNumber.ReadOnly = true;
-            // 
-            // structure_Name
-            // 
-            this.structure_Name.HeaderText = "Name";
-            this.structure_Name.Name = "structure_Name";
-            this.structure_Name.ReadOnly = true;
-            // 
-            // structure_Type
-            // 
-            this.structure_Type.HeaderText = "Type";
-            this.structure_Type.Name = "structure_Type";
-            this.structure_Type.ReadOnly = true;
-            // 
-            // structure_Records
-            // 
-            this.structure_Records.HeaderText = "Records";
-            this.structure_Records.Name = "structure_Records";
-            this.structure_Records.ReadOnly = true;
-            // 
-            // structure_size
-            // 
-            this.structure_size.HeaderText = "Size (KB)";
-            this.structure_size.Name = "structure_size";
-            this.structure_size.ReadOnly = true;
-            // 
-            // structure_comparingSubtitlesMethod
-            // 
-            this.structure_comparingSubtitlesMethod.HeaderText = "Comparing Subtitles Method";
-            this.structure_comparingSubtitlesMethod.Name = "structure_comparingSubtitlesMethod";
-            this.structure_comparingSubtitlesMethod.ReadOnly = true;
             // 
             // Structure
             // 
@@ -229,6 +187,24 @@ namespace DBManager.Views.Engines
             this.TrackedQueries.UseVisualStyleBackColor = true;
             this.TrackedQueries.Enter += new System.EventHandler(this.TrackedQueries_Enter);
             // 
+            // structure_columnNumber
+            // 
+            this.structure_columnNumber.HeaderText = "#";
+            this.structure_columnNumber.Name = "structure_columnNumber";
+            this.structure_columnNumber.ReadOnly = true;
+            // 
+            // structure_Name
+            // 
+            this.structure_Name.HeaderText = "Name";
+            this.structure_Name.Name = "structure_Name";
+            this.structure_Name.ReadOnly = true;
+            // 
+            // structure_Records
+            // 
+            this.structure_Records.HeaderText = "Records";
+            this.structure_Records.Name = "structure_Records";
+            this.structure_Records.ReadOnly = true;
+            // 
             // DatabaseView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -254,14 +230,11 @@ namespace DBManager.Views.Engines
         private System.Windows.Forms.TabPage Structure;
         private System.Windows.Forms.TabControl DatabaseView_TabControl;
         private System.Windows.Forms.Label Tables_Structure_Label;
-        private System.Windows.Forms.DataGridViewTextBoxColumn structure_columnNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn structure_Name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn structure_Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn structure_Records;
-        private System.Windows.Forms.DataGridViewTextBoxColumn structure_size;
-        private System.Windows.Forms.DataGridViewTextBoxColumn structure_comparingSubtitlesMethod;
         private System.Windows.Forms.TabPage Query;
         private System.Windows.Forms.Label Name_Structure_Label;
         private System.Windows.Forms.TabPage TrackedQueries;
+        private System.Windows.Forms.DataGridViewTextBoxColumn structure_columnNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn structure_Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn structure_Records;
     }
 }

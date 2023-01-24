@@ -43,10 +43,7 @@ namespace DBManager.Views.Engines
                     i,
                     i,
                     payload.TablesStructure[i].Name,
-                    payload.TablesStructure[i].Type,
-                    payload.TablesStructure[i].Records,
-                    payload.TablesStructure[i].Size,
-                    payload.TablesStructure[i].ComparingSubtitlesMethod);
+                    payload.TablesStructure[i].Records);
             }
 
             Tables_Structure_Label.Text = $"Tables: {payload.TablesCount}";
