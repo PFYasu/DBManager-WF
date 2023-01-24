@@ -122,9 +122,7 @@ namespace DBManager.EngineModule.PostgreSQL
 
             var columnsQuery =
                 $"SELECT " +
-                    $"column_name, " +
-                    $"data_type, " +
-                    $"collation_name " +
+                    $"column_name " +
                 $"FROM information_schema.columns " +
                 $"WHERE table_name = '{tableName}' AND table_catalog = '{databaseName}';";
             DataTable columnsQueryResult;
@@ -152,14 +150,10 @@ namespace DBManager.EngineModule.PostgreSQL
             foreach (DataRow row in columnsQueryResult.Rows)
             {
                 var name = row.TryConvertTo<string>("column_name");
-                var type = row.TryConvertTo<string>("data_type");
-                var comparingSubtitlesMethod = row.TryConvertTo<string>("collation_name");
 
                 var columnStructure = new ColumnStructure
                 {
-                    Name = name,
-                    Type = type,
-                    ComparingSubtitlesMethod = comparingSubtitlesMethod
+                    Name = name
                 };
 
                 columnsStructure.Add(columnStructure);

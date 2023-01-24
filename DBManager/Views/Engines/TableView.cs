@@ -40,9 +40,7 @@ namespace DBManager.Views.Engines
                 Structure_Structure_DataGridView.Rows.Insert(
                     i,
                     i,
-                    payload.ColumnsStructure[i].Name,
-                    payload.ColumnsStructure[i].Type,
-                    payload.ColumnsStructure[i].ComparingSubtitlesMethod);
+                    payload.ColumnsStructure[i].Name);
             }
 
             _unsupportedColumns.Clear();

@@ -122,7 +122,7 @@ namespace DBManager.EngineModule.MySql
                 $"WHERE TABLE_SCHEMA = '{databaseName}' AND TABLE_NAME = '{tableName}';";
             DataTable tableQueryResult;
 
-            var columnsQuery = $"SELECT COLUMN_NAME, DATA_TYPE, COLLATION_NAME " +
+            var columnsQuery = $"SELECT COLUMN_NAME " +
                 $"FROM COLUMNS " +
                 $"WHERE TABLE_NAME = '{tableName}' AND TABLE_SCHEMA = '{databaseName}';";
             DataTable columnsQueryResult;
@@ -159,14 +159,10 @@ namespace DBManager.EngineModule.MySql
             foreach (DataRow row in columnsQueryResult.Rows)
             {
                 var name = row.TryConvertTo<string>("COLUMN_NAME");
-                var type = row.TryConvertTo<string>("DATA_TYPE");
-                var comparingSubtitlesMethod = row.TryConvertTo<string>("COLLATION_NAME");
 
                 var columnStructure = new ColumnStructure
                 {
                     Name = name,
-                    Type = type,
-                    ComparingSubtitlesMethod = comparingSubtitlesMethod
                 };
 
                 columnsStructure.Add(columnStructure);
