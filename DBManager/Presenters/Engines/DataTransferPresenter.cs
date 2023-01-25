@@ -7,6 +7,7 @@ using DBManager.Core.Dto.Engines;
 using DBManager.Core.Dto;
 using System.Data;
 using System.Text;
+using DBManager.Utils.Files.Routing;
 
 namespace DBManager.Presenters.Engines;
 
@@ -31,7 +32,7 @@ public class DataTransferPresenter : IDataTransferPresenter
 
     public Response<ConnectionNamesResponseDto> GetConnectionNames()
     {
-        var connectionNames = _fileManager.LoadMany<Connection>(Router.ToConnectionRepository())
+        var connectionNames = _fileManager.LoadMany<Connection>(Router.Init().CurrentDictionaryPath())
             .Select(x => x.Name)
             .ToList();
 
@@ -45,7 +46,7 @@ public class DataTransferPresenter : IDataTransferPresenter
 
     public async Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames(string connectionName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<DatabaseNamesResponseDto>
@@ -64,7 +65,7 @@ public class DataTransferPresenter : IDataTransferPresenter
 
     public async Task<Response<TableNamesResponseDto>> GetTableNames(string connectionName, string databaseName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<TableNamesResponseDto>
@@ -88,7 +89,7 @@ public class DataTransferPresenter : IDataTransferPresenter
         var tableName = dto.TableName;
         var dataTable = dto.DataTable;
 
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<QueryResponseDto>

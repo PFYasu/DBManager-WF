@@ -4,7 +4,7 @@ using DBManager.Core.Presenters;
 using DBManager.Presenters;
 using DBManager.Tests.Assertion;
 using DBManager.Tests.Mocks;
-using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -31,7 +31,7 @@ public class UpdateConnectionTests : DBManagerTestBase
 
         ResponseAssert.Error(response);
 
-        FileManager.AssertFileNotExist(Router.ToConnection(NewName));
+        FileManager.AssertFileNotExist(Router.Init().Connection(NewName).SettingsPath());
     }
 
     [Fact]
@@ -55,8 +55,8 @@ public class UpdateConnectionTests : DBManagerTestBase
             },
         };
 
-        FileManager.Save(existingConnectionWithOldName, Router.ToConnection(existingConnectionWithOldName.Name));
-        FileManager.Save(existingConnectionWithNewName, Router.ToConnection(existingConnectionWithNewName.Name));
+        FileManager.Save(existingConnectionWithOldName, Router.Init().Connection(existingConnectionWithOldName.Name).SettingsPath());
+        FileManager.Save(existingConnectionWithNewName, Router.Init().Connection(existingConnectionWithNewName.Name).SettingsPath());
 
         var dto = new UpdateConnectionDto
         {
@@ -73,8 +73,8 @@ public class UpdateConnectionTests : DBManagerTestBase
 
         ResponseAssert.Error(response);
 
-        var loadedNewNameExistingConnection = FileManager.AssertFileExists<Connection>(Router.ToConnection(NewName));
-        var loadedOldNameExistingConnection = FileManager.AssertFileExists<Connection>(Router.ToConnection(OldName));
+        var loadedNewNameExistingConnection = FileManager.AssertFileExists<Connection>(Router.Init().Connection(NewName).SettingsPath());
+        var loadedOldNameExistingConnection = FileManager.AssertFileExists<Connection>(Router.Init().Connection(OldName).SettingsPath());
 
         Assert.Equal(
             existingConnectionWithNewName.ConnectionParameters.First().Value, 
@@ -97,7 +97,7 @@ public class UpdateConnectionTests : DBManagerTestBase
             },
         };
 
-        FileManager.Save(existingConnection, Router.ToConnection(existingConnection.Name));
+        FileManager.Save(existingConnection, Router.Init().Connection(existingConnection.Name).SettingsPath());
 
         var dto = new UpdateConnectionDto
         {
@@ -114,8 +114,8 @@ public class UpdateConnectionTests : DBManagerTestBase
 
         ResponseAssert.Ok(response);
 
-        FileManager.AssertFileNotExist(Router.ToConnection(OldName));
-        var loadedExistingConnection = FileManager.AssertFileExists<Connection>(Router.ToConnection(NewName));
+        FileManager.AssertFileNotExist(Router.Init().Connection(OldName).SettingsPath());
+        var loadedExistingConnection = FileManager.AssertFileExists<Connection>(Router.Init().Connection(NewName).SettingsPath());
 
         Assert.Equal(
             dto.ConnectionParameters.First().Value,

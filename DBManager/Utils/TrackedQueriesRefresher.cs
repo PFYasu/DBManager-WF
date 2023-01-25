@@ -1,6 +1,7 @@
 ﻿using DBManager.Core.Models;
 using DBManager.Core.Utils.Log;
 using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using Newtonsoft.Json;
 using System;
 using System.Data;
@@ -34,7 +35,7 @@ public class TrackedQueriesRefresher
     {
         _minutesAfterStart++;
 
-        var connections = _fileManager.LoadMany<Connection>(Router.ToConnectionRepository());
+        var connections = _fileManager.LoadMany<Connection>(Router.Init().CurrentDictionaryPath());
 
         foreach (var connection in connections)
         {
@@ -58,7 +59,7 @@ public class TrackedQueriesRefresher
                 if (TryApplyNewSnapshot(trackedQuery, executeQueryResult, out var snapshot))
                 {
                     trackedQuery.QuerySnapshots.Add(snapshot);
-                    _fileManager.Save(connection, Router.ToConnection(connection.Name));
+                    _fileManager.Save(connection, Router.Init().Connection(connection.Name).SettingsPath());
                 }
 
                 Logger.Log(

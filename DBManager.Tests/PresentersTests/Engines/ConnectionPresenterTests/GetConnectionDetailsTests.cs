@@ -5,6 +5,7 @@ using DBManager.Presenters.Engines;
 using DBManager.Tests.Assertion;
 using DBManager.Tests.Mocks;
 using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,7 +27,7 @@ public class GetConnectionDetailsTests : DBManagerTestBase
         var engineModuleResolver = new MockEngineModuleResolver()
             .GetSuccessful();
 
-        FileManager.Save(SomeConnection, Router.ToConnection(SomeConnection.Name));
+        FileManager.Save(SomeConnection, Router.Init().Connection(SomeConnection.Name).SettingsPath());
 
         var response = await Act(SomeConnection.Name, engineModuleResolver);
 
@@ -46,7 +47,7 @@ public class GetConnectionDetailsTests : DBManagerTestBase
             .WithEnginePresenter(enginePresenter)
             .GetSuccessful();
 
-        FileManager.Save(SomeConnection, Router.ToConnection(SomeConnection.Name));
+        FileManager.Save(SomeConnection, Router.Init().Connection(SomeConnection.Name).SettingsPath());
 
         var response = await Act(SomeConnection.Name, engineModuleResolver);
 

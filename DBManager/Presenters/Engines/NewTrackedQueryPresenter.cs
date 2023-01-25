@@ -2,6 +2,7 @@
 using DBManager.Core.Models;
 using DBManager.Core.Presenters;
 using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 
 namespace DBManager.Presenters.Engines;
 
@@ -21,7 +22,7 @@ public class NewTrackedQueryPresenter : INewTrackedQueryPresenter
 
     public Response AddTrackedQuery(NewTrackedQueryDto dto)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(dto.ConnectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(dto.ConnectionName).SettingsPath());
 
         if (connection == null)
             return Response.Error($"Connection {dto.ConnectionName} does not exist.");
@@ -36,7 +37,7 @@ public class NewTrackedQueryPresenter : INewTrackedQueryPresenter
 
         connection.TrackedQueries.Add(trackedQuery);
 
-        _fileManager.Save(connection, Router.ToConnection(connection.Name));
+        _fileManager.Save(connection, Router.Init().Connection(connection.Name).SettingsPath());
 
         return Response.Ok();
     }

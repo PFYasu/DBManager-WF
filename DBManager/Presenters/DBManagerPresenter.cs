@@ -3,6 +3,7 @@ using DBManager.Core.Dto.Engines;
 using DBManager.Core.Models;
 using DBManager.Core.Presenters;
 using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace DBManager.Presenters
 
             var connection = Connection.FromDto(dto);
 
-            _fileManager.Save(connection, Router.ToConnection(dto.Name));
+            _fileManager.Save(connection, Router.Init().Connection(dto.Name).SettingsPath());
 
             return Response.Ok();
         }
@@ -36,7 +37,7 @@ namespace DBManager.Presenters
             if (ConnectionExists(connectionName) == false)
                 return Response.Error($"Connection with {connectionName} name does not exist.");
 
-            _fileManager.Delete(Router.ToConnection(connectionName));
+            _fileManager.Delete(Router.Init().Connection(connectionName).SettingsPath());
 
             return Response.Ok();
         }
@@ -49,13 +50,13 @@ namespace DBManager.Presenters
             if (dto.OldName != dto.Name && ConnectionExists(dto.Name))
                 return Response.Error($"Unable to change {dto.OldName} connection - {dto.Name} connection already exists.");
 
-            var oldConnection = _fileManager.Load<Connection>(Router.ToConnection(dto.OldName));
+            var oldConnection = _fileManager.Load<Connection>(Router.Init().Connection(dto.OldName).SettingsPath());
 
             var newConnection = Connection.FromDto(dto);
             newConnection.TrackedQueries = oldConnection.TrackedQueries;
 
-            _fileManager.Delete(Router.ToConnection(dto.OldName));
-            _fileManager.Save(newConnection, Router.ToConnection(newConnection.Name));
+            _fileManager.Delete(Router.Init().Connection(dto.OldName).SettingsPath());
+            _fileManager.Save(newConnection, Router.Init().Connection(newConnection.Name).SettingsPath());
 
             return Response.Ok();
         }
@@ -63,7 +64,7 @@ namespace DBManager.Presenters
         public Response<ConnectionNamesResponseDto> GetConnectionNames()
         {
             var names = _fileManager
-                .LoadMany<Connection>(Router.ToConnectionRepository())
+                .LoadMany<Connection>(Router.Init().CurrentDictionaryPath())
                 .Select(x => x.Name)
                 .ToList();
 
@@ -77,7 +78,7 @@ namespace DBManager.Presenters
             if (ConnectionExists(connectionName) == false)
                 return Response<AddConnectionDto>.Error($"Connection with {connectionName} does not exist");
 
-            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+            var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
             var dto = new AddConnectionDto
             {
@@ -112,7 +113,7 @@ namespace DBManager.Presenters
 
         public async Task<Response<DatabaseNamesResponseDto>> GetDatabaseNames(string connectionName)
         {
-            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+            var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
             if (connection == null)
                 return Response<DatabaseNamesResponseDto>
@@ -131,7 +132,7 @@ namespace DBManager.Presenters
 
         public async Task<Response<TableNamesResponseDto>> GetTableNames(string connectionName, string databaseName)
         {
-            var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+            var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
             if (connection == null)
                 return Response<TableNamesResponseDto>
@@ -153,7 +154,7 @@ namespace DBManager.Presenters
             try
             {
                 var exists = _fileManager
-                    .LoadMany<Connection>(Router.ToConnectionRepository())
+                    .LoadMany<Connection>(Router.Init().CurrentDictionaryPath())
                     .Exists(x => x.Name == connectionName);
 
                 return exists;

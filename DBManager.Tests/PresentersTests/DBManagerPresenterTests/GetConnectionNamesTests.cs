@@ -4,7 +4,7 @@ using DBManager.Core.Presenters;
 using DBManager.Presenters;
 using DBManager.Tests.Assertion;
 using DBManager.Tests.Mocks;
-using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using Xunit;
 
 namespace DBManager.Tests.PresentersTests.DBManagerPresenterTests;
@@ -18,9 +18,9 @@ public class GetConnectionNamesTest : DBManagerTestBase
         var secondConnection = new Connection { Name = "PostgreSQLConnection" };
         var thirdConnection = new Connection { Name = "SecondMySQLConnection" };
 
-        FileManager.Save(firstConnection, Router.ToConnection(firstConnection.Name));
-        FileManager.Save(secondConnection, Router.ToConnection(secondConnection.Name));
-        FileManager.Save(thirdConnection, Router.ToConnection(thirdConnection.Name));
+        FileManager.Save(firstConnection, Router.Init().Connection(firstConnection.Name).SettingsPath());
+        FileManager.Save(secondConnection, Router.Init().Connection(secondConnection.Name).SettingsPath());
+        FileManager.Save(thirdConnection, Router.Init().Connection(thirdConnection.Name).SettingsPath());
 
         var response = Act();
 

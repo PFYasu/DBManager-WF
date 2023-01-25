@@ -4,7 +4,7 @@ using DBManager.Core.Presenters;
 using DBManager.Presenters;
 using DBManager.Tests.Assertion;
 using DBManager.Tests.Mocks;
-using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -26,7 +26,7 @@ public class GetConnectionSettingsTests : DBManagerTestBase
             }
         };
 
-        FileManager.Save(connection, Router.ToConnection(connection.Name));
+        FileManager.Save(connection, Router.Init().Connection(connection.Name).SettingsPath());
 
         var response = Act(connection.Name);
 

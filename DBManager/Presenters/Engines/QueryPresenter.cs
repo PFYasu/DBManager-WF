@@ -2,6 +2,7 @@
 using DBManager.Core.Models;
 using DBManager.Core.Presenters;
 using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Threading.Tasks;
 
 namespace DBManager.Presenters.Engines;
@@ -25,7 +26,7 @@ public class QueryPresenter : IQueryPresenter
 
     public async Task<Response<DatabaseTableColumnsResponseDto>> GetDatabaseTableColumns(string connectionName, string databaseName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<DatabaseTableColumnsResponseDto>
@@ -44,7 +45,7 @@ public class QueryPresenter : IQueryPresenter
 
     public async Task<Response<QueryResponseDto>> SendQuery(string connectionName, string databaseName, string query)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<QueryResponseDto>

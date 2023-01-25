@@ -5,6 +5,7 @@ using DBManager.Presenters;
 using DBManager.Tests.Assertion;
 using DBManager.Tests.Mocks;
 using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -42,7 +43,7 @@ public class GetTableNamesTests : DBManagerTestBase
             .WithEnginePresenter(enginePresenter)
             .GetSuccessful();
 
-        FileManager.Save(connection, Router.ToConnection(connection.Name));
+        FileManager.Save(connection, Router.Init().Connection(connection.Name).SettingsPath());
 
         var response = await Act(connection.Name, "some-database-name", engineModuleResolver);
 

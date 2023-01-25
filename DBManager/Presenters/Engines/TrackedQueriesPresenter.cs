@@ -7,6 +7,7 @@ using System;
 using DBManager.Utils.Files;
 using System.Linq;
 using DBManager.Utils;
+using DBManager.Utils.Files.Routing;
 
 namespace DBManager.Presenters.Engines;
 
@@ -31,7 +32,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
 
     public Response<TrackedQueriesDetailsResponseDto> GetTrackedQueriesDetails(string connectionName, string databaseName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<TrackedQueriesDetailsResponseDto>.Error(
@@ -63,7 +64,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
     public Response<TrackedQuerySnapshotsDetailsResponseDto> GetTrackedQuerySnapshotsDetails(
         string connectionName, string databaseName, string trackedQueryName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<TrackedQuerySnapshotsDetailsResponseDto>.Error(
@@ -93,7 +94,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
 
     public Response<TrackedQuerySnapshotResponseDto> GetSnapshot(string connectionName, string databaseName, string snapshotName, string trackedQueryName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<TrackedQuerySnapshotResponseDto>.Error(
@@ -133,7 +134,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
         var connectionName = dto.ConnectionName;
         var databaseName = dto.DatabaseName;
 
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<TrackedQuerySnapshotDifferencesResponseDto>.Error(
@@ -187,7 +188,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
 
     public Response<TrackedQueryPreviewResponseDto> GetPreview(string connectionName, string databaseName, string trackedQueryName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<TrackedQueryPreviewResponseDto>.Error(
@@ -210,7 +211,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
 
     public Response RemoveTrackedQuery(string connectionName, string databaseName, string trackedQueryName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response.Error($"Connection {connectionName} does not exist.");
@@ -224,7 +225,7 @@ public class TrackedQueriesPresenter : ITrackedQueriesPresenter
         if (numberOfDeletedElements > 1)
             throw new InvalidOperationException($"Removed more than one tracked query: {numberOfDeletedElements}.");
 
-        _fileManager.Save(connection, Router.ToConnection(connection.Name));
+        _fileManager.Save(connection, Router.Init().Connection(connection.Name).SettingsPath());
 
         return Response.Ok();
     }

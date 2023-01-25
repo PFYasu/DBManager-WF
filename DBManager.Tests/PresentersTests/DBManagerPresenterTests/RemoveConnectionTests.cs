@@ -3,7 +3,7 @@ using DBManager.Core.Presenters;
 using DBManager.Presenters;
 using DBManager.Tests.Assertion;
 using DBManager.Tests.Mocks;
-using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using Xunit;
 
 namespace DBManager.Tests.PresentersTests.DBManagerPresenterTests;
@@ -18,13 +18,13 @@ public class RemoveConnectionTests : DBManagerTestBase
             Name = "connectionName",
         };
 
-        FileManager.Save(connection, Router.ToConnection(connection.Name));
+        FileManager.Save(connection, Router.Init().Connection(connection.Name).SettingsPath());
 
         var response = Act(connection.Name);
 
         ResponseAssert.Ok(response);
 
-        FileManager.AssertFileNotExist(Router.ToConnection(connection.Name));
+        FileManager.AssertFileNotExist(Router.Init().Connection(connection.Name).SettingsPath());
     }
 
     [Fact]

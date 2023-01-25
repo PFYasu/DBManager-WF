@@ -3,7 +3,7 @@ using DBManager.Core.Models;
 using DBManager.Core.Presenters;
 using DBManager.Presenters;
 using DBManager.Tests.Assertion;
-using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Collections.Generic;
 using Xunit;
 
@@ -28,7 +28,7 @@ public class AddConnectionTests : DBManagerTestBase
             Name = "ConnectionName"
         };
 
-        FileManager.Save(connection, Router.ToConnection(connection.Name));
+        FileManager.Save(connection, Router.Init().Connection(connection.Name).SettingsPath());
 
         var response = Act(dto);
 
@@ -54,7 +54,7 @@ public class AddConnectionTests : DBManagerTestBase
 
         ResponseAssert.Ok(response);
 
-        FileManager.AssertFileExists<Connection>(Router.ToConnection(connectionName));
+        FileManager.AssertFileExists<Connection>(Router.Init().Connection(connectionName).SettingsPath());
     }
 
     private Response Act(AddConnectionDto dto)

@@ -2,6 +2,7 @@
 using DBManager.Core.Models;
 using DBManager.Core.Presenters;
 using DBManager.Utils.Files;
+using DBManager.Utils.Files.Routing;
 using System.Threading.Tasks;
 
 namespace DBManager.Presenters.Engines;
@@ -24,7 +25,7 @@ public class DatabasePresenter : IDatabasePresenter
 
     public async Task<Response<DatabaseDetailsResponseDto>> GetDatabaseDetails(string connectionName, string databaseName)
     {
-        var connection = _fileManager.Load<Connection>(Router.ToConnection(connectionName));
+        var connection = _fileManager.Load<Connection>(Router.Init().Connection(connectionName).SettingsPath());
 
         if (connection == null)
             return Response<DatabaseDetailsResponseDto>.Error($"Connection with {connectionName} connection name does not exist.");
