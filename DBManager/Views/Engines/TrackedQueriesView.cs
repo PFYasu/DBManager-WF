@@ -4,6 +4,7 @@ using DBManager.Core.Views.Helpers;
 using DBManager.Presenters.Engines;
 using System;
 using System.ComponentModel;
+using System.Data;
 using System.Windows.Forms;
 
 namespace DBManager.Views.Engines
@@ -110,7 +111,10 @@ namespace DBManager.Views.Engines
             if (_selectedTrackedQuerySnapshot == null)
                 return;
 
-            var data = _selectedTrackedQuerySnapshot.Data;
+            var data = _selectedTrackedQuerySnapshot.Data.Columns.Count != 0
+                ? _selectedTrackedQuerySnapshot.Data
+                : DataTableWithoutSchema();
+
             var updated = _selectedTrackedQuerySnapshot.Updated;
 
             FirstQuerySnapshot_DataGridView.DataSource = data;
@@ -131,7 +135,10 @@ namespace DBManager.Views.Engines
             if (_selectedTrackedQuerySnapshot == null)
                 return;
 
-            var data = _selectedTrackedQuerySnapshot.Data;
+            var data = _selectedTrackedQuerySnapshot.Data.Columns.Count != 0
+                ? _selectedTrackedQuerySnapshot.Data
+                : DataTableWithoutSchema();
+
             var updated = _selectedTrackedQuerySnapshot.Updated;
 
             SecondQuerySnapshot_DataGridView.DataSource = data;
@@ -278,6 +285,14 @@ namespace DBManager.Views.Engines
         {
             TrackedQueries_ListView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.HeaderSize);
             TrackedQueries_ListView.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+
+        private static DataTable DataTableWithoutSchema()
+        {
+            var dataTable = new DataTable();
+
+            dataTable.Columns.Add("This table is empty");
+            return dataTable;
         }
     }
 }
