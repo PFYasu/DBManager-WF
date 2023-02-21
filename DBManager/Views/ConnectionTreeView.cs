@@ -110,6 +110,21 @@ namespace DBManager.Views
             }
         }
 
+        public void CollapseNode(string connectionName)
+        {
+            ConnectionTree_TreeView
+                .Nodes[connectionName]
+                .Collapse();
+        }
+
+        public void CollapseNode(string connectionName, string databaseName)
+        {
+            ConnectionTree_TreeView
+                .Nodes[connectionName]
+                .Nodes[databaseName]
+                .Collapse();
+        }
+
         private class EmptyTreeNode : TreeNode
         {
         }

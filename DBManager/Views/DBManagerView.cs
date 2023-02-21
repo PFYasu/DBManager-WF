@@ -160,6 +160,7 @@ namespace DBManager.Views
             var response = await _presenter.GetDatabaseNames(connectionName);
             if (response.Type == ResponseType.Error)
             {
+                ConnectionTree_ConnectionTreeView.CollapseNode(connectionName);
                 _messageHelper.ShowError($"Unable to load database list for {connectionName} connection.", response.ErrorMessage);
                 return;
             }
@@ -174,6 +175,7 @@ namespace DBManager.Views
             var response = await _presenter.GetTableNames(connectionName, databaseName);
             if (response.Type == ResponseType.Error)
             {
+                ConnectionTree_ConnectionTreeView.CollapseNode(connectionName, databaseName);
                 _messageHelper.ShowError($"Unable to load table list for {connectionName} connection and {databaseName} database.", response.ErrorMessage);
                 return;
             }
