@@ -2,7 +2,12 @@
 
 public abstract class RouterBase
 {
-    protected string _parentPath;
+    protected readonly string _parentPath;
+
+    protected RouterBase(string parentPath)
+    {
+        _parentPath = parentPath;
+    }
 
     public string CurrentDictionaryPath() => _parentPath;
 }

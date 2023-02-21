@@ -2,13 +2,11 @@
 
 namespace DBManager.Utils.Files.Routing;
 
-public class TrackedQueryRouter
+public class TrackedQueryRouter : RouterBase
 {
-    private readonly string _parentPath;
-
     public TrackedQueryRouter(string parentPath)
+        : base(parentPath)
     {
-        _parentPath = parentPath;
     }
 
     public string SettingsPath()

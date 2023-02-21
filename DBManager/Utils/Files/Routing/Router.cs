@@ -5,8 +5,8 @@ namespace DBManager.Utils.Files.Routing;
 public class Router : RouterBase
 {
     private Router()
+        : base(Constants.Paths.ConnectionsRespository)
     {
-        _parentPath = Constants.Paths.ConnectionsRespository;
     }
 
     public static Router Init() => new();
